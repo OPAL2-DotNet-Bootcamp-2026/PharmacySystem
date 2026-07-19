@@ -15,5 +15,6 @@ namespace Pharmacy_System.Modules
         public int Quantity { get; set; } // input
         [Required]
         public string ExpiryDate { get; set; } //input
+
     }
 }
