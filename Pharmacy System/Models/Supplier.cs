@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Pharmacy_System.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Modules
@@ -18,8 +19,8 @@ namespace Pharmacy_System.Modules
         [MaxLength(100)]
         [RegularExpression(@".+@.+\.com$", ErrorMessage = "Email must contain @ and end with .com")]
         public string Email { get; set; } //input
-   
 
+        public ICollection<Supply> Supplies { get; set; } = new List<Supply>();
 
     }
 }
