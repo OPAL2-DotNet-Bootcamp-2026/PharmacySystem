@@ -28,7 +28,8 @@ namespace Pharmacy_System.Models
         [Required]
         public string Status { get; set; } = "Pending";
 
-        public ICollection<TransferDetail> TransferDetails { get; set; } = new List<TransferDetail>();
+        // Many-to-Many relationship with Medicine
+        public ICollection<Medicine> Medicines { get; set; } = new List<Medicine>();
            
     }
 }
