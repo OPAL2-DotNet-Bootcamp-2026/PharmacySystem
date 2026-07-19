@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Pharmacy_System.Modules;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Modules
@@ -25,6 +26,7 @@ namespace Pharmacy_System.Modules
         public string Status { get; set; } = "Pending";
 
         public ICollection<PharmacistOrderDetail> PharmacistOrderDetails{ get; set; } = new List<PharmacistOrderDetail>();
-        
+        public ICollection<Medicine> Medicines { get; set; } = new List<Medicine>();
+
     }
 }
