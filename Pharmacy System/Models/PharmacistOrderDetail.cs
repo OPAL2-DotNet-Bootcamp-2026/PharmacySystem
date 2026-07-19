@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Pharmacy_System.Models
+namespace Pharmacy_System.Modules
 {
     public class PharmacistOrderDetail
     {
