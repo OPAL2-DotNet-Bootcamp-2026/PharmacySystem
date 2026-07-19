@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Pharmacy_System.Models
+namespace Pharmacy_System.Modules
 {
     public class CustomerOrder
     {

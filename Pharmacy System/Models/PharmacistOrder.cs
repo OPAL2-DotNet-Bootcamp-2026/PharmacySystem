@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Pharmacy_System.Models
+namespace Pharmacy_System.Modules
 {
     public class PharmacistOrder
     {
@@ -11,12 +11,12 @@ namespace Pharmacy_System.Models
         public int PharmacistOrderId { get; set; }
 
         [Range(1, int.MaxValue)]
-        public int PharmacistId { get; set; }//fk
+        public int PharmacistId { get; set; }
 
         public Pharmacist Pharmacist { get; set; } = null!;//relation
 
         [Range(1, int.MaxValue)]
-        public int PharmacyId { get; set; }//fk
+        public int PharmacyId { get; set; }
 
         public Pharmacy Pharmacy { get; set; } = null!;//relation
 
