@@ -4,11 +4,11 @@ namespace Pharmacy_System.Models
 {
     public class PharmacistOrderDetail
     {
-        public int PharmacistOrderId { get; set; }//fk
+        public int PharmacistOrderId { get; set; }
 
         public PharmacistOrder PharmacistOrder { get; set; } = null!;//relation
 
-        public int MedicineId { get; set; }//fk
+        public int MedicineId { get; set; }
 
         public Medicine Medicine { get; set; } = null!;//relation
 
