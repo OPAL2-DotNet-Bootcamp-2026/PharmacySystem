@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Pharmacy_System.Modeles;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Modules
@@ -19,6 +20,8 @@ namespace Pharmacy_System.Modules
         [Required]
         [MaxLength(100)]
         public string Category { get; set; }  // input
-       
+
+        public ICollection<Supply> Supplies { get; set; } = new List<Supply>();
+
     }
 }
