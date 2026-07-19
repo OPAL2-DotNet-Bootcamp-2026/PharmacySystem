@@ -11,8 +11,8 @@ namespace Pharmacy_System.Modules
         [Required]
         [MaxLength(100)]
         public string FullName { get; set; } // input
-       
-        [RegularExpression(@"^\+968[0-9]{8}$", ErrorMessage = "Phone must start with +968 and contain 8 digits")]
+
+        [Required]
         public string Phone { get; set; } // input
         [Required]
         [MaxLength(100)]
