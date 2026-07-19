@@ -19,6 +19,10 @@ namespace Pharmacy_System.Modules
         [Required]
         [MaxLength(100)]
         public string Category { get; set; }  // input
-       
+
+        // Many-to-Many relationship with Transfers
+        public ICollection<Transfer> Transfers { get; set; }= new List<Transfer>();
+    
+
     }
 }
