@@ -1,6 +1,8 @@
 ﻿using Pharmacy_System.Modeles;
+using Pharmacy_System.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Cryptography.Xml;
 
 namespace Pharmacy_System.Modules
 {
@@ -21,7 +23,16 @@ namespace Pharmacy_System.Modules
         [MaxLength(100)]
         public string Category { get; set; }  // input
 
+        // Warehouse relationship
+        [ForeignKey(nameof(Warehouse))]
+        public int WarehouseId { get; set; }//FK
+        public Warehouse Warehouse { get; set; }
         public ICollection<Supply> Supplies { get; set; } = new List<Supply>();
+
+
+        public ICollection<PharmacistOrder> PharmacistOrders { get; set; } = new List<PharmacistOrder>();
+        public ICollection<CustomerOrder> CustomerOrders { get; set; } = new List<CustomerOrder>();
+        public ICollection<Transfer> Transfers { get; set; } = new List<Transfer>();
 
     }
 }

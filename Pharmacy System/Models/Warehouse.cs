@@ -11,6 +11,7 @@ namespace Pharmacy_System.Modules
         public int WarehouseID {  get; set; }  // system generation
         [Required]
         [MaxLength(100)]
+
         public string Location { get; set; } // input
         [Range(0, int.MaxValue, ErrorMessage = "The value cannot be negative")]
         public int Quantity { get; set; } // input
@@ -18,5 +19,6 @@ namespace Pharmacy_System.Modules
         public string ExpiryDate { get; set; } //input
 
         public ICollection<Supply> Supplies { get; set; } = new List<Supply>();
+        public ICollection<Medicine> Medicines { get; set; } = new List<Medicine>();
     }
 }
