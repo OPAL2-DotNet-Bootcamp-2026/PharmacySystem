@@ -30,7 +30,7 @@ namespace Pharmacy_System.Modules
 
         //RELATION
         public ICollection<CustomerOrderDetail> CustomerOrderDetails{ get; set; } = new List<CustomerOrderDetail>();
-        public ICollection<Medicine> Medicines { get; set; } = new List<Medicine>();
+      
 
     }
 }
