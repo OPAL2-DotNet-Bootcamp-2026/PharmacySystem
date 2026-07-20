@@ -1,5 +1,4 @@
 ﻿using Pharmacy_System.Repos;
-using Pharmacy_System.DTOs;
 using Pharmacy_System.Modules;
 using Pharmacy_System.DTOs.Customer;
 
