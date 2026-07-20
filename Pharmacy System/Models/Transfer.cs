@@ -1,8 +1,8 @@
-﻿using Pharmacy_System.Modules;
+using Pharmacy_System.Modules;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Pharmacy_System.Models
+namespace Pharmacy_System.Modules
 {
     public class Transfer
     {
@@ -10,27 +10,35 @@ namespace Pharmacy_System.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TransferId { get; set; }
 
-        //FROM WAREHOUSE
+
+        // FROM WAREHOUSE
         [Range(1, int.MaxValue)]
-        public int WarehouseId { get; set; }//FK 
+        public int WarehouseId { get; set; }
 
-        public Warehouse Warehouse { get; set; } = null!;//RELATION
+        public Warehouse Warehouse { get; set; } = null!;
 
-        //TO PHARMACY
+
+        // TO PHARMACY
         [Range(1, int.MaxValue)]
-        public int PharmacyId { get; set; }//FK
+        public int PharmacyId { get; set; }
 
-        public Pharmacy Pharmacy { get; set; } = null!;//RELATION
+        public Pharmacy Pharmacy { get; set; } = null!;
+
 
         public DateTime TransferDate { get; set; } = DateTime.Now;
 
         public DateTime? ReceiveDate { get; set; }
 
+
         [Required]
         public string Status { get; set; } = "Pending";
 
-        public ICollection<TransferDetail> TransferDetails { get; set; } = new List<TransferDetail>();
-        public ICollection<Medicine> Medicines { get; set; } = new List<Medicine>();
 
+        // Transfer details (recommended for tracking quantities)
+        public ICollection<TransferDetail> TransferDetails { get; set; } = new List<TransferDetail>();
+
+
+        // Many-to-Many relationship with Medicine
+        public ICollection<Medicine> Medicines { get; set; } = new List<Medicine>();
     }
 }

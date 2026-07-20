@@ -1,11 +1,11 @@
 ﻿using Pharmacy_System.Modules;
 using System.ComponentModel.DataAnnotations;
 
-namespace Pharmacy_System.Models
+namespace Pharmacy_System.Modules
 {
     public class PharmacistOrderDetail
     {
-        public int PharmacistOrderId { get; set; }//fk
+        public int PharmacistOrderId { get; set; }
 
         public PharmacistOrder PharmacistOrder { get; set; } = null!;//relation
 
