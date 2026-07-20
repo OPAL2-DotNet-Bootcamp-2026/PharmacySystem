@@ -15,6 +15,10 @@ namespace Pharmacy_System
         public DbSet<Transfer> transfers { get; set; }
         public DbSet<Warehouse> warehouse { get; set; }
 
+        public DbSet<CustomerOrder> CustomerOrders { get; set; }
+        public DbSet<CustomerOrderDetail> CustomerOrderDetails { get; set; }
+        public DbSet<PharmacistOrderDetail> PharmacistOrderDetails { get; set; }
+
         public PharmacyContext(DbContextOptions<PharmacyContext> options) : base(options)
         {
 
