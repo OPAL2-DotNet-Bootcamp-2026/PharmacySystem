@@ -3,7 +3,7 @@
     public class MedicineDto  // // it return data, so it do not need for [Required] or default values.
     {
 
-        public int MedicineId { get; set; }
+        public int MedicineID { get; set; }
 
         public string MedicineName { get; set; }
 
