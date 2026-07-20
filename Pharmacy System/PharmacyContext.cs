@@ -8,7 +8,7 @@ namespace Pharmacy_System
         public DbSet<Customer> customers { get; set; }
         public DbSet<Medicine> medicines { get; set; }
         public DbSet<Pharmacist> pharmacists { get; set; }
-        public DbSet<PharmacistOrder> pharmacistsOrder { get; set; }
+        public DbSet<PharmacistOrder> PharmacistsOrder { get; set; }
         public DbSet<Pharmacy> pharmacies { get; set; }
         public DbSet<Supplier> suppliers { get; set; }
         public DbSet<Supply> Supplies { get; set; }
