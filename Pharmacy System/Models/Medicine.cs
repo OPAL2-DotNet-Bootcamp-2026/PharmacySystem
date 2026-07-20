@@ -41,8 +41,9 @@ namespace Pharmacy_System.Modules
         // Orders containing this medicine
         public ICollection<PharmacistOrder> PharmacistOrders { get; set; } = new List<PharmacistOrder>();
 
-        public ICollection<CustomerOrder> CustomerOrders { get; set; } = new List<CustomerOrder>();
-
+        // Many-to-Many relationship with Transfers
+        public ICollection<Transfer> Transfers { get; set; }= new List<Transfer>();
+    
 
         // Many-to-Many relationship with Transfers
         public ICollection<Transfer> Transfers { get; set; } = new List<Transfer>();

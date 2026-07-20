@@ -13,7 +13,7 @@ namespace Pharmacy_System
         public DbSet<Supplier> suppliers { get; set; }
         public DbSet<Supply> supplies { get; set; }
         public DbSet<Transfer> transfers { get; set; }
-        public DbSet<Warehouse> warehouses { get; set; }
+        public DbSet<Warehouse> warehouse { get; set; }
 
         public PharmacyContext(DbContextOptions<PharmacyContext> options) : base(options)
         {
