@@ -26,7 +26,7 @@ namespace Pharmacy_System.Modules
         public string Status { get; set; } = "Pending";
 
         public ICollection<PharmacistOrderDetail> PharmacistOrderDetails{ get; set; } = new List<PharmacistOrderDetail>();
-        public ICollection<Medicine> Medicines { get; set; } = new List<Medicine>();
+        
 
     }
 }
