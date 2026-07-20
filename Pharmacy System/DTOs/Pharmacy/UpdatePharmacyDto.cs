@@ -1,4 +1,4 @@
-﻿namespace Pharmacy_System.DOTs.Pharmacy
+﻿namespace Pharmacy_System.DTOs.Pharmacy
 {
     public class UpdatePharmacyDto
     {
