@@ -1,4 +1,4 @@
-﻿namespace Pharmacy_System.DOTs.Customer
+﻿namespace Pharmacy_System.DTOs.Customer
 {
     public class CustomerDto
     {

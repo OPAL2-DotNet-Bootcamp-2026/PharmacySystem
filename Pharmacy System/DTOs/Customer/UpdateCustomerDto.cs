@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Pharmacy_System.DOTs.Customer
+namespace Pharmacy_System.DTOs.Customer
 {
     public class UpdateCustomerDto
     {
