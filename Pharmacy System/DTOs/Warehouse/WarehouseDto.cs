@@ -2,7 +2,7 @@
 {
     public class WarehouseDto
     {
-        public int WarehouseID { get; set; }
+        public int WarehouseId { get; set; }
         public string Location { get; set; } = string.Empty;
         public int Quantity { get; set; }
         public string ExpiryDate { get; set; }
