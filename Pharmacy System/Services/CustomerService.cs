@@ -51,7 +51,7 @@ namespace Pharmacy_System.Services
         }
 
         // Add Customer
-        public CustomerDto Add(CustomerDto dto)
+        public CustomerDto Add(CreateCustomerDto dto)
         {
             Customer customer = new Customer
             {
@@ -63,8 +63,7 @@ namespace Pharmacy_System.Services
             customerRepo.Add(customer);
 
             return new CustomerDto
-            {
-                CustomerID = dto.CustomerID,
+            {                
                 FullName = dto.FullName,
                 Phone = dto.Phone,
                 DOB = dto.DOB
