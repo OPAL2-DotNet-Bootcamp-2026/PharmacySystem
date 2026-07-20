@@ -1,4 +1,5 @@
-﻿using Pharmacy_System.Modules;
+﻿using Microsoft.EntityFrameworkCore;
+using Pharmacy_System.Modules;
 
 namespace Pharmacy_System.Repos
 {
