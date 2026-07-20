@@ -1,4 +1,4 @@
-﻿namespace Pharmacy_System.DOTs.Warehouse
+﻿namespace Pharmacy_System.DTOs.Warehouse
 {
     public class WarehouseDto
     {

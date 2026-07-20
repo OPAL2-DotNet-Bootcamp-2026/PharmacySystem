@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Pharmacy_System.DOTs.Supplier
+namespace Pharmacy_System.DTOs.Supplier
 {
     public class CreateSupplierDto
     {

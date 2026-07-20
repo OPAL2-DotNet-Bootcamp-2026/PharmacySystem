@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Pharmacy_System.DOTs.Medicine
+namespace Pharmacy_System.DTOs.Medicine
 {
     public class CreateMedicineDto //for adding a new medicine
     {

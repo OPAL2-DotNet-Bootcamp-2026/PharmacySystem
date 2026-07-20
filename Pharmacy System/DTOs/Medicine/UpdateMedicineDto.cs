@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Pharmacy_System.DOTs.Medicine
+namespace Pharmacy_System.DTOs.Medicine
 {
     public class UpdateMedicineDto
     {
