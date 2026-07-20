@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Pharmacy_System.DOTs.Pharmacist
+namespace Pharmacy_System.DTOs.Pharmacist
 {
     public class UpdatePharmacistDto
     {
@@ -15,6 +15,6 @@ namespace Pharmacy_System.DOTs.Pharmacist
         public string Phone { get; set; } = string.Empty;
 
         [Required]
-        public int? PharmacyID { get; set; }
+        public int PharmacyID { get; set; }
     }
 }
