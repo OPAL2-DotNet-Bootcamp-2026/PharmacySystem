@@ -22,7 +22,12 @@ namespace Pharmacy_System.Modules
 
         // Many-to-Many relationship with Transfers
         public ICollection<Transfer> Transfers { get; set; }= new List<Transfer>();
-    
+
+        public ICollection<CustomerOrderDetail> CustomerOrderDetails{ get; set; } = new List<CustomerOrderDetail>();
+        
+
+        public ICollection<PharmacistOrderDetail> PharmacistOrderDetails{ get; set; } = new List<PharmacistOrderDetail>();
+        
 
     }
 }
