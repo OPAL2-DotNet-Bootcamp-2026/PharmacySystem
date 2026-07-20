@@ -34,8 +34,6 @@ namespace Pharmacy_System.Modules
         public string Status { get; set; } = "Pending";
 
 
-        // Transfer details (recommended for tracking quantities)
-        public ICollection<TransferDetail> TransferDetails { get; set; } = new List<TransferDetail>();
 
 
         // Many-to-Many relationship with Medicine
