@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Pharmacy_System.Modules;
+using System.ComponentModel.DataAnnotations;
 
 namespace Pharmacy_System.Modules
 {
@@ -8,7 +9,7 @@ namespace Pharmacy_System.Modules
 
         public PharmacistOrder PharmacistOrder { get; set; } = null!;//relation
 
-        public int MedicineId { get; set; }
+        public int MedicineID { get; set; }//fk
 
         public Medicine Medicine { get; set; } = null!;//relation
 
