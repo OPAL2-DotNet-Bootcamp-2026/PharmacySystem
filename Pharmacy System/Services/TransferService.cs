@@ -1,4 +1,4 @@
-﻿\namespace Pharmacy_System.Services
+﻿namespace Pharmacy_System.Services
 {
     public class TransferService
     {
