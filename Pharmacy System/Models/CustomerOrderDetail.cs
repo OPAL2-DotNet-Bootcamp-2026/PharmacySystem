@@ -9,7 +9,7 @@ namespace Pharmacy_System.Modules
 
         public CustomerOrder CustomerOrder { get; set; } = null!;//relation
 
-        public int MedicineId { get; set; }
+        public int MedicineID { get; set; }
 
         public Medicine Medicine { get; set; } = null!;//relation
 

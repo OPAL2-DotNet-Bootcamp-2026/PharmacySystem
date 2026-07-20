@@ -29,7 +29,7 @@ namespace Pharmacy_System.Modules
 
         // Warehouse relationship
         [ForeignKey(nameof(Warehouse))]
-        public int WarehouseId { get; set; }
+        public int WarehouseID { get; set; }
 
         public Warehouse Warehouse { get; set; }
 

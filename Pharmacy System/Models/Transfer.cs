@@ -13,7 +13,7 @@ namespace Pharmacy_System.Modules
 
         // FROM WAREHOUSE
         [Range(1, int.MaxValue)]
-        public int WarehouseId { get; set; }
+        public int WarehouseID { get; set; }
 
         public Warehouse Warehouse { get; set; } = null!;
 
