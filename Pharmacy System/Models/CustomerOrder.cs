@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Pharmacy_System.Modules;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Modules
@@ -29,6 +30,7 @@ namespace Pharmacy_System.Modules
 
         //RELATION
         public ICollection<CustomerOrderDetail> CustomerOrderDetails{ get; set; } = new List<CustomerOrderDetail>();
-        
+        public ICollection<Medicine> Medicines { get; set; } = new List<Medicine>();
+
     }
 }
