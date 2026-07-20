@@ -1,4 +1,4 @@
-﻿namespace Pharmacy_System.DOTs.Medicine
+﻿namespace Pharmacy_System.DTOs.Medicine
 {
     public class MedicineDto  // // it return data, so it do not need for [Required] or default values.
     {

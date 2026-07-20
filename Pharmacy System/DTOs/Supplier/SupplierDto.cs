@@ -1,4 +1,4 @@
-﻿namespace Pharmacy_System.DOTs.Supplier
+﻿namespace Pharmacy_System.DTOs.Supplier
 {
     public class SupplierDto
     {
