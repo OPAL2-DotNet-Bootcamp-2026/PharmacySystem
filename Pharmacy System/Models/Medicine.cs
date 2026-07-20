@@ -45,7 +45,6 @@ namespace Pharmacy_System.Modules
         public ICollection<Transfer> Transfers { get; set; }= new List<Transfer>();
     
 
-        // Many-to-Many relationship with Transfers
-        public ICollection<Transfer> Transfers { get; set; } = new List<Transfer>();
+
     }
 }
