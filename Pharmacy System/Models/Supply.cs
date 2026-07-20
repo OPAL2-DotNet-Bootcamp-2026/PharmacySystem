@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Pharmacy_System.Modules;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Modeles
@@ -26,15 +27,15 @@ namespace Pharmacy_System.Modeles
         public DateTime ExpiryDate { get; set; }
 
         // Supplier relationship
-        public int SupplierId { get; set; }//FK
+        public int SupplierID { get; set; }//FK
         public Supplier Supplier { get; set; } = null!;
 
         // Medicine relationship
-        public int MedicineId { get; set; }//FK
+        public int MedicineID { get; set; }//FK
         public Medicine Medicine { get; set; } = null!;
 
         // Warehouse relationship
-        public int WarehouseId { get; set; }//FK
+        public int WarehouseID { get; set; }//FK
         public Warehouse Warehouse { get; set; } = null!;
     }
 }
