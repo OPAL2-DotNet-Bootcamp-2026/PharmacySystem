@@ -1,5 +1,5 @@
-using Pharmacy_System.Modeles;
-using Pharmacy_System.Models;
+using Pharmacy_System.Modules;
+using Pharmacy_System.Modules;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -38,8 +38,13 @@ namespace Pharmacy_System.Modules
         public ICollection<Supply> Supplies { get; set; } = new List<Supply>();
 
 
-        // Orders containing this medicine
-        public ICollection<PharmacistOrder> PharmacistOrders { get; set; } = new List<PharmacistOrder>();
+        // Customer order relationship
+        public ICollection<CustomerOrderDetail> CustomerOrderDetails { get; set; }
+            = new List<CustomerOrderDetail>();
+
+        // Pharmacist order relationship
+        public ICollection<PharmacistOrderDetail> PharmacistOrderDetails { get; set; }
+            = new List<PharmacistOrderDetail>();
 
         // Many-to-Many relationship with Transfers
         public ICollection<Transfer> Transfers { get; set; }= new List<Transfer>();
