@@ -4,8 +4,8 @@
     {
         public int WarehouseID { get; set; }
         public string Location { get; set; } = string.Empty;
-        public int Quantity { get; set; }
-        public string ExpiryDate { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
     }
 }
