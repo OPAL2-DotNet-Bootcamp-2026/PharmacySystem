@@ -2,12 +2,11 @@
 
 namespace Pharmacy_System.DTOs.PharmacistOrder
 {
-    // Used to update the current status of a pharmacist order
+    // Used to update the status of  pharmacist order
     public class UpdatePharmacistOrderDto
     {
-        // New order status ==> such as Pending, Approved,Rejected, or Completed
-        // 
-        [Required]
+        [Required(ErrorMessage = "Order status is required")]
+        [MaxLength(30)]
         public string Status { get; set; } = string.Empty;
     }
 }

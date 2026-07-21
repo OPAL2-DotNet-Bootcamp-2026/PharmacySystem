@@ -3,21 +3,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Pharmacy_System.DTOs.PharmacistOrder
 {
-    // Used when a pharmacist creates a new medicine request
-    // for the pharmacy
     public class CreatePharmacistOrderDto
     {
-        // ID of the pharmacist creating the order
-        [Range(1, int.MaxValue)]
-        public int PharmacistId { get; set; }
+        // Pharmacist creating the order
+        [Range(1, int.MaxValue, ErrorMessage = "A valid pharmacist must be selected")]
+         public int PharmacistID { get; set; }
 
-        // ID of the pharmacy that needs the medicines
-        [Range(1, int.MaxValue)]
-        public int PharmacyId { get; set; }
+        [Range(1, int.MaxValue,  ErrorMessage = "A valid pharmacy must be selected")]
+             public int PharmacyID { get; set; }  
+   
 
-        // List of medicines and required quantities
-        [Required]
-        [MinLength(1)]
+        // Medicines and quantities included in the order
+        [Required(ErrorMessage = "Order details are required")]
+        [MinLength(1, ErrorMessage = "The order must contain at least one medicine")]
         public List<CreatePharmacistOrderDetailDto> OrderDetails { get; set; } = new List<CreatePharmacistOrderDetailDto>();
            
     }
