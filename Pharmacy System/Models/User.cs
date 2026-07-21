@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pharmacy_System.Models
 {
     [Index(nameof(Email), IsUnique = true)]
-    public class User
+    public class User : BaseEntity
     {
 
         [Key]
