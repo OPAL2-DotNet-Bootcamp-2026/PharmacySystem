@@ -1,25 +1,36 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using Pharmacy_System.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Modules
 {
-    public class Pharmacist
+    [Index(nameof(UserID), IsUnique = true)]
+    public class Pharmacist : BaseEntity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PharmacistID { get; set; }               // System Generated
+
+        public int UserID { get; set; }                     // Foreign Key
+        [Required, ForeignKey("UserID")]
+        public User user { get; set; }
 
         public int PharmacyID { get; set; }                 // Foreign Key
         [Required, ForeignKey("PharmacyID")]
         public Pharmacy pharmacy { get; set; }
 
-        [Required, MaxLength(150)]
+        [Required, MaxLength(100)]
         public string FullName { get; set; }                // User Input
 
-        [Required, MaxLength(150)]
+        [Required, MaxLength(12)]
+        public string Phone {  get; set; }                  // User Input
+
+
+        [Required, MaxLength(100)]
         public string Email { get; set; }                   // User Input
 
-        [Required, MaxLength(8)]
-        public string Phone {  get; set; }                  // User Input
+        [Required]
+        public bool IsActive { get; set; } = true;          // System Default Value
 
     }
 }
