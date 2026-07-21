@@ -1,8 +1,13 @@
-﻿using System;
-
-public class Class1
+﻿namespace Pharmacy_System.DTOs.Category
 {
-	public Class1()
-	{
-	}
+    // Used to return category information from the API
+    public class CategoryDto
+    {
+        public int CategoryID { get; set; }
+
+        public string CategoryName { get; set; } = string.Empty;
+
+        public string? Description { get; set; }
+
+    }
 }
