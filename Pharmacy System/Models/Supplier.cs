@@ -12,7 +12,7 @@ namespace Pharmacy_System.Modules
         [Required]
         [MaxLength(100)]
         public string FullName { get; set; } // input
-        [MaxLength(12)]
+        [MaxLength(13)]
         [Required]
         public string Phone { get; set; } // input
         [Required]
