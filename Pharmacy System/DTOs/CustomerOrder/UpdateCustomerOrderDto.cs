@@ -2,11 +2,12 @@
 
 namespace Pharmacy_System.DTOs.CustomerOrder
 {
-    // Used to update the current status of a customer order
+    //  update the status of a customer order
     public class UpdateCustomerOrderStatusDto
     {
-        // New order status ==> such as Pending, Completed, or Cancelled
-        [Required]
+        [Required(ErrorMessage = "Order status is required")]
+        [MaxLength(30)]
+            
         public string Status { get; set; } = string.Empty;
     }
 }

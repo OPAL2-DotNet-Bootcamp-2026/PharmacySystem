@@ -1,22 +1,20 @@
-﻿namespace Pharmacy_System.DTOs.CustomerOrderDetail
+﻿
+namespace Pharmacy_System.DTOs.CustomerOrderDetail
 {
-    // Represents the details of one medicine item inside  customer order
-    // The full customer order can contain multiple medicine items
+    // Used to return one medicine item inside a customer order
     public class CustomerOrderDetailDto
     {
-        // ID of the medicine in this order item
-        public int MedicineId { get; set; }
-
-        // Name of the medicine displayed in the response
+        // Medicine information
+        public int MedicineID { get; set; }
         public string MedicineName { get; set; } = string.Empty;
 
-        // Quantity ordered from this medicine
+       
         public int Quantity { get; set; }
 
-        // Price of one medicine unit at the time of the order
+        // Price of one medicine unit at the time of ordering
         public decimal UnitPrice { get; set; }
 
-        // Total price for this medicine item
+        // Calculated ==> UnitPrice × Quantity
         public decimal Subtotal { get; set; }
     }
 }

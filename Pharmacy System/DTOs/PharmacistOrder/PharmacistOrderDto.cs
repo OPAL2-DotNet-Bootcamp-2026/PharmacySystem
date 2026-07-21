@@ -2,30 +2,31 @@
 
 namespace Pharmacy_System.DTOs.PharmacistOrder
 {
-    // Used to return complete pharmacist order information from  API
-    
+    // Used to return complete pharmacist order information
     public class PharmacistOrderDto
     {
-        // Order ID 
+        
         public int PharmacistOrderId { get; set; }
 
-        // ID of the pharmacist who created  order
-        public int PharmacistId { get; set; }
+        // Pharmacist information
+        public int PharmacistID { get; set; }
+        public string FullName { get; set; } = string.Empty;
 
-        // Name of the pharmacist displayed in  response
-        public string PharmacistName { get; set; } = string.Empty;
+        // Pharmacy information
+        public int PharmacyID { get; set; }
+        public string PharmacyName { get; set; } = string.Empty;
 
-        // ID of the pharmacy that requested  medicines
-        public int PharmacyId { get; set; }
-
-        // Date when the order was created
+        // Generated when the order is created
         public DateTime OrderDate { get; set; }
 
-        // Current status of order
+        // Calculated 
+        public decimal TotalCost { get; set; }
+
+        //  order status
         public string Status { get; set; } = string.Empty;
 
-        // List of all medicines and quantities included in  order
-        public List<PharmacistOrderDetailDto> OrderDetails { get; set; }  = new List<PharmacistOrderDetailDto>();
-          
+        // Medicines and quantities included in the order
+        public List<PharmacistOrderDetailDto> OrderDetails { get; set; }= new List<PharmacistOrderDetailDto>();
+            
     }
 }

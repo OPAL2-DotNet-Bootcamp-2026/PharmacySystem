@@ -2,18 +2,15 @@
 
 namespace Pharmacy_System.DTOs.CustomerOrderDetail
 {
-    // Represents one medicine entry inside  customer order.
-    // The full customer order contains a list of these entries,
-    // so it can include multiple different medicines
-
+    // Represents one medicine inside a customer order
     public class CreateCustomerOrderDetailDto
     {
-        // ID of the medicine 
-        [Range(1, int.MaxValue)]
-        public int MedicineId { get; set; }
+        // Inpu
+        [Range(1, int.MaxValue, ErrorMessage = "A valid medicine must be selected")]
+        public int MedicineID { get; set; }
 
-        // Quantity requested from this medicine
-        [Range(1, int.MaxValue)]
+        // Input
+        [Range(1, int.MaxValue,  ErrorMessage = "Quantity must be greater than 0")]
         public int Quantity { get; set; }
     }
 }
