@@ -19,8 +19,10 @@ namespace Pharmacy_System.Modules
         [Range(typeof(decimal), "0.01", "10000.00",
             ErrorMessage = "Unit price must be between 0.01 and 10,000")]
         public decimal UnitPrice { get; set; }
-
+        [Required]
         public bool isAvailable { get; set; } = true;
+        [Required]
+        public bool IsActive { get; set; } = true;
 
         [Required]
         [MaxLength(100)]
