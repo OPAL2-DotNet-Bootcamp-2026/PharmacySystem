@@ -22,7 +22,7 @@ namespace Pharmacy_System.Repos
                 .ToList();
         }
 
-        // Returns one supply using its ID
+        // Returns one supply using  ID
         public Supply? GetSupplyById(int id)
         {
             return context.Supplies
@@ -32,20 +32,20 @@ namespace Pharmacy_System.Repos
                 .FirstOrDefault(s => s.SupplyId == id);
         }
 
-        // Adds a new supply record
+        // Adds  new supply 
         public void Add(Supply supply)
         {
             context.Supplies.Add(supply);
             context.SaveChanges();
         }
 
-        // Saves changes made to a supply record
+        // Save changes made to supply 
         public void SupplyUpdate()
         {
             context.SaveChanges();
         }
 
-        // Deletes a supply record
+        // Delete supply 
         public void SupplyDelete(Supply supply)
         {
             context.Supplies.Remove(supply);
