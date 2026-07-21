@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <Folder Include="DTOs\WarehouseStock\" />
-    <Folder Include="DTOs\User\" />
   </ItemGroup>
 
 </Project>
