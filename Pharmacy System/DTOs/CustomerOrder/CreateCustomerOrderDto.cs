@@ -3,21 +3,23 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Pharmacy_System.DTOs.CustomerOrder
 {
-    // Used to receive information when creating  new customer order
-    // The order can contain multiple medicine items
+    // Used when creating a new customer order
     public class CreateCustomerOrderDto
     {
-        // ID of the customer placing the order
-        [Range(1, int.MaxValue)]
-        public int CustomerId { get; set; }
+        // Customer placing the order
+        [Range(1, int.MaxValue, ErrorMessage = "A valid customer must be selected")]
+           
+        public int CustomerID { get; set; }
 
-        // ID of the pharmacy handling the order
-        [Range(1, int.MaxValue)]
-        public int PharmacyId { get; set; }
+        // Pharmacy fulfilling the order
+        [Range(1, int.MaxValue,ErrorMessage = "A valid pharmacy must be selected")]
+            
+        public int PharmacyID { get; set; }
 
-        // List of medicine items included in the customer order
-        [Required]
-        [MinLength(1)]
+        // Medicines and quantities included in the order
+        [Required(ErrorMessage = "Order details are required")]
+        [MinLength(1,ErrorMessage = "The order must contain at least one medicine")]
+            
         public List<CreateCustomerOrderDetailDto> OrderDetails { get; set; }= new List<CreateCustomerOrderDetailDto>();
             
     }
