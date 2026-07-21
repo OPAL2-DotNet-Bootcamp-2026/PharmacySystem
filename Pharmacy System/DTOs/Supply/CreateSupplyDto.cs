@@ -2,36 +2,29 @@
 
 namespace Pharmacy_System.DTOs.Supply
 {
-    // Used when the user wants to create a new supply record
     public class CreateSupplyDto
     {
-        // entered Batch number 
-        [Required]
+        [Required(ErrorMessage = "Batch number is required")]
         [MaxLength(50)]
         public string BatchNumber { get; set; } = string.Empty;
 
-        // Quantity of medicine supplied
-        [Range(1, int.MaxValue)]
+        [Range(1, int.MaxValue, ErrorMessage = "Quantity must be greater than 0")]
         public int Quantity { get; set; }
 
-        // Total cost of the whole supply
-        [Range(typeof(decimal), "0.01", "99999999")]
+        [Range(typeof(decimal), "0.01", "99999999.99",ErrorMessage = "Total cost must be greater than 0")]
         public decimal TotalCost { get; set; }
 
-        // Expiry date of the supplied medicine
-        [Required]
-        public DateTime ExpiryDate { get; set; }
+        [Required(ErrorMessage = "Expiry date is required")]
+        public DateTime? ExpiryDate { get; set; }
 
-        // Foreign key used to select the supplier
-        [Range(1, int.MaxValue)]
-        public int SupplierId { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "A valid supplier must be selected")]
+        public int SupplierID { get; set; }   
+        
 
-        // Foreign key used to select the medicine
-        [Range(1, int.MaxValue)]
-        public int MedicineId { get; set; }
+        [Range(1, int.MaxValue,ErrorMessage = "A valid medicine must be selected")]
+        public int MedicineID { get; set; }
 
-        // Foreign key used to select the warehouse
-        [Range(1, int.MaxValue)]
-        public int WarehouseId { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "A valid warehouse must be selected")]
+        public int WarehouseID { get; set; }
     }
 }

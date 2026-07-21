@@ -2,36 +2,32 @@
 
 namespace Pharmacy_System.DTOs.Supply
 {
-    // Used when wants to update an existing supply record
     public class UpdateSupplyDto
     {
-        // Updated batch number
-        [Required]
+        [Required(ErrorMessage = "Batch number is required")]
         [MaxLength(50)]
         public string BatchNumber { get; set; } = string.Empty;
 
-        // Updated medicine quantity
-        [Range(1, int.MaxValue)]
-        public int Quantity { get; set; }
+        [Range(1, int.MaxValue,ErrorMessage = "Quantity must be greater than 0")]
+         public int Quantity { get; set; }
 
-        // Updated total cost
-        [Range(typeof(decimal), "0.01", "99999999")]
-        public decimal TotalCost { get; set; }
+        [Range(typeof(decimal), "0.01", "99999999.99",ErrorMessage = "Total cost must be greater than 0")]
+        public decimal TotalCost { get; set; }    
+        
 
-        // Updated expiry date
-        [Required]
-        public DateTime ExpiryDate { get; set; }
+        [Required(ErrorMessage = "Expiry date is required")]
+        public DateTime? ExpiryDate { get; set; }
 
-        // Updated supplier ID
-        [Range(1, int.MaxValue)]
-        public int SupplierId { get; set; }
+        [Range(1, int.MaxValue,ErrorMessage = "A valid supplier must be selected")]
+        public int SupplierID { get; set; }    
+        
 
-        // Updated medicine ID
-        [Range(1, int.MaxValue)]
-        public int MedicineId { get; set; }
+        [Range(1, int.MaxValue,ErrorMessage = "A valid medicine must be selected")]
+         public int MedicineID { get; set; }   
+        
 
-        // Updated warehouse ID
-        [Range(1, int.MaxValue)]
-        public int WarehouseId { get; set; }
+        [Range(1, int.MaxValue,ErrorMessage = "A valid warehouse must be selected")]
+        public int WarehouseID { get; set; }    
+        
     }
 }
