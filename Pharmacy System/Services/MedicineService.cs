@@ -25,7 +25,7 @@ namespace Pharmacy_System.Services
             {
                 MedicineID = m.MedicineID,
                 MedicineName = m.MedicineName,
-                Category = m.Category,
+               
                 UnitPrice = m.UnitPrice,
                 IsAvailable = m.isAvailable
             }).ToList();
