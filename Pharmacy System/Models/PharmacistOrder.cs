@@ -13,13 +13,13 @@ namespace Pharmacy_System.Modules
      
         [ForeignKey(nameof(Pharmacist))]
         [Range(1, int.MaxValue)]
-        public int PharmacistId { get; set; }
+        public int PharmacistID { get; set; }
         public Pharmacist Pharmacist { get; set; } = null!;
 
 
         [ForeignKey(nameof(Pharmacy))]
         [Range(1, int.MaxValue)]
-        public int PharmacyId { get; set; }
+        public int PharmacyID { get; set; }
         public Pharmacy Pharmacy { get; set; } = null!;
 
 
