@@ -1,9 +1,11 @@
-﻿using Pharmacy_System.Modules;
+﻿using Microsoft.EntityFrameworkCore;
+using Pharmacy_System.Modules;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Modules
 {
+    [Index(nameof(Email), nameof(Phone), IsUnique = true)]
     public class Supplier : BaseEntity
     {
         [Key]
