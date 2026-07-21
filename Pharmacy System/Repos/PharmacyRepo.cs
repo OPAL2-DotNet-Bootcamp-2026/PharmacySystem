@@ -1,4 +1,6 @@
-﻿using Pharmacy_System.Modules;
+﻿using Microsoft.EntityFrameworkCore;
+using Pharmacy_System.Models;
+using Pharmacy_System.Modules;
 
 namespace Pharmacy_System.Repos
 {
@@ -11,31 +13,41 @@ namespace Pharmacy_System.Repos
             context = _context;
         }
 
-        public List<Pharmacy> GetAllPharmacy()
+        public async Task<List<Pharmacy>> GetAllPharmacy()
         {
-            return context.pharmacies.ToList();
+            return await context.pharmacies.ToListAsync();
         }
 
-        public Pharmacy GetPharmacyById(int id)
+        public async Task<Pharmacy?> GetPharmacyById(int id)
         {
-            return context.pharmacies.FirstOrDefault(p => p.PharmacyID == id);
+            return await context.pharmacies.FirstOrDefaultAsync(p => p.PharmacyID == id);
         }
 
-        public void Add(Pharmacy pharmacy)
+        public async Task<List<Pharmacy>> GetPharmacyByName(string name)
         {
-            context.pharmacies.Add(pharmacy);
-            context.SaveChanges();
+            return await context.pharmacies.Where(n => n.PharmacyName == name) .ToListAsync();
         }
 
-        public void Update()
+        public async Task<PharmacyStockRepo?> GetPharmacyStockById(int id)
         {
-            context.SaveChanges();
+            return await context.pharmacyStocks.FirstOrDefaultAsync(p => p.PharmacyID == id);
         }
 
-        public void Delete(Pharmacy pharmacy)
+        public async Task Add(Pharmacy pharmacy)
         {
-            context.pharmacies.Remove(pharmacy);
-            context.SaveChanges();
+            await context.pharmacies.AddAsync(pharmacy);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task Update()
+        {
+            await context.SaveChangesAsync();
+        }
+
+        public async Task Delete(Pharmacy pharmacy)
+        {
+            pharmacy.IsActive = false;
+            await context.SaveChangesAsync();
         }
     }
 }

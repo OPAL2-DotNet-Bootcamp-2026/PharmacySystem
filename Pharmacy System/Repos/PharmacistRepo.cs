@@ -1,4 +1,5 @@
-﻿using Pharmacy_System.Modules;
+﻿using Microsoft.EntityFrameworkCore;
+using Pharmacy_System.Modules;
 
 namespace Pharmacy_System.Repos
 {
@@ -11,41 +12,46 @@ namespace Pharmacy_System.Repos
             context = _context;
         }
 
-        public List<Pharmacist> GetAllPharmacist()
+        public async Task<List<Pharmacist>> GetAllPharmacist()
         {
-            return context.pharmacists.ToList();
+            return await context.pharmacists.ToListAsync();
         }
 
-        public Pharmacist GetPharmacistById(int id)
+        public async Task<Pharmacist?> GetPharmacistById(int id)
         {
-            return context.pharmacists.FirstOrDefault(p => p.PharmacistID == id);
+            return await context.pharmacists.FirstOrDefaultAsync(p => p.PharmacistID == id);
         }
 
-        public Pharmacist GetPharmacistByEmail(string email)
+        public async Task<Pharmacist?> GetPharmacistByEmail(string email)
         {
-            return context.pharmacists.FirstOrDefault(e => e.Email == email);
+            return await context.pharmacists.FirstOrDefaultAsync(e => e.Email == email);
         }
 
-        public bool EmailExists(string email)
+        public async Task<Pharmacy?> GetPharmacyById(int id)
         {
-            return context.pharmacists.Any(e => e.Email == email);
+            return await context.pharmacies.FirstOrDefaultAsync(p => p.PharmacyID == id);
         }
 
-        public void Add(Pharmacist pharmacists)
+        public async Task<List<Pharmacist>> GetPharmacistByName(string name)
         {
-            context.pharmacists.Add(pharmacists);
-            context.SaveChanges();
+            return await context.pharmacists.Where(n => n.FullName == name).ToListAsync();
         }
 
-        public void PharmacistUpdate()
+        public async Task Add(Pharmacist pharmacists)
         {
-            context.SaveChanges();
+            await context.pharmacists.AddAsync(pharmacists);
+            await context.SaveChangesAsync();
         }
 
-        public void PharmacistDelete(Pharmacist pharmacists)
+        public async Task PharmacistUpdate()
         {
-            context.pharmacists.Remove(pharmacists);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+        }
+
+        public async Task PharmacistDelete(Pharmacist pharmacists)
+        {
+            pharmacists.IsActive = false;
+            await context.SaveChangesAsync();
         }
     }
 }
