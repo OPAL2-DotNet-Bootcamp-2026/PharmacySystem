@@ -26,16 +26,16 @@ namespace Pharmacy_System.Modules
         public bool IsActive { get; set; } = true;
 
 
+        // Category relationship
+        [ForeignKey(nameof(Category))]
+        public int CategoryID { get; set; }
+        public Category Category { get; set; }
+
         // Warehouse relationship
         [ForeignKey(nameof(Warehouse))]
         public int WarehouseID { get; set; }
-
         public Warehouse Warehouse { get; set; }
 
-        // Warehouse relationship
-        [ForeignKey(nameof(Warehouse))]
-        public int CategoryID { get; set; }
-        //public Category Category { get; set; }
 
 
         // One-to-Many relationship with Supplies
@@ -50,10 +50,19 @@ namespace Pharmacy_System.Modules
         public ICollection<PharmacistOrderDetail> PharmacistOrderDetails { get; set; }
             = new List<PharmacistOrderDetail>();
 
+        public ICollection<TransferDetails> TransferDetails { get; set; }
+      = new List<TransferDetails>();
+
         // Many-to-Many relationship with Transfers
         public ICollection<Transfer> Transfers { get; set; }= new List<Transfer>();
-    
 
+        // One to Many: Medicine to WarehouseStocks
+        public ICollection<WarehouseStock> WarehouseStocks { get; set; }
+            = new List<WarehouseStock>();
+
+        // One to Many: Medicine to PharmacyStocks
+        public ICollection<PharmacyStock> PharmacyStocks { get; set; }
+            = new List<PharmacyStock>();
 
     }
 }
