@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pharmacy_System.Modules;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,5 +25,8 @@ namespace Pharmacy_System.Models
         [Required]
         public bool IsActive { get; set; } = true; // default value
 
+
+        // One User may have one Pharmacist profile , Because Admin is also a User, but Admin does not have a Pharmacist record.
+        public Pharmacist? Pharmacist { get; set; }
     }
 }
