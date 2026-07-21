@@ -19,12 +19,10 @@ namespace Pharmacy_System.Modules
         [Range(typeof(decimal), "0.01", "10000.00",
             ErrorMessage = "Unit price must be between 0.01 and 10,000")]
         public decimal UnitPrice { get; set; }
-
-        public bool isAvailable { get; set; } = true;
-
         [Required]
-        [MaxLength(100)]
-        public string Category { get; set; }
+        public bool isAvailable { get; set; } = true;
+        [Required]
+        public bool IsActive { get; set; } = true;
 
 
         // Warehouse relationship
@@ -32,6 +30,11 @@ namespace Pharmacy_System.Modules
         public int WarehouseID { get; set; }
 
         public Warehouse Warehouse { get; set; }
+
+        // Warehouse relationship
+        [ForeignKey(nameof(Warehouse))]
+        public int CategoryID { get; set; }
+        //public Category Category { get; set; }
 
 
         // One-to-Many relationship with Supplies

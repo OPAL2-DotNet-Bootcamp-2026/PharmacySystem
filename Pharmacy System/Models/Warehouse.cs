@@ -10,14 +10,10 @@ namespace Pharmacy_System.Modules
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int WarehouseID {  get; set; }  // system generation
         [Required]
-        [MaxLength(100)]
-
+        [MaxLength(150)]
         public string Location { get; set; } // input
-        [Range(0, int.MaxValue, ErrorMessage = "The value cannot be negative")]
-        public int Quantity { get; set; } // input
-        [Required]
-        public string ExpiryDate { get; set; } //input
-
+       
+     
         public ICollection<Supply> Supplies { get; set; } = new List<Supply>();
         public ICollection<Medicine> Medicines { get; set; } = new List<Medicine>();
     }
