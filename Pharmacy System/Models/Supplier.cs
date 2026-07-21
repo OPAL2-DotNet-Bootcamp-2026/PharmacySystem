@@ -20,7 +20,7 @@ namespace Pharmacy_System.Modules
         [RegularExpression(@".+@.+\.com$", ErrorMessage = "Email must contain @ and end with .com")]
         public string Email { get; set; } //input
         [Required]
-        [MaxLength(100)]
+        [MaxLength(150)]
         public string Location { get; set; } //input
         [Required]
         public bool IsActive { get; set; } = true; //Default value
