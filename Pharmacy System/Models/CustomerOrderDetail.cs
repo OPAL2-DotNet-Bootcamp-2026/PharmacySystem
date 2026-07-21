@@ -8,24 +8,20 @@ namespace Pharmacy_System.Modules
     // CustomerOrderId + MedicineID
     [PrimaryKey(nameof(CustomerOrderId), nameof(MedicineID))]
 
-    public class CustomerOrderDetail
+    public class CustomerOrderDetail : BaseEntity
     {
-        // Part 1 of the composite primary key
-        // Foreign key for CustomerOrder
+        // composite primary key
         [ForeignKey(nameof(CustomerOrder))]
         public int CustomerOrderId { get; set; }
-
         public CustomerOrder CustomerOrder { get; set; } = null!;
 
-        // Part 2 of the composite primary key
-        // Foreign key for Medicine
+        // composite primary key
         [ForeignKey(nameof(Medicine))]
         [Range(1, int.MaxValue)]
         public int MedicineID { get; set; }
-
         public Medicine Medicine { get; set; } = null!;
 
-        // Input: quantity selected in the order
+        // Input: quantity selected in  order
         [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
 
@@ -33,7 +29,7 @@ namespace Pharmacy_System.Modules
         [Column(TypeName = "decimal(18,2)")]
         public decimal UnitPrice { get; set; }
 
-        // System calculated: Quantity × UnitPrice
+        //  calculated ==> quantity × unitPrice
         [Column(TypeName = "decimal(18,2)")]
         public decimal Subtotal { get; set; }
     }

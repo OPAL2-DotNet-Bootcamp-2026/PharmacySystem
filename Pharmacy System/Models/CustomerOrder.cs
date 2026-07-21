@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Modules
 {
-    public class CustomerOrder
+    public class CustomerOrder : BaseEntity
     {
         // system Generated 
         [Key]

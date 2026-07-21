@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Modules
 {
-    public class Supply
+    public class Supply : BaseEntity
     {
         // Generated automatically by the database
         [Key]

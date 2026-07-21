@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Modules
 {
-    public class Transfer
+    public class Transfer : BaseEntity
     {
         // system Generated
         [Key]
