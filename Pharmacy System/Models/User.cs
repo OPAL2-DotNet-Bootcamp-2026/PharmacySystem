@@ -24,10 +24,5 @@ namespace Pharmacy_System.Models
         [Required]
         public bool IsActive { get; set; } = true; // default value
 
-
-
-
-
-
     }
 }
