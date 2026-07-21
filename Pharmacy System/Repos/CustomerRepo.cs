@@ -1,4 +1,5 @@
-﻿using Pharmacy_System.Modules;
+﻿using Microsoft.EntityFrameworkCore;
+using Pharmacy_System.Modules;
 
 namespace Pharmacy_System.Repos
 {
@@ -11,31 +12,46 @@ namespace Pharmacy_System.Repos
             context = _context;
         }
 
-        public List<Customer> GetAllCustomer()
+        public async Task<List<Customer>> GetAllCustomer()
         {
-            return context.customers.ToList();
+            return await context.customers.ToListAsync();
         }
 
-        public Customer GetCustomerById(int id)
+        public async Task<Customer?> GetCustomerById(int id)
         {
-            return context.customers.FirstOrDefault(p => p.CustomerID == id);
+            return await context.customers.FirstOrDefaultAsync(p => p.CustomerID == id);
         }
 
-        public void Add(Customer customers)
+        public async Task<List<Customer>> GetCustomerByName(string name)
         {
-            context.customers.Add(customers);
-            context.SaveChanges();
+            return await context.customers.Where(c => c.FullName.Contains(name)).ToListAsync();
         }
 
-        public void CustomerUpdate()
+        public async Task<Customer?> GetCustomerByPhone(string phone)
         {
-            context.SaveChanges();
+            return await context.customers.FirstOrDefaultAsync(p => p.Phone == phone);
         }
 
-        public void CustomerDelete(Customer customers)
+        public async Task<List<CustomerOrder>> GetCustomerOrdersById(int id)
         {
-            context.customers.Remove(customers);
-            context.SaveChanges();
+            return await context.customerOrders.Where(o => o.CustomerId == id).ToListAsync();
+        }
+
+        public async Task Add(Customer customers)
+        {
+            await context.customers.AddAsync(customers);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task CustomerUpdate()
+        {
+            await context.SaveChangesAsync();
+        }
+
+        public async Task CustomerDelete(Customer customers)
+        {
+            customers.IsActive = false;
+            await context.SaveChangesAsync();
         }
     }
 }
