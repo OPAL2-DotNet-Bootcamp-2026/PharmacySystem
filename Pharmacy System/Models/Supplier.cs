@@ -22,7 +22,8 @@ namespace Pharmacy_System.Modules
         [Required]
         [MaxLength(100)]
         public string Location { get; set; } //input
-
+        [Required]
+        public bool IsActive { get; set; } = true; //Default value
         public ICollection<Supply> Supplies { get; set; } = new List<Supply>();
 
     }
