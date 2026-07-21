@@ -13,7 +13,7 @@ namespace Pharmacy_System.Modules
         [MaxLength(150)]
         public string Location { get; set; } // input
        
-
+     
         public ICollection<Supply> Supplies { get; set; } = new List<Supply>();
         public ICollection<Medicine> Medicines { get; set; } = new List<Medicine>();
     }

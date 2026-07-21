@@ -24,16 +24,17 @@ namespace Pharmacy_System.Modules
         [Required]
         public bool IsActive { get; set; } = true;
 
-        [Required]
-        [MaxLength(100)]
-        public string Category { get; set; }
-
 
         // Warehouse relationship
         [ForeignKey(nameof(Warehouse))]
         public int WarehouseID { get; set; }
 
         public Warehouse Warehouse { get; set; }
+
+        // Warehouse relationship
+        [ForeignKey(nameof(Warehouse))]
+        public int CategoryID { get; set; }
+        //public Category Category { get; set; }
 
 
         // One-to-Many relationship with Supplies
