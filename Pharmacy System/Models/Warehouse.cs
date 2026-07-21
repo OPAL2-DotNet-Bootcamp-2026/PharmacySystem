@@ -1,4 +1,5 @@
-﻿using Pharmacy_System.Modules;
+﻿using Pharmacy_System.Models;
+using Pharmacy_System.Modules;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
