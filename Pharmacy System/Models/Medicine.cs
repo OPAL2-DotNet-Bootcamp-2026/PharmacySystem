@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Modules
 {
-    public class Medicine
+    public class Medicine 
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
