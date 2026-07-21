@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pharmacy_System.Models
 {
     [Index(nameof(WarehouseID), nameof(MedicineID), IsUnique = true)] //for unique
-    public class WarehouseStock
+    public class WarehouseStock : BaseEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

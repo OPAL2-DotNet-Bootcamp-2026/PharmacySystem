@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pharmacy_System.Models
 {
     [Index(nameof(Email), IsUnique = true)]
-    public class User
+    public class User : BaseEntity
     {
 
         [Key]
@@ -16,8 +16,8 @@ namespace Pharmacy_System.Models
         [RegularExpression(@".+@.+\.com$", ErrorMessage = "Email must contain @ and end with .com")]
         public string Email { get; set; } // user input
         [Required]
-        [MaxLength(100)]
-        public string PasswordHash { get; set; } // user input
+        [MaxLength(255)]
+        public string PasswordHash { get; set; } //user input
         [Required]
         [MaxLength(30)]
         public string Role { get; set; } //   ((Admin / Manager / Pharmacist))

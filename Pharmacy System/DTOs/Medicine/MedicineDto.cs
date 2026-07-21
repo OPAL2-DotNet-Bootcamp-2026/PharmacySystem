@@ -7,12 +7,18 @@
 
         public string MedicineName { get; set; }
 
-        public string Category { get; set; }
+        public int CategoryID { get; set; }
+
+        public string CategoryName { get; set; }
 
         public decimal UnitPrice { get; set; }
 
         public bool IsAvailable { get; set; }
 
+        public bool IsActive { get; set; }
 
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime? UpdatedAt { get; set; }
     }
 }

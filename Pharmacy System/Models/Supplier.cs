@@ -1,10 +1,12 @@
-﻿using Pharmacy_System.Modules;
+﻿using Microsoft.EntityFrameworkCore;
+using Pharmacy_System.Modules;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Modules
 {
-    public class Supplier
+    [Index(nameof(Email), nameof(Phone), IsUnique = true)]
+    public class Supplier : BaseEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -12,7 +14,7 @@ namespace Pharmacy_System.Modules
         [Required]
         [MaxLength(100)]
         public string FullName { get; set; } // input
-        [MaxLength(12)]
+        [MaxLength(13)]
         [Required]
         public string Phone { get; set; } // input
         [Required]
