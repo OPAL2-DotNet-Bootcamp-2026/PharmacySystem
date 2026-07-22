@@ -37,7 +37,7 @@ namespace Pharmacy_System.Modules
        
         public int CategoryID { get; set; }
 
-        // Navigation property loaded by Entity Framework
+        // Navigation property 
         public Category Category { get; set; } = null!;
 
         // One medicine can appear in many supply records
