@@ -13,9 +13,9 @@ namespace Pharmacy_System.Repos
         }
 
         // Returns all supply records with related data
-        public List<Supply> GetAllSupply()
+        public async Task<List<Supply>> GetAllSupply()
         {
-            return context.Supplies
+            return await context.Supplies
                 .Include(s => s.Supplier)
                 .Include(s => s.Medicine)
                 .Include(s => s.Warehouse)
@@ -23,9 +23,9 @@ namespace Pharmacy_System.Repos
         }
 
         // Returns one supply using  ID
-        public Supply? GetSupplyById(int id)
+        public async Task<Supply?> GetSupplyById(int id)
         {
-            return context.Supplies
+            return await context.Supplies
                 .Include(s => s.Supplier)
                 .Include(s => s.Medicine)
                 .Include(s => s.Warehouse)
@@ -33,23 +33,23 @@ namespace Pharmacy_System.Repos
         }
 
         // Adds  new supply 
-        public void Add(Supply supply)
+        public async Task Add(Supply supply)
         {
-            context.Supplies.Add(supply);
-            context.SaveChanges();
+            await context.Supplies.Add(supply);
+            await context.SaveChanges();
         }
 
         // Save changes made to supply 
-        public void SupplyUpdate()
+        public async Task SupplyUpdate()
         {
-            context.SaveChanges();
+            await context.SaveChanges();
         }
 
         // Delete supply 
-        public void SupplyDelete(Supply supply)
+        public async Task SupplyDelete(Supply supply)
         {
             context.Supplies.Remove(supply);
-            context.SaveChanges();
+           await context.SaveChanges();
         }
     }
 }
