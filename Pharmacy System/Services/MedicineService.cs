@@ -7,7 +7,7 @@ namespace Pharmacy_System.Services
     public class MedicineService
     {
         private MedicineRepo medicineRepo;
-        private WarehouseRepo warehouseRepo;
+        private readonly CategoryRepo categoryRepo;
 
 
         public MedicineService(MedicineRepo _medicineRepo, WarehouseRepo _warehouseRepo)  // Receive the repositories
