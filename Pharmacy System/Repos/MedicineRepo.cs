@@ -36,7 +36,7 @@ namespace Pharmacy_System.Repos
 
         public void MedicineDelete(Medicine medicine)
         {
-            context.medicines.Remove(medicine);
+            medicine.IsActive = false;
             context.SaveChanges();
         }
 

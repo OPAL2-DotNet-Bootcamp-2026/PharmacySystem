@@ -45,7 +45,7 @@ namespace Pharmacy_System.Services
             {
                 MedicineID = medicine.MedicineID,
                 MedicineName = medicine.MedicineName,
-                Category = medicine.Category,
+               
                 UnitPrice = medicine.UnitPrice,
                 IsAvailable = medicine.isAvailable
             };
