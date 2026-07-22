@@ -1,6 +1,4 @@
 using Pharmacy_System.Models;
-using Pharmacy_System.Modules;
-using Pharmacy_System.Modules;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,61 +6,62 @@ namespace Pharmacy_System.Modules
 {
     public class Medicine : BaseEntity
     {
+        // Generated automatically by the database
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MedicineID { get; set; }
 
+        // Input
         [Required(ErrorMessage = "Medicine name is required")]
-        [MaxLength(100)]
-        public string MedicineName { get; set; }
+        [MaxLength(100,ErrorMessage = "Medicine name cannot exceed 100 characters")]
+        public string MedicineName { get; set; } = string.Empty;
 
-        [Column(TypeName = "decimal(10,2)")]
-        [Range(typeof(decimal), "0.01", "10000.00",
-            ErrorMessage = "Unit price must be between 0.01 and 10,000")]
+        // Input
+        [Column(TypeName = "decimal(18,2)")]
+        [Range(  typeof(decimal), "0.01", "99999999.99",ErrorMessage = "Unit price must be greater than 0")]
+       
+      
         public decimal UnitPrice { get; set; }
-        [Required]
+
+        //  default value
+        // Can change depending on medicine availability
         public bool isAvailable { get; set; } = true;
-        [Required]
+
+        //  default value 
         public bool IsActive { get; set; } = true;
 
-
-        // Category relationship
+       
+        // One category can contain many medicines
         [ForeignKey(nameof(Category))]
+        [Range(1, int.MaxValue,ErrorMessage = "A valid category must be selected")]
+       
         public int CategoryID { get; set; }
-        public Category Category { get; set; }
 
-        // Warehouse relationship
-        [ForeignKey(nameof(Warehouse))]
-        public int WarehouseID { get; set; }
-        public Warehouse Warehouse { get; set; }
+        // Navigation property loaded by Entity Framework
+        public Category Category { get; set; } = null!;
 
+        // One medicine can appear in many supply records
+        public ICollection<Supply> Supplies { get; set; }= new List<Supply>();
+            
 
+        // One medicine can appear in many customer order details
+        public ICollection<CustomerOrderDetail> CustomerOrderDetails { get; set; } = new List<CustomerOrderDetail>();
+           
 
-        // One-to-Many relationship with Supplies
-        public ICollection<Supply> Supplies { get; set; } = new List<Supply>();
+        // One medicine can appear in many pharmacist order details
+        public ICollection<PharmacistOrderDetail> PharmacistOrderDetails { get; set; }= new List<PharmacistOrderDetail>();
+            
 
+        // One medicine can appear in many transfer details
+        public ICollection<TransferDetail> TransferDetails { get; set; }= new List<TransferDetail>();
+            
 
-        // Customer order relationship
-        public ICollection<CustomerOrderDetail> CustomerOrderDetails { get; set; }
-            = new List<CustomerOrderDetail>();
+        // One medicine can have stock records in many warehouses
+        public ICollection<WarehouseStock> WarehouseStocks { get; set; }  = new List<WarehouseStock>();
+          
 
-        // Pharmacist order relationship
-        public ICollection<PharmacistOrderDetail> PharmacistOrderDetails { get; set; }
-            = new List<PharmacistOrderDetail>();
-
-        public ICollection<TransferDetails> TransferDetails { get; set; }
-      = new List<TransferDetails>();
-
-        // Many-to-Many relationship with Transfers
-        public ICollection<Transfer> Transfers { get; set; }= new List<Transfer>();
-
-        // One to Many: Medicine to WarehouseStocks
-        public ICollection<WarehouseStock> WarehouseStocks { get; set; }
-            = new List<WarehouseStock>();
-
-        // One to Many: Medicine to PharmacyStocks
-        public ICollection<PharmacyStock> PharmacyStocks { get; set; }
-            = new List<PharmacyStock>();
-
+        // One medicine can have stock records in many pharmacies
+        public ICollection<PharmacyStock> PharmacyStocks { get; set; }= new List<PharmacyStock>();
+            
     }
 }

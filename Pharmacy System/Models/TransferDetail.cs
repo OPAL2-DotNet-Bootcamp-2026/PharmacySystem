@@ -1,12 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
 using Pharmacy_System.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+
 
 namespace Pharmacy_System.Modules
-{
+{ 
+ 
+    [PrimaryKey(nameof(Transfer), nameof(Medicine))]
     public class TransferDetail : BaseEntity
     {
-        [Index(nameof(TransferID), nameof(MedicineID), IsUnique = true)]
+       
         //system generated 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

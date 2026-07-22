@@ -7,7 +7,7 @@ namespace Pharmacy_System.Modules
 {
     // Composite primary key:
     // CustomerOrderId + MedicineID
-    [PrimaryKey(nameof(CustomerOrderId), nameof(MedicineID))]
+    [PrimaryKey(nameof(CustomerOrder), nameof(Medicine))]
 
     public class CustomerOrderDetail : BaseEntity
     {
