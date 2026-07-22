@@ -11,9 +11,9 @@ namespace Pharmacy_System.DTOs.Supply
         [Range(1, int.MaxValue,ErrorMessage = "Quantity must be greater than 0")]
          public int Quantity { get; set; }
 
-        [Range(typeof(decimal), "0.01", "99999999.99",ErrorMessage = "Total cost must be greater than 0")]
-        public decimal TotalCost { get; set; }    
-        
+        [Range(typeof(decimal), "0.01", "999999.99",ErrorMessage = "Unit cost must be greater than 0")]
+        public decimal UnitCost { get; set; }
+
 
         [Required(ErrorMessage = "Expiry date is required")]
         public DateTime? ExpiryDate { get; set; }
