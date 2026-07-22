@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pharmacy_System.Models;
 using Pharmacy_System.Modules;
 namespace Pharmacy_System.Repos
 {
@@ -11,26 +12,48 @@ namespace Pharmacy_System.Repos
             context = _context;
         }
 
-        public Warehouse GetWarehouse()  // Return the only our warehouse with its medicines
+        public async Task<Warehouse> GetWarehouse()  // Return the only our warehouse with its medicines
         {
-            return context.warehouse.Include(w => w.Medicines).FirstOrDefault();
-        }
-        
-        public bool WarehouseExists() // here to check that we have just one warehouse and to prevents adding a second warehouse.
-        {
-            return context.warehouse.Any();
+            return await context.warehouses.FirstOrDefaultAsync();
         }
 
-        public void Add(Warehouse warehouse) 
+
+        public async Task<Warehouse> GetWarehouseById(int id)
         {
-            context.warehouse.Add(warehouse);
-            context.SaveChanges();
+            return await context.warehouses.FirstOrDefaultAsync(w => w.WarehouseID == id);
+        }
+
+
+        public async Task Add(Warehouse warehouse) 
+        {
+            await context.warehouses.AddAsync(warehouse);
+            await context.SaveChangesAsync();
         }
 
   
-        public void WarehouseUpdate()  // save warehouse changes
+        public async Task WarehouseUpdate()  // save warehouse changes
         {
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+        }
+        // Get medicines currently held in the warehouse
+        public async Task<List<WarehouseStock>> GetStock(int warehouseId)
+        {
+            return await context.warehouseStocks.Where(ws =>ws.WarehouseID == warehouseId &&
+                    ws.Quantity > 0).Include(ws => ws.Medicine).ToListAsync();
+        }
+
+        // Get warehouse items ordered by nearest expiry date
+
+        public async Task<List<WarehouseStock>> GetExpiringItems(
+            int warehouseId)
+        {
+            return await context.warehouseStocks.Where(ws =>ws.WarehouseID == warehouseId &&
+                    ws.Quantity > 0 &&
+                    ws.ExpiryDate != null &&
+                    ws.ExpiryDate >= DateTime.UtcNow)  //Check that the expiry date is today or later, so the medicine is not expired
+                .Include(ws => ws.Medicine)
+                .OrderBy(ws => ws.ExpiryDate)
+                .ToListAsync();
         }
 
     }
