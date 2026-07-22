@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Modules
 {
-    [Index(nameof(UserID), IsUnique = true)]
+    [Index(nameof(UserID), nameof(Phone), nameof(Email), IsUnique = true)]
     public class Pharmacist : BaseEntity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -22,7 +22,7 @@ namespace Pharmacy_System.Modules
         [Required, MaxLength(100)]
         public string FullName { get; set; }                // User Input
 
-        [Required, MaxLength(12)]
+        [Required, MaxLength(13)]
         public string Phone {  get; set; }                  // User Input
 
 
