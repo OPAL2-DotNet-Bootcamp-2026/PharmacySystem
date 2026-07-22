@@ -13,9 +13,9 @@ namespace Pharmacy_System.Repos
         }
 
         // Returns all pharmacist orders with related data
-        public List<PharmacistOrder> GetAllPharmacistOrders()
+        public async Task<List<PharmacistOrder>> GetAllPharmacistOrders()
         {
-            return context.pharmacistOrders
+            return await context.pharmacistOrders
                 .Include(o => o.Pharmacist)
                 .Include(o => o.Pharmacy)
                 .Include(o => o.PharmacistOrderDetails).ThenInclude(d => d.Medicine)
@@ -23,9 +23,9 @@ namespace Pharmacy_System.Repos
         }
 
         // Returns one pharmacist order using its ID
-        public PharmacistOrder? GetPharmacistOrderById(int id)
+        public async Task<PharmacistOrder?> GetPharmacistOrderById(int id)
         {
-            return context.pharmacistOrders
+            return await context.pharmacistOrders
                 .Include(o => o.Pharmacist)
                 .Include(o => o.Pharmacy)
                 .Include(o => o.PharmacistOrderDetails).ThenInclude(d => d.Medicine)
@@ -33,23 +33,23 @@ namespace Pharmacy_System.Repos
         }
 
         // Adds new pharmacist order
-        public void Add(PharmacistOrder pharmacistOrder)
+        public async Task Add(PharmacistOrder pharmacistOrder)
         {
-            context.PharmacistOrders.Add(pharmacistOrder);
-            context.SaveChanges();
+            await context.PharmacistOrders.Add(pharmacistOrder);
+            await context.SaveChanges();
         }
 
         // Save changes made to  pharmacist order
-        public void PharmacistOrderUpdate()
+        public async Task PharmacistOrderUpdate()
         {
-            context.SaveChanges();
+            await context.SaveChanges();
         }
 
         // Delete  pharmacist order
-        public void PharmacistOrderDelete(PharmacistOrder pharmacistOrder)
+        public async Task PharmacistOrderDelete(PharmacistOrder pharmacistOrder)
         {
             context.pharmacistOrders.Remove(pharmacistOrder);
-            context.SaveChanges();
+            await context.SaveChanges();
         }
     }
 }
