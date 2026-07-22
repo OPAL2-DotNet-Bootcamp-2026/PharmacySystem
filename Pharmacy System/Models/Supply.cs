@@ -22,8 +22,7 @@ namespace Pharmacy_System.Modules
         [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
 
-        //  calculated 
-        // Total cost of the  supply
+        // Input: total cost of the whole supply
         [Column(TypeName = "decimal(18,2)")]
         [Range(typeof(decimal), "0.01", "999999.99")]
         public decimal TotalCost { get; set; }
