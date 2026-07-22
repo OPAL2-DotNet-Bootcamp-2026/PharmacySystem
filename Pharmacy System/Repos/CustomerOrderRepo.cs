@@ -13,9 +13,9 @@ namespace Pharmacy_System.Repos
         }
 
         // Returns all customer orders with related data
-        public List<CustomerOrder> GetAllCustomerOrders()
+        public async Task<List<CustomerOrder>> GetAllCustomerOrders()
         {
-            return context.customerOrders
+            return await context.customerOrders
                 .Include(o => o.Customer)
                 .Include(o => o.Pharmacy)
                 // Loads the Medicine related to each customer order detail
@@ -24,9 +24,9 @@ namespace Pharmacy_System.Repos
         }
 
         // Returns one customer order using its ID
-        public CustomerOrder? GetCustomerOrderById(int id)
+        public async Task<CustomerOrder?> GetCustomerOrderById(int id)
         {
-            return context.customerOrders
+            return await context.customerOrders
                 .Include(o => o.Customer)
                 .Include(o => o.Pharmacy)
                 // Loads the Medicine related to each customer order detail
@@ -35,23 +35,23 @@ namespace Pharmacy_System.Repos
         }
 
         // Adds  new customer order
-        public void Add(CustomerOrder customerOrder)
+        public async Task Add(CustomerOrder customerOrder)
         {
-            context.customerOrders.Add(customerOrder);
-            context.SaveChanges();
+            await context.customerOrders.Add(customerOrder);
+            await context.SaveChanges();
         }
 
         // Saves changes made to  customer order
-        public void CustomerOrderUpdate()
+        public async Task CustomerOrderUpdate()
         {
-            context.SaveChanges();
+            await context.SaveChanges();
         }
 
         // Deletes  customer order
-        public void CustomerOrderDelete(CustomerOrder customerOrder)
+        public async Task CustomerOrderDelete(CustomerOrder customerOrder)
         {
             context.customerOrders.Remove(customerOrder);
-            context.SaveChanges();
+            await context.SaveChanges();
         }
     }
 }
