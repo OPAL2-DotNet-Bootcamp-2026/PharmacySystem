@@ -12,7 +12,7 @@ namespace Pharmacy_System.Repos
             context = _context;
         }
 
-        public async Task<Warehouse> GetWarehouse()  // Return the only our warehouse with its medicines
+        public async Task<Warehouse?> GetWarehouse()  // Return the only our warehouse with its medicines
         {
             return await context.warehouses.FirstOrDefaultAsync();
         }
