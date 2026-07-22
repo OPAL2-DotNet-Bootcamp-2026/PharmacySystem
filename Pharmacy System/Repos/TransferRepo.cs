@@ -13,9 +13,9 @@ namespace Pharmacy_System.Repos
         }
 
         // Returns all transfers with related data
-        public List<Transfer> GetAllTransfer()
+        public async Task<List<Transfer>> GetAllTransfer()
         {
-            return context.Transfers
+            return  await context.Transfers
                 .Include(t => t.Warehouse)
                 .Include(t => t.Pharmacy)
                 .Include(t => t.PharmacistOrder)
@@ -26,9 +26,9 @@ namespace Pharmacy_System.Repos
         }
 
         // Returns one transfer by ID with related data
-        public Transfer? GetTransferById(int id)
+        public async Task<Transfer?> GetTransferById(int id)
         {
-            return context.Transfers
+            return await context.Transfers
                 .Include(t => t.Warehouse)
                 .Include(t => t.Pharmacy)
                 .Include(t => t.PharmacistOrder)
@@ -39,23 +39,23 @@ namespace Pharmacy_System.Repos
         }
 
         // Adds a new transfer with its transfer details
-        public void Add(Transfer transfer)
+        public async Task Add(Transfer transfer)
         {
-            context.Transfers.Add(transfer);
-            context.SaveChanges();
+            await context.Transfers.Add(transfer);
+            await context.SaveChanges();
         }
 
         // Saves changes made to an existing transfer
-        public void TransferUpdate()
+        public async Task TransferUpdate()
         {
-            context.SaveChanges();
+            await context.SaveChanges();
         }
 
         // Deletes an existing transfer
-        public void TransferDelete(Transfer transfer)
+        public async Task TransferDelete(Transfer transfer)
         {
             context.Transfers.Remove(transfer);
-            context.SaveChanges();
+            await context.SaveChanges();
         }
     }
 }
