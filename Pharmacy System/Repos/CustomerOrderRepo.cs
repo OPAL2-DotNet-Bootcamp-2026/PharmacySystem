@@ -15,7 +15,7 @@ namespace Pharmacy_System.Repos
         // Returns all customer orders with related data
         public List<CustomerOrder> GetAllCustomerOrders()
         {
-            return context.CustomerOrders
+            return context.customerOrders
                 .Include(o => o.Customer)
                 .Include(o => o.Pharmacy)
                 // Loads the Medicine related to each customer order detail
@@ -26,7 +26,7 @@ namespace Pharmacy_System.Repos
         // Returns one customer order using its ID
         public CustomerOrder? GetCustomerOrderById(int id)
         {
-            return context.CustomerOrders
+            return context.customerOrders
                 .Include(o => o.Customer)
                 .Include(o => o.Pharmacy)
                 // Loads the Medicine related to each customer order detail
@@ -37,7 +37,7 @@ namespace Pharmacy_System.Repos
         // Adds  new customer order
         public void Add(CustomerOrder customerOrder)
         {
-            context.CustomerOrders.Add(customerOrder);
+            context.customerOrders.Add(customerOrder);
             context.SaveChanges();
         }
 
@@ -50,7 +50,7 @@ namespace Pharmacy_System.Repos
         // Deletes  customer order
         public void CustomerOrderDelete(CustomerOrder customerOrder)
         {
-            context.CustomerOrders.Remove(customerOrder);
+            context.customerOrders.Remove(customerOrder);
             context.SaveChanges();
         }
     }

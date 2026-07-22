@@ -15,7 +15,7 @@ namespace Pharmacy_System.Repos
         // Returns all pharmacist orders with related data
         public List<PharmacistOrder> GetAllPharmacistOrders()
         {
-            return context.PharmacistOrders
+            return context.pharmacistOrders
                 .Include(o => o.Pharmacist)
                 .Include(o => o.Pharmacy)
                 .Include(o => o.PharmacistOrderDetails).ThenInclude(d => d.Medicine)
@@ -25,7 +25,7 @@ namespace Pharmacy_System.Repos
         // Returns one pharmacist order using its ID
         public PharmacistOrder? GetPharmacistOrderById(int id)
         {
-            return context.PharmacistOrders
+            return context.pharmacistOrders
                 .Include(o => o.Pharmacist)
                 .Include(o => o.Pharmacy)
                 .Include(o => o.PharmacistOrderDetails).ThenInclude(d => d.Medicine)
@@ -48,7 +48,7 @@ namespace Pharmacy_System.Repos
         // Delete  pharmacist order
         public void PharmacistOrderDelete(PharmacistOrder pharmacistOrder)
         {
-            context.PharmacistOrders.Remove(pharmacistOrder);
+            context.pharmacistOrders.Remove(pharmacistOrder);
             context.SaveChanges();
         }
     }

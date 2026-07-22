@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Pharmacy_System.Models;
 
 namespace Pharmacy_System.Modules
 {
     // Composite primary key:
     // PharmacistOrderId + MedicineID
-    [PrimaryKey(nameof(PharmacistOrderId), nameof(MedicineID))]
+    [PrimaryKey(nameof(PharmacistOrder), nameof(Medicine))]
     public class PharmacistOrderDetail : BaseEntity
     {
        

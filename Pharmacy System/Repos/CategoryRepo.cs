@@ -16,7 +16,7 @@ namespace Pharmacy_System.Repos
         // Returns all categories with their medicines
         public List<Category> GetAllCategories()
         {
-            return context.Categories
+            return context.categories
                 .Include(c => c.Medicines)
                 .ToList();
         }
@@ -24,7 +24,7 @@ namespace Pharmacy_System.Repos
         // Returns one category using its ID
         public Category? GetCategoryById(int id)
         {
-            return context.Categories
+            return context.categories
                 .Include(c => c.Medicines)
                 .FirstOrDefault(c => c.CategoryID == id);
         }
@@ -32,14 +32,14 @@ namespace Pharmacy_System.Repos
         // Returns one category using its name
         public Category? GetCategoryByName(string categoryName)
         {
-            return context.Categories
+            return context.categories
                 .FirstOrDefault(c => c.CategoryName == categoryName);
         }
 
         // Adds a new category
         public void Add(Category category)
         {
-            context.Categories.Add(category);
+            context.categories.Add(category);
             context.SaveChanges();
         }
 
@@ -52,7 +52,7 @@ namespace Pharmacy_System.Repos
         // Deletes an existing category
         public void CategoryDelete(Category category)
         {
-            context.Categories.Remove(category);
+            context.categories.Remove(category);
             context.SaveChanges();
         }
     }

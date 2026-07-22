@@ -20,7 +20,7 @@ namespace Pharmacy_System
         public DbSet<Supplier> suppliers { get; set; }
         public DbSet<Supply> Supplies { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
-        public DbSet<TransferDetails> transferDetails { get; set; }
+        public DbSet<TransferDetail> transferDetails { get; set; }
         public DbSet<User> users { get; set; } 
         public DbSet<Warehouse> warehouses { get; set; }
         public DbSet<WarehouseStock> warehouseStocks { get; set; }
