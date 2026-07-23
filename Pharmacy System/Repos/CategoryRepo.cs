@@ -12,29 +12,42 @@ namespace Pharmacy_System.Repos
             this.context = context;
         }
 
-        // Returns all categories with their medicines
+        // Returns all active categories with their medicines
         public async Task<List<Category>> GetAllCategories()
         {
             return await context.categories
+                .Where(c => c.IsActive)
                 .Include(c => c.Medicines)
                 .ToListAsync();
         }
 
-        // Returns one category using its ID
+        // Returns one active category using its ID
         public async Task<Category?> GetCategoryById(int id)
         {
             return await context.categories
                 .Include(c => c.Medicines)
-                .FirstOrDefaultAsync(c => c.CategoryID == id);
+                .FirstOrDefaultAsync(
+                    c => c.CategoryID == id && c.IsActive
+                        
+                );
         }
 
         // Returns one category using its name
         public async Task<Category?> GetCategoryByName(string categoryName)
+            
         {
-            return await context.categories
-                .FirstOrDefaultAsync(
-                    c => c.CategoryName == categoryName
-                );
+            return await context.categories.FirstOrDefaultAsync(c => c.CategoryName == categoryName);
+               
+            
+        }
+
+        // Checks whether the category contains any active medicines
+        public async Task<bool> HasActiveMedicines(int categoryId)
+        {
+            return await context.medicines
+                .AnyAsync(m => m.CategoryID == categoryId && m.IsActive );
+                        
+               
         }
 
         // Adds a new category
@@ -44,16 +57,16 @@ namespace Pharmacy_System.Repos
             await context.SaveChangesAsync();
         }
 
-        // Saves changes made to a category
+        // Saves changes made to  existing category
         public async Task CategoryUpdate()
         {
             await context.SaveChangesAsync();
         }
 
-        // Deletes a category
+        // Soft deletes a category
         public async Task CategoryDelete(Category category)
         {
-            context.categories.Remove(category);
+            category.IsActive = false;
             await context.SaveChangesAsync();
         }
     }

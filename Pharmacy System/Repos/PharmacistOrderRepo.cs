@@ -43,6 +43,7 @@ namespace Pharmacy_System.Repos
             await context.SaveChangesAsync();
         }
 
+        //delete
         public async Task PharmacistOrderDelete(
             PharmacistOrder pharmacistOrder)
         {

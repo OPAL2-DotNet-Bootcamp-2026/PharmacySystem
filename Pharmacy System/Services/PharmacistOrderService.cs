@@ -215,8 +215,30 @@ namespace Pharmacy_System.Services
 
             return true;
         }
+        // Deletes a pharmacist order
+        public async Task<bool> DeletePharmacistOrder(int id)
+        {
+            PharmacistOrder? order =await pharmacistOrderRepo.GetPharmacistOrderById(id);
+                
 
-        
+            // Return false if the order does not exist
+            if (order == null)
+            {
+                return false;
+            }
+
+            // Only pending orders can be deleted
+            if (order.Status != "Pending")
+            {
+                throw new Exception("Only pending pharmacist orders can be deleted" );
+
+            }
+
+            await pharmacistOrderRepo.PharmacistOrderDelete(order);
+
+            return true;
+        }
+
 
         // Converts PharmacistOrder model into PharmacistOrderDto
         private PharmacistOrderDto ConvertToDto(
