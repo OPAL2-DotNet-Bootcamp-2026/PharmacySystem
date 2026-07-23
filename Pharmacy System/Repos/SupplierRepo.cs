@@ -32,6 +32,25 @@ namespace Pharmacy_System.Repos
         {
             return await context.suppliers.AnyAsync(s => s.Email == email);
         }
+        public async Task<List<Supplier>> SearchByName(string name)
+        {
+            return await context.suppliers.Where(s => s.FullName.Contains(name)).ToListAsync();
+        }
+
+        public async Task<List<Supplier>> GetByLocation(string location)
+        {
+            return await context.suppliers.Where(s => s.Location == location).ToListAsync();
+        }
+
+        // it return the supplier with their supply records:
+        public async Task<Supplier?> GetSupplies(int id)
+        {
+            return await context.suppliers.Include(s => s.Supplies)
+                                          .ThenInclude(s => s.Medicine)
+                                          .FirstOrDefaultAsync(s =>s.SupplierID == id &&s.IsActive);
+        }
+
+
 
         public async Task Add(Supplier supplier)  // add a new supplier to the database
         {
