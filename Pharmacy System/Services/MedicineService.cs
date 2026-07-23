@@ -122,19 +122,19 @@ namespace Pharmacy_System.Services
             return true;
         }
 
-        public async Task<bool> DeleteMedicine(int id)
-        {
-            Medicine? medicine = await MedicineRepo.GetMedicineById(id);
+        //public async Task<bool> DeleteMedicine(int id)
+        //{
+        //    Medicine? medicine = await MedicineRepo.GetMedicineById(id);
 
-            if (medicine == null)
-            {
-                return false;
-            }
+        //    if (medicine == null)
+        //    {
+        //        return false;
+        //    }
 
-            await MedicineRepo.MedicineDelete(medicine);
+        //    await MedicineRepo.MedicineDelete(medicine);
 
-            return true;
-        }
+        //    return true;
+        //}
 
     }
 }

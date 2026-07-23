@@ -16,10 +16,10 @@ namespace Pharmacy_System.Services
             supplierRepo = _supplierRepo;
         }
 
-        public List<SupplierDto> GetAllSuppliers() //get all suppliers
-        {
 
-            List<Supplier> suppliers = supplierRepo.GetAllSuppliers();
+        public async Task<List<SupplierDto>> GetAllSuppliers() //get all suppliers
+        {
+            List<Supplier> suppliers = await supplierRepo.GetAllSuppliers();
 
             // Convert Supplier models into SupplierDto objects
             return suppliers.Select(s => new SupplierDto
@@ -33,9 +33,10 @@ namespace Pharmacy_System.Services
         }
 
 
-        public SupplierDto? GetSupplierById(int id) //  get one supplier by ID
+        public async Task<SupplierDto?> GetSupplierById(int id) //  get one supplier by ID
         {
-            Supplier? supplier = supplierRepo.GetSupplierById(id);
+            Supplier? supplier = await supplierRepo.GetSupplierById(id);
+
 
             // Return null if the supplier does not exist
             if (supplier == null)
@@ -55,10 +56,12 @@ namespace Pharmacy_System.Services
         }
 
 
-        public bool CreateSupplier(CreateSupplierDto dto)
+        public async Task<bool> CreateSupplier(CreateSupplierDto dto)
         {
+
+            bool emailExists = await supplierRepo.EmailExists(dto.Email);
             // Stop if the email already exists
-            if (supplierRepo.EmailExists(dto.Email))
+            if (emailExists)
             {
                 return false;
             }
@@ -76,22 +79,21 @@ namespace Pharmacy_System.Services
             return true;
         }
 
-    
-    public bool UpdateSupplier(int id, UpdateSupplierDto dto) //update
-        {
-            Supplier? supplier = supplierRepo.GetSupplierById(id);
 
-            // Stop if the supplier does not exist
+        public async Task<bool> UpdateSupplier(int id,UpdateSupplierDto dto)
+        {
+            Supplier? supplier = await supplierRepo.GetSupplierById(id);
+
+
             if (supplier == null)
             {
                 return false;
             }
-
             // Find whether another supplier uses this email
-            Supplier? supplierWithEmail =supplierRepo.GetSupplierByEmail(dto.Email);
+            Supplier? supplierWithEmail = await supplierRepo.GetSupplierByEmail(dto.Email);
 
-         
-            if (supplierWithEmail != null &&supplierWithEmail.SupplierID != id) // email must be unique 
+            // Check whether another supplier already uses this email
+            if (supplierWithEmail != null && supplierWithEmail.SupplierID != id)
             {
                 throw new Exception("Supplier email already exists");
             }
@@ -108,22 +110,22 @@ namespace Pharmacy_System.Services
             return true;
         }
 
-        // Delete a supplier
-        public bool DeleteSupplier(int id)
-        {
-            Supplier? supplier = supplierRepo.GetSupplierById(id);
+    //    // Delete a supplier
+    //    public async Task<bool> DeleteSupplier(int id)
+    //    {
+    //        Supplier? supplier = await supplierRepo.GetSupplierById(id);
 
-            // Stop if the supplier does not exist
-            if (supplier == null)
-            {
-                return false;
-            }
+    //        // Stop if the supplier does not exist
+    //        if (supplier == null)
+    //        {
+    //            return false;
+    //        }
 
-            supplierRepo.SupplierDelete(supplier);
+    //        supplierRepo.SupplierDelete(supplier);
 
-            return true;
-        }
-    }
+    //        return true;
+    //    }
+    //}
 
 
 }
