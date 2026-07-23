@@ -12,10 +12,6 @@ namespace Pharmacy_System.DTOs.WarehouseStock
         [Range(1, int.MaxValue, ErrorMessage = "Select a valid medicine")]
         public int MedicineID { get; set; }
 
-        [Required(ErrorMessage = "Medicine name is required")]
-        [MaxLength(100, ErrorMessage = "Medicine name cannot exceed 100 characters")]
-        public string MedicineName { get; set; }
-
         [Required(ErrorMessage = "Quantity is required")]
         [Range(1, int.MaxValue, ErrorMessage = "Quantity must be greater than zero")]
         public int Quantity { get; set; }
