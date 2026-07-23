@@ -58,29 +58,30 @@ namespace Pharmacy_System.Services
         // Creates a new supply and returns its generated ID
         public async Task<int> CreateSupply(CreateSupplyDto dto)
         {
-            Supplier? supplier =
-                supplierRepo.GetSupplierById(dto.SupplierID);
+            Supplier? supplier =await supplierRepo.GetSupplierById(dto.SupplierID);
+    
 
             if (supplier == null)
             {
                 throw new Exception("Supplier not found");
             }
 
-            Medicine? medicine =
-                medicineRepo.GetMedicineById(dto.MedicineID);
+            Medicine? medicine = await medicineRepo.GetMedicineById(dto.MedicineID);
+    
+
 
             if (medicine == null)
             {
                 throw new Exception("Medicine not found");
             }
 
-            //Warehouse? warehouse =
-            //    warehouseRepo.GetWarehouseById(dto.WarehouseID);
+            Warehouse? warehouse =await warehouseRepo.GetWarehouseById(dto.WarehouseID);
+     
 
-            //if (warehouse == null)
-            //{
-            //    throw new Exception("Warehouse not found");
-            //}
+            if (warehouse == null)
+            {
+                throw new Exception("Warehouse not found");
+            }
 
             if (dto.ExpiryDate == null)
             {
@@ -121,37 +122,37 @@ namespace Pharmacy_System.Services
             int id,
             UpdateSupplyDto dto)
         {
-            Supply? supply =
-                await supplyRepo.GetSupplyById(id);
+            Supply? supply =await supplyRepo.GetSupplyById(id);
+                
 
             if (supply == null)
             {
                 return false;
             }
 
-            Supplier? supplier =
-                supplierRepo.GetSupplierById(dto.SupplierID);
+            Supplier? supplier =await supplierRepo.GetSupplierById(dto.SupplierID);
+      
 
             if (supplier == null)
             {
                 throw new Exception("Supplier not found");
             }
 
-            Medicine? medicine =
-                medicineRepo.GetMedicineById(dto.MedicineID);
+            Medicine? medicine = await medicineRepo.GetMedicineById(dto.MedicineID);
+   
 
             if (medicine == null)
             {
                 throw new Exception("Medicine not found");
             }
 
-            //Warehouse? warehouse =
-            //    warehouseRepo.GetWarehouseById(dto.WarehouseID);
+            Warehouse? warehouse =await warehouseRepo.GetWarehouseById(dto.WarehouseID);
+    
 
-            //if (warehouse == null)
-            //{
-            //    throw new Exception("Warehouse not found");
-            //}
+            if (warehouse == null)
+            {
+                throw new Exception("Warehouse not found");
+            }
 
             if (dto.ExpiryDate == null)
             {
