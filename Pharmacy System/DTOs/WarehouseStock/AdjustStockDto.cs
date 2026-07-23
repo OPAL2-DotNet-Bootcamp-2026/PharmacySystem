@@ -17,7 +17,7 @@ namespace Pharmacy_System.DTOs.WarehouseStock
         [Range(1, int.MaxValue, ErrorMessage = "Quantity must be greater than zero")]
         public int Quantity { get; set; }
         [Column(TypeName = "date")]
-        public DateTime? ExpiryDate { get; set; } // Optional
+        public DateOnly? ExpiryDate { get; set; } // Optional
 
     }
 }

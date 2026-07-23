@@ -30,7 +30,7 @@ namespace Pharmacy_System.Models
         public int Quantity { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? ExpiryDate { get; set; }
+        public DateOnly? ExpiryDate { get; set; }
 
        
 

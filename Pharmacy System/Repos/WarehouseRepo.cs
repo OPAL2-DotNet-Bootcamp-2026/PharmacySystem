@@ -12,19 +12,19 @@ namespace Pharmacy_System.Repos
             context = _context;
         }
 
-        public async Task<Warehouse?> GetWarehouse()  // Return the only our warehouse with its medicines
+        public async Task<List<Warehouse>> GetAllWarehouses()
         {
-            return await context.warehouses.FirstOrDefaultAsync();
+            return await context.warehouses.ToListAsync();
         }
 
 
-        public async Task<Warehouse> GetWarehouseById(int id)
+        public async Task<Warehouse?> GetWarehouseById(int id)
         {
             return await context.warehouses.FirstOrDefaultAsync(w => w.WarehouseID == id);
         }
 
 
-        public async Task Add(Warehouse warehouse) 
+        public async Task AddWarehouse(Warehouse warehouse) 
         {
             await context.warehouses.AddAsync(warehouse);
             await context.SaveChangesAsync();
@@ -45,17 +45,25 @@ namespace Pharmacy_System.Repos
         // Get warehouse items ordered by nearest expiry date
         public async Task<List<WarehouseStock>> GetExpiringItems(int warehouseId,int days)
         {
-            //only store today date 
             DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
-            // to Calculate the last day
-            DateOnly expiryLimit =today.AddDays(days);
 
-            return await context.warehouseStocks.Where(ws =>ws.WarehouseID == warehouseId &&
-                                                                              ws.ExpiryDate.HasValue &&
-                                                                              ws.ExpiryDate.Value >= today &&
-                                                                              ws.ExpiryDate.Value <= expiryLimit)
-                                                                              .Include(ws => ws.Medicine)
-                                                                              .ToListAsync();
+            DateOnly expiryLimit =
+                today.AddDays(days);
+
+            return await context.warehouseStocks
+                .Where(ws =>
+                    ws.WarehouseID == warehouseId &&
+                    ws.ExpiryDate.HasValue &&
+                    ws.ExpiryDate.Value >= today &&
+                    ws.ExpiryDate.Value <= expiryLimit)
+                .Include(ws => ws.Medicine)
+                .ToListAsync();
+        }
+
+        public async Task DeleteWarehouse(Warehouse warehouse)
+        {
+            context.warehouses.Remove(warehouse);
+            await context.SaveChangesAsync();
         }
 
     }
