@@ -1,6 +1,6 @@
 ﻿namespace Pharmacy_System.DTOs.User
 {
-    public class UserDto
+    public class UserResponseDto
     {
 
         public int UserID { get; set; }     
