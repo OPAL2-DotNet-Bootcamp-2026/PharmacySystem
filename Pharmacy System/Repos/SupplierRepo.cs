@@ -45,11 +45,11 @@ namespace Pharmacy_System.Repos
             await context.SaveChangesAsync();
         }
 
-        
-        public void SupplierDelete(Supplier supplier)  //  Delete a supplier from the database
+
+        public async Task SupplierDelete(Supplier supplier)  //  Delete a supplier from the database
         {
-            context.suppliers.Remove(supplier);
-            context.SaveChanges();
+            supplier.IsActive = false;
+            await context.SaveChangesAsync();
         }
 
 
