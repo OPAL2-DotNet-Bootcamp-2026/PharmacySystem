@@ -47,7 +47,7 @@ namespace Pharmacy_System.Repos
             await context.SaveChangesAsync();
         }
 
-        // Deletes a customer order
+        // Deletes  customer order
         public async Task CustomerOrderDelete(CustomerOrder customerOrder)
         {
             context.customerOrders.Remove(customerOrder);

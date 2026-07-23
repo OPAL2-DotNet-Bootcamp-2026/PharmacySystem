@@ -206,7 +206,31 @@ namespace Pharmacy_System.Services
             return true;
         }
 
-      
+        // Deletes a customer order
+        public async Task<bool> DeleteCustomerOrder(int id)
+        {
+            CustomerOrder? order =await customerOrderRepo.GetCustomerOrderById(id);
+                
+
+            // Return false if the order does not exist
+            if (order == null)
+            {
+                return false;
+            }
+
+            // Only pending orders can be deleted
+            if (order.Status != "Pending")
+            {
+                throw new Exception("Only pending customer orders can be deleted" );
+                    
+               
+            }
+
+            await customerOrderRepo.CustomerOrderDelete(order);
+
+            return true;
+        }
+
 
         // Converts CustomerOrder model into CustomerOrderDto
         private CustomerOrderDto ConvertToDto(
