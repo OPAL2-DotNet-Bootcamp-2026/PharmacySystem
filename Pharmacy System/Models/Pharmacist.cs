@@ -5,7 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Modules
 {
-    [Index(nameof(UserID), nameof(Phone), nameof(Email), IsUnique = true)]
+    [Index(nameof(UserID), IsUnique = true)]
+    [Index(nameof(Phone), IsUnique = true)]
+    [Index(nameof(Email), IsUnique = true)]
     public class Pharmacist : BaseEntity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

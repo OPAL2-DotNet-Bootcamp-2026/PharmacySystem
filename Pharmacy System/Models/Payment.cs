@@ -1,4 +1,5 @@
-﻿using Pharmacy_System.Modules;
+﻿using Pharmacy_System.Models.Enums;
+using Pharmacy_System.Modules;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,11 +18,19 @@ namespace Pharmacy_System.Models
         public decimal Amount { get; set; }                      
 
         [Required, MaxLength(30)]
-        public string Method { get; set; }  
+        public PaymentMethod Method { get; set; }  
 
         [Required, MaxLength(30)]
-        public string Status { get; set; }
+        public PaymentStatus Status { get; set; }
 
         public DateTime? PaidDate { get; set; }
+
+        [MaxLength(200)]
+        public string? RefundReason { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal? RefundedAmount { get; set; }
+
+        public DateTime? RefundedDate { get; set; }
     }
 }

@@ -18,10 +18,11 @@ namespace Pharmacy_System.DTOs.Customer
         public string Phone { get; set; }
 
         [
+            Required(ErrorMessage = "The Email Is Required!!"),
             MaxLength(100, ErrorMessage = "Email Cano't Be Exceed 100 Lenght!!"), 
             EmailAddress(ErrorMessage = "Enter a Valid Email Format!!")
         ]
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         [
             Required(ErrorMessage = "The DOB Is Required!!"), 

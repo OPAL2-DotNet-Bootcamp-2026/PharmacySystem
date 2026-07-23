@@ -22,7 +22,8 @@ namespace Pharmacy_System.Models
         [Required]
         public int Quantity { get; set; }
 
-        public DateTime? ExpiryDate { get; set; }
+        [Required]
+        public DateOnly ExpiryDate { get; set; }
 
     }
 }
