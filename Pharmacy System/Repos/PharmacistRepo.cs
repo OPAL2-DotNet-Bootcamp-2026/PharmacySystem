@@ -27,6 +27,11 @@ namespace Pharmacy_System.Repos
             return await context.pharmacists.FirstOrDefaultAsync(e => e.Email == email);
         }
 
+        public async Task<bool> EmailExists(string email)
+        {
+            return await context.pharmacists.AnyAsync(p => p.Email == email);
+        }
+
         public async Task<Pharmacy?> GetPharmacyById(int id)
         {
             return await context.pharmacies.FirstOrDefaultAsync(p => p.PharmacyID == id);
