@@ -13,7 +13,7 @@ namespace Pharmacy_System.Repos
             context = _context;
         }
 
-        public async Task<List<Medicine>> GetAllMedicine()
+        public async Task<List<Medicine>> GetAllMedicines()
         {
             return await context.medicines
                 .Where(m => m.IsActive)
@@ -48,7 +48,7 @@ namespace Pharmacy_System.Repos
                 .ToListAsync();
         }
 
-        public async Task Add(Medicine medicine)
+        public async Task AddNewMedicine(Medicine medicine)
         {
             await context.medicines.AddAsync(medicine);
             await context.SaveChangesAsync();

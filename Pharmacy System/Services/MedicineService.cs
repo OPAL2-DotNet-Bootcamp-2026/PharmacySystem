@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pharmacy_System.DTOs.Medicine;
+using Pharmacy_System.DTOs.WarehouseStock;
+using Pharmacy_System.Models;
 using Pharmacy_System.Modules;
 using Pharmacy_System.Repos;
 
@@ -8,29 +10,18 @@ namespace Pharmacy_System.Services
     public class MedicineService
     {
 
-            private readonly MedicineRepo MedicineRepo;
-            private readonly CategoryRepo CategoryRepo;
-            private readonly SupplyRepo SupplyRepo;
-            private readonly WarehouseStockRepo WarehouseStockRepo;
+        private readonly MedicineRepo medicineRepo;
 
-
-            public MedicineService(
-                MedicineRepo _medicineRepo,
-                CategoryRepo _categoryRepo,
-                SupplyRepo _supplyRepo,
-                WarehouseStockRepo _warehouseStockRepo)
-            {
-                MedicineRepo = _medicineRepo;
-                CategoryRepo = _categoryRepo;
-                SupplyRepo = _supplyRepo;
-                WarehouseStockRepo = _warehouseStockRepo;
-            }
-
-
-
-        public async Task<List<MedicineDto>> GetAllMedicines()       // Get all medicines and convert them to MedicineDto
+        public MedicineService(MedicineRepo _medicineRepo)
         {
-            List<Medicine> medicines =await MedicineRepo.GetAllMedicine();
+            medicineRepo = _medicineRepo;
+        }
+
+
+        // Get all active medicines
+        public async Task<List<MedicineDto>> GetAll()
+        {
+            List<Medicine> medicines = await medicineRepo.GetAllMedicines();
 
             return medicines.Select(m => new MedicineDto
             {
@@ -38,17 +29,15 @@ namespace Pharmacy_System.Services
                 MedicineName = m.MedicineName,
                 CategoryID = m.CategoryID,
                 UnitPrice = m.UnitPrice,
-                IsAvailable = m.IsAvailable,
-                IsActive = m.IsActive,
-                CreatedAt = m.CreatedAt,
-                UpdatedAt = m.UpdatedAt
+                IsAvailable = m.IsAvailable
             }).ToList();
         }
 
-      
-        public async Task<MedicineDto?> GetMedicineById(int id)   // get one medicine by ID
+
+        // Get one medicine by ID
+        public async Task<MedicineDto?> GetById(int id)
         {
-            Medicine? medicine =await MedicineRepo.GetMedicineById(id);
+            Medicine? medicine = await medicineRepo.GetMedicineById(id);
 
             if (medicine == null)
             {
@@ -61,80 +50,133 @@ namespace Pharmacy_System.Services
                 MedicineName = medicine.MedicineName,
                 CategoryID = medicine.CategoryID,
                 UnitPrice = medicine.UnitPrice,
-                IsAvailable = medicine.IsAvailable,
-                IsActive = medicine.IsActive,
-                CreatedAt = medicine.CreatedAt,
-                UpdatedAt = medicine.UpdatedAt
+                IsAvailable = medicine.IsAvailable
             };
         }
 
 
-        //public async Task<int> CreateMedicine(CreateMedicineDto dto)
-        //{
-        //    Category? category = await CategoryRepo.GetCategoryById(dto.CategoryID);
-
-        //    if (category == null)
-        //    {
-        //        throw new Exception("Category does not exist");
-        //    }
-
-        //    Medicine medicine = new Medicine
-        //    {
-        //        MedicineName = dto.MedicineName,
-        //        CategoryID = dto.CategoryID,
-        //        UnitPrice = dto.UnitPrice,
-        //        isAvailable = true,
-        //        IsActive = true
-        //    };
-
-        //    await MedicineRepo.Add(medicine);
-
-        //    return medicine.MedicineID;
-        //}
-
-
-        public async Task<bool> UpdateMedicine(int id, UpdateMedicineDto dto)  //update
+        // Get available medicines
+        public async Task<List<MedicineDto>> GetAvailable()
         {
-            Medicine? medicine = await MedicineRepo.GetMedicineById(id); 
+            List<Medicine> medicines = await medicineRepo.GetAvailableMedicines();
+
+            return medicines.Select(m => new MedicineDto
+            {
+                MedicineID = m.MedicineID,
+                MedicineName = m.MedicineName,
+                CategoryID = m.CategoryID,
+                UnitPrice = m.UnitPrice,
+                IsAvailable = m.IsAvailable
+            }).ToList();
+        }
+
+
+        // Get medicines by category
+        public async Task<List<MedicineDto>> GetByCategory(int categoryId)
+        {
+            List<Medicine> medicines = await medicineRepo.GetMedicinesByCategory(categoryId);
+
+            return medicines.Select(m => new MedicineDto
+            {
+                MedicineID = m.MedicineID,
+                MedicineName = m.MedicineName,
+                CategoryID = m.CategoryID,
+                UnitPrice = m.UnitPrice,
+                IsAvailable = m.IsAvailable
+            }).ToList();
+        }
+
+
+        // Search medicines by name
+        public async Task<List<MedicineDto>> SearchByName(string name)
+        {
+            List<Medicine> medicines = await medicineRepo.SearchMedicinesByName(name);
+
+            return medicines.Select(m => new MedicineDto
+            {
+                MedicineID = m.MedicineID,
+                MedicineName = m.MedicineName,
+                CategoryID = m.CategoryID,
+                UnitPrice = m.UnitPrice,
+                IsAvailable = m.IsAvailable
+            }).ToList();
+        }
+
+
+        // Change medicine availability
+        public async Task<bool> ToggleAvailability(int id)
+        {
+            Medicine? medicine = await medicineRepo.GetMedicineById(id);
 
             if (medicine == null)
             {
                 return false;
             }
 
+            // True becomes false, and false becomes true
+            medicine.IsAvailable = !medicine.IsAvailable;
 
-            //// Check that the category exists
-            //Category? category = await CategoryRepo.GetCategoryById(dto.CategoryID);
-
-            //if (category == null)
-            //{
-            //    throw new Exception("Category does not exist");
-            //}
-
-
-            medicine.MedicineName = dto.MedicineName;
-            medicine.CategoryID = dto.CategoryID;
-            medicine.UnitPrice = dto.UnitPrice;
-            medicine.IsAvailable = dto.IsAvailable;
-
-            await MedicineRepo.MedicineUpdate();
+            await medicineRepo.MedicineUpdate();
 
             return true;
         }
 
-        //public async Task<bool> DeleteMedicine(int id)
+
+
+        // Add a new medicine
+        public async Task<int> AddNewMedicine(CreateMedicineDto dto)
+        {
+            Medicine medicine = new Medicine
+            {
+                MedicineName = dto.MedicineName,
+                CategoryID = dto.CategoryID,
+                UnitPrice = dto.UnitPrice,
+                IsAvailable = true,
+                IsActive = true
+            };
+
+            await medicineRepo.AddNewMedicine(medicine);
+
+            return medicine.MedicineID;
+        }
+
+        // Update medicine information
+        public async Task<bool> Update(int id, UpdateMedicineDto dto)
+        {
+            Medicine? medicine = await medicineRepo.GetMedicineById(id);
+
+            if (medicine == null)
+            {
+                return false;
+            }
+
+            medicine.MedicineName = dto.MedicineName;
+            medicine.CategoryID = dto.CategoryID;
+            medicine.UnitPrice = dto.UnitPrice;
+
+            await medicineRepo.MedicineUpdate();
+
+            return true;
+        }
+
+        //// Soft delete medicine
+        //public async Task<bool> Delete(int id)
         //{
-        //    Medicine? medicine = await MedicineRepo.GetMedicineById(id);
+        //    Medicine? medicine =
+        //        await medicineRepo.GetMedicineById(id);
 
         //    if (medicine == null)
         //    {
         //        return false;
         //    }
 
-        //    await MedicineRepo.MedicineDelete(medicine);
+        //    await medicineRepo.MedicineDelete(medicine);
 
         //    return true;
         //}
+
+
+
 
     }
 }
