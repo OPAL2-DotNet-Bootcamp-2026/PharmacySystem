@@ -10,6 +10,7 @@ namespace Pharmacy_System.DTOs.Supplier
         public string FullName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Phone number is required")]
+        [MaxLength(13)]
         public string Phone { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Email is required")]
