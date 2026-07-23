@@ -38,7 +38,7 @@ namespace Pharmacy_System.Services
                 MedicineName = m.MedicineName,
                 CategoryID = m.CategoryID,
                 UnitPrice = m.UnitPrice,
-                IsAvailable = m.isAvailable,
+                IsAvailable = m.IsAvailable,
                 IsActive = m.IsActive,
                 CreatedAt = m.CreatedAt,
                 UpdatedAt = m.UpdatedAt
@@ -61,7 +61,7 @@ namespace Pharmacy_System.Services
                 MedicineName = medicine.MedicineName,
                 CategoryID = medicine.CategoryID,
                 UnitPrice = medicine.UnitPrice,
-                IsAvailable = medicine.isAvailable,
+                IsAvailable = medicine.IsAvailable,
                 IsActive = medicine.IsActive,
                 CreatedAt = medicine.CreatedAt,
                 UpdatedAt = medicine.UpdatedAt
@@ -115,7 +115,7 @@ namespace Pharmacy_System.Services
             medicine.MedicineName = dto.MedicineName;
             medicine.CategoryID = dto.CategoryID;
             medicine.UnitPrice = dto.UnitPrice;
-            medicine.isAvailable = dto.IsAvailable;
+            medicine.IsAvailable = dto.IsAvailable;
 
             await MedicineRepo.MedicineUpdate();
 

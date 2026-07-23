@@ -34,10 +34,7 @@ namespace Pharmacy_System.Modules
         // One category can contain many medicines
         [ForeignKey(nameof(Category))]
         [Range(1, int.MaxValue,ErrorMessage = "A valid category must be selected")]
-       
         public int CategoryID { get; set; }
-
-        // Navigation property 
         public Category Category { get; set; } = null!;
 
         // One medicine can appear in many supply records

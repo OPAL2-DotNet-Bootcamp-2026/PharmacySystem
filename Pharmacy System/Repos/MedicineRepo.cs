@@ -26,6 +26,28 @@ namespace Pharmacy_System.Repos
             return await context.medicines.FirstOrDefaultAsync(m =>m.MedicineID == id &&m.IsActive);
         }
 
+
+      
+        public async Task<List<Medicine>> GetAvailableMedicines()  // get available medicines
+        {
+            return await context.medicines.Where(m =>m.IsActive &&m.IsAvailable).ToListAsync();
+        }
+
+
+    
+        // Get medicines by category
+        public async Task<List<Medicine>> GetMedicinesByCategory(int categoryId)
+        {
+            return await context.medicines.Where(m =>m.IsActive &&m.CategoryID == categoryId).ToListAsync();
+        }
+
+        // Search medicines by name
+        public async Task<List<Medicine>> SearchMedicinesByName(string name)
+        {
+            return await context.medicines.Where(m =>m.IsActive &&m.MedicineName.Contains(name))
+                .ToListAsync();
+        }
+
         public async Task Add(Medicine medicine)
         {
             await context.medicines.AddAsync(medicine);
