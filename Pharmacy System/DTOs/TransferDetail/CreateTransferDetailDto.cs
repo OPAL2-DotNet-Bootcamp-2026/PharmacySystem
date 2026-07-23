@@ -6,7 +6,7 @@ namespace Pharmacy_System.DTOs.TransferDetail
     public class CreateTransferDetailDto
     {
       
-        [Range(1, int.MaxValue ,ErrorMessage = "A valid medicine must be selected")],
+        [Range(1, int.MaxValue ,ErrorMessage = "A valid medicine must be selected")]
         public int MedicineID { get; set; }    
         
 
