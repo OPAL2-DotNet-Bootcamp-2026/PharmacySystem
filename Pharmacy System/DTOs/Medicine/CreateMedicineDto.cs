@@ -6,7 +6,7 @@ namespace Pharmacy_System.DTOs.Medicine
     {
 
         [Required(ErrorMessage = "Medicine name is required")]
-        [MaxLength(100, ErrorMessage = "Medicine name cannot exceed 150 characters")]
+        [MaxLength(100,ErrorMessage = "Medicine name cannot exceed 100 characters")]
         public string MedicineName { get; set; }
 
         [Required(ErrorMessage = "Category is required")]
