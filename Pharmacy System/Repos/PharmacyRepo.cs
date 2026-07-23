@@ -32,7 +32,7 @@ namespace Pharmacy_System.Repos
         {
             return await context.pharmacyStocks
                 .Where(p => p.PharmacyID == id)
-                .Include(p => p.MedicineID)
+                .Include(p => p.medicine)
                 .ToListAsync();
         }
 
