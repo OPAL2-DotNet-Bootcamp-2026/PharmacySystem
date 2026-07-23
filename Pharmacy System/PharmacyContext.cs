@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pharmacy_System.Models;
 using Pharmacy_System.Modules;
+using System.Reflection.Emit;
 
 namespace Pharmacy_System
 {
@@ -46,11 +47,12 @@ namespace Pharmacy_System
                 else if (entry.State == EntityState.Modified)
                 {
                     entry.Entity.UpdatedAt = now;
-                    entry.Property(nameof(BaseEntity.CreatedAt)).IsModified = false;
+                    entry.Property(nameof(BaseEntity.CreatedAt)).IsModified = false;                    
                 }
             }
-
             return base.SaveChangesAsync(ct);
         }
+
+        
     }
 }
