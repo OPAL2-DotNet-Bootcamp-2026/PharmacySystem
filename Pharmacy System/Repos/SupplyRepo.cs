@@ -5,11 +5,11 @@ namespace Pharmacy_System.Repos
 {
     public class SupplyRepo
     {
-        private PharmacyContext context;
+        private readonly PharmacyContext context;
 
-        public SupplyRepo(PharmacyContext _context)
+        public SupplyRepo(PharmacyContext context)
         {
-            context = _context;
+            this.context = context;
         }
 
         // Returns all supply records with related data
@@ -19,37 +19,37 @@ namespace Pharmacy_System.Repos
                 .Include(s => s.Supplier)
                 .Include(s => s.Medicine)
                 .Include(s => s.Warehouse)
-                .ToList();
+                .ToListAsync();
         }
 
-        // Returns one supply using  ID
+        // Returns one supply using ID
         public async Task<Supply?> GetSupplyById(int id)
         {
             return await context.Supplies
                 .Include(s => s.Supplier)
                 .Include(s => s.Medicine)
                 .Include(s => s.Warehouse)
-                .FirstOrDefault(s => s.SupplyId == id);
+                .FirstOrDefaultAsync(s => s.SupplyId == id);
         }
 
-        // Adds  new supply 
+        // Adds a new supply
         public async Task Add(Supply supply)
         {
-            await context.Supplies.Add(supply);
-            await context.SaveChanges();
+            await context.Supplies.AddAsync(supply);
+            await context.SaveChangesAsync();
         }
 
-        // Save changes made to supply 
+        // Saves changes made to supply
         public async Task SupplyUpdate()
         {
-            await context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        // Delete supply 
+        // Deletes supply
         public async Task SupplyDelete(Supply supply)
         {
             context.Supplies.Remove(supply);
-           await context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }
