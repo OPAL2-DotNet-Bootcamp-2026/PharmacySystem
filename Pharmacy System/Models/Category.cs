@@ -23,6 +23,9 @@ namespace Pharmacy_System.Modules
         [MaxLength(250)]
         public string? Description { get; set; }
 
+        [Required]
+        public bool IsActive { get; set; } = true;
+
         // One category can contain many medicines
         public ICollection<Medicine> Medicines { get; set; }= new List<Medicine>();
             
