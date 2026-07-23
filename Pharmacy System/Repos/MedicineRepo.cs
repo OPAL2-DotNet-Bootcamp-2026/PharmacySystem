@@ -13,31 +13,34 @@ namespace Pharmacy_System.Repos
             context = _context;
         }
 
-        public List<Medicine> GetAllMedicine()
+        public async Task<List<Medicine>> GetAllMedicine()
         {
-            return context.medicines.ToList();
+            return await context.medicines
+                .Where(m => m.IsActive)
+                .ToListAsync();
+
         }
 
-        public Medicine GetMedicineById(int id)   // Search for one medicine that has the same ID 
+        public async Task<Medicine?> GetMedicineById(int id)   // Search for one medicine that has the same ID 
         {
-            return context.medicines.FirstOrDefault(m => m.MedicineID == id);
+            return await context.medicines.FirstOrDefaultAsync(m =>m.MedicineID == id &&m.IsActive);
         }
 
-        public void Add(Medicine medicine)
+        public async Task Add(Medicine medicine)
         {
-            context.medicines.Add(medicine);
-            context.SaveChanges();
+            await context.medicines.AddAsync(medicine);
+            await context.SaveChangesAsync();
         }
 
-        public void MedicineUpdate()
+        public async Task MedicineUpdate()
         {
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void MedicineDelete(Medicine medicine)
+        public async Task MedicineDelete(Medicine medicine)
         {
-            context.medicines.Remove(medicine);
-            context.SaveChanges();
+            medicine.IsActive = false;
+            await context.SaveChangesAsync();
         }
 
 

@@ -12,37 +12,37 @@ namespace Pharmacy_System.Repos
             context = _context;
         }
 
-        public List<Supplier> GetAllSuppliers()  // get all suppliers from the database
+        public async Task<List<Supplier>> GetAllSuppliers()  // get all suppliers from the database
         {
-            return context.suppliers.ToList();
+            return await context.suppliers.Where(s => s.IsActive).ToListAsync();
         }
 
-        public Supplier? GetSupplierById(int id)
+        public async Task<Supplier?> GetSupplierById(int id)
         {
-            return context.suppliers.FirstOrDefault(s => s.SupplierID == id);
-        }
-
-        
-        public Supplier? GetSupplierByEmail(string email) // find a supplier by email
-        {
-            return context.suppliers.FirstOrDefault(s => s.Email == email);
-        }
-
-        public bool EmailExists(string email)  // to check if the email exists
-        {
-            return context.pharmacists.Any(e => e.Email == email);
-        }
-
-        public void Add(Supplier supplier)  // add a new supplier to the database
-        {
-            context.suppliers.Add(supplier);
-            context.SaveChanges();
+            return await context.suppliers.FirstOrDefaultAsync(s =>s.SupplierID == id &&s.IsActive);
         }
 
         
-        public void SupplierUpdate() // save changes made to a supplier
+        public async Task<Supplier?> GetSupplierByEmail(string email) // find a supplier by email
         {
-            context.SaveChanges();
+            return await context.suppliers.FirstOrDefaultAsync(s => s.Email == email &&s.IsActive);
+        }
+
+        public async Task<bool> EmailExists(string email)  // to check if the email exists
+        {
+            return await context.pharmacists.AnyAsync(e => e.Email == email);
+        }
+
+        public async Task Add(Supplier supplier)  // add a new supplier to the database
+        {
+            await context.suppliers.AddAsync(supplier);
+            await context.SaveChangesAsync();
+        }
+
+
+        public async Task SupplierUpdate() // save changes made to a supplier
+        {
+            await context.SaveChangesAsync();
         }
 
         

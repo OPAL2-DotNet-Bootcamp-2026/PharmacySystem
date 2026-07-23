@@ -8,6 +8,7 @@
         public int WarehouseID { get; set; }
 
         public int MedicineID { get; set; }
+        public string MedicineName { get; set; }
 
         public int Quantity { get; set; }
 
