@@ -30,7 +30,7 @@ namespace Pharmacy_System.Repos
 
         public async Task<bool> EmailExists(string email)  // to check if the email exists
         {
-            return await context.pharmacists.AnyAsync(e => e.Email == email);
+            return await context.suppliers.AnyAsync(s => s.Email == email);
         }
 
         public async Task Add(Supplier supplier)  // add a new supplier to the database

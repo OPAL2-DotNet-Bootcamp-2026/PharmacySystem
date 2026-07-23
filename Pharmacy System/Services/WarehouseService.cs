@@ -107,6 +107,8 @@ namespace Pharmacy_System.Services
         // Get warehouse items ordered by nearest expiry date
         public async Task<List<WarehouseStockDto>> GetExpiringItems(int warehouseId)
         {
+            int days = 30; //to check medicines that will expire within the next 30 days
+
             Warehouse? warehouse = await warehouseRepo.GetWarehouseById(warehouseId);
 
             if (warehouse == null)
@@ -114,7 +116,8 @@ namespace Pharmacy_System.Services
                 throw new Exception("Warehouse does not exist");
             }
 
-            List<WarehouseStock> stocks = await warehouseRepo.GetExpiringItems(warehouseId);
+            List<WarehouseStock> stocks = await warehouseRepo.GetExpiringItems(warehouseId,days);
+
 
             return stocks.Select(ws => new WarehouseStockDto
             {

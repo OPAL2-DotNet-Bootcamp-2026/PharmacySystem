@@ -43,17 +43,19 @@ namespace Pharmacy_System.Repos
         }
 
         // Get warehouse items ordered by nearest expiry date
-
-        public async Task<List<WarehouseStock>> GetExpiringItems(
-            int warehouseId)
+        public async Task<List<WarehouseStock>> GetExpiringItems(int warehouseId,int days)
         {
+            //only store today date 
+            DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
+            // to Calculate the last day
+            DateOnly expiryLimit =today.AddDays(days);
+
             return await context.warehouseStocks.Where(ws =>ws.WarehouseID == warehouseId &&
-                    ws.Quantity > 0 &&
-                    ws.ExpiryDate != null &&
-                    ws.ExpiryDate >= DateTime.UtcNow)  //Check that the expiry date is today or later, so the medicine is not expired
-                .Include(ws => ws.Medicine)
-                .OrderBy(ws => ws.ExpiryDate)
-                .ToListAsync();
+                                                                              ws.ExpiryDate.HasValue &&
+                                                                              ws.ExpiryDate.Value >= today &&
+                                                                              ws.ExpiryDate.Value <= expiryLimit)
+                                                                              .Include(ws => ws.Medicine)
+                                                                              .ToListAsync();
         }
 
     }
