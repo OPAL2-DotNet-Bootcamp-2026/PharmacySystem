@@ -5,51 +5,49 @@ namespace Pharmacy_System.Repos
 {
     public class PharmacistOrderRepo
     {
-        private PharmacyContext context;
+        private readonly PharmacyContext context;
 
-        public PharmacistOrderRepo(PharmacyContext _context)
+        public PharmacistOrderRepo(PharmacyContext context)
         {
-            context = _context;
+            this.context = context;
         }
 
-        // Returns all pharmacist orders with related data
-        public List<PharmacistOrder> GetAllPharmacistOrders()
+        public async Task<List<PharmacistOrder>> GetAllPharmacistOrders()
         {
-            return context.pharmacistOrders
+            return await context.PharmacistsOrder
                 .Include(o => o.Pharmacist)
                 .Include(o => o.Pharmacy)
-                .Include(o => o.PharmacistOrderDetails).ThenInclude(d => d.Medicine)
-                .ToList();
+                .Include(o => o.PharmacistOrderDetails)
+                    .ThenInclude(d => d.Medicine)
+                .ToListAsync();
         }
 
-        // Returns one pharmacist order using its ID
-        public PharmacistOrder? GetPharmacistOrderById(int id)
+        public async Task<PharmacistOrder?> GetPharmacistOrderById(int id)
         {
-            return context.pharmacistOrders
+            return await context.PharmacistsOrder
                 .Include(o => o.Pharmacist)
                 .Include(o => o.Pharmacy)
-                .Include(o => o.PharmacistOrderDetails).ThenInclude(d => d.Medicine)
-                .FirstOrDefault(o => o.PharmacistOrderId == id);
+                .Include(o => o.PharmacistOrderDetails)
+                    .ThenInclude(d => d.Medicine)
+                .FirstOrDefaultAsync(o => o.PharmacistOrderId == id);
         }
 
-        // Adds new pharmacist order
-        public void Add(PharmacistOrder pharmacistOrder)
+        public async Task Add(PharmacistOrder pharmacistOrder)
         {
-            context.PharmacistOrders.Add(pharmacistOrder);
-            context.SaveChanges();
+            await context.PharmacistsOrder.AddAsync(pharmacistOrder);
+            await context.SaveChangesAsync();
         }
 
-        // Save changes made to  pharmacist order
-        public void PharmacistOrderUpdate()
+        public async Task PharmacistOrderUpdate()
         {
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        // Delete  pharmacist order
-        public void PharmacistOrderDelete(PharmacistOrder pharmacistOrder)
+        public async Task PharmacistOrderDelete(
+            PharmacistOrder pharmacistOrder)
         {
-            context.pharmacistOrders.Remove(pharmacistOrder);
-            context.SaveChanges();
+            context.PharmacistsOrder.Remove(pharmacistOrder);
+            await context.SaveChangesAsync();
         }
     }
 }

@@ -6,10 +6,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace Pharmacy_System.Modules
-{ 
- 
-    [PrimaryKey(nameof(Transfer), nameof(Medicine))]
-    public class TransferDetail : BaseEntity
+{
+    [Index(nameof(TransferID),nameof(MedicineID),IsUnique = true )]
+          
+          
+      public class TransferDetail : BaseEntity
     {
        
         //system generated 

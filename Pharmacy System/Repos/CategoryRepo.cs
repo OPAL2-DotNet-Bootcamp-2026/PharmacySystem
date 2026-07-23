@@ -5,55 +5,56 @@ namespace Pharmacy_System.Repos
 {
     public class CategoryRepo
     {
-        private PharmacyContext context;
+        private readonly PharmacyContext context;
 
-       
-        public CategoryRepo(PharmacyContext _context)
+        public CategoryRepo(PharmacyContext context)
         {
-            context = _context;
+            this.context = context;
         }
 
         // Returns all categories with their medicines
-        public List<Category> GetAllCategories()
+        public async Task<List<Category>> GetAllCategories()
         {
-            return context.categories
+            return await context.categories
                 .Include(c => c.Medicines)
-                .ToList();
+                .ToListAsync();
         }
 
         // Returns one category using its ID
-        public Category? GetCategoryById(int id)
+        public async Task<Category?> GetCategoryById(int id)
         {
-            return context.categories
+            return await context.categories
                 .Include(c => c.Medicines)
-                .FirstOrDefault(c => c.CategoryID == id);
+                .FirstOrDefaultAsync(c => c.CategoryID == id);
         }
 
         // Returns one category using its name
-        public Category? GetCategoryByName(string categoryName)
+        public async Task<Category?> GetCategoryByName(string categoryName)
         {
-            return context.categories
-                .FirstOrDefault(c => c.CategoryName == categoryName);
+            return await context.categories
+                .FirstOrDefaultAsync(
+                    c => c.CategoryName == categoryName
+                );
         }
 
         // Adds a new category
-        public void Add(Category category)
+        public async Task Add(Category category)
         {
-            context.categories.Add(category);
-            context.SaveChanges();
+            await context.categories.AddAsync(category);
+            await context.SaveChangesAsync();
         }
 
-        // Saves changes made to an existing category
-        public void CategoryUpdate()
+        // Saves changes made to a category
+        public async Task CategoryUpdate()
         {
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        // Deletes an existing category
-        public void CategoryDelete(Category category)
+        // Deletes a category
+        public async Task CategoryDelete(Category category)
         {
             context.categories.Remove(category);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }

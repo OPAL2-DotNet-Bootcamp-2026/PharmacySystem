@@ -5,51 +5,51 @@ namespace Pharmacy_System.Repos
 {
     public class SupplyRepo
     {
-        private PharmacyContext context;
+        private readonly PharmacyContext context;
 
-        public SupplyRepo(PharmacyContext _context)
+        public SupplyRepo(PharmacyContext context)
         {
-            context = _context;
+            this.context = context;
         }
 
         // Returns all supply records with related data
-        public List<Supply> GetAllSupply()
+        public async Task<List<Supply>> GetAllSupply()
         {
-            return context.Supplies
+            return await context.Supplies
                 .Include(s => s.Supplier)
                 .Include(s => s.Medicine)
                 .Include(s => s.Warehouse)
-                .ToList();
+                .ToListAsync();
         }
 
-        // Returns one supply using  ID
-        public Supply? GetSupplyById(int id)
+        // Returns one supply using ID
+        public async Task<Supply?> GetSupplyById(int id)
         {
-            return context.Supplies
+            return await context.Supplies
                 .Include(s => s.Supplier)
                 .Include(s => s.Medicine)
                 .Include(s => s.Warehouse)
-                .FirstOrDefault(s => s.SupplyId == id);
+                .FirstOrDefaultAsync(s => s.SupplyId == id);
         }
 
-        // Adds  new supply 
-        public void Add(Supply supply)
+        // Adds a new supply
+        public async Task Add(Supply supply)
         {
-            context.Supplies.Add(supply);
-            context.SaveChanges();
+            await context.Supplies.AddAsync(supply);
+            await context.SaveChangesAsync();
         }
 
-        // Save changes made to supply 
-        public void SupplyUpdate()
+        // Saves changes made to supply
+        public async Task SupplyUpdate()
         {
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        // Delete supply 
-        public void SupplyDelete(Supply supply)
+        // Deletes supply
+        public async Task SupplyDelete(Supply supply)
         {
             context.Supplies.Remove(supply);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }

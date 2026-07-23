@@ -5,53 +5,53 @@ namespace Pharmacy_System.Repos
 {
     public class CustomerOrderRepo
     {
-        private PharmacyContext context;
+        private readonly PharmacyContext context;
 
-        public CustomerOrderRepo(PharmacyContext _context)
+        public CustomerOrderRepo(PharmacyContext context)
         {
-            context = _context;
+            this.context = context;
         }
 
         // Returns all customer orders with related data
-        public List<CustomerOrder> GetAllCustomerOrders()
+        public async Task<List<CustomerOrder>> GetAllCustomerOrders()
         {
-            return context.customerOrders
+            return await context.customerOrders
                 .Include(o => o.Customer)
                 .Include(o => o.Pharmacy)
-                // Loads the Medicine related to each customer order detail
-                .Include(o => o.CustomerOrderDetails).ThenInclude(d => d.Medicine)
-                .ToList();
+                .Include(o => o.CustomerOrderDetails)
+                    .ThenInclude(d => d.Medicine)
+                .ToListAsync();
         }
 
         // Returns one customer order using its ID
-        public CustomerOrder? GetCustomerOrderById(int id)
+        public async Task<CustomerOrder?> GetCustomerOrderById(int id)
         {
-            return context.customerOrders
+            return await context.customerOrders
                 .Include(o => o.Customer)
                 .Include(o => o.Pharmacy)
-                // Loads the Medicine related to each customer order detail
-                .Include(o => o.CustomerOrderDetails).ThenInclude(d => d.Medicine)
-                .FirstOrDefault(o => o.CustomerOrderId == id);
+                .Include(o => o.CustomerOrderDetails)
+                    .ThenInclude(d => d.Medicine)
+                .FirstOrDefaultAsync(o => o.CustomerOrderId == id);
         }
 
-        // Adds  new customer order
-        public void Add(CustomerOrder customerOrder)
+        // Adds a new customer order
+        public async Task Add(CustomerOrder customerOrder)
         {
-            context.customerOrders.Add(customerOrder);
-            context.SaveChanges();
+            await context.customerOrders.AddAsync(customerOrder);
+            await context.SaveChangesAsync();
         }
 
-        // Saves changes made to  customer order
-        public void CustomerOrderUpdate()
+        // Saves changes made to a customer order
+        public async Task CustomerOrderUpdate()
         {
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        // Deletes  customer order
-        public void CustomerOrderDelete(CustomerOrder customerOrder)
+        // Deletes a customer order
+        public async Task CustomerOrderDelete(CustomerOrder customerOrder)
         {
             context.customerOrders.Remove(customerOrder);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }
