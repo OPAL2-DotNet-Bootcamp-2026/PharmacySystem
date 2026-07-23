@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pharmacy_System.Models;
+using Pharmacy_System.Models.Enums;
 
 namespace Pharmacy_System.Repos
 {
@@ -27,7 +28,7 @@ namespace Pharmacy_System.Repos
             return await context.payments.Where(p => p.CustomerOrderID == id).ToListAsync();
         }
 
-        public async Task<List<Payment>> GetPaymentsByStatus(string status)
+        public async Task<List<Payment>> GetPaymentsByStatus(PaymentStatus status)
         {
             return await context.payments.Where(p => p.Status == status).ToListAsync();
         }
