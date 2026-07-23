@@ -25,7 +25,7 @@ namespace Pharmacy_System.Modules
 
         //  default value
         // Can change depending on medicine availability
-        public bool isAvailable { get; set; } = true;
+        public bool IsAvailable { get; set; } = true;
 
         //  default value 
         public bool IsActive { get; set; } = true;

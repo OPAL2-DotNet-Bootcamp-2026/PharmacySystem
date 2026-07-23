@@ -18,7 +18,7 @@ namespace Pharmacy_System.Modules
         // one to many:  Warehouse to Transfers
         public ICollection<Transfer> Transfers { get; set; }= new List<Transfer>();
         //one to many:  Warehouse to WarehouseStocks
-        public ICollection<WarehouseStock> warehouseStocks { get; set; } = new List<WarehouseStock>();
+        public ICollection<WarehouseStock> WarehouseStocks { get; set; } = new List<WarehouseStock>();
         
         
     }
