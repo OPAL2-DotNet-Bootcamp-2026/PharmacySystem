@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.DTOs.WarehouseStock
 {
-    public class AdjustStockDto
+    public class AdjustWarehouseStockDto
     {
         [Required(ErrorMessage = "Warehouse ID is required")]
         [Range(1, int.MaxValue, ErrorMessage = "Select a valid warehouse")]
