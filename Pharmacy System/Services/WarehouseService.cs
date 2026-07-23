@@ -15,22 +15,17 @@ namespace Pharmacy_System.Services
             warehouseRepo = _warehouseRepo;
         }
 
-        // Get the warehouse
-        public async Task<WarehouseDto?> GetWarehouse()
+        // Get all warehouses
+        public async Task<List<WarehouseDto>> GetAllWarehouses()
         {
-            Warehouse? warehouse = await warehouseRepo.GetWarehouse();
+            List<Warehouse> warehouses =
+                await warehouseRepo.GetAllWarehouses();
 
-            if (warehouse == null)
+            return warehouses.Select(w => new WarehouseDto
             {
-                return null;
-            }
-
-            return new WarehouseDto
-            {
-                WarehouseID = warehouse.WarehouseID,
-                Location = warehouse.Location
-            };
-
+                WarehouseID = w.WarehouseID,
+                Location = w.Location
+            }).ToList();
         }
 
         // Get warehouse by ID
@@ -59,7 +54,7 @@ namespace Pharmacy_System.Services
                 Location = dto.Location
             };
 
-            await warehouseRepo.Add(warehouse);
+            await warehouseRepo.AddWarehouse(warehouse);
 
             return warehouse.WarehouseID;
         }
