@@ -86,19 +86,19 @@ namespace Pharmacy_System.Controllers
             }
         }
 
-        // DELETE: api/Supply/1
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteSupply(int id)
-        //{
-        //    bool deleted =
-        //        await supplyService.DeleteSupply(id);
+        //DELETE: api/Supply/1
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSupply(int id)
+        {
+            bool deleted =
+                await supplyService.DeleteSupply(id);
 
-        //    if (!deleted)
-        //    {
-        //        return NotFound("Supply not found");
-        //    }
+            if (!deleted)
+            {
+                return NotFound("Supply not found");
+            }
 
-        //    return Ok("Supply deleted successfully");
+            return Ok("Supply deleted successfully");
         }
     }
 }

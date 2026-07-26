@@ -37,6 +37,8 @@ namespace Pharmacy_System.Modules
         [Column(TypeName = "date")]
         public DateTime ExpiryDate { get; set; }
 
+        public bool IsActive { get; set; } = true;
+
         //  supplier
         [ForeignKey(nameof(Supplier))]
         [Range(1, int.MaxValue)]
