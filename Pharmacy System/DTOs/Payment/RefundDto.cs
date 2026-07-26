@@ -4,7 +4,9 @@ namespace Pharmacy_System.DTOs.Payment
 {
     public class RefundDto
     {
-        [Range(0.01, 1000000, ErrorMessage = "Refund amount must be greater than zero.")]
+        [
+            Range(0.01, 1000000, ErrorMessage = "Refund amount must be greater than zero.")
+        ]
         public decimal RefundedAmount { get; set; }
 
         [
@@ -12,10 +14,5 @@ namespace Pharmacy_System.DTOs.Payment
             MaxLength(200)
         ]
         public string RefundReason { get; set; } = string.Empty;
-
-        [
-            Required(ErrorMessage = "The Refund Date is Required!!")
-        ]
-        public DateTime RefundedDate { get; set; }
     }
 }
