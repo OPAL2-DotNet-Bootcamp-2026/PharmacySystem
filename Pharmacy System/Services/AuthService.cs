@@ -84,26 +84,20 @@ namespace Pharmacy_System.Services
             List<Claim> claims =
                 new List<Claim>
                 {
-                    new Claim(
-                        ClaimTypes.NameIdentifier,
-                        user.UserID.ToString()),
+                    new Claim(ClaimTypes.NameIdentifier,user.UserID.ToString()),
 
-                    new Claim(
-                        ClaimTypes.Email,
-                        user.Email),
+                    new Claim(ClaimTypes.Email,user.Email),
 
-                    new Claim(
-                        ClaimTypes.Role,
-                        user.Role)
+                    new Claim(ClaimTypes.Role,user.Role)
                 };
 
-            string secretKey =config["Jwt:Key"]!;
+            string secretKey =config["Jwt:Key"]!;  //create and protect the JWT token.
 
-            SymmetricSecurityKey key = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(secretKey));
+            //gets the secret password used to secure the token
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
-            SigningCredentials credentials = new SigningCredentials(key,
-                    SecurityAlgorithms.HmacSha256);
+            //converts the secret password into a security key.
+            SigningCredentials credentials = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
 
             JwtSecurityToken token = new JwtSecurityToken(
                     issuer: config["Jwt:Issuer"],
@@ -112,7 +106,7 @@ namespace Pharmacy_System.Services
                     expires: DateTime.UtcNow.AddHours(2),
                     signingCredentials: credentials);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return new JwtSecurityTokenHandler().WriteToken(token);  //converts the token object into a string that can be returned after login.
         }
     
 
