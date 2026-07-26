@@ -16,6 +16,7 @@ namespace Pharmacy_System.Repos
         public async Task<List<Supply>> GetAllSupply()
         {
             return await context.Supplies
+             .Where(s => s.IsActive)
                 .Include(s => s.Supplier)
                 .Include(s => s.Medicine)
                 .Include(s => s.Warehouse)
@@ -29,7 +30,7 @@ namespace Pharmacy_System.Repos
                 .Include(s => s.Supplier)
                 .Include(s => s.Medicine)
                 .Include(s => s.Warehouse)
-                .FirstOrDefaultAsync(s => s.SupplyId == id);
+                .FirstOrDefaultAsync(s => s.SupplyId == id && s.IsActive);
         }
 
         // Adds a new supply
@@ -45,10 +46,10 @@ namespace Pharmacy_System.Repos
             await context.SaveChangesAsync();
         }
 
-        // Deletes supply
         public async Task SupplyDelete(Supply supply)
         {
-            context.Supplies.Remove(supply);
+            supply.IsActive = false;
+
             await context.SaveChangesAsync();
         }
     }

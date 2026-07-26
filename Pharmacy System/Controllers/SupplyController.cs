@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pharmacy_System.DTOs.Supply;
 using Pharmacy_System.Services;
 
@@ -6,6 +7,7 @@ namespace Pharmacy_System.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin,Manager")]
     public class SupplyController : ControllerBase
     {
         private readonly SupplyService supplyService;
@@ -42,7 +44,7 @@ namespace Pharmacy_System.Controllers
 
         // POST: api/Supply
         [HttpPost]
-        public async Task<IActionResult> CreateSupply(CreateSupplyDto dto)
+        public async Task<IActionResult> CreateSupply([FromBody] CreateSupplyDto dto)
             
         {
             try
@@ -64,14 +66,14 @@ namespace Pharmacy_System.Controllers
 
         // PUT: api/Supply/1
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSupply(int id, UpdateSupplyDto dto)
+        public async Task<IActionResult> UpdateSupply(int id, [FromBody] UpdateSupplyDto dto)
             
            
         {
             try
             {
-                bool updated =
-                    await supplyService.UpdateSupply(id, dto);
+                bool updated = await supplyService.UpdateSupply(id, dto);
+                   
 
                 if (!updated)
                 {
@@ -86,19 +88,21 @@ namespace Pharmacy_System.Controllers
             }
         }
 
-        // DELETE: api/Supply/1
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteSupply(int id)
-        //{
-        //    bool deleted =
-        //        await supplyService.DeleteSupply(id);
+        //DELETE: api/Supply/1
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
 
-        //    if (!deleted)
-        //    {
-        //        return NotFound("Supply not found");
-        //    }
+        public async Task<IActionResult> DeleteSupply(int id)
+        {
+            bool deleted =
+                await supplyService.DeleteSupply(id);
 
-        //    return Ok("Supply deleted successfully");
+            if (!deleted)
+            {
+                return NotFound("Supply not found");
+            }
+
+            return Ok("Supply deleted successfully");
         }
     }
 }

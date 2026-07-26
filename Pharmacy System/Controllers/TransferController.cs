@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pharmacy_System.DTOs.Transfer;
 using Pharmacy_System.Services;
 
@@ -6,6 +7,8 @@ namespace Pharmacy_System.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
+
     public class TransferController : ControllerBase
     {
         private readonly TransferService transferService;
@@ -18,6 +21,8 @@ namespace Pharmacy_System.Controllers
 
         // GET: api/Transfer
         [HttpGet]
+        [Authorize(Roles = "Admin,Manager,Pharmacist")]
+
         public async Task<IActionResult> GetAllTransfers()
         {
             List<TransferDto> transfers =await transferService.GetAllTransfers();
@@ -28,6 +33,8 @@ namespace Pharmacy_System.Controllers
 
         // GET: api/Transfer/1
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Manager,Pharmacist")]
+
         public async Task<IActionResult> GetTransferById(int id)
         {
             TransferDto? transfer = await transferService.GetTransferById(id);
@@ -43,7 +50,9 @@ namespace Pharmacy_System.Controllers
 
         // POST: api/Transfer
         [HttpPost]
-        public async Task<IActionResult> CreateTransfer(CreateTransferDto dto)
+        [Authorize(Roles = "Admin,Manager")]
+
+        public async Task<IActionResult> CreateTransfer([FromBody] CreateTransferDto dto)
             
         {
             try
@@ -65,7 +74,8 @@ namespace Pharmacy_System.Controllers
 
         // PUT: api/Transfer/1
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTransfer(int id,UpdateTransferDto dto)
+        [Authorize(Roles = "Admin,Manager")]
+        public async Task<IActionResult> UpdateTransfer(int id,[FromBody] UpdateTransferDto dto)
         
             
         {

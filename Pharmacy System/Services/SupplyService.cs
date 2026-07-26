@@ -149,13 +149,13 @@ namespace Pharmacy_System.Services
         // Updates an existing supply
         // Returns true when successful
         // Returns false when the supply is not found
-        public async Task<bool> UpdateSupply(
-            int id,
-            UpdateSupplyDto dto)
+        public async Task<bool> UpdateSupply(  int id,  UpdateSupplyDto dto)
+          
+          
         {
             // Find the existing supply
-            Supply? supply =
-                await supplyRepo.GetSupplyById(id);
+            Supply? supply =await supplyRepo.GetSupplyById(id);
+                
 
             // Stop if the supply does not exist
             if (supply == null)
@@ -226,7 +226,25 @@ namespace Pharmacy_System.Services
             return true;
         }
 
-        
+        // Soft deletes an existing supply
+        // Returns true if the supply was found
+        // Returns false if the supply does not exist
+        public async Task<bool> DeleteSupply(int id)
+        {
+            // Find the active supply
+            Supply? supply = await supplyRepo.GetSupplyById(id);
+               
+
+            if (supply == null)
+            {
+                return false;
+            }
+
+            // Soft delete: changes IsActive to false
+            await supplyRepo.SupplyDelete(supply);
+
+            return true;
+        }
 
         // Converts the Supply model into SupplyDto
         // This method prepares the data returned by the API
