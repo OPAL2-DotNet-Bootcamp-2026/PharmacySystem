@@ -39,7 +39,12 @@ namespace Pharmacy_System.Repos
 
         public async Task<List<Pharmacist>> GetPharmacistByName(string name)
         {
-            return await context.pharmacists.Where(n => n.FullName == name).ToListAsync();
+            return await context.pharmacists.Where(n => n.FullName.Contains(name)).ToListAsync();
+        }
+
+        public async Task<List<Pharmacist>> GetByPharmacy(int pharmacyId)
+        {
+            return await context.pharmacists.Where(p => p.PharmacyID == pharmacyId).ToListAsync();
         }
 
         public async Task Add(Pharmacist pharmacists)
