@@ -12,7 +12,7 @@ namespace Pharmacy_System.DTOs.User
         [Required(ErrorMessage = "Password is required")]
         [MinLength(8, ErrorMessage = "New password must contain at least 8 characters")]
         [MaxLength(255)]
-        public string PasswordHash { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Role is required")]
         [MaxLength(30)]

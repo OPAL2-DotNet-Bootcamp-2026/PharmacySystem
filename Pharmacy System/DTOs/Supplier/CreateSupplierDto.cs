@@ -10,6 +10,7 @@ namespace Pharmacy_System.DTOs.Supplier
         [Required(ErrorMessage = "Phone number is required")]
         [MaxLength(13)]
         public string Phone { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Email is required")]
         [MaxLength(100)]
         [RegularExpression(@".+@.+\.com$", ErrorMessage = "Email must contain @ and end with .com")]
         public string Email { get; set; } = string.Empty;

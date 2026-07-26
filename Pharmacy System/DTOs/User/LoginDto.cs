@@ -10,7 +10,7 @@ namespace Pharmacy_System.DTOs.User
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Password is required")]
-        [MinLength(255)]
+        [MinLength(8), MaxLength(100)]
         public string PasswordHash { get; set; } = string.Empty;
 
 

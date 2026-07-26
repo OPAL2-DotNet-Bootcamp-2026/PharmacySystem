@@ -28,7 +28,9 @@ namespace Pharmacy_System.Models
         [Required]
         [Range(0, int.MaxValue)] //zero or more
         public int Quantity { get; set; }
-        public DateTime? ExpiryDate { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateOnly? ExpiryDate { get; set; }
 
        
 
