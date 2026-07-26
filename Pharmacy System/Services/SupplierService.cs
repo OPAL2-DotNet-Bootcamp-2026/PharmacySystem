@@ -58,9 +58,8 @@ namespace Pharmacy_System.Services
 
         public async Task<bool> CreateSupplier(CreateSupplierDto dto)
         {
-
             bool emailExists = await supplierRepo.EmailExists(dto.Email);
-            // Stop if the email already exists
+
             if (emailExists)
             {
                 return false;
@@ -71,10 +70,11 @@ namespace Pharmacy_System.Services
                 FullName = dto.FullName,
                 Phone = dto.Phone,
                 Email = dto.Email,
-                Location = dto.Location
+                Location = dto.Location,
+                IsActive = true
             };
 
-            supplierRepo.Add(supplier);
+            await supplierRepo.Add(supplier);
 
             return true;
         }
@@ -110,22 +110,22 @@ namespace Pharmacy_System.Services
             return true;
         }
 
-    //    // Delete a supplier
-    //    public async Task<bool> DeleteSupplier(int id)
-    //    {
-    //        Supplier? supplier = await supplierRepo.GetSupplierById(id);
+        // Delete a supplier
+        public async Task<bool> DeleteSupplier(int id)
+        {
+            Supplier? supplier = await supplierRepo.GetSupplierById(id);
 
-    //        // Stop if the supplier does not exist
-    //        if (supplier == null)
-    //        {
-    //            return false;
-    //        }
+            // Stop if the supplier does not exist
+            if (supplier == null)
+            {
+                return false;
+            }
 
-    //        supplierRepo.SupplierDelete(supplier);
+            supplierRepo.SupplierDelete(supplier);
 
-    //        return true;
-    //    }
-}
+            return true;
+        }
+    }
 
 
 }
