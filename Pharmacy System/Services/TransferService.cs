@@ -88,6 +88,12 @@ namespace Pharmacy_System.Services
                 throw new Exception("Pharmacist order not found");
             }
 
+            // Only approved orders can create transfers
+            if (pharmacistOrder.Status.ToLower() != "approved")
+            {
+                throw new Exception( "Only approved pharmacist orders can create a transfer");
+                   
+            }
 
             // Check that the order belongs to the selected pharmacy
             if (pharmacistOrder.PharmacyID != dto.PharmacyID)
@@ -160,9 +166,9 @@ namespace Pharmacy_System.Services
         }
 
         // Updates transfer status and receive date
-        public async Task<bool> UpdateTransfer(
-            int id,
-            UpdateTransferDto dto)
+        public async Task<bool> UpdateTransfer(  int id,  UpdateTransferDto dto)
+   
+   
         {
             Transfer? transfer =await transferRepo.GetTransferById(id);
                 
@@ -172,47 +178,50 @@ namespace Pharmacy_System.Services
                 return false;
             }
 
+            // Check the old status before changing it
+            if (transfer.Status == "Cancelled")
+            {
+                throw new Exception("A cancelled transfer cannot be updated");
+                    
+            }
+
+            if (transfer.Status == "Received")
+            {
+                throw new Exception("A received transfer cannot be updated");
+                    
+            }
+
+            // Check that status was entered
+            if (string.IsNullOrWhiteSpace(dto.Status))
+            {
+                throw new Exception( "Status is required");
+                   
+            }
+
             string status = dto.Status.Trim();
 
-            // Only these statuses are allowed
             string[] allowedStatuses =
             {
                 "Pending",
                 "Shipped",
                 "Received",
                 "Cancelled"
-            };
+             };
 
-            string? correctStatus =allowedStatuses.FirstOrDefault(s =>s.ToLower() == status.Trim().ToLower());
-                
-                    
+            // Search for the status in the allowed list
+
+            string? correctStatus =allowedStatuses.FirstOrDefault(s =>s.ToLower() == status.ToLower());
+    
+        
 
             if (correctStatus == null)
             {
-                throw new Exception("Status must be Pending, Shipped, Received or Cancelled");
-             }
-            transfer.Status = correctStatus;
-
-
-            // Prevent changing a cancelled transfer
-            if (transfer.Status == "Cancelled")
-            {
-                throw new Exception("A cancelled transfer cannot be updated");
-             }       
-                
-            
-
-            // Prevent changing a received transfer
-            if (transfer.Status == "Received")
-            {
-                throw new Exception("A received transfer cannot be updated");
-                    
-                
+                throw new Exception( "Status must be Pending, Shipped, Received or Cancelled");
+                   
             }
 
             transfer.Status = correctStatus;
 
-            // ReceiveDate is added only when status becomes Received
             if (correctStatus == "Received")
             {
                 transfer.ReceiveDate =dto.ReceiveDate ?? DateTime.Now;
@@ -228,7 +237,7 @@ namespace Pharmacy_System.Services
             return true;
         }
 
-        
+
 
         // Converts Transfer model into TransferDto
         private TransferDto ConvertToDto(Transfer transfer)
@@ -243,9 +252,8 @@ namespace Pharmacy_System.Services
                 PharmacyID = transfer.PharmacyID,
                 PharmacyName = transfer.Pharmacy.PharmacyName,
 
-                PharmacistOrderId =
-                    transfer.PharmacistOrderId,
-
+                PharmacistOrderId =  transfer.PharmacistOrderId,
+                  
                 TransferDate = transfer.TransferDate,
                 ReceiveDate = transfer.ReceiveDate,
                 Status = transfer.Status
