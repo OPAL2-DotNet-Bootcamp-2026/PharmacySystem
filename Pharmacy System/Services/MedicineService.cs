@@ -160,20 +160,20 @@ namespace Pharmacy_System.Services
         }
 
         //// Soft delete medicine
-        //public async Task<bool> Delete(int id)
-        //{
-        //    Medicine? medicine =
-        //        await medicineRepo.GetMedicineById(id);
+        public async Task<bool> MedicineDelete(int id)
+        {
+            Medicine? medicine =
+                await medicineRepo.GetMedicineById(id);
 
-        //    if (medicine == null)
-        //    {
-        //        return false;
-        //    }
+            if (medicine == null)
+            {
+                return false;
+            }
 
-        //    await medicineRepo.MedicineDelete(medicine);
+            await medicineRepo.MedicineDelete(medicine);
 
-        //    return true;
-        //}
+            return true;
+        }
 
 
     }
