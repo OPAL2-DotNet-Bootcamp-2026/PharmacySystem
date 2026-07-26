@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pharmacy_System.DTOs.CustomerOrder;
 using Pharmacy_System.Services;
 
@@ -6,6 +7,8 @@ namespace Pharmacy_System.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin,Pharmacist")]
+
     public class CustomerOrderController : ControllerBase
     {
         private readonly CustomerOrderService customerOrderService;
@@ -46,7 +49,7 @@ namespace Pharmacy_System.Controllers
         // Creates a new customer order
         // POST: api/CustomerOrder
         [HttpPost]
-        public async Task<IActionResult> CreateCustomerOrder(  CreateCustomerOrderDto dto)
+        public async Task<IActionResult> CreateCustomerOrder([FromBody] CreateCustomerOrderDto dto)
           
         {
             try
@@ -69,7 +72,7 @@ namespace Pharmacy_System.Controllers
         // Updates customer order status
         // PUT: api/CustomerOrder/1/status
         [HttpPut("{id}/status")]
-        public async Task<IActionResult> UpdateCustomerOrderStatus( int id,UpdateCustomerOrderStatusDto dto)
+        public async Task<IActionResult> UpdateCustomerOrderStatus( int id, [FromBody] UpdateCustomerOrderStatusDto dto)
            
             
         {
@@ -97,6 +100,8 @@ namespace Pharmacy_System.Controllers
         // Deletes a customer order
         // DELETE: api/CustomerOrder/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> DeleteCustomerOrder(int id)
         {
             try
