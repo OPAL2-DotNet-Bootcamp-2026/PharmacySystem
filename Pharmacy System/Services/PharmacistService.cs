@@ -60,7 +60,7 @@ namespace Pharmacy_System.Services
                 PasswordHash = HashPassword(dto.Password),   // never store plaintext
                 Role = "Pharmacist"
             };
-            await userRepo.Add(user);   // saves, but stays PENDING inside the transaction
+            await userRepo.AddUser(user);   // saves, but stays PENDING inside the transaction
                                         // after this, user.UserID is filled in by the database
 
             // Step 2 — create the profile that points at that User.
