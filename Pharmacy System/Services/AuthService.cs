@@ -8,114 +8,82 @@ using System.Text;
 
 namespace Pharmacy_System.Services
 {
-    public class AuthService
-    {
-        private IConfiguration config;
-        private UserRepo userRepo;
-
-        public AuthService(
-            IConfiguration _config,
-            UserRepo _userRepo)
+   
+        public class AuthService
         {
-            config = _config;
-            userRepo = _userRepo;
+            private IConfiguration config;
 
-        }
-
-        // Check email and password, then return a token
-        public async Task<string> Login(LoginDto dto)
-        {
-            User? user = await userRepo.GetUserByEmail(dto.Email);
-
-            if (user == null)
+           // Read JWT settings from appsettings.json
+           public AuthService(IConfiguration _config)
             {
-                throw new Exception("Invalid email or password");
+                config = _config;
             }
 
-            if (user.IsActive == false)
+
+           // Create a JWT token for the user.
+           public string GenerateToken(User user)
             {
-                throw new Exception("This account is inactive");
-            }
+                string secretKey =
+                    config["JwtSettings:SecretKey"]!;
 
-            bool passwordIsCorrect =
-                BCrypt.Net.BCrypt.Verify(dto.PasswordHash,user.PasswordHash);
+                string issuer =
+                    config["JwtSettings:Issuer"]!;
 
-            if (passwordIsCorrect == false)
-            {
-                throw new Exception("Invalid email or password");
-            }
+                string audience =
+                    config["JwtSettings:Audience"]!;
 
-            return GenerateToken(user);
-        }
+                int hours = int.Parse(
+                    config["JwtSettings:ExpiryHours"]!);
 
 
-        // Admin creates a new system user
-        public async Task<int> CreateUser(
-            RegisterUserDto dto)
-        {
-            User? existingUser =await userRepo.GetUserByEmail(dto.Email);
+               // Create the security key.
+                 SymmetricSecurityKey key =
+                    new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(secretKey));
 
-            if (existingUser != null)
-            {
-                throw new Exception("The email already exists");
-            }
 
-            User user = new User
-            {
-                Email = dto.Email.Trim().ToLower(),
+                 // Sign the token.
+                 SigningCredentials credentials =
+                    new SigningCredentials(
+                        key,
+                        SecurityAlgorithms.HmacSha256);
 
-                PasswordHash =
-                    BCrypt.Net.BCrypt.HashPassword(dto.Password),
 
-                Role = dto.Role,
-                IsActive = true
+            // User information inside the token.
+                Claim[] claims =
+                {
+                new Claim(
+                    ClaimTypes.NameIdentifier,
+                    user.UserID.ToString()),
+
+                new Claim(
+                    ClaimTypes.Name,
+                    user.Username),
+
+                new Claim(
+                    ClaimTypes.Email,
+                    user.Email),
+
+                new Claim(
+                    ClaimTypes.Role,
+                    user.Role)
             };
 
-            await userRepo.AddUser(user);
 
-            return user.UserID;
+                 // Create the token.
+                   JwtSecurityToken token =
+                    new JwtSecurityToken(
+                        issuer: issuer,
+                        audience: audience,
+                        claims: claims,
+                        expires: DateTime.UtcNow.AddHours(hours),
+                        signingCredentials: credentials
+                    );
+
+
+                    // Return the token as a string.
+                    return new JwtSecurityTokenHandler().WriteToken(token);
+            }
+
         }
-
-
-
-        // Generate JWT token
-        public string GenerateToken(User user)
-        {
-            List<Claim> claims =
-                new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier,user.UserID.ToString()),
-
-                    new Claim(ClaimTypes.Email,user.Email),
-
-                    new Claim(ClaimTypes.Role,user.Role)
-                };
-
-            string secretKey =config["Jwt:Key"]!;  //create and protect the JWT token.
-
-            //gets the secret password used to secure the token
-            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-
-            //converts the secret password into a security key.
-            SigningCredentials credentials = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
-
-            JwtSecurityToken token = new JwtSecurityToken(
-                    issuer: config["Jwt:Issuer"],
-                    audience: config["Jwt:Audience"],
-                    claims: claims,
-                    expires: DateTime.UtcNow.AddHours(2),
-                    signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);  //converts the token object into a string that can be returned after login.
-        }
-    
-
-
-
-
-
-
-}
-
-
 }
