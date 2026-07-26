@@ -16,6 +16,12 @@ namespace Pharmacy_System.Models
         [MaxLength(100)]
         [RegularExpression(@".+@.+\.com$", ErrorMessage = "Email must contain @ and end with .com")]
         public string Email { get; set; } // user input
+
+
+        [Required]
+        [MaxLength(50)]
+        public string Username { get; set; } = string.Empty;
+
         [Required]
         [MaxLength(255)]
         public string PasswordHash { get; set; } //user input
