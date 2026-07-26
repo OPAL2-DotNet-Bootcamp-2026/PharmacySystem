@@ -3,7 +3,13 @@
 namespace Pharmacy_System.DTOs.User
 {
     public class RegisterUserDto
+
     {
+
+        [Required(ErrorMessage = "Username is required")]
+        [MaxLength(50)]
+        public string Username { get; set; } = string.Empty;
+
         [Required(ErrorMessage = "Email is required")]
         [RegularExpression(@".+@.+\.com$", ErrorMessage = "Email must contain @ and end with .com")]
         [MaxLength(100)]

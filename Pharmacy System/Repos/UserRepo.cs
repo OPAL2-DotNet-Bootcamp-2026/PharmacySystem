@@ -39,7 +39,7 @@ namespace Pharmacy_System.Repos
         }
 
         
-        public async Task Add(User user)
+        public async Task AddUser(User user)
         {
             await context.users.AddAsync(user);
             await context.SaveChangesAsync();
