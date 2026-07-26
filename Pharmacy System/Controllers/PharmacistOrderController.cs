@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pharmacy_System.DTOs.PharmacistOrder;
 using Pharmacy_System.Services;
 
@@ -6,6 +7,8 @@ namespace Pharmacy_System.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
+
     public class PharmacistOrderController : ControllerBase
     {
         private readonly PharmacistOrderService pharmacistOrderService;
@@ -19,6 +22,8 @@ namespace Pharmacy_System.Controllers
         // Returns all pharmacist orders
         // GET: api/PharmacistOrder
         [HttpGet]
+        [Authorize(Roles = "Admin,Manager,Pharmacist")]
+
         public async Task<IActionResult> GetAllPharmacistOrders()
         {
             List<PharmacistOrderDto> orders =await pharmacistOrderService.GetAllPharmacistOrders();
@@ -30,6 +35,8 @@ namespace Pharmacy_System.Controllers
         // Returns one pharmacist order by ID
         // GET: api/PharmacistOrder/1
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Manager,Pharmacist")]
+
         public async Task<IActionResult> GetPharmacistOrderById(int id)
         {
             PharmacistOrderDto? order =  await pharmacistOrderService.GetPharmacistOrderById(id);
@@ -46,7 +53,9 @@ namespace Pharmacy_System.Controllers
         // Creates a new pharmacist order
         // POST: api/PharmacistOrder
         [HttpPost]
-        public async Task<IActionResult> CreatePharmacistOrder(CreatePharmacistOrderDto dto)
+        [Authorize(Roles = "Admin,Pharmacist")]
+
+        public async Task<IActionResult> CreatePharmacistOrder([FromBody] CreatePharmacistOrderDto dto)
             
         {
             try
@@ -70,7 +79,9 @@ namespace Pharmacy_System.Controllers
         // Updates pharmacist order status
         // PUT: api/PharmacistOrder/1/status
         [HttpPut("{id}/status")]
-        public async Task<IActionResult> UpdatePharmacistOrderStatus( int id, UpdatePharmacistOrderDto dto)
+        [Authorize(Roles = "Admin,Manager")]
+
+        public async Task<IActionResult> UpdatePharmacistOrderStatus( int id, [FromBody] UpdatePharmacistOrderDto dto)
            
            
         {
@@ -98,6 +109,8 @@ namespace Pharmacy_System.Controllers
         // Deletes a pharmacist order
         // DELETE: api/PharmacistOrder/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> DeletePharmacistOrder(int id)
         {
             try
