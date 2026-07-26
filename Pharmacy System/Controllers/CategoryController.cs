@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pharmacy_System.DTOs.Category;
 using Pharmacy_System.Services;
 
@@ -6,47 +7,53 @@ namespace Pharmacy_System.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CategoryController : ControllerBase
     {
         private readonly CategoryService categoryService;
 
         public CategoryController(CategoryService categoryService)
-            
         {
             this.categoryService = categoryService;
         }
 
-        // Returns all active categories
+        // Admin, Manager and Pharmacist can view all categories
         // GET: api/Category
         [HttpGet]
+        [Authorize(Roles = "Admin,Manager,Pharmacist")]
         public async Task<IActionResult> GetAllCategories()
         {
-            List<CategoryDto> categories = await categoryService.GetAllCategories();
-               
+            List<CategoryDto> categories =await categoryService.GetAllCategories();
+                
 
             return Ok(categories);
         }
 
-        // Returns one active category by ID
+        // Admin, Manager and Pharmacist can view one category
         // GET: api/Category/1
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Manager,Pharmacist")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
-            CategoryDto? category = await categoryService.GetCategoryById(id);
-               
+            CategoryDto? category =await categoryService.GetCategoryById(id);
+                
 
             if (category == null)
             {
-                return NotFound("Category not found");
+                return NotFound(new
+                {
+                    message = "Category not found"
+                });
             }
 
             return Ok(category);
         }
 
-        // Creates a new category
+        // Only Admin can create categories
         // POST: api/Category
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CreateCategoryDto dto)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryDto dto)
             
         {
             try
@@ -62,15 +69,19 @@ namespace Pharmacy_System.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
             }
         }
 
-        // Updates an existing category
+        // Only Admin can update categories
         // PUT: api/Category/1
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(int id,UpdateCategoryDto dto)
-            
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateCategory( int id,[FromBody] UpdateCategoryDto dto)
+           
             
         {
             try
@@ -80,41 +91,56 @@ namespace Pharmacy_System.Controllers
 
                 if (!updated)
                 {
-                    return NotFound("Category not found");
+                    return NotFound(new
+                    {
+                        message = "Category not found"
+                    });
                 }
 
-                return Ok( "Category updated successfully" );
-                   
-               
+                return Ok(new
+                {
+                    message = "Category updated successfully"
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
             }
         }
 
-        
+        // Only Admin can delete categories
         // DELETE: api/Category/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             try
             {
                 bool deleted =await categoryService.DeleteCategory(id);
-
                     
+
                 if (!deleted)
                 {
-                    return NotFound("Category not found");
+                    return NotFound(new
+                    {
+                        message = "Category not found"
+                    });
                 }
 
-                return Ok("Category deleted successfully");
-                    
-                
+                return Ok(new
+                {
+                    message = "Category deleted successfully"
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
             }
         }
     }
