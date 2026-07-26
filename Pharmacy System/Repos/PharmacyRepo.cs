@@ -25,7 +25,12 @@ namespace Pharmacy_System.Repos
 
         public async Task<List<Pharmacy>> GetPharmacyByName(string name)
         {
-            return await context.pharmacies.Where(n => n.PharmacyName == name) .ToListAsync();
+            return await context.pharmacies.Where(n => n.PharmacyName.Contains(name)) .ToListAsync();
+        }
+
+        public async Task<List<Pharmacy>> GetByLocation(string location)
+        {
+            return await context.pharmacies.Where(n => n.Location.Contains(location)).ToListAsync();
         }
 
         public async Task<List<PharmacyStock>> GetPharmacyStockById(int id)
