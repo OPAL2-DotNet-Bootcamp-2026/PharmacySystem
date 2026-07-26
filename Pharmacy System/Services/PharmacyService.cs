@@ -1,60 +1,36 @@
 ﻿using Pharmacy_System.Repos;
 using Pharmacy_System.Modules;
+using Pharmacy_System.Models;
 using Pharmacy_System.DTOs.Pharmacy;
+using Pharmacy_System.DTOs.Pharmacist;
+using Pharmacy_System.DTOs.PharmacyStock;
 
 namespace Pharmacy_System.Services
 {
     public class PharmacyService
     {
         private readonly PharmacyRepo pharmacyRepo;
+        private readonly PharmacistRepo pharmacistRepo;
 
-        public PharmacyService(PharmacyRepo _pharmacyRepo)
+        public PharmacyService(PharmacyRepo pharmacyRepo, PharmacistRepo pharmacistRepo)
         {
-            pharmacyRepo = _pharmacyRepo;
+            this.pharmacyRepo = pharmacyRepo;
+            this.pharmacistRepo = pharmacistRepo;
         }
 
-        // Get All Pharmacies
-        public List<PharmacyDto> GetAll()
+        public async Task<List<PharmacyDto>> GetAll()
         {
-            List<Pharmacy> pharmacies = pharmacyRepo.GetAllPharmacy();
-
-            List<PharmacyDto> response = new List<PharmacyDto>();
-
-            foreach (var pharmacy in pharmacies)
-            {
-                response.Add(new PharmacyDto
-                {
-                    PharmacyID = pharmacy.PharmacyID,
-                    PharmacyName = pharmacy.PharmacyName,
-                    Location = pharmacy.Location,
-                    Phone = pharmacy.Phone,
-                    StorageCapacity = pharmacy.StorageCapacity
-                });
-            }
-
-            return response;
+            List<Pharmacy> pharmacies = await pharmacyRepo.GetAllPharmacy();
+            return pharmacies.Select(ToDto).ToList();
         }
 
-        // Get Pharmacy By Id
-        public PharmacyDto GetById(int id)
+        public async Task<PharmacyDto?> GetById(int id)
         {
-            Pharmacy pharmacy = pharmacyRepo.GetPharmacyById(id);
-
-            if (pharmacy == null)
-                return null;
-
-            return new PharmacyDto
-            {
-                PharmacyID = pharmacy.PharmacyID,
-                PharmacyName = pharmacy.PharmacyName,
-                Location = pharmacy.Location,
-                Phone = pharmacy.Phone,
-                StorageCapacity = pharmacy.StorageCapacity
-            };
+            Pharmacy? pharmacy = await pharmacyRepo.GetPharmacyById(id);
+            return pharmacy == null ? null : ToDto(pharmacy);
         }
 
-        // Add Pharmacy
-        public PharmacyDto Add(CreatePharmacyDto dto)
+        public async Task<PharmacyDto> Add(CreatePharmacyDto dto)
         {
             Pharmacy pharmacy = new Pharmacy
             {
@@ -64,41 +40,81 @@ namespace Pharmacy_System.Services
                 StorageCapacity = dto.StorageCapacity
             };
 
-            pharmacyRepo.Add(pharmacy);
-
-            return new PharmacyDto
-            {
-                PharmacyID = pharmacy.PharmacyID,
-                PharmacyName = pharmacy.PharmacyName,
-                Location = pharmacy.Location,
-                Phone = pharmacy.Phone,
-                StorageCapacity = pharmacy.StorageCapacity
-            };
+            await pharmacyRepo.Add(pharmacy);
+            return ToDto(pharmacy);
         }
 
-        // Update Pharmacy
-        public PharmacyDto Update(int id, UpdatePharmacyDto dto)
+        public async Task<PharmacyDto?> Update(int id, UpdatePharmacyDto dto)
         {
-            Pharmacy pharmacy = pharmacyRepo.GetPharmacyById(id);
-
-            if (pharmacy == null)
-                return null;
+            Pharmacy? pharmacy = await pharmacyRepo.GetPharmacyById(id);
+            if (pharmacy == null) return null;
 
             pharmacy.PharmacyName = dto.PharmacyName;
             pharmacy.Location = dto.Location;
             pharmacy.Phone = dto.Phone;
             pharmacy.StorageCapacity = dto.StorageCapacity;
 
-            pharmacyRepo.Update();
-
-            return new PharmacyDto
-            {
-                PharmacyID = pharmacy.PharmacyID,
-                PharmacyName = pharmacy.PharmacyName,
-                Location = pharmacy.Location,
-                Phone = pharmacy.Phone,
-                StorageCapacity = pharmacy.StorageCapacity
-            };
+            await pharmacyRepo.Update();
+            return ToDto(pharmacy);
         }
+
+        public async Task<bool> Delete(int id)
+        {
+            Pharmacy? pharmacy = await pharmacyRepo.GetPharmacyById(id);
+            if (pharmacy == null) return false;
+
+            await pharmacyRepo.Delete(pharmacy);
+            return true;
+        }
+
+        public async Task<List<PharmacyDto>> SearchByName(string name)
+        {
+            List<Pharmacy> pharmacies = await pharmacyRepo.GetPharmacyByName(name);
+            return pharmacies.Select(ToDto).ToList();
+        }
+
+        public async Task<List<PharmacyDto>> GetByLocation(string location)
+        {
+            List<Pharmacy> pharmacies = await pharmacyRepo.GetByLocation(location);
+            return pharmacies.Select(ToDto).ToList();
+        }
+
+        public async Task<List<PharmacistDto>> GetPharmacists(int id)
+        {
+            List<Pharmacist> staff = await pharmacistRepo.GetByPharmacy(id);
+            return staff.Select(p => new PharmacistDto
+            {
+                PharmacistID = p.PharmacistID,
+                UserID = p.UserID,
+                PharmacyID = p.PharmacyID,
+                FullName = p.FullName,
+                Phone = p.Phone,
+                Email = p.Email,
+                IsActive = p.IsActive
+            }).ToList();
+        }
+
+        public async Task<List<PharmacyStockDto>> GetStock(int id)
+        {
+            List<PharmacyStock> stock = await pharmacyRepo.GetPharmacyStockById(id);
+            return stock.Select(s => new PharmacyStockDto
+            {
+                PharmacyStockID = s.PharmacyStockID,
+                PharmacyID = s.PharmacyID,
+                MedicineID = s.MedicineID,
+                Quantity = s.Quantity,
+                ExpiryDate = s.ExpiryDate
+            }).ToList();
+        }
+
+        private static PharmacyDto ToDto(Pharmacy p) => new PharmacyDto
+        {
+            PharmacyID = p.PharmacyID,
+            PharmacyName = p.PharmacyName,
+            Location = p.Location,
+            Phone = p.Phone,
+            StorageCapacity = p.StorageCapacity,
+            IsActive = p.IsActive
+        };
     }
 }
