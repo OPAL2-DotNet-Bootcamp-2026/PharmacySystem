@@ -8,12 +8,12 @@ namespace Pharmacy_System.Services
     {
 
             private UserRepo userRepo;
-            //private AuthService authService;
+            private AuthService authService;
 
-            public UserService(UserRepo _userRepo)  // ,  AuthService _authService
+            public UserService(UserRepo _userRepo, AuthService _authService) 
             {
                 userRepo = _userRepo;
-               // authService = _authService;
+                authService = _authService;
             }
 
         // --- Create User  / Register 
@@ -76,12 +76,12 @@ namespace Pharmacy_System.Services
                 return null;
             }
 
-            //     // Generate JWT token
-          //  string token = authService.GenerateToken(user);
+           // Generate JWT token
+         string token = authService.GenerateToken(user);
 
             LoginResponseDto response = new LoginResponseDto();
 
-         //   response.Token = token;
+            response.Token = token;
             response.Username = user.Username;
             response.Role = user.Role;
 
