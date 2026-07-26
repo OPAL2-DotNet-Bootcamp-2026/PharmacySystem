@@ -4,6 +4,7 @@ using Pharmacy_System.Models;
 using Pharmacy_System.Modules;
 using Pharmacy_System.Repos;
 
+
 namespace Pharmacy_System.Services
 {
     public class WarehouseStockService
@@ -127,12 +128,6 @@ namespace Pharmacy_System.Services
 
             }).ToList();
         }
-
-
-
-
-
-
 
 
 
