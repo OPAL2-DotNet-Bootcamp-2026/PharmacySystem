@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pharmacy_System.Models;
 using Pharmacy_System.Modules;
-using System.Reflection.Emit;
 
 namespace Pharmacy_System
 {
@@ -35,9 +34,9 @@ namespace Pharmacy_System
                                     Trusted_Connection=True;
                                     TrustServerCertificate=True;");
         }
-        
 
-        public override Task<int> SaveChangesAsync(CancellationToken ct = default)
+
+        private void StampAuditFields()
         {
             var now = DateTime.UtcNow;
             foreach (var entry in ChangeTracker.Entries<BaseEntity>())
@@ -47,12 +46,25 @@ namespace Pharmacy_System
                 else if (entry.State == EntityState.Modified)
                 {
                     entry.Entity.UpdatedAt = now;
-                    entry.Property(nameof(BaseEntity.CreatedAt)).IsModified = false;                    
+                    entry.Property(nameof(BaseEntity.CreatedAt)).IsModified = false;
                 }
             }
-            return base.SaveChangesAsync(ct);
         }
 
-        
+        // Every sync save funnels through here
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            StampAuditFields();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        // Every async save funnels through here.
+        public override Task<int> SaveChangesAsync(
+            bool acceptAllChangesOnSuccess,
+            CancellationToken cancellationToken = default)
+        {
+            StampAuditFields();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
     }
 }
