@@ -77,7 +77,7 @@ namespace Pharmacy_System.Services
             }
 
            // Generate JWT token
-         string token = authService.GenerateToken(user);
+           string token = authService.GenerateToken(user);
 
             LoginResponseDto response = new LoginResponseDto();
 

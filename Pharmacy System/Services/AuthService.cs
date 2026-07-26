@@ -79,7 +79,7 @@ namespace Pharmacy_System.Services
 
 
         // Generate JWT token
-        private string GenerateToken(User user)
+        public string GenerateToken(User user)
         {
             List<Claim> claims =
                 new List<Claim>
