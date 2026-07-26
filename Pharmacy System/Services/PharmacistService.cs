@@ -1,120 +1,144 @@
 ﻿using Pharmacy_System.Repos;
 using Pharmacy_System.Modules;
+using Pharmacy_System.Models;
 using Pharmacy_System.DTOs.Pharmacist;
+using Microsoft.EntityFrameworkCore;   // needed for context.Database.BeginTransactionAsync()
 
 namespace Pharmacy_System.Services
 {
     public class PharmacistService
     {
+        // All three are supplied by dependency injection.
+        // Because they're registered AddScoped, DI gives all three the
+        // SAME PharmacyContext instance for one web request — which is
+        // what lets a transaction opened here also cover the repos' saves.
         private readonly PharmacistRepo pharmacistRepo;
-        
+        private readonly UserRepo userRepo;
+        private readonly PharmacyContext context;
 
-        public PharmacistService(PharmacistRepo _pharmacistRepo)
+        public PharmacistService(
+            PharmacistRepo pharmacistRepo,
+            UserRepo userRepo,
+            PharmacyContext context)
         {
-            pharmacistRepo = _pharmacistRepo;
-            
+            this.pharmacistRepo = pharmacistRepo;
+            this.userRepo = userRepo;
+            this.context = context;
         }
 
-        // Get All Pharmacists
-        public List<PharmacistDto> GetAll()
+        // ---- reads ----
+
+        public async Task<List<PharmacistDto>> GetAll()
         {
-            List<Pharmacist> pharmacists = pharmacistRepo.GetAllPharmacist();
-
-            List<PharmacistDto> response = new List<PharmacistDto>();
-
-            foreach (var pharmacist in pharmacists)
-            {
-                response.Add(new PharmacistDto
-                {
-                    PharmacistID = pharmacist.PharmacistID,
-                    FullName = pharmacist.FullName,
-                    Email = pharmacist.Email,
-                    Phone = pharmacist.Phone,
-                    PharmacyID = pharmacist.PharmacyID
-                });
-            }
-
-            return response;
+            List<Pharmacist> pharmacists = await pharmacistRepo.GetAllPharmacist();
+            return pharmacists.Select(ToDto).ToList();
         }
 
-        // Get Pharmacist By Id
-        public PharmacistDto GetById(int id)
+        public async Task<PharmacistDto?> GetById(int id)
         {
-            Pharmacist pharmacist = pharmacistRepo.GetPharmacistById(id);
+            Pharmacist? pharmacist = await pharmacistRepo.GetPharmacistById(id);
+            return pharmacist == null ? null : ToDto(pharmacist);
+        }
 
-            if (pharmacist == null)
-            {
+        // ---- create: profile + linked User account, all-or-nothing ----
+
+        public async Task<PharmacistDto?> Add(CreatePharmacistDto dto)
+        {
+            // Reject early if the email is already taken (avoids starting work we'll undo).
+            if (await userRepo.EmailExists(dto.Email))
                 return null;
-            }
 
-            PharmacistDto response = new PharmacistDto
+            // Open the "all or nothing" wrapper on the shared context.
+            // 'using' means: if we leave this method without committing,
+            // the transaction is disposed and everything rolls back.
+            using var tx = await context.Database.BeginTransactionAsync();
+
+            // Step 1 — create the login account.
+            User user = new User
             {
-                PharmacistID = pharmacist.PharmacistID,
-                FullName = pharmacist.FullName,
-                Email = pharmacist.Email,
-                Phone= pharmacist.Phone,
-                PharmacyID = pharmacist.PharmacyID
+                Email = dto.Email,
+                PasswordHash = HashPassword(dto.Password),   // never store plaintext
+                Role = "Pharmacist"
             };
+            await userRepo.Add(user);   // saves, but stays PENDING inside the transaction
+                                        // after this, user.UserID is filled in by the database
 
-
-            return response;
-        }
-
-        // Create Pharmacist
-        public PharmacistDto Add(CreatePharmacistDto dto)
-        {
+            // Step 2 — create the profile that points at that User.
             Pharmacist pharmacist = new Pharmacist
             {
+                UserID = user.UserID,   // link the profile to the account we just made
+                PharmacyID = dto.PharmacyID,
                 FullName = dto.FullName,
-                Email = dto.Email,
                 Phone = dto.Phone,
-                PharmacyID = dto.PharmacyID
+                Email = dto.Email
             };
+            await pharmacistRepo.Add(pharmacist);   // if THIS throws, we never reach the commit
+                                                    // below, so Step 1 is rolled back too
 
-            if (pharmacistRepo.EmailExists(dto.Email))
-                return null;
+            // Both inserts worked — make them permanent, together.
+            await tx.CommitAsync();
 
-            pharmacistRepo.Add(pharmacist);
-
-            PharmacistDto response = new PharmacistDto
-            {
-                PharmacistID = pharmacist.PharmacistID,
-                FullName = pharmacist.FullName,
-                Email = pharmacist.Email,
-                Phone = pharmacist.Phone,
-                PharmacyID = pharmacist.PharmacyID
-            };
-
-            return response;
+            return ToDto(pharmacist);
         }
 
-        // Update Pharmacist
-        public PharmacistDto Update(int id, UpdatePharmacistDto dto)
-        {
-            Pharmacist pharmacist = pharmacistRepo.GetPharmacistById(id);
+        // ---- update: profile fields only (login lives on the User account) ----
 
-            if (pharmacist == null)
-            {
-                return null;
-            }
-            
+        public async Task<PharmacistDto?> Update(int id, UpdatePharmacistDto dto)
+        {
+            Pharmacist? pharmacist = await pharmacistRepo.GetPharmacistById(id);
+            if (pharmacist == null) return null;
+
             pharmacist.FullName = dto.FullName;
-            pharmacist.Email = dto.Email;
             pharmacist.Phone = dto.Phone;
+            pharmacist.Email = dto.Email;
             pharmacist.PharmacyID = dto.PharmacyID;
 
-            pharmacistRepo.PharmacistUpdate();
-
-            PharmacistDto response = new PharmacistDto
-            {
-                PharmacistID = pharmacist.PharmacistID,
-                FullName = pharmacist.FullName,
-                Email = pharmacist.Email,
-                Phone = pharmacist.Phone,
-                PharmacyID = pharmacist.PharmacyID
-            };
-
-            return response;
+            await pharmacistRepo.PharmacistUpdate();
+            return ToDto(pharmacist);
         }
+
+        // ---- soft delete (repo sets IsActive = false) ----
+
+        public async Task<bool> Delete(int id)
+        {
+            Pharmacist? pharmacist = await pharmacistRepo.GetPharmacistById(id);
+            if (pharmacist == null) return false;
+
+            await pharmacistRepo.PharmacistDelete(pharmacist);
+            return true;
+        }
+
+        // ---- queries ----
+
+        public async Task<List<PharmacistDto>> GetByPharmacy(int pharmacyId)
+        {
+            List<Pharmacist> list = await pharmacistRepo.GetByPharmacy(pharmacyId);
+            return list.Select(ToDto).ToList();
+        }
+
+        public async Task<List<PharmacistDto>> SearchByName(string name)
+        {
+            List<Pharmacist> list = await pharmacistRepo.GetPharmacistByName(name);
+            return list.Select(ToDto).ToList();
+        }
+
+        // ---- helpers ----
+
+        // Maps the entity to the read DTO. (PharmacyName stays empty unless the
+        // repo .Include()s the pharmacy navigation — see the review note.)
+        private static PharmacistDto ToDto(Pharmacist p) => new PharmacistDto
+        {
+            PharmacistID = p.PharmacistID,
+            UserID = p.UserID,
+            PharmacyID = p.PharmacyID,
+            FullName = p.FullName,
+            Phone = p.Phone,
+            Email = p.Email,
+            IsActive = p.IsActive
+        };
+
+        // Salted one-way hash. Requires the BCrypt.Net-Next NuGet package.
+        private static string HashPassword(string plain)
+            => BCrypt.Net.BCrypt.HashPassword(plain);
     }
 }
