@@ -85,6 +85,17 @@ namespace Pharmacy_System
 
             modelBuilder.Entity<Transfer>().HasMany(t => t.TransferDetails)
                 .WithOne(d => d.Transfer).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                UserID = 1,
+                Username = "admin",
+                Email = "admin@pharmacy.com",
+                PasswordHash = "$2a$12$BV55ozb08WyBqeRg3/jN5O1/zkmg7dHlVLDiHBb.L89srGQgAm15G", // Admin123
+                Role = "Admin",
+                IsActive = true,
+                CreatedAt = new DateTime(2026, 1, 1)
+            });
         }
     }
 }
