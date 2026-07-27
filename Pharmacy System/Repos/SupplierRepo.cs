@@ -37,9 +37,12 @@ namespace Pharmacy_System.Repos
             return await context.suppliers.Where(s => s.FullName.Contains(name)).ToListAsync();
         }
 
-        public async Task<List<Supplier>> GetByLocation(string location)
+        public async Task<List<Supplier>> GetByLocation(string location)  //  Check if the supplier location contains the entered location
         {
-            return await context.suppliers.Where(s => s.Location == location).ToListAsync();
+            return await context.suppliers
+                .Where(s => s.IsActive &&
+                            s.Location.Contains(location))
+                .ToListAsync();
         }
 
         // it return the supplier with their supply records:

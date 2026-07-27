@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_System.Models
 {
-    [PrimaryKey(nameof(WarehouseID), nameof(MedicineID))]
+    [Index(nameof(WarehouseID), nameof(MedicineID), IsUnique = true)]
 
     public class WarehouseStock : BaseEntity
     {
