@@ -104,8 +104,8 @@ namespace Pharmacy_System.Services
             supplier.Email = dto.Email;
             supplier.Location = dto.Location;
 
-          
-            supplierRepo.SupplierUpdate();
+
+            await supplierRepo.SupplierUpdate();
 
             return true;
         }
@@ -121,7 +121,7 @@ namespace Pharmacy_System.Services
                 return false;
             }
 
-            supplierRepo.SupplierDelete(supplier);
+            await supplierRepo.SupplierDelete(supplier);
 
             return true;
         }
