@@ -7,7 +7,8 @@ namespace Pharmacy_System.Controllers
 {
 
     [ApiController]
-    [Route("supplier")]
+    [Route("api/[controller]")]
+    [Authorize]
     public class SupplierController : ControllerBase
     {
         private SupplierService supplierService;
@@ -54,22 +55,14 @@ namespace Pharmacy_System.Controllers
         public async Task<IActionResult> CreateSupplier(
             [FromBody] CreateSupplierDto dto)
         {
-            bool created = await supplierService.CreateSupplier(dto);
-
-            if (!created)
-            {
-                return BadRequest(new
-                {
-                    message = "Supplier email already exists."
-                });
-            }
+            int supplierId = await supplierService.CreateSupplier(dto);
 
             return Ok(new
             {
-                message = "Supplier created successfully."
+                message = "Supplier created successfully.",
+                SupplierID = supplierId
             });
         }
-
 
 
         // Update supplier information

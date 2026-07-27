@@ -7,7 +7,8 @@ namespace Pharmacy_System.Controllers
 {
 
     [ApiController]
-    [Route("medicine")]
+    [Route("api/[controller]")]
+    [Authorize] // All endpoints require login
     public class MedicineController : ControllerBase
     {
         private readonly MedicineService medicineService;
@@ -21,7 +22,6 @@ namespace Pharmacy_System.Controllers
         // GET medicine/GetAll
         // Any authenticated user can view medicines
         [HttpGet("GetAll")]
-        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             List<MedicineDto> medicines =
@@ -33,7 +33,6 @@ namespace Pharmacy_System.Controllers
 
         // GET medicine/GetById/3
         [HttpGet("GetById/{id}")]
-        [Authorize]
         public async Task<IActionResult> GetById(int id)
         {
             MedicineDto? medicine =
@@ -53,7 +52,6 @@ namespace Pharmacy_System.Controllers
 
         // GET medicine/GetAvailable
         [HttpGet("GetAvailable")]
-        [Authorize]
         public async Task<IActionResult> GetAvailable()
         {
             List<MedicineDto> medicines =
@@ -65,7 +63,6 @@ namespace Pharmacy_System.Controllers
 
         // GET medicine/GetByCategory/2
         [HttpGet("GetByCategory/{categoryId}")]
-        [Authorize]
         public async Task<IActionResult> GetByCategory(int categoryId)
         {
             List<MedicineDto> medicines =
@@ -77,7 +74,6 @@ namespace Pharmacy_System.Controllers
 
         // GET medicine/SearchByName?name=Panadol
         [HttpGet("SearchByName")]
-        [Authorize]
         public async Task<IActionResult> SearchByName(
             [FromQuery] string name)
         {

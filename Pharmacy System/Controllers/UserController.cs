@@ -7,7 +7,8 @@ namespace Pharmacy_System.Controllers
 {
 
     [ApiController]
-    [Route("user")]
+    [Route("api/[controller]")]
+    [Authorize] // All endpoints require login unless AllowAnonymous is added
     public class UserController : ControllerBase
     {
         private UserService userService;
