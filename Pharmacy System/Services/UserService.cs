@@ -69,7 +69,7 @@ namespace Pharmacy_System.Services
             }
 
             // Compare the entered password with the stored hashed password
-            bool validPassword = BCrypt.Net.BCrypt.Verify(dto.PasswordHash, user.PasswordHash);
+            bool validPassword = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash)
 
             if (!validPassword)
             {
