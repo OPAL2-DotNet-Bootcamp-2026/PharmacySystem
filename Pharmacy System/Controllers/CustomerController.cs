@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pharmacy_System.DTOs.Customer;
 using Pharmacy_System.Services;
 
 namespace Pharmacy_System.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+    
+    [ApiController, Route("api/[controller]"), Authorize]
     public class CustomerController : ControllerBase
     {
         private readonly CustomerService customerService;

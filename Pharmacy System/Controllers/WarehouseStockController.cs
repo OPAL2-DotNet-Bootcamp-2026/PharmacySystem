@@ -41,11 +41,11 @@ namespace Pharmacy_System.Controllers
         // Increase medicine quantity in the warehouse
         [HttpPut("Increase")]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IActionResult> Increase(int warehouseId,int medicineId,int quantity)
+        public async Task<IActionResult> Increase(int warehouseId,int medicineId,int quantity, DateOnly expiryDate)
         {
             try
             {
-                await warehouseStockService.Increase(warehouseId,medicineId,quantity);
+                await warehouseStockService.Increase(warehouseId,medicineId,quantity, expiryDate);
 
                 return Ok(new
                 {

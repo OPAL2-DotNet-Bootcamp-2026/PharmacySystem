@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pharmacy_System.DTOs.Payment;
 using Pharmacy_System.Models.Enums;
 using Pharmacy_System.Services;
 
 namespace Pharmacy_System.Controllers
 {
-    [ApiController, Route("api/[controller]")]    
+    [ApiController, Route("api/[controller]"), Authorize]    
     public class PaymentController : ControllerBase
     {
         private readonly PaymentService paymentService;
@@ -19,7 +20,7 @@ namespace Pharmacy_System.Controllers
         public async Task<IActionResult> GetAll()
             => Ok(await paymentService.GetAll());
 
-        [HttpGet("{id}")]                                  // GET api/Payment/5
+        [HttpGet("{id}")]                                  // GET api/Payment/id
         public async Task<IActionResult> GetById(int id)
         {
             PaymentDto? payment = await paymentService.GetById(id);

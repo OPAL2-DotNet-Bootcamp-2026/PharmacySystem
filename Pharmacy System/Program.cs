@@ -1,6 +1,9 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Pharmacy_System.Repos;
 using Pharmacy_System.Services;
+using System.Text;
 
 namespace Pharmacy_System
 {
@@ -11,6 +14,10 @@ namespace Pharmacy_System
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            builder.Services.AddControllers();
+            builder.Services.AddOpenApi();
+            builder.Services.AddAuthorization();
 
             builder.Services.AddDbContext<PharmacyContext>();
 
@@ -45,7 +52,23 @@ namespace Pharmacy_System
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<WarehouseService>();
             builder.Services.AddScoped<WarehouseStockService>();
+            builder.Services.AddScoped<AuthService>();
 
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                    ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]!))
+                };
+            });
 
             var app = builder.Build();
 
@@ -57,6 +80,7 @@ namespace Pharmacy_System
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

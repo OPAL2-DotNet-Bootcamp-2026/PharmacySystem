@@ -66,5 +66,25 @@ namespace Pharmacy_System
             StampAuditFields();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Default everything to "don't cascade": protects soft-deleted rows
+            // and avoids SQL Server's multiple-cascade-paths rejection.
+            foreach (var fk in modelBuilder.Model.GetEntityTypes()
+                                                 .SelectMany(e => e.GetForeignKeys()))
+                fk.DeleteBehavior = DeleteBehavior.Restrict;
+
+            // Re-enable cascade only where the parent OWNS the children.
+            modelBuilder.Entity<CustomerOrder>().HasMany(o => o.CustomerOrderDetails)
+                .WithOne(d => d.CustomerOrder).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PharmacistOrder>().HasMany(o => o.PharmacistOrderDetails)
+                .WithOne(d => d.PharmacistOrder).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Transfer>().HasMany(t => t.TransferDetails)
+                .WithOne(d => d.Transfer).OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

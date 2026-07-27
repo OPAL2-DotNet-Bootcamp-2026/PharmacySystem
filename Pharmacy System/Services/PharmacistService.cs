@@ -2,7 +2,6 @@
 using Pharmacy_System.Modules;
 using Pharmacy_System.Models;
 using Pharmacy_System.DTOs.Pharmacist;
-using Microsoft.EntityFrameworkCore;   // needed for context.Database.BeginTransactionAsync()
 
 namespace Pharmacy_System.Services
 {
