@@ -28,7 +28,10 @@ namespace Pharmacy_System.Services
                 FullName = s.FullName,
                 Phone = s.Phone,
                 Email = s.Email,
-                Location = s.Location
+                Location = s.Location,
+                IsActive = s.IsActive,
+                CreatedAt = s.CreatedAt,
+                UpdatedAt = s.UpdatedAt
             }).ToList();
         }
 
@@ -45,39 +48,62 @@ namespace Pharmacy_System.Services
             }
 
 
-            return new SupplierDto  //Convert Supplier model into SupplierDto
+            SupplierDto response = new SupplierDto();
+
+            response.SupplierID = supplier.SupplierID;
+            response.FullName = supplier.FullName;
+            response.Phone = supplier.Phone;
+            response.Email = supplier.Email;
+            response.Location = supplier.Location;
+            response.IsActive = supplier.IsActive;
+            response.CreatedAt = supplier.CreatedAt;
+            response.UpdatedAt = supplier.UpdatedAt;
+
+            return response;
+        }
+
+        // Get suppliers by location
+        public async Task<List<SupplierDto>> GetByLocation(string location)
+        {
+            List<Supplier> suppliers = await supplierRepo.GetByLocation(location);
+
+            return suppliers.Select(s => new SupplierDto
             {
-                SupplierID = supplier.SupplierID,
-                FullName = supplier.FullName,
-                Phone = supplier.Phone,
-                Email = supplier.Email,
-                Location = supplier.Location
-            };
+                SupplierID = s.SupplierID,
+                FullName = s.FullName,
+                Phone = s.Phone,
+                Email = s.Email,
+                Location = s.Location,
+                IsActive = s.IsActive,
+                CreatedAt = s.CreatedAt,
+                UpdatedAt = s.UpdatedAt
+            }).ToList();
         }
 
 
-        public async Task<bool> CreateSupplier(CreateSupplierDto dto)
+        // Create supplier
+        public async Task<int> CreateSupplier(CreateSupplierDto dto)
         {
             bool emailExists = await supplierRepo.EmailExists(dto.Email);
 
             if (emailExists)
             {
-                return false;
+                throw new Exception("Supplier email already exists");
             }
 
-            Supplier supplier = new Supplier
-            {
-                FullName = dto.FullName,
-                Phone = dto.Phone,
-                Email = dto.Email,
-                Location = dto.Location,
-                IsActive = true
-            };
+            Supplier supplier = new Supplier();
+
+            supplier.FullName = dto.FullName;
+            supplier.Phone = dto.Phone;
+            supplier.Email = dto.Email;
+            supplier.Location = dto.Location;
+            supplier.IsActive = true;
 
             await supplierRepo.Add(supplier);
 
-            return true;
+            return supplier.SupplierID;
         }
+
 
 
         public async Task<bool> UpdateSupplier(int id,UpdateSupplierDto dto)
