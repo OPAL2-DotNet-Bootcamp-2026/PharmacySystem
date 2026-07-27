@@ -69,7 +69,7 @@ namespace Pharmacy_System.Services
             }
 
             // Compare the entered password with the stored hashed password
-            bool validPassword = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash)
+            bool validPassword = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
 
             if (!validPassword)
             {
@@ -99,6 +99,7 @@ namespace Pharmacy_System.Services
             {
                 UserID = u.UserID,
                 Email = u.Email,
+                Username = u.Username,
                 Role = u.Role,
                 IsActive = u.IsActive
             }).ToList();
@@ -117,6 +118,7 @@ namespace Pharmacy_System.Services
             UserResponseDto response = new UserResponseDto();
 
             response.UserID = user.UserID;
+            response.Username = user.Username;
             response.Email = user.Email;
             response.Role = user.Role;
             response.IsActive = user.IsActive;
@@ -137,6 +139,7 @@ namespace Pharmacy_System.Services
             UserResponseDto response = new UserResponseDto();
 
             response.UserID = user.UserID;
+            response.Username = user.Username;
             response.Email = user.Email;
             response.Role = user.Role;
             response.IsActive = user.IsActive;
