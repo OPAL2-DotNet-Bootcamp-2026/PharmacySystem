@@ -8,6 +8,8 @@ namespace Pharmacy_System.Services
 {
     public class TransferService
     {
+        private readonly PharmacyContext context;
+
         private readonly TransferRepo transferRepo;
         private readonly WarehouseRepo warehouseRepo;
         private readonly PharmacyRepo pharmacyRepo;
@@ -24,8 +26,11 @@ namespace Pharmacy_System.Services
             PharmacistOrderRepo pharmacistOrderRepo,
             MedicineRepo medicineRepo,
             WarehouseStockService warehouseStockService,
-            PharmacyStockService pharmacyStockService)
+            PharmacyStockService pharmacyStockService,
+            PharmacyContext context)
         {
+            this.context = context;
+
             this.transferRepo = transferRepo;
             this.warehouseRepo = warehouseRepo;
             this.pharmacyRepo = pharmacyRepo;
@@ -127,6 +132,8 @@ namespace Pharmacy_System.Services
 
             }
 
+            using var tx = await context.Database.BeginTransactionAsync();
+
             // Create the main Transfer model
             Transfer transfer = new Transfer
             {
@@ -220,6 +227,7 @@ namespace Pharmacy_System.Services
 
             // Save Transfer and TransferDetails
             await transferRepo.Add(transfer);
+            await tx.CommitAsync();
 
             return transfer.TransferId;
         }
@@ -281,6 +289,19 @@ namespace Pharmacy_System.Services
                 throw new Exception("Status must be Pending, Shipped or Cancelled");
                     
 
+            }
+
+            // Give the reserved quantity back to the warehouse
+            if (correctStatus == "Cancelled")
+            {
+                foreach (TransferDetail detail in transfer.TransferDetails)
+                {
+                    await warehouseStockService.Increase(
+                        transfer.WarehouseID,
+                        detail.MedicineID,
+                        detail.Quantity,
+                        detail.ExpiryDate);
+                }
             }
 
             transfer.Status = correctStatus;

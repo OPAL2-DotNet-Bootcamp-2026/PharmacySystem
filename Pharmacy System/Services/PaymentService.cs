@@ -50,7 +50,12 @@ namespace Pharmacy_System.Services
         public async Task<bool> MarkPaid(int id)
         {
             Payment? payment = await paymentRepo.GetPaymentById(id);
-            if (payment == null) return false;
+
+            if (payment == null) 
+                return false;
+
+            if (payment.Status != PaymentStatus.Pending)
+                throw new Exception("Only a pending payment can be marked paid");
 
             payment.Status = PaymentStatus.Paid;
             payment.PaidDate = DateTime.UtcNow;
@@ -62,7 +67,15 @@ namespace Pharmacy_System.Services
         public async Task<bool> Refund(int id, RefundDto dto)
         {
             Payment? payment = await paymentRepo.GetPaymentById(id);
-            if (payment == null) return false;
+
+            if (payment == null) 
+                return false;
+
+            if (payment.Status != PaymentStatus.Paid)
+                throw new Exception("Only a paid payment can be refunded");
+
+            if (dto.RefundedAmount > payment.Amount)
+                throw new Exception("Refund cannot exceed the amount paid");
 
             payment.Status = PaymentStatus.Refunded;
             payment.RefundedAmount = dto.RefundedAmount;

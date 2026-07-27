@@ -1,7 +1,8 @@
-﻿using Pharmacy_System.Repos;
-using Pharmacy_System.Modules;
+﻿using Pharmacy_System.DTOs.Pharmacist;
+using Pharmacy_System.DTOs.User;
 using Pharmacy_System.Models;
-using Pharmacy_System.DTOs.Pharmacist;
+using Pharmacy_System.Modules;
+using Pharmacy_System.Repos;
 
 namespace Pharmacy_System.Services
 {
@@ -12,16 +13,13 @@ namespace Pharmacy_System.Services
         // SAME PharmacyContext instance for one web request — which is
         // what lets a transaction opened here also cover the repos' saves.
         private readonly PharmacistRepo pharmacistRepo;
-        private readonly UserRepo userRepo;
+        private readonly UserService userService;
         private readonly PharmacyContext context;
 
-        public PharmacistService(
-            PharmacistRepo pharmacistRepo,
-            UserRepo userRepo,
-            PharmacyContext context)
+        public PharmacistService(PharmacistRepo pharmacistRepo, UserService userService, PharmacyContext context)
         {
             this.pharmacistRepo = pharmacistRepo;
-            this.userRepo = userRepo;
+            this.userService = userService;
             this.context = context;
         }
 
@@ -43,38 +41,34 @@ namespace Pharmacy_System.Services
 
         public async Task<PharmacistDto?> Add(CreatePharmacistDto dto)
         {
-            // Reject early if the email is already taken (avoids starting work we'll undo).
-            if (await userRepo.EmailExists(dto.Email))
-                return null;
-
-            // Open the "all or nothing" wrapper on the shared context.
-            // 'using' means: if we leave this method without committing,
-            // the transaction is disposed and everything rolls back.
             using var tx = await context.Database.BeginTransactionAsync();
 
-            // Step 1 — create the login account.
-            User user = new User
+            // Step 1 — create the login account through UserService,
+            // so hashing and defaults live in ONE place.
+            RegisterUserDto userDto = new RegisterUserDto
             {
+                Username = dto.Username,
                 Email = dto.Email,
-                PasswordHash = HashPassword(dto.Password),   // never store plaintext
+                Password = dto.Password,
                 Role = "Pharmacist"
             };
-            await userRepo.AddUser(user);   // saves, but stays PENDING inside the transaction
-                                        // after this, user.UserID is filled in by the database
+
+            UserResponseDto? user = await userService.CreateUser(userDto);
+
+            if (user == null)
+                return null;   // email already registered
 
             // Step 2 — create the profile that points at that User.
             Pharmacist pharmacist = new Pharmacist
             {
-                UserID = user.UserID,   // link the profile to the account we just made
+                UserID = user.UserID,
                 PharmacyID = dto.PharmacyID,
                 FullName = dto.FullName,
                 Phone = dto.Phone,
                 Email = dto.Email
             };
-            await pharmacistRepo.Add(pharmacist);   // if THIS throws, we never reach the commit
-                                                    // below, so Step 1 is rolled back too
+            await pharmacistRepo.Add(pharmacist);
 
-            // Both inserts worked — make them permanent, together.
             await tx.CommitAsync();
 
             return ToDto(pharmacist);
@@ -135,9 +129,5 @@ namespace Pharmacy_System.Services
             Email = p.Email,
             IsActive = p.IsActive
         };
-
-        // Salted one-way hash. Requires the BCrypt.Net-Next NuGet package.
-        private static string HashPassword(string plain)
-            => BCrypt.Net.BCrypt.HashPassword(plain);
     }
 }
