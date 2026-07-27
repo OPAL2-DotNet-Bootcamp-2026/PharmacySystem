@@ -14,7 +14,7 @@ namespace Pharmacy_System.Controllers
         private readonly TransferService transferService;
 
         public TransferController(TransferService transferService)
-           
+
         {
             this.transferService = transferService;
         }
@@ -25,8 +25,8 @@ namespace Pharmacy_System.Controllers
 
         public async Task<IActionResult> GetAllTransfers()
         {
-            List<TransferDto> transfers =await transferService.GetAllTransfers();
-                
+            List<TransferDto> transfers = await transferService.GetAllTransfers();
+
 
             return Ok(transfers);
         }
@@ -38,7 +38,7 @@ namespace Pharmacy_System.Controllers
         public async Task<IActionResult> GetTransferById(int id)
         {
             TransferDto? transfer = await transferService.GetTransferById(id);
-               
+
 
             if (transfer == null)
             {
@@ -53,12 +53,12 @@ namespace Pharmacy_System.Controllers
         [Authorize(Roles = "Admin,Manager")]
 
         public async Task<IActionResult> CreateTransfer([FromBody] CreateTransferDto dto)
-            
+
         {
             try
             {
                 int transferId = await transferService.CreateTransfer(dto);
-                   
+
 
                 return Ok(new
                 {
@@ -75,21 +75,45 @@ namespace Pharmacy_System.Controllers
         // PUT: api/Transfer/1
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IActionResult> UpdateTransfer(int id,[FromBody] UpdateTransferDto dto)
-        
-            
+        public async Task<IActionResult> UpdateTransfer(int id, [FromBody] UpdateTransferDto dto)
+
+
         {
             try
             {
-                bool updated = await transferService.UpdateTransfer(id, dto );
-                      
-                   
+                bool updated = await transferService.UpdateTransfer(id, dto);
+
+
                 if (!updated)
                 {
                     return NotFound("Transfer not found");
                 }
 
                 return Ok("Transfer updated successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+        // PUT: api/Transfer/1/confirm-receive
+        [HttpPut("{id}/confirm-receive")]
+        [Authorize(Roles = "Admin,Manager,Pharmacist")]
+        public async Task<IActionResult> ConfirmReceive(int id)
+        {
+            try
+            {
+                bool received = await transferService.ConfirmReceive(id);
+                   
+
+                if (!received)
+                {
+                    return NotFound("Transfer not found");
+                }
+
+                return Ok( "Transfer received and pharmacy stock updated successfully");
+                   
             }
             catch (Exception ex)
             {

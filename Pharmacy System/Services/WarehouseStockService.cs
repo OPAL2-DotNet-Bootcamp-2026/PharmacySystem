@@ -53,16 +53,29 @@ namespace Pharmacy_System.Services
             }).ToList();
         }
 
+        // Get one medicine stock from  warehouse
+        public async Task<WarehouseStock?> GetStock(
+            int warehouseId,
+            int medicineId)
+        {
+            return await warehouseStockRepo.GetStock(
+                warehouseId,
+                medicineId);
+        }
+
 
         // Increase stock when a supply is received
-        public async Task Increase(int warehouseId, int medicineId, int qty)
+        public async Task Increase(
+            int warehouseId,
+            int medicineId,
+            int qty,
+            DateOnly expiryDate)
         {
             if (qty <= 0)
             {
-                throw new Exception(
-                    "Quantity must be greater than zero");
+                throw new Exception("Quantity must be greater than zero");
+                    
             }
-
             WarehouseStock? stock = await warehouseStockRepo.GetStock(warehouseId, medicineId);
 
 
@@ -72,7 +85,8 @@ namespace Pharmacy_System.Services
                 {
                     WarehouseID = warehouseId,
                     MedicineID = medicineId,
-                    Quantity = qty
+                    Quantity = qty,
+                    ExpiryDate = expiryDate
                 };
 
                 await warehouseStockRepo.Add(newStock);
@@ -81,6 +95,8 @@ namespace Pharmacy_System.Services
             }
 
             stock.Quantity += qty;
+            stock.ExpiryDate = expiryDate;
+
 
             await warehouseStockRepo.WarehouseStockUpdate();
 
@@ -88,12 +104,15 @@ namespace Pharmacy_System.Services
 
 
         // Decrease stock when medicine is transferred out
-        public async Task Decrease(int warehouseId,int medicineId,int qty)
+        public async Task Decrease(
+              int warehouseId,
+              int medicineId,
+              int qty)
         {
             if (qty <= 0)
             {
-                throw new Exception(
-                    "Quantity must be greater than zero");
+                throw new Exception( "Quantity must be greater than zero");
+                   
             }
 
             WarehouseStock? stock =await warehouseStockRepo.GetStock(warehouseId,medicineId);

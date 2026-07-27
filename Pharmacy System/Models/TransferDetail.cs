@@ -33,5 +33,9 @@ namespace Pharmacy_System.Modules
        
         [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
+
+        // Preserves the expiry date while medicine is in transit
+        [Column(TypeName = "date")]
+        public DateOnly ExpiryDate { get; set; }
     }
 }
