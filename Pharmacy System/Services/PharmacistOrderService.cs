@@ -11,17 +11,20 @@ namespace Pharmacy_System.Services
         private readonly PharmacistRepo pharmacistRepo;
         private readonly PharmacyRepo pharmacyRepo;
         private readonly MedicineRepo medicineRepo;
+        private readonly EmailService emailService;
 
         public PharmacistOrderService(
             PharmacistOrderRepo pharmacistOrderRepo,
             PharmacistRepo pharmacistRepo,
             PharmacyRepo pharmacyRepo,
-            MedicineRepo medicineRepo)
+            MedicineRepo medicineRepo,
+            EmailService emailService)
         {
             this.pharmacistOrderRepo = pharmacistOrderRepo;
             this.pharmacistRepo = pharmacistRepo;
             this.pharmacyRepo = pharmacyRepo;
             this.medicineRepo = medicineRepo;
+            this.emailService = emailService;
         }
 
         // Returns all pharmacist orders 
@@ -163,11 +166,11 @@ namespace Pharmacy_System.Services
 
         // Updates pharmacist order status
         public async Task<bool> UpdatePharmacistOrderStatus(int id, UpdatePharmacistOrderDto dto)
-            
-           
+
+
         {
-            PharmacistOrder? order =await pharmacistOrderRepo.GetPharmacistOrderById(id);
-                
+            PharmacistOrder? order = await pharmacistOrderRepo.GetPharmacistOrderById(id);
+
 
             if (order == null)
             {
@@ -177,17 +180,17 @@ namespace Pharmacy_System.Services
             // Approved order cannot be changed
             if (order.Status == "Approved")
             {
-                throw new Exception( "An approved order cannot be updated");
-                   
-                
+                throw new Exception("An approved order cannot be updated");
+
+
             }
 
             // Cancelled order cannot be changed
             if (order.Status == "Cancelled")
             {
-                throw new Exception("A cancelled order cannot be updated" );
-                    
-            
+                throw new Exception("A cancelled order cannot be updated");
+
+
             }
 
             string status = dto.Status.Trim();
@@ -200,21 +203,33 @@ namespace Pharmacy_System.Services
             };
 
             // Find the correct status and ignore capital/small letters
-            string? correctStatus =allowedStatuses.FirstOrDefault(s => s.ToLower() == status.ToLower() );
-                
-      
+            string? correctStatus = allowedStatuses.FirstOrDefault(s => s.ToLower() == status.ToLower());
+
+
             if (correctStatus == null)
             {
-                throw new Exception("Status must be Pending, Approved or Cancelled" );
-  
+                throw new Exception("Status must be Pending, Approved or Cancelled");
+
             }
 
             order.Status = correctStatus;
 
             await pharmacistOrderRepo.PharmacistOrderUpdate();
 
+
+
+            // Send email only when the order is approved
+            if (correctStatus == "Approved")
+            {
+                await emailService.SendAsync(
+                    order.Pharmacist.Email,
+                    "Order Approved",
+                    $"Your pharmacist order number {order.PharmacistOrderId} has been approved.");
+
+            }
             return true;
         }
+
         // Deletes a pharmacist order
         public async Task<bool> DeletePharmacistOrder(int id)
         {
