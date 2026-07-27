@@ -7,7 +7,8 @@ using Pharmacy_System.Services;
 namespace Pharmacy_System.Controllers
 {
     [ApiController]
-    [Route("warehouse")]
+    [Route("api/[controller]")]
+    [Authorize] // All endpoints require login
     public class WarehouseController : ControllerBase
     {
         private readonly WarehouseService warehouseService;
@@ -22,7 +23,6 @@ namespace Pharmacy_System.Controllers
 
         // Get all warehouses
         [HttpGet("GetAll")]
-        [Authorize]
         public async Task<IActionResult> GetAllWarehouses()
         {
             List<WarehouseDto> warehouses = await warehouseService.GetAllWarehouses();
@@ -33,7 +33,6 @@ namespace Pharmacy_System.Controllers
 
         // Get one warehouse by ID
         [HttpGet("GetById/{id}")]
-        [Authorize]
         public async Task<IActionResult> GetWarehouseById(int id)
         {
             WarehouseDto? warehouse = await warehouseService.GetWarehouseById(id);
@@ -89,7 +88,6 @@ namespace Pharmacy_System.Controllers
 
         // Get medicines available in the warehouse
         [HttpGet("GetStock/{warehouseId}")]
-        [Authorize]
         public async Task<IActionResult> GetStock(int warehouseId)
         {
             try

@@ -7,7 +7,8 @@ namespace Pharmacy_System.Controllers
 {
 
     [ApiController]
-    [Route("warehouseStock")]
+    [Route("api/[controller]")]
+    [Authorize] // All endpoints require login
     public class WarehouseStockController : ControllerBase
     {
         private readonly WarehouseStockService warehouseStockService;
@@ -20,7 +21,6 @@ namespace Pharmacy_System.Controllers
 
         // Get all stock in one warehouse
         [HttpGet("GetByWarehouse/{warehouseId}")]
-        [Authorize]
         public async Task<IActionResult> GetByWarehouse(int warehouseId)
         {
             List<WarehouseStockDto> stocks = await warehouseStockService.GetByWarehouse(warehouseId);
@@ -30,7 +30,6 @@ namespace Pharmacy_System.Controllers
 
         // Get warehouse stock for one medicine
         [HttpGet("GetByMedicine/{medicineId}")]
-        [Authorize]
         public async Task<IActionResult> GetByMedicine(int medicineId)
         {
             List<WarehouseStockDto> stocks = await warehouseStockService.GetByMedicine(medicineId);
