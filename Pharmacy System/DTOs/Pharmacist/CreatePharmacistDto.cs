@@ -6,6 +6,12 @@ namespace Pharmacy_System.DTOs.Pharmacist
     public class CreatePharmacistDto
     {
         [
+            Required(ErrorMessage = "Username Is Required!!"),
+            MaxLength(50, ErrorMessage = "Username Can't Exceed 50 Char!!")
+        ]
+        public string Username { get; set; } = string.Empty;
+
+        [
             Required(ErrorMessage = "The Full Name Is Required!!"), 
             MaxLength(100, ErrorMessage = "The Maxlength Is 100 Char!!")
         ]
