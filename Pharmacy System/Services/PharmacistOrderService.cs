@@ -12,19 +12,22 @@ namespace Pharmacy_System.Services
         private readonly PharmacyRepo pharmacyRepo;
         private readonly MedicineRepo medicineRepo;
         private readonly EmailService emailService;
+        private readonly ILogger<PharmacistOrderService> logger;
 
         public PharmacistOrderService(
             PharmacistOrderRepo pharmacistOrderRepo,
             PharmacistRepo pharmacistRepo,
             PharmacyRepo pharmacyRepo,
             MedicineRepo medicineRepo,
-            EmailService emailService)
+            EmailService emailService,
+            ILogger<PharmacistOrderService> logger)
         {
             this.pharmacistOrderRepo = pharmacistOrderRepo;
             this.pharmacistRepo = pharmacistRepo;
             this.pharmacyRepo = pharmacyRepo;
             this.medicineRepo = medicineRepo;
             this.emailService = emailService;
+            this.logger = logger;
         }
 
         // Returns all pharmacist orders 
@@ -202,7 +205,7 @@ namespace Pharmacy_System.Services
                 "Cancelled"
             };
 
-            // Find the correct status and ignore capital/small letters
+            // Find the correct status 
             string? correctStatus = allowedStatuses.FirstOrDefault(s => s.ToLower() == status.ToLower());
 
 
@@ -216,6 +219,10 @@ namespace Pharmacy_System.Services
 
             await pharmacistOrderRepo.PharmacistOrderUpdate();
 
+            logger.LogInformation("Order {OrderId} status changed to {Status}",order.PharmacistOrderId, correctStatus);
+
+
+           
 
 
             // Send email only when the order is approved
