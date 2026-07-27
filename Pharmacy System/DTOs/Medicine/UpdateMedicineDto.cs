@@ -17,7 +17,6 @@ namespace Pharmacy_System.DTOs.Medicine
            ErrorMessage = "Unit price must be between 0.01 and 10,000")]
         public decimal UnitPrice { get; set; }
 
-        public bool IsAvailable { get; set; }
 
     }
 }
