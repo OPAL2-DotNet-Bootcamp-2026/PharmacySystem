@@ -152,7 +152,7 @@ namespace Pharmacy_System.Services
 
             medicine.MedicineName = dto.MedicineName;
             medicine.CategoryID = dto.CategoryID;
-            medicine.UnitPrice = dto.UnitPrice;
+            medicine.UnitPrice = dto.UnitPrice;            
 
             await medicineRepo.MedicineUpdate();
 
