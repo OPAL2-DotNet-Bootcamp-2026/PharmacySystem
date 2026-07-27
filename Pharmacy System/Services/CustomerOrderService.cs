@@ -1,5 +1,6 @@
 ﻿using Pharmacy_System.DTOs.CustomerOrder;
 using Pharmacy_System.DTOs.CustomerOrderDetail;
+using Pharmacy_System.Models;
 using Pharmacy_System.Modules;
 using Pharmacy_System.Repos;
 
@@ -12,16 +13,20 @@ namespace Pharmacy_System.Services
         private readonly PharmacyRepo pharmacyRepo;
         private readonly MedicineRepo medicineRepo;
 
+        private readonly PharmacyStockService pharmacyStockService;
+
         public CustomerOrderService(
             CustomerOrderRepo customerOrderRepo,
             CustomerRepo customerRepo,
             PharmacyRepo pharmacyRepo,
-            MedicineRepo medicineRepo)
+            MedicineRepo medicineRepo,
+            PharmacyStockService pharmacyStockService)
         {
             this.customerOrderRepo = customerOrderRepo;
             this.customerRepo = customerRepo;
             this.pharmacyRepo = pharmacyRepo;
             this.medicineRepo = medicineRepo;
+            this.pharmacyStockService = pharmacyStockService;
         }
 
         // Returns all customer orders as DTOs
@@ -123,6 +128,25 @@ namespace Pharmacy_System.Services
                    
                 }
 
+                // Check that the medicine exists in pharmacy stock
+                PharmacyStock? pharmacyStock =
+                    await pharmacyStockService.GetStock(
+                        dto.PharmacyID,
+                        detailDto.MedicineID);
+
+                if (pharmacyStock == null)
+                {
+                    throw new Exception( $"Medicine {medicine.MedicineName} does not exist in pharmacy stock");
+                       
+                }
+
+                // Check that the pharmacy has enough quantity
+                if (pharmacyStock.Quantity < detailDto.Quantity)
+                {
+                    throw new Exception( $"Not enough pharmacy stock for {medicine.MedicineName}");
+                       
+                }
+
                 // Calculate subtotal
                 decimal subtotal =detailDto.Quantity * medicine.UnitPrice;
                     
@@ -144,6 +168,17 @@ namespace Pharmacy_System.Services
                 // Add subtotal to total cost
                 customerOrder.TotalCost += subtotal;
             }
+            // Decrease pharmacy stock for every ordered medicine
+            foreach (CustomerOrderDetail detail
+                     in customerOrder.CustomerOrderDetails)
+            {
+                await pharmacyStockService.Decrease(
+                    customerOrder.PharmacyId,
+                    detail.MedicineID,
+                    detail.Quantity);
+            }
+
+
 
             // Save order and details
             await customerOrderRepo.Add(customerOrder);

@@ -27,6 +27,15 @@ namespace Pharmacy_System.Services
             return stocks.Select(ToDto).ToList();
         }
 
+        public async Task<PharmacyStock?> GetStock(
+           int pharmacyId,
+           int medicineId)
+        {
+            return await pharmacyStockRepo
+                .GetPharmacyStockAndMedicineById(
+                    pharmacyId,
+                    medicineId);
+        }
         public async Task Increase(int pharmacyId, int medicineId, int qty, DateOnly expiryDate)
         {
             if (qty <= 0)

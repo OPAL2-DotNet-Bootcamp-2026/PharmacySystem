@@ -7,7 +7,5 @@ namespace Pharmacy_System.DTOs.Transfer
         [Required(ErrorMessage = "Transfer status is required")]
         [MaxLength(30)]
         public string Status { get; set; } = string.Empty;
-
-        public DateTime? ReceiveDate { get; set; }
     }
 }
