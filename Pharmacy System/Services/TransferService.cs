@@ -294,6 +294,8 @@ namespace Pharmacy_System.Services
             // Give the reserved quantity back to the warehouse
             if (correctStatus == "Cancelled")
             {
+                using var tx = await context.Database.BeginTransactionAsync();
+
                 foreach (TransferDetail detail in transfer.TransferDetails)
                 {
                     await warehouseStockService.Increase(
@@ -302,6 +304,10 @@ namespace Pharmacy_System.Services
                         detail.Quantity,
                         detail.ExpiryDate);
                 }
+
+                transfer.Status = correctStatus;
+                await transferRepo.TransferUpdate();
+                await tx.CommitAsync();
             }
 
             transfer.Status = correctStatus;
@@ -344,6 +350,8 @@ namespace Pharmacy_System.Services
                     
             }
 
+            using var tx = await context.Database.BeginTransactionAsync();
+
             // Increase pharmacy stock for each received medicine
             foreach (TransferDetail detail in transfer.TransferDetails)
             {
@@ -361,6 +369,8 @@ namespace Pharmacy_System.Services
             transfer.ReceiveDate = DateTime.Now;
 
             await transferRepo.TransferUpdate();
+
+            await tx.CommitAsync();
 
             return true;
         }

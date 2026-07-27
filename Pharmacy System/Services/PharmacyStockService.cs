@@ -7,10 +7,14 @@ namespace Pharmacy_System.Services
     public class PharmacyStockService
     {
         private readonly PharmacyStockRepo pharmacyStockRepo;
+        private readonly ILogger<PharmacyStockService> logger;
 
-        public PharmacyStockService(PharmacyStockRepo pharmacyStockRepo)
+        public PharmacyStockService(
+            PharmacyStockRepo pharmacyStockRepo,
+            ILogger<PharmacyStockService> logger)
         {
             this.pharmacyStockRepo = pharmacyStockRepo;
+            this.logger = logger;
         }
 
         public async Task<List<PharmacyStockDto>> GetByPharmacy(int pharmacyId)
@@ -36,6 +40,7 @@ namespace Pharmacy_System.Services
                     pharmacyId,
                     medicineId);
         }
+
         public async Task Increase(int pharmacyId, int medicineId, int qty, DateOnly expiryDate)
         {
             if (qty <= 0)
@@ -54,10 +59,20 @@ namespace Pharmacy_System.Services
                     ExpiryDate = expiryDate
                 };
                 await pharmacyStockRepo.Add(newStock);
+
+                logger.LogInformation(
+                    "Pharmacy {PharmacyId}: new stock row for medicine {MedicineId}, qty {Qty}",
+                    pharmacyId, medicineId, qty);
+
                 return;
             }
 
             stock.Quantity += qty;
+
+            logger.LogInformation(
+                "Pharmacy {PharmacyId}: medicine {MedicineId} +{Qty} (now {Total})",
+                pharmacyId, medicineId, qty, stock.Quantity);
+
             await pharmacyStockRepo.Update();
         }
 
@@ -76,6 +91,11 @@ namespace Pharmacy_System.Services
                 throw new Exception("Not enough quantity in the pharmacy");
 
             stock.Quantity -= qty;
+
+            logger.LogInformation(
+                "Pharmacy {PharmacyId}: medicine {MedicineId} -{Qty} (now {Total})",
+                pharmacyId, medicineId, qty, stock.Quantity);
+
             await pharmacyStockRepo.Update();
         }
 

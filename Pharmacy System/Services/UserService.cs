@@ -7,14 +7,16 @@ namespace Pharmacy_System.Services
     public class UserService
     {
 
-            private UserRepo userRepo;
-            private AuthService authService;
+        private UserRepo userRepo;
+        private AuthService authService;
+        private readonly ILogger<UserService> logger;
 
-            public UserService(UserRepo _userRepo, AuthService _authService) 
-            {
-                userRepo = _userRepo;
-                authService = _authService;
-            }
+        public UserService(UserRepo _userRepo, AuthService _authService, ILogger<UserService> logger) 
+        {
+            userRepo = _userRepo;
+            authService = _authService;
+            this.logger = logger;
+        }
 
         // --- Create User  / Register 
         public async Task<UserResponseDto?> CreateUser(RegisterUserDto dto)
@@ -48,6 +50,8 @@ namespace Pharmacy_System.Services
             response.Role = user.Role;
             response.IsActive = user.IsActive;
 
+            logger.LogInformation("New user created: {Email} with role {Role}", user.Email, user.Role);
+
             return response;
         }
 
@@ -59,12 +63,14 @@ namespace Pharmacy_System.Services
 
             if (user == null)
             {
+                logger.LogWarning("Login failed - no account for {Email}", dto.Email);
                 return null;
             }
 
             // Inactive users cannot log in
             if (!user.IsActive)
             {
+                logger.LogWarning("Login blocked - inactive account {Email}", dto.Email);
                 return null;
             }
 
@@ -73,11 +79,14 @@ namespace Pharmacy_System.Services
 
             if (!validPassword)
             {
+                logger.LogWarning("Login failed - wrong password for {Email}", dto.Email);
                 return null;
             }
 
-           // Generate JWT token
-           string token = authService.GenerateToken(user);
+            // Generate JWT token
+            string token = authService.GenerateToken(user);
+
+            logger.LogInformation("User {Email} logged in as {Role}", user.Email, user.Role);
 
             LoginResponseDto response = new LoginResponseDto();
 

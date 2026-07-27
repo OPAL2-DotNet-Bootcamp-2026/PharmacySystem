@@ -12,21 +12,23 @@ namespace Pharmacy_System.Services
         private readonly CustomerRepo customerRepo;
         private readonly PharmacyRepo pharmacyRepo;
         private readonly MedicineRepo medicineRepo;
-
         private readonly PharmacyStockService pharmacyStockService;
+        private readonly PharmacyContext context;
 
         public CustomerOrderService(
             CustomerOrderRepo customerOrderRepo,
             CustomerRepo customerRepo,
             PharmacyRepo pharmacyRepo,
             MedicineRepo medicineRepo,
-            PharmacyStockService pharmacyStockService)
+            PharmacyStockService pharmacyStockService,
+            PharmacyContext context)
         {
             this.customerOrderRepo = customerOrderRepo;
             this.customerRepo = customerRepo;
             this.pharmacyRepo = pharmacyRepo;
             this.medicineRepo = medicineRepo;
             this.pharmacyStockService = pharmacyStockService;
+            this.context = context;
         }
 
         // Returns all customer orders as DTOs
@@ -100,6 +102,8 @@ namespace Pharmacy_System.Services
                     TotalCost = 0,
                     Status = "Pending"
                 };
+
+            using var tx = await context.Database.BeginTransactionAsync();
 
             // Add every medicine to the order
             foreach (CreateCustomerOrderDetailDto detailDto in dto.OrderDetails)
@@ -182,6 +186,8 @@ namespace Pharmacy_System.Services
 
             // Save order and details
             await customerOrderRepo.Add(customerOrder);
+
+            await tx.CommitAsync();
 
             return customerOrder.CustomerOrderId;
         }

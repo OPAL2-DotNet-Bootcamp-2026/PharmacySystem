@@ -11,10 +11,12 @@ namespace Pharmacy_System.Services
     {
 
         private readonly WarehouseStockRepo warehouseStockRepo;
+        private readonly ILogger<WarehouseStockService> logger;
 
-        public WarehouseStockService(WarehouseStockRepo _warehouseStockRepo)
+        public WarehouseStockService(WarehouseStockRepo _warehouseStockRepo, ILogger<WarehouseStockService> logger)
         {
             warehouseStockRepo = _warehouseStockRepo;
+            this.logger = logger;
         }
 
 
@@ -91,12 +93,19 @@ namespace Pharmacy_System.Services
 
                 await warehouseStockRepo.Add(newStock);
 
+                logger.LogInformation(
+                    "Warehouse {WarehouseId}: new stock row for medicine {MedicineId}, qty {Qty}",
+                    warehouseId, medicineId, qty);
+
                 return;
             }
 
             stock.Quantity += qty;
             stock.ExpiryDate = expiryDate;
 
+            logger.LogInformation(
+                "Warehouse {WarehouseId}: medicine {MedicineId} +{Qty} (now {Total})",
+                warehouseId, medicineId, qty, stock.Quantity);
 
             await warehouseStockRepo.WarehouseStockUpdate();
 
@@ -128,6 +137,9 @@ namespace Pharmacy_System.Services
             }
 
             stock.Quantity -= qty;
+
+            logger.LogInformation("Warehouse {WarehouseId}: medicine {MedicineId} -{Qty} (now {Total})",
+                warehouseId, medicineId, qty, stock.Quantity);
 
             await warehouseStockRepo.WarehouseStockUpdate();
         }
