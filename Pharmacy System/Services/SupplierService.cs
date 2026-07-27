@@ -104,7 +104,7 @@ namespace Pharmacy_System.Services
             supplier.Email = dto.Email;
             supplier.Location = dto.Location;
 
-
+            // Save the changes
             await supplierRepo.SupplierUpdate();
 
             return true;
