@@ -31,8 +31,15 @@ namespace Pharmacy_System.Controllers
         [HttpPost]                                         // POST api/Payment
         public async Task<IActionResult> Add(CreatePaymentDto dto)
         {
-            PaymentDto payment = await paymentService.Add(dto);
-            return CreatedAtAction(nameof(GetById), new { id = payment.PaymentID }, payment);
+            try
+            {
+                PaymentDto payment = await paymentService.Add(dto);
+                return CreatedAtAction(nameof(GetById), new { id = payment.PaymentID }, payment);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet("by-order/{orderId}")]                    // GET api/Payment/by-order/5
@@ -42,17 +49,31 @@ namespace Pharmacy_System.Controllers
         [HttpPatch("{id}/pay")]                            // PATCH api/Payment/5/pay
         public async Task<IActionResult> MarkPaid(int id)
         {
-            bool ok = await paymentService.MarkPaid(id);
-            if (!ok) return NotFound();
-            return Ok("Payment marked as paid");
+            try
+            {
+                bool ok = await paymentService.MarkPaid(id);
+                if (!ok) return NotFound();
+                return Ok("Payment marked as paid");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
-        [HttpPost("{id}/refund")]                          // POST api/Payment/5/refund
+        [HttpPost("{id}/refund")]
         public async Task<IActionResult> Refund(int id, RefundDto dto)
         {
-            bool ok = await paymentService.Refund(id, dto);
-            if (!ok) return NotFound();
-            return Ok("Payment refunded");
+            try
+            {
+                bool ok = await paymentService.Refund(id, dto);
+                if (!ok) return NotFound();
+                return Ok("Payment refunded");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet("by-status/{status}")]                    // GET api/Payment/by-status/Paid
