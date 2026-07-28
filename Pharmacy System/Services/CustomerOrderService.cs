@@ -62,7 +62,7 @@ namespace Pharmacy_System.Services
             return ConvertToDto(order);
         }
 
-        // Creates a new customer order
+        // Creates new customer order
         public async Task<int> CreateCustomerOrder(CreateCustomerOrderDto dto)
             
         {
@@ -84,7 +84,6 @@ namespace Pharmacy_System.Services
                 throw new Exception("Pharmacy not found");
             }
 
-            // Check that the order contains at least one medicine
             if (dto.OrderDetails == null ||dto.OrderDetails.Count == 0)
                 
             {
@@ -92,7 +91,6 @@ namespace Pharmacy_System.Services
                 
             }
 
-            // Create the main customer order
             CustomerOrder customerOrder =
                 new CustomerOrder
                 {
@@ -105,11 +103,10 @@ namespace Pharmacy_System.Services
 
             using var tx = await context.Database.BeginTransactionAsync();
 
-            // Add every medicine to the order
+            // Add  medicine to the order
             foreach (CreateCustomerOrderDetailDto detailDto in dto.OrderDetails)
                      
             {
-                // Check that the medicine exists
                 Medicine? medicine =await medicineRepo.GetMedicineById(detailDto.MedicineID);
                     
                     
@@ -121,41 +118,27 @@ namespace Pharmacy_System.Services
                    
                 }
 
-                // Prevent adding the same medicine twice
-                bool medicineAlreadyAdded =customerOrder.CustomerOrderDetails.Any( d => d.MedicineID ==detailDto.MedicineID );
-                  
+              
 
-                if (medicineAlreadyAdded)
-                {
-                    throw new Exception("The same medicine cannot be added twice" );
+                PharmacyStock? pharmacyStock = await pharmacyStockService.GetStock(  dto.PharmacyID,detailDto.MedicineID);
+
+         
                         
-                   
-                }
-
-                // Check that the medicine exists in pharmacy stock
-                PharmacyStock? pharmacyStock =
-                    await pharmacyStockService.GetStock(
-                        dto.PharmacyID,
-                        detailDto.MedicineID);
-
                 if (pharmacyStock == null)
                 {
                     throw new Exception( $"Medicine {medicine.MedicineName} does not exist in pharmacy stock");
                        
                 }
 
-                // Check that the pharmacy has enough quantity
                 if (pharmacyStock.Quantity < detailDto.Quantity)
                 {
                     throw new Exception( $"Not enough pharmacy stock for {medicine.MedicineName}");
                        
                 }
 
-                // Calculate subtotal
                 decimal subtotal =detailDto.Quantity * medicine.UnitPrice;
                     
 
-                // Create one order detail
                 CustomerOrderDetail orderDetail =
                     new CustomerOrderDetail
                     {
@@ -166,13 +149,14 @@ namespace Pharmacy_System.Services
                             
                     };
 
-                // Add detail to the order
                 customerOrder.CustomerOrderDetails.Add( orderDetail );
               
-                // Add subtotal to total cost
                 customerOrder.TotalCost += subtotal;
+
             }
-            // Decrease pharmacy stock for every ordered medicine
+           
+
+
             foreach (CustomerOrderDetail detail
                      in customerOrder.CustomerOrderDetails)
             {
@@ -184,7 +168,7 @@ namespace Pharmacy_System.Services
 
 
 
-            // Save order and details
+            // Save 
             await customerOrderRepo.Add(customerOrder);
 
             await tx.CommitAsync();
@@ -192,7 +176,7 @@ namespace Pharmacy_System.Services
             return customerOrder.CustomerOrderId;
         }
 
-        // Updates customer order status
+        // Updates 
         public async Task<bool> UpdateCustomerOrderStatus( int id, UpdateCustomerOrderStatusDto dto)
       
         {
@@ -204,7 +188,6 @@ namespace Pharmacy_System.Services
                 return false;
             }
 
-            // Completed order cannot be updated
             if (order.Status == "Completed")
             {
                 throw new Exception("A completed order cannot be updated");
@@ -212,7 +195,6 @@ namespace Pharmacy_System.Services
                 
             }
 
-            // Cancelled order cannot be updated
             if (order.Status == "Cancelled")
             {
                 throw new Exception("A cancelled order cannot be updated" );
@@ -228,7 +210,6 @@ namespace Pharmacy_System.Services
                 "Cancelled"
             };
 
-            // Ignore capital and small letters
             string? correctStatus = allowedStatuses.FirstOrDefault(s => s.ToLower() == status.ToLower());
                     
            
@@ -247,19 +228,17 @@ namespace Pharmacy_System.Services
             return true;
         }
 
-        // Deletes a customer order
+        // Deletes
         public async Task<bool> DeleteCustomerOrder(int id)
         {
             CustomerOrder? order =await customerOrderRepo.GetCustomerOrderById(id);
                 
 
-            // Return false if the order does not exist
             if (order == null)
             {
                 return false;
             }
 
-            // Only pending orders can be deleted
             if (order.Status != "Pending")
             {
                 throw new Exception("Only pending customer orders can be deleted" );
@@ -273,7 +252,6 @@ namespace Pharmacy_System.Services
         }
 
 
-        // Converts CustomerOrder model into CustomerOrderDto
         private CustomerOrderDto ConvertToDto(
             CustomerOrder order)
         {
@@ -298,7 +276,6 @@ namespace Pharmacy_System.Services
                       
                 };
 
-            // Convert order details into DTOs
             foreach (CustomerOrderDetail detail in order.CustomerOrderDetails)
                     
             {

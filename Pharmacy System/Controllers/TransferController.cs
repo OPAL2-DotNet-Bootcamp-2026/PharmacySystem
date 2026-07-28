@@ -19,7 +19,7 @@ namespace Pharmacy_System.Controllers
             this.transferService = transferService;
         }
 
-        // GET: api/Transfer
+        // GET
         [HttpGet]
         [Authorize(Roles = "Admin,Manager,Pharmacist")]
 
@@ -31,7 +31,7 @@ namespace Pharmacy_System.Controllers
             return Ok(transfers);
         }
 
-        // GET: api/Transfer/1
+        // GET
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin,Manager,Pharmacist")]
 
@@ -48,7 +48,7 @@ namespace Pharmacy_System.Controllers
             return Ok(transfer);
         }
 
-        // POST: api/Transfer
+        // POST
         [HttpPost]
         [Authorize(Roles = "Admin,Manager")]
 
@@ -72,7 +72,7 @@ namespace Pharmacy_System.Controllers
             }
         }
 
-        // PUT: api/Transfer/1
+        // PUT
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> UpdateTransfer(int id, [FromBody] UpdateTransferDto dto)
@@ -97,7 +97,7 @@ namespace Pharmacy_System.Controllers
             }
 
         }
-        // PUT: api/Transfer/1/confirm-receive
+        // PUT
         [HttpPut("{id}/confirm-receive")]
         [Authorize(Roles = "Admin,Manager,Pharmacist")]
         public async Task<IActionResult> ConfirmReceive(int id)

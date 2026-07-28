@@ -17,7 +17,7 @@ namespace Pharmacy_System.Controllers
             this.supplyService = supplyService;
         }
 
-        // GET: api/Supply
+        // GET
         [HttpGet]
         public async Task<IActionResult> GetAllSupplies()
         {
@@ -27,7 +27,7 @@ namespace Pharmacy_System.Controllers
             
         }
 
-        // GET: api/Supply/1
+        // GET
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSupplyById(int id)
         {
@@ -42,7 +42,7 @@ namespace Pharmacy_System.Controllers
             return Ok(supply);
         }
 
-        // POST: api/Supply
+        // POST
         [HttpPost]
         public async Task<IActionResult> CreateSupply([FromBody] CreateSupplyDto dto)
             
@@ -64,7 +64,7 @@ namespace Pharmacy_System.Controllers
             }
         }
 
-        // PUT: api/Supply/1
+        // PUT
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSupply(int id, [FromBody] UpdateSupplyDto dto)
             
@@ -88,7 +88,7 @@ namespace Pharmacy_System.Controllers
             }
         }
 
-        //DELETE: api/Supply/1
+        //DELETE
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
 

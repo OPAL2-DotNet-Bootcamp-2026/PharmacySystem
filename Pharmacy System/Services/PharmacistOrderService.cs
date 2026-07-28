@@ -47,7 +47,7 @@ namespace Pharmacy_System.Services
             return orderDtos;
         }
 
-        // Returns one pharmacist order using its ID
+        // Returns one pharmacist order using  ID
         public async Task<PharmacistOrderDto?> GetPharmacistOrderById(int id)
         {
             PharmacistOrder? order =await pharmacistOrderRepo.GetPharmacistOrderById(id);
@@ -61,7 +61,7 @@ namespace Pharmacy_System.Services
             return ConvertToDto(order);
         }
 
-        // Creates a new pharmacist order
+        // Creates  new pharmacist order
         public async Task<int> CreatePharmacistOrder(CreatePharmacistOrderDto dto)
             
         {
@@ -100,7 +100,6 @@ namespace Pharmacy_System.Services
                 
             }
 
-            // Create the main pharmacist order
             PharmacistOrder pharmacistOrder = new PharmacistOrder
                
                 {
@@ -109,18 +108,17 @@ namespace Pharmacy_System.Services
 
                     OrderDate = DateTime.Now,
 
-                    // Calculated from order details
                     TotalCost = 0,
 
                     // Default status
                     Status = "Pending"
                 };
 
-            // Add every medicine to the order
+            // Add every medicine to  order
             foreach (CreatePharmacistOrderDetailDto detailDto in dto.OrderDetails)
                     
             {
-                // Check that the medicine exists
+                // Check  medicine exists
                 Medicine? medicine =  await medicineRepo.GetMedicineById( detailDto.MedicineID );
                   
                 if (medicine == null)
@@ -130,18 +128,9 @@ namespace Pharmacy_System.Services
                    
                 }
 
-                // Prevent adding the same medicine twice
-                bool medicineAlreadyAdded = pharmacistOrder.PharmacistOrderDetails.Any(d => d.MedicineID == detailDto.MedicineID );
-                   
                
-                if (medicineAlreadyAdded)
-                {
-                    throw new Exception("The same medicine cannot be added twice" );
-                        
-                   
-                }
 
-                // Calculate the cost of this medicine
+                // Calculate  cost of  medicine
                 decimal subtotal = detailDto.Quantity * medicine.UnitPrice;
                    
 
@@ -153,15 +142,15 @@ namespace Pharmacy_System.Services
                         Quantity = detailDto.Quantity
                     };
 
-                // Add detail to the order
+                // Add detail order
                 pharmacistOrder.PharmacistOrderDetails.Add( orderDetail);
                    
           
-                // Add subtotal to the total order cost
+                // Add subtotal to total order cost
                 pharmacistOrder.TotalCost += subtotal;
             }
 
-            // Save the order and its details
+          
             await pharmacistOrderRepo.Add(pharmacistOrder);
 
             return pharmacistOrder.PharmacistOrderId;
@@ -180,7 +169,8 @@ namespace Pharmacy_System.Services
                 return false;
             }
 
-            // Approved order cannot be changed
+           
+
             if (order.Status == "Approved")
             {
                 throw new Exception("An approved order cannot be updated");
@@ -188,7 +178,6 @@ namespace Pharmacy_System.Services
 
             }
 
-            // Cancelled order cannot be changed
             if (order.Status == "Cancelled")
             {
                 throw new Exception("A cancelled order cannot be updated");
@@ -237,7 +226,8 @@ namespace Pharmacy_System.Services
             return true;
         }
 
-        // Deletes a pharmacist order
+
+
         public async Task<bool> DeletePharmacistOrder(int id)
         {
             PharmacistOrder? order =await pharmacistOrderRepo.GetPharmacistOrderById(id);
@@ -261,8 +251,6 @@ namespace Pharmacy_System.Services
             return true;
         }
 
-
-        // Converts PharmacistOrder model into PharmacistOrderDto
         private PharmacistOrderDto ConvertToDto(
             PharmacistOrder order)
         {
@@ -280,7 +268,6 @@ namespace Pharmacy_System.Services
                        
                 };
 
-            // Convert every order detail into DTO
             foreach (PharmacistOrderDetail detail in order.PharmacistOrderDetails)
                      
             {
