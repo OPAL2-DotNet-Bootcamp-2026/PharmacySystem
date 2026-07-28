@@ -2,16 +2,19 @@
 using Pharmacy_System.Models;
 using Pharmacy_System.Models.Enums;
 using Pharmacy_System.DTOs.Payment;
+using Pharmacy_System.Modules;
 
 namespace Pharmacy_System.Services
 {
     public class PaymentService
     {
         private readonly PaymentRepo paymentRepo;
+        private readonly CustomerOrderRepo customerOrderRepo;
 
-        public PaymentService(PaymentRepo paymentRepo)
+        public PaymentService(PaymentRepo paymentRepo, CustomerOrderRepo customerOrderRepo)
         {
             this.paymentRepo = paymentRepo;
+            this.customerOrderRepo = customerOrderRepo;
         }
 
         public async Task<List<PaymentDto>> GetAll()
@@ -28,6 +31,12 @@ namespace Pharmacy_System.Services
 
         public async Task<PaymentDto> Add(CreatePaymentDto dto)
         {
+            CustomerOrder? order =
+                await customerOrderRepo.GetCustomerOrderById(dto.CustomerOrderID);
+
+            if (order == null)
+                throw new Exception("Customer order not found");
+
             Payment payment = new Payment
             {
                 CustomerOrderID = dto.CustomerOrderID,
