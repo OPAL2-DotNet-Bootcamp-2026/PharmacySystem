@@ -2,6 +2,7 @@
 using Pharmacy_System.DTOs.User;
 using Pharmacy_System.Models;
 using Pharmacy_System.Repos;
+using System.Data;
 
 namespace Pharmacy_System.Services
 {
@@ -32,16 +33,18 @@ namespace Pharmacy_System.Services
                 return null;
             }
 
-            User user = new User();
+            User user = new User()
+            {
+                Username = dto.Username,
+                Email = dto.Email,
+                // Hash the password before saving it in the database
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                Role = dto.Role,
+                IsActive = true
 
-            user.Username = dto.Username;
-            user.Email = dto.Email;
 
-            // Hash the password before saving it in the database
-            user.PasswordHash =BCrypt.Net.BCrypt.HashPassword(dto.Password);
+            };
 
-            user.Role = dto.Role;
-            user.IsActive = true;
 
             await userRepo.AddUser(user);
 
@@ -120,14 +123,14 @@ namespace Pharmacy_System.Services
 
             logger.LogInformation("User {Email} logged in as {Role}", user.Email, user.Role);
 
-            LoginResponseDto response = new LoginResponseDto();
-            response.Token = token;
-            response.Username = user.Username;
-            response.Role = user.Role;
+            return new LoginResponseDto()
+            {
+                Token = token,
+                Username = user.Username,
+                Role = user.Role
+            };
 
-            return response;
         }
-
 
         //  Get All Users 
         public async Task<List<UserResponseDto>> GetAllUsers()
@@ -154,15 +157,15 @@ namespace Pharmacy_System.Services
                 return null;
             }
 
-            UserResponseDto response = new UserResponseDto();
+            return new UserResponseDto()
+            {
+                UserID = user.UserID,
+                Username = user.Username,
+                Email = user.Email,
+                Role = user.Role,
+                IsActive = user.IsActive
+            };
 
-            response.UserID = user.UserID;
-            response.Username = user.Username;
-            response.Email = user.Email;
-            response.Role = user.Role;
-            response.IsActive = user.IsActive;
-
-            return response;
         }
 
         //  Get User by Email 
@@ -175,15 +178,15 @@ namespace Pharmacy_System.Services
                 return null;
             }
 
-            UserResponseDto response = new UserResponseDto();
+            return new UserResponseDto()
+            {
+                UserID = user.UserID,
+                Username = user.Username,
+                Email = user.Email,
+                Role = user.Role,
+                IsActive = user.IsActive
+            };
 
-            response.UserID = user.UserID;
-            response.Username = user.Username;
-            response.Email = user.Email;
-            response.Role = user.Role;
-            response.IsActive = user.IsActive;
-
-            return response;
         }
 
         //  Delete User 
