@@ -1,4 +1,5 @@
-﻿using Pharmacy_System.DTOs.User;
+﻿using Azure;
+using Pharmacy_System.DTOs.User;
 using Pharmacy_System.Models;
 using Pharmacy_System.Repos;
 
@@ -44,17 +45,20 @@ namespace Pharmacy_System.Services
 
             await userRepo.AddUser(user);
 
-            UserResponseDto response = new UserResponseDto();
-
-            response.UserID = user.UserID;
-            response.Username = user.Username;
-            response.Email = user.Email;
-            response.Role = user.Role;
-            response.IsActive = user.IsActive;
+            
 
             logger.LogInformation("New user created: {Email} with role {Role}", user.Email, user.Role);
 
-            return response;
+            return new UserResponseDto()
+            {
+                UserID = user.UserID,
+                Username = user.Username,
+                Email = user.Email,
+                Role = user.Role,
+                IsActive = user.IsActive
+            };
+
+            
         }
 
 
