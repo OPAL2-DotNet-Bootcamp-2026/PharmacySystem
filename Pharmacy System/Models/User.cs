@@ -34,5 +34,10 @@ namespace Pharmacy_System.Models
 
         // One User may have one Pharmacist profile , Because Admin is also a User, but Admin does not have a Pharmacist record.
         public Pharmacist? Pharmacist { get; set; }
+
+        [Required]
+        public int FailedLoginAttempts { get; set; } = 0;
+
+        public DateTime? LockedUntil { get; set; }
     }
 }
