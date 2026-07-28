@@ -10,6 +10,8 @@ namespace Pharmacy_System.Services
         private UserRepo userRepo;
         private AuthService authService;
         private readonly ILogger<UserService> logger;
+        private const int MaxFailedAttempts = 5;
+        private const int LockoutMinutes = 15;
 
         public UserService(UserRepo _userRepo, AuthService _authService, ILogger<UserService> logger) 
         {
@@ -67,36 +69,60 @@ namespace Pharmacy_System.Services
                 return null;
             }
 
-            // Inactive users cannot log in
-            if (!user.IsActive)
+            // Still inside the lockout window?
+            if (user.LockedUntil != null && user.LockedUntil > DateTime.UtcNow)
             {
-                logger.LogWarning("Login blocked - inactive account {Email}", dto.Email);
+                logger.LogWarning(
+                    "Login blocked - {Email} is locked until {Until}",
+                    dto.Email, user.LockedUntil);
                 return null;
             }
 
-            // Compare the entered password with the stored hashed password
             bool validPassword = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
 
             if (!validPassword)
             {
-                logger.LogWarning("Login failed - wrong password for {Email}", dto.Email);
+                user.FailedLoginAttempts++;
+
+                if (user.FailedLoginAttempts >= MaxFailedAttempts)
+                {
+                    user.LockedUntil = DateTime.UtcNow.AddMinutes(LockoutMinutes);
+                    user.FailedLoginAttempts = 0;      // counter resets with the lock
+
+                    logger.LogWarning(
+                        "Account {Email} LOCKED for {Minutes} minutes after {Max} failed attempts",
+                        dto.Email, LockoutMinutes, MaxFailedAttempts);
+                }
+                else
+                {
+                    logger.LogWarning(
+                        "Login failed - wrong password for {Email} (attempt {Count} of {Max})",
+                        dto.Email, user.FailedLoginAttempts, MaxFailedAttempts);
+                }
+
+                await userRepo.UserUpdate();
                 return null;
             }
 
-            // Generate JWT token
+            // Success — clear any previous failures
+            if (user.FailedLoginAttempts > 0 || user.LockedUntil != null)
+            {
+                user.FailedLoginAttempts = 0;
+                user.LockedUntil = null;
+                await userRepo.UserUpdate();
+            }
+
             string token = authService.GenerateToken(user);
 
             logger.LogInformation("User {Email} logged in as {Role}", user.Email, user.Role);
 
             LoginResponseDto response = new LoginResponseDto();
-
             response.Token = token;
             response.Username = user.Username;
             response.Role = user.Role;
 
-
             return response;
-       }
+        }
 
 
         //  Get All Users 
