@@ -1,5 +1,4 @@
-﻿using Azure;
-using Pharmacy_System.DTOs.User;
+﻿using Pharmacy_System.DTOs.User;
 using Pharmacy_System.Models;
 using Pharmacy_System.Repos;
 using System.Data;
@@ -9,8 +8,8 @@ namespace Pharmacy_System.Services
     public class UserService
     {
 
-        private UserRepo userRepo;
-        private AuthService authService;
+        private readonly UserRepo userRepo;
+        private readonly AuthService authService;
         private readonly ILogger<UserService> logger;
         private const int MaxFailedAttempts = 5;
         private const int LockoutMinutes = 15;
