@@ -13,14 +13,14 @@ namespace Pharmacy_System.Services
         {
             private IConfiguration config;
 
-           // Read JWT settings from appsettings.json
-           public AuthService(IConfiguration _config)
-            {
+        
+           public AuthService(IConfiguration _config) // to read JWT setting from appsettings.json
+        {
                 config = _config;
             }
 
 
-           // Create a JWT token for the user.
+    
            public string GenerateToken(User user)
             {
                 string secretKey =

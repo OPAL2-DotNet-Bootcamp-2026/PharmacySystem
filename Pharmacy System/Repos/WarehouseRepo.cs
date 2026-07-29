@@ -31,24 +31,23 @@ namespace Pharmacy_System.Repos
         }
 
   
-        public async Task WarehouseUpdate()  // save warehouse changes
+        public async Task WarehouseUpdate()  
         {
             await context.SaveChangesAsync();
         }
-        // Get medicines currently held in the warehouse
+ 
         public async Task<List<WarehouseStock>> GetStock(int warehouseId)
         {
             return await context.warehouseStocks.Where(ws =>ws.WarehouseID == warehouseId &&
                     ws.Quantity > 0).Include(ws => ws.Medicine).ToListAsync();
         }
 
-        // Get warehouse items ordered by nearest expiry date
+      
         public async Task<List<WarehouseStock>> GetExpiringItems(int warehouseId,int days)
         {
             DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
 
-            DateOnly expiryLimit =
-                today.AddDays(days);
+            DateOnly expiryLimit = today.AddDays(days);
 
             return await context.warehouseStocks
                 .Where(ws =>

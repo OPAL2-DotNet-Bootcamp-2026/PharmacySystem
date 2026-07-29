@@ -19,7 +19,7 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // Get all suppliers
+    
         [HttpGet("GetAll")]
         [Authorize]
         public async Task<IActionResult> GetAllSuppliers()
@@ -30,7 +30,7 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // Get one supplier by ID
+     
         [HttpGet("GetById/{id}")]
         [Authorize]
         public async Task<IActionResult> GetSupplierById(int id)
@@ -49,7 +49,7 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // Add a new supplier
+      
         [HttpPost("Create")]
         [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> CreateSupplier(
@@ -65,12 +65,9 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // Update supplier information
         [HttpPut("Update/{id}")]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IActionResult> UpdateSupplier(
-            int id,
-            [FromBody] UpdateSupplierDto dto)
+        public async Task<IActionResult> UpdateSupplier(int id,[FromBody] UpdateSupplierDto dto)
         {
             try
             {

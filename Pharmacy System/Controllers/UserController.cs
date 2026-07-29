@@ -8,7 +8,7 @@ namespace Pharmacy_System.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // All endpoints require login unless AllowAnonymous is added
+    [Authorize] 
     public class UserController : ControllerBase
     {
         private UserService userService;
@@ -19,14 +19,12 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // POST user/create  --  Admin only — creates a new system user
 
         [HttpPost("create")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateUser([FromBody] RegisterUserDto dto)
         {
-            UserResponseDto? created =
-                await userService.CreateUser(dto);
+            UserResponseDto? created = await userService.CreateUser(dto);
 
             if (created == null)
             {
@@ -40,20 +38,18 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // POST user/login  ---- Public — no token required
 
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
-            LoginResponseDto? result =
-                await userService.Login(dto);
+            LoginResponseDto? result = await userService.Login(dto);
 
             if (result == null)
             {
                 return Unauthorized(new
                 {
-                    message = "Invalid email or password."
+                    message = "Invalid email or password"
                 });
             }
 
@@ -61,7 +57,7 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // GET user/GetAllUsers  Admin only
+        // GET user/GetAllUsers 
         [HttpGet("GetAllUsers")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllUsers()
@@ -74,13 +70,11 @@ namespace Pharmacy_System.Controllers
 
 
         // GET user/GetUserData/3
-        // Any authenticated system user
         [HttpGet("GetUserData/{id}")]
         [Authorize(Roles = "Admin,Manager,Pharmacist")]
         public async Task<IActionResult> GetUserData(int id)
         {
-            UserResponseDto? user =
-                await userService.GetUserById(id);
+            UserResponseDto? user = await userService.GetUserById(id);
 
             if (user == null)
             {
@@ -94,26 +88,25 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // DELETE user/DeleteUser/3   --   Admin only
+        // DELETE user/DeleteUser/3 
 
         [HttpDelete("DeleteUser/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            bool deleted =
-                await userService.UserDelete(id);
+            bool deleted = await userService.UserDelete(id);
 
             if (!deleted)
             {
                 return NotFound(new
                 {
-                    message = $"User with ID {id} was not found."
+                    message = $"User with ID {id} was not found"
                 });
             }
 
             return Ok(new
             {
-                message = "User deactivated successfully."
+                message = "User deactivated successfully"
             });
         }
     }

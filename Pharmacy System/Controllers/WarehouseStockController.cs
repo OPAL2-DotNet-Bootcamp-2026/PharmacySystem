@@ -8,7 +8,7 @@ namespace Pharmacy_System.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // All endpoints require login
+    [Authorize] 
     public class WarehouseStockController : ControllerBase
     {
         private readonly WarehouseStockService warehouseStockService;
@@ -19,7 +19,6 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // Get all stock in one warehouse
         [HttpGet("GetByWarehouse/{warehouseId}")]
         public async Task<IActionResult> GetByWarehouse(int warehouseId)
         {
@@ -28,7 +27,6 @@ namespace Pharmacy_System.Controllers
             return Ok(stocks);
         }
 
-        // Get warehouse stock for one medicine
         [HttpGet("GetByMedicine/{medicineId}")]
         public async Task<IActionResult> GetByMedicine(int medicineId)
         {
@@ -38,7 +36,6 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // Increase medicine quantity in the warehouse
         [HttpPut("Increase")]
         [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Increase(int warehouseId,int medicineId,int quantity, DateOnly expiryDate)
@@ -62,7 +59,6 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // Decrease medicine quantity in the warehouse
         [HttpPut("Decrease")]
         [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Decrease(int warehouseId,int medicineId,int quantity)
@@ -88,7 +84,6 @@ namespace Pharmacy_System.Controllers
             }
         }
 
-        // Get medicines with low stock
         [HttpGet("GetLowStock/{warehouseId}")]
         [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> GetLowStock(int warehouseId,

@@ -8,7 +8,7 @@ namespace Pharmacy_System.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // All endpoints require login
+    [Authorize]
     public class WarehouseController : ControllerBase
     {
         private readonly WarehouseService warehouseService;
@@ -21,7 +21,6 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // Get all warehouses
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllWarehouses()
         {
@@ -31,7 +30,6 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // Get one warehouse by ID
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetWarehouseById(int id)
         {
@@ -48,11 +46,10 @@ namespace Pharmacy_System.Controllers
             return Ok(warehouse);
         }
 
-        // Add a new warehouse
+        
         [HttpPost("Add")]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IActionResult> AddWarehouse(
-            [FromBody] CreateWarehouseDto dto)
+        public async Task<IActionResult> AddWarehouse([FromBody] CreateWarehouseDto dto)
         {
             int warehouseId = await warehouseService.AddWarehouse(dto);
 
@@ -63,7 +60,7 @@ namespace Pharmacy_System.Controllers
             });
         }
 
-        // Update warehouse information
+
         [HttpPut("Update/{id}")]
         [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> UpdateWarehouse(int id,
@@ -86,7 +83,6 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // Get medicines available in the warehouse
         [HttpGet("GetStock/{warehouseId}")]
         public async Task<IActionResult> GetStock(int warehouseId)
         {
@@ -106,7 +102,6 @@ namespace Pharmacy_System.Controllers
         }
 
 
-        // Get medicines expiring within 30 days
         [HttpGet("GetExpiringItems/{warehouseId}")]
         [Authorize(Roles = "Admin,Manager,Pharmacist")]
         public async Task<IActionResult> GetExpiringItems(int warehouseId)
