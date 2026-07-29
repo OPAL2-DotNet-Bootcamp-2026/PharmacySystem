@@ -13,7 +13,6 @@ namespace Pharmacy_System.Repos
             context = _context;
         }
 
-        // Get all stock records for one warehouse
         public async Task<List<WarehouseStock>> GetByWarehouse(int warehouseId)
         {
             return await context.warehouseStocks.Where(ws => ws.WarehouseID == warehouseId)
@@ -21,7 +20,7 @@ namespace Pharmacy_System.Repos
                                                 .ToListAsync();
         }
 
-        // Get the warehouses that contain a specific medicine
+       
         public async Task<List<WarehouseStock>> GetByMedicine(int medicineId)
         {
             return await context.warehouseStocks.Where(ws => ws.MedicineID == medicineId)
@@ -29,13 +28,12 @@ namespace Pharmacy_System.Repos
                                                 .ToListAsync();
         }
 
-        // Get one medicine stock record from one warehouse
         public async Task<WarehouseStock?> GetStock(int warehouseId,int medicineId)
         {
             return await context.warehouseStocks.FirstOrDefaultAsync(ws =>ws.WarehouseID == warehouseId &&ws.MedicineID == medicineId);
         }
 
-        // Get medicines with a low quantity
+        // medicines with a low quantity
         public async Task<List<WarehouseStock>> GetLowStock(int warehouseId,int minimumQuantity)
         {
             return await context.warehouseStocks.Where(ws =>ws.WarehouseID == warehouseId &&ws.Quantity <= minimumQuantity)

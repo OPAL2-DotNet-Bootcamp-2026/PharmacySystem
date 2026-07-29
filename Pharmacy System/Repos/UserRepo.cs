@@ -12,19 +12,16 @@ namespace Pharmacy_System.Repos
             context = _context;
         }
 
-        // Get all active users from the database
 
-        public async Task<List<User>> GetAllUsers()
+        public async Task<List<User>> GetAllUsers() 
         {
             return await context.users.Where(u => u.IsActive).ToListAsync();
         }
 
-
-        // get active user by ID
         public async Task<User?> GetUserById(int id)
         {
             return await context.users.Where(u => u.UserID == id && u.IsActive)
-                .FirstOrDefaultAsync(); // Return the user, or null if not found
+                .FirstOrDefaultAsync(); 
         }
 
         public async Task<User?> GetUserByEmail(string email)
@@ -33,7 +30,7 @@ namespace Pharmacy_System.Repos
         }
 
        
-        public async Task<bool> EmailExists(string email)  // Check if the email already exists
+        public async Task<bool> EmailExists(string email)  
         {
             return await context.users.AnyAsync(u => u.Email == email);
         }
@@ -51,7 +48,7 @@ namespace Pharmacy_System.Repos
         }
 
 
-        public async Task UserDelete(User user) // Soft delete 
+        public async Task UserDelete(User user) 
         {
             user.IsActive = false;
 

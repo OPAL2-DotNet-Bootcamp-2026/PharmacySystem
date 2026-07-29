@@ -18,7 +18,6 @@ namespace Pharmacy_System.Services
         }
 
 
-        // Get all active medicines
         public async Task<List<MedicineDto>> GetAll()
         {
             List<Medicine> medicines = await medicineRepo.GetAllMedicines();
@@ -34,7 +33,7 @@ namespace Pharmacy_System.Services
         }
 
 
-        // Get one medicine by ID
+  
         public async Task<MedicineDto?> GetById(int id)
         {
             Medicine? medicine = await medicineRepo.GetMedicineById(id);
@@ -55,7 +54,7 @@ namespace Pharmacy_System.Services
         }
 
 
-        // Get available medicines
+       
         public async Task<List<MedicineDto>> GetAvailable()
         {
             List<Medicine> medicines = await medicineRepo.GetAvailableMedicines();
@@ -71,7 +70,6 @@ namespace Pharmacy_System.Services
         }
 
 
-        // Get medicines by category
         public async Task<List<MedicineDto>> GetByCategory(int categoryId)
         {
             List<Medicine> medicines = await medicineRepo.GetMedicinesByCategory(categoryId);
@@ -87,7 +85,6 @@ namespace Pharmacy_System.Services
         }
 
 
-        // Search medicines by name
         public async Task<List<MedicineDto>> SearchByName(string name)
         {
             List<Medicine> medicines = await medicineRepo.SearchMedicinesByName(name);
@@ -103,8 +100,7 @@ namespace Pharmacy_System.Services
         }
 
 
-        // Change medicine availability
-        public async Task<bool> ToggleAvailability(int id)
+        public async Task<bool> ToggleAvailability(int id) // Change availability
         {
             Medicine? medicine = await medicineRepo.GetMedicineById(id);
 
@@ -113,7 +109,6 @@ namespace Pharmacy_System.Services
                 return false;
             }
 
-            // True becomes false, and false becomes true
             medicine.IsAvailable = !medicine.IsAvailable;
 
             await medicineRepo.MedicineUpdate();
@@ -123,7 +118,6 @@ namespace Pharmacy_System.Services
 
 
 
-        // Add a new medicine
         public async Task<int> AddNewMedicine(CreateMedicineDto dto)
         {
             Medicine medicine = new Medicine
@@ -140,7 +134,7 @@ namespace Pharmacy_System.Services
             return medicine.MedicineID;
         }
 
-        // Update medicine information
+     
         public async Task<bool> Update(int id, UpdateMedicineDto dto)
         {
             Medicine? medicine = await medicineRepo.GetMedicineById(id);
@@ -159,7 +153,7 @@ namespace Pharmacy_System.Services
             return true;
         }
 
-        //// Soft delete medicine
+   
         public async Task<bool> MedicineDelete(int id)
         {
             Medicine? medicine =

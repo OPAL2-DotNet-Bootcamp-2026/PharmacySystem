@@ -1,4 +1,6 @@
 ﻿using Pharmacy_System.DTOs.Supplier;
+using Pharmacy_System.DTOs.User;
+using Pharmacy_System.Models;
 using Pharmacy_System.Modules;
 using Pharmacy_System.Repos;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -17,11 +19,11 @@ namespace Pharmacy_System.Services
         }
 
 
-        public async Task<List<SupplierDto>> GetAllSuppliers() //get all suppliers
+        public async Task<List<SupplierDto>> GetAllSuppliers() 
         {
             List<Supplier> suppliers = await supplierRepo.GetAllSuppliers();
 
-            // Convert Supplier models into SupplierDto objects
+           
             return suppliers.Select(s => new SupplierDto
             {
                 SupplierID = s.SupplierID,
@@ -36,33 +38,32 @@ namespace Pharmacy_System.Services
         }
 
 
-        public async Task<SupplierDto?> GetSupplierById(int id) //  get one supplier by ID
+        public async Task<SupplierDto?> GetSupplierById(int id) 
         {
             Supplier? supplier = await supplierRepo.GetSupplierById(id);
 
 
-            // Return null if the supplier does not exist
+           
             if (supplier == null)
             {
                 return null;
             }
 
 
-            SupplierDto response = new SupplierDto();
+            return new SupplierDto() {
 
-            response.SupplierID = supplier.SupplierID;
-            response.FullName = supplier.FullName;
-            response.Phone = supplier.Phone;
-            response.Email = supplier.Email;
-            response.Location = supplier.Location;
-            response.IsActive = supplier.IsActive;
-            response.CreatedAt = supplier.CreatedAt;
-            response.UpdatedAt = supplier.UpdatedAt;
+                SupplierID = supplier.SupplierID,
+                FullName = supplier.FullName,
+                Phone = supplier.Phone,
+                Email = supplier.Email,
+                Location = supplier.Location,
+                IsActive = supplier.IsActive,
+                CreatedAt = supplier.CreatedAt,
+                UpdatedAt = supplier.UpdatedAt
+            };
 
-            return response;
         }
 
-        // Get suppliers by location
         public async Task<List<SupplierDto>> GetByLocation(string location)
         {
             List<Supplier> suppliers = await supplierRepo.GetByLocation(location);
@@ -81,7 +82,6 @@ namespace Pharmacy_System.Services
         }
 
 
-        // Create supplier
         public async Task<int> CreateSupplier(CreateSupplierDto dto)
         {
             bool emailExists = await supplierRepo.EmailExists(dto.Email);
@@ -91,14 +91,17 @@ namespace Pharmacy_System.Services
                 throw new Exception("Supplier email already exists");
             }
 
-            Supplier supplier = new Supplier();
 
-            supplier.FullName = dto.FullName;
-            supplier.Phone = dto.Phone;
-            supplier.Email = dto.Email;
-            supplier.Location = dto.Location;
-            supplier.IsActive = true;
+            Supplier supplier = new Supplier()
+            {
+                FullName = dto.FullName,
+                Phone = dto.Phone,
+                Email = dto.Email,
+                Location = dto.Location,
+                IsActive = true
+            };
 
+         
             await supplierRepo.Add(supplier);
 
             return supplier.SupplierID;
@@ -115,33 +118,31 @@ namespace Pharmacy_System.Services
             {
                 return false;
             }
-            // Find whether another supplier uses this email
+           
             Supplier? supplierWithEmail = await supplierRepo.GetSupplierByEmail(dto.Email);
 
-            // Check whether another supplier already uses this email
+           
             if (supplierWithEmail != null && supplierWithEmail.SupplierID != id)
             {
                 throw new Exception("Supplier email already exists");
             }
 
-            // Change supplier information
+            // Change supplier info
             supplier.FullName = dto.FullName;
             supplier.Phone = dto.Phone;
             supplier.Email = dto.Email;
             supplier.Location = dto.Location;
 
-            // Save the changes
+            
             await supplierRepo.SupplierUpdate();
 
             return true;
         }
 
-        // Delete a supplier
         public async Task<bool> DeleteSupplier(int id)
         {
             Supplier? supplier = await supplierRepo.GetSupplierById(id);
 
-            // Stop if the supplier does not exist
             if (supplier == null)
             {
                 return false;

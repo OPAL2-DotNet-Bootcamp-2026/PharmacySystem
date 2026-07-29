@@ -12,7 +12,7 @@ namespace Pharmacy_System.Repos
             context = _context;
         }
 
-        public async Task<List<Supplier>> GetAllSuppliers()  // get all suppliers from the database
+        public async Task<List<Supplier>> GetAllSuppliers()  
         {
             return await context.suppliers.Where(s => s.IsActive).ToListAsync();
         }
@@ -45,7 +45,7 @@ namespace Pharmacy_System.Repos
                 .ToListAsync();
         }
 
-        // it return the supplier with their supply records:
+        // here we return the supplier with their supply records
         public async Task<Supplier?> GetSupplies(int id)
         {
             return await context.suppliers.Include(s => s.Supplies)
@@ -55,20 +55,20 @@ namespace Pharmacy_System.Repos
 
 
 
-        public async Task Add(Supplier supplier)  // add a new supplier to the database
+        public async Task Add(Supplier supplier)  
         {
             await context.suppliers.AddAsync(supplier);
             await context.SaveChangesAsync();
         }
 
 
-        public async Task SupplierUpdate() // save changes made to a supplier
+        public async Task SupplierUpdate()
         {
             await context.SaveChangesAsync();
         }
 
 
-        public async Task SupplierDelete(Supplier supplier)  //  Delete a supplier from the database
+        public async Task SupplierDelete(Supplier supplier)  
         {
             supplier.IsActive = false;
             await context.SaveChangesAsync();

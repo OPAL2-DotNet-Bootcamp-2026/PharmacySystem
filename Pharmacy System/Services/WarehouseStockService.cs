@@ -20,7 +20,7 @@ namespace Pharmacy_System.Services
         }
 
 
-        // here to get all medicines stored in one warehouse
+        // here to get all medicines that stored in one warehouse
         public async Task<List<WarehouseStockDto>> GetByWarehouse(int warehouseId)
         {
             List<WarehouseStock> stocks = await warehouseStockRepo.GetByWarehouse(warehouseId);
@@ -55,23 +55,15 @@ namespace Pharmacy_System.Services
             }).ToList();
         }
 
-        // Get one medicine stock from  warehouse
-        public async Task<WarehouseStock?> GetStock(
-            int warehouseId,
-            int medicineId)
+        // get one medicine stock from  warehouse
+        public async Task<WarehouseStock?> GetStock(int warehouseId, int medicineId)
         {
-            return await warehouseStockRepo.GetStock(
-                warehouseId,
-                medicineId);
+            return await warehouseStockRepo.GetStock(warehouseId,medicineId);
         }
 
 
-        // Increase stock when a supply is received
-        public async Task Increase(
-            int warehouseId,
-            int medicineId,
-            int qty,
-            DateOnly expiryDate)
+        // for when the stock increase when a new supply is received
+        public async Task Increase(int warehouseId,int medicineId,int qty,DateOnly expiryDate)
         {
             if (qty <= 0)
             {
@@ -112,11 +104,8 @@ namespace Pharmacy_System.Services
         }
 
 
-        // Decrease stock when medicine is transferred out
-        public async Task Decrease(
-              int warehouseId,
-              int medicineId,
-              int qty)
+        // decrease stock when medicine is transferred to the pharmacy
+        public async Task Decrease(int warehouseId,int medicineId,int qty)
         {
             if (qty <= 0)
             {

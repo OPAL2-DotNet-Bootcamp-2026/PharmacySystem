@@ -15,11 +15,9 @@ namespace Pharmacy_System.Services
             warehouseRepo = _warehouseRepo;
         }
 
-        // Get all warehouses
         public async Task<List<WarehouseDto>> GetAllWarehouses()
         {
-            List<Warehouse> warehouses =
-                await warehouseRepo.GetAllWarehouses();
+            List<Warehouse> warehouses = await warehouseRepo.GetAllWarehouses();
 
             return warehouses.Select(w => new WarehouseDto
             {
@@ -28,7 +26,6 @@ namespace Pharmacy_System.Services
             }).ToList();
         }
 
-        // Get warehouse by ID
         public async Task<WarehouseDto?> GetWarehouseById(int id)
         {
             Warehouse? warehouse = await warehouseRepo.GetWarehouseById(id);
@@ -47,7 +44,7 @@ namespace Pharmacy_System.Services
         }
 
        
-        public async Task<int> AddWarehouse(CreateWarehouseDto dto) //Add
+        public async Task<int> AddWarehouse(CreateWarehouseDto dto) 
         {
             Warehouse warehouse = new Warehouse
             {
@@ -76,7 +73,6 @@ namespace Pharmacy_System.Services
             return true;
         }
 
-        // Get medicines currently held in the warehouse
         public async Task<List<WarehouseStockDto>> GetStock(int warehouseId)
         {
             Warehouse? warehouse = await warehouseRepo.GetWarehouseById(warehouseId);
@@ -99,10 +95,10 @@ namespace Pharmacy_System.Services
             }).ToList();
         }
 
-        // Get warehouse items ordered by nearest expiry date
+        
         public async Task<List<WarehouseStockDto>> GetExpiringItems(int warehouseId)
         {
-            int days = 30; //to check medicines that will expire within the next 30 days
+            int days = 30; 
 
             Warehouse? warehouse = await warehouseRepo.GetWarehouseById(warehouseId);
 

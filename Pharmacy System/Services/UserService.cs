@@ -21,10 +21,10 @@ namespace Pharmacy_System.Services
             this.logger = logger;
         }
 
-        // --- Create User  / Register 
+      
         public async Task<UserResponseDto?> CreateUser(RegisterUserDto dto)
         {
-            // Check if the email is already registered
+           
             bool emailExists = await userRepo.EmailExists(dto.Email);
 
             if (emailExists)
@@ -36,8 +36,7 @@ namespace Pharmacy_System.Services
             {
                 Username = dto.Username,
                 Email = dto.Email,
-                // Hash the password before saving it in the database
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password), // we hash the pass before saving it in DB
                 Role = dto.Role,
                 IsActive = true
 
@@ -64,7 +63,6 @@ namespace Pharmacy_System.Services
         }
 
 
-        // --- Login 
         public async Task<LoginResponseDto?> Login(LoginDto dto)
         {
             User? user = await userRepo.GetUserByEmail(dto.Email);
@@ -75,8 +73,8 @@ namespace Pharmacy_System.Services
                 return null;
             }
 
-            // Still inside the lockout window?
-            if (user.LockedUntil != null && user.LockedUntil > DateTime.UtcNow)
+     
+            if (user.LockedUntil != null && user.LockedUntil > DateTime.UtcNow) //if the account is still locked
             {
                 logger.LogWarning(
                     "Login blocked - {Email} is locked until {Until}",
@@ -111,7 +109,7 @@ namespace Pharmacy_System.Services
             }
 
             // Success — clear any previous failures
-            if (user.FailedLoginAttempts > 0 || user.LockedUntil != null)
+            if (user.FailedLoginAttempts > 0 || user.LockedUntil != null)  // check if the user have pervious failed login attempts or saved acc lock time.
             {
                 user.FailedLoginAttempts = 0;
                 user.LockedUntil = null;
@@ -131,7 +129,7 @@ namespace Pharmacy_System.Services
 
         }
 
-        //  Get All Users 
+
         public async Task<List<UserResponseDto>> GetAllUsers()
         {
             List<User> users = await userRepo.GetAllUsers();
@@ -146,7 +144,7 @@ namespace Pharmacy_System.Services
             }).ToList();
         }
 
-        // Get User by ID
+        
         public async Task<UserResponseDto?> GetUserById(int id)
         {
             User? user = await userRepo.GetUserById(id);
@@ -167,7 +165,7 @@ namespace Pharmacy_System.Services
 
         }
 
-        //  Get User by Email 
+     
         public async Task<UserResponseDto?> GetUserByEmail(string email)
         {
             User? user = await userRepo.GetUserByEmail(email);
@@ -188,7 +186,7 @@ namespace Pharmacy_System.Services
 
         }
 
-        //  Delete User 
+      
         public async Task<bool> UserDelete(int id)
         {
             User? user = await userRepo.GetUserById(id);
