@@ -59,7 +59,7 @@ namespace Pharmacy_System.Services
             return transferDtos;
         }
 
-        // Returns one transfer using its ID
+        // Returns one transfer using  ID
         public async Task<TransferDto?> GetTransferById(int id)
         {
             Transfer? transfer = await transferRepo.GetTransferById(id);
@@ -73,12 +73,11 @@ namespace Pharmacy_System.Services
             return ConvertToDto(transfer);
         }
 
-        // Creates a new transfer
+        // Creates  transfer
         public async Task<int> CreateTransfer(CreateTransferDto dto)
         {
-            // Check that the warehouse exists
-            Warehouse? warehouse = await warehouseRepo.GetWarehouseById(
-                dto.WarehouseID);
+            Warehouse? warehouse = await warehouseRepo.GetWarehouseById( dto.WarehouseID);
+               
 
 
             if (warehouse == null)
@@ -86,20 +85,16 @@ namespace Pharmacy_System.Services
                 throw new Exception("Warehouse not found");
             }
 
-            // Check that the pharmacy exists
-            Pharmacy? pharmacy = await pharmacyRepo.GetPharmacyById(
-                dto.PharmacyID);
+            Pharmacy? pharmacy = await pharmacyRepo.GetPharmacyById( dto.PharmacyID);
+               
 
             if (pharmacy == null)
             {
                 throw new Exception("Pharmacy not found");
             }
 
-            // Check that the pharmacist order exists
             PharmacistOrder? pharmacistOrder =await pharmacistOrderRepo.GetPharmacistOrderById(dto.PharmacistOrderId);
                 
-                    
-
 
             if (pharmacistOrder == null)
             {
@@ -114,7 +109,6 @@ namespace Pharmacy_System.Services
 
             }
 
-            // Check that the order belongs to the selected pharmacy
             if (pharmacistOrder.PharmacyID != dto.PharmacyID)
             {
                 throw new Exception( "The pharmacist order does not belong to this pharmacy");
@@ -134,7 +128,6 @@ namespace Pharmacy_System.Services
 
             using var tx = await context.Database.BeginTransactionAsync();
 
-            // Create the main Transfer model
             Transfer transfer = new Transfer
             {
                 WarehouseID = dto.WarehouseID,
@@ -143,7 +136,6 @@ namespace Pharmacy_System.Services
 
                 TransferDate = DateTime.Now,
 
-                // Default status
                 Status = "Pending"
             };
 
@@ -151,7 +143,6 @@ namespace Pharmacy_System.Services
             foreach (CreateTransferDetailDto detailDto in dto.TransferDetails)
 
             {
-                // Check that the medicine exists
                 Medicine? medicine = await medicineRepo.GetMedicineById(detailDto.MedicineID);
                     
 
@@ -163,21 +154,7 @@ namespace Pharmacy_System.Services
 
                 }
 
-                // Prevent adding the same medicine twice
-                bool medicineAlreadyAdded = transfer.TransferDetails.Any( d => d.MedicineID == detailDto.MedicineID);
-                   
-                       
 
-
-                if (medicineAlreadyAdded)
-                {
-                    throw new Exception( "The same medicine cannot be added twice");
-                       
-
-
-                }
-
-                // Check that the medicine exists in warehouse stock
                 WarehouseStock? warehouseStock =await warehouseStockService.GetStock( dto.WarehouseID, detailDto.MedicineID);
                     
                        
@@ -196,14 +173,12 @@ namespace Pharmacy_System.Services
                        
                 }
 
-                // Check that the warehouse stock has an expiry date
                 if (warehouseStock.ExpiryDate == null)
                 {
                     throw new Exception( $"Expiry date is missing for {medicine.MedicineName}");
                        
                 }
 
-                // Create one transfer detail
                 TransferDetail transferDetail =
                     new TransferDetail
                     {
@@ -212,7 +187,6 @@ namespace Pharmacy_System.Services
                         ExpiryDate = warehouseStock.ExpiryDate.Value
                     };
 
-                // Add the detail to the transfer
                 transfer.TransferDetails.Add(transferDetail);
             }
 
@@ -225,7 +199,6 @@ namespace Pharmacy_System.Services
                     detail.Quantity);
             }
 
-            // Save Transfer and TransferDetails
             await transferRepo.Add(transfer);
             await tx.CommitAsync();
 
@@ -260,7 +233,6 @@ namespace Pharmacy_System.Services
 
             }
 
-            // Check that status was entered
             if (string.IsNullOrWhiteSpace(dto.Status))
             {
                 throw new Exception( "Status is required");
@@ -277,7 +249,6 @@ namespace Pharmacy_System.Services
                 "Cancelled"
             };
 
-            // Search for the status in the allowed list
 
             string? correctStatus =allowedStatuses.FirstOrDefault(s => s.ToLower() == status.ToLower());
                 
@@ -336,14 +307,12 @@ namespace Pharmacy_System.Services
                    
             }
 
-            // Prevent increasing pharmacy stock more than once
             if (transfer.Status == "Received")
             {
                 throw new Exception("This transfer has already been received");
                     
             }
 
-            // Only shipped transfers can be received
             if (transfer.Status != "Shipped")
             {
                 throw new Exception("Only a shipped transfer can be received");
@@ -362,10 +331,8 @@ namespace Pharmacy_System.Services
                     detail.ExpiryDate);
             }
 
-            // Change transfer status to Received
             transfer.Status = "Received";
 
-            // ReceiveDate is generated by the system
             transfer.ReceiveDate = DateTime.Now;
 
             await transferRepo.TransferUpdate();
@@ -377,7 +344,6 @@ namespace Pharmacy_System.Services
 
 
 
-        // Converts Transfer model into TransferDto
         private TransferDto ConvertToDto(Transfer transfer)
         {
             TransferDto dto = new TransferDto

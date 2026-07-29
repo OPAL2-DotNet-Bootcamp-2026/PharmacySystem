@@ -19,8 +19,7 @@ namespace Pharmacy_System.Controllers
             this.pharmacistOrderService = pharmacistOrderService;
         }
 
-        // Returns all pharmacist orders
-        // GET: api/PharmacistOrder
+        // GET
         [HttpGet]
         [Authorize(Roles = "Admin,Manager,Pharmacist")]
 
@@ -32,8 +31,7 @@ namespace Pharmacy_System.Controllers
             return Ok(orders);
         }
 
-        // Returns one pharmacist order by ID
-        // GET: api/PharmacistOrder/1
+        // GET
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin,Manager,Pharmacist")]
 
@@ -50,8 +48,7 @@ namespace Pharmacy_System.Controllers
             return Ok(order);
         }
 
-        // Creates a new pharmacist order
-        // POST: api/PharmacistOrder
+        // POST
         [HttpPost]
         [Authorize(Roles = "Admin,Pharmacist")]
 
@@ -76,8 +73,7 @@ namespace Pharmacy_System.Controllers
             }
         }
 
-        // Updates pharmacist order status
-        // PUT: api/PharmacistOrder/1/status
+        // PUT
         [HttpPut("{id}/status")]
         [Authorize(Roles = "Admin,Manager")]
 
@@ -106,8 +102,7 @@ namespace Pharmacy_System.Controllers
             }
         }
 
-        // Deletes a pharmacist order
-        // DELETE: api/PharmacistOrder/1
+        // DELETE
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
 

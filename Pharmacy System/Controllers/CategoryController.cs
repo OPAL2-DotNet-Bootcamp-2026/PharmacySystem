@@ -17,8 +17,7 @@ namespace Pharmacy_System.Controllers
             this.categoryService = categoryService;
         }
 
-        // Admin, Manager and Pharmacist can view all categories
-        // GET: api/Category
+        // GET
         [HttpGet]
         [Authorize(Roles = "Admin,Manager,Pharmacist")]
         public async Task<IActionResult> GetAllCategories()
@@ -29,8 +28,8 @@ namespace Pharmacy_System.Controllers
             return Ok(categories);
         }
 
-        // Admin, Manager and Pharmacist can view one category
-        // GET: api/Category/1
+        
+        // GET
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin,Manager,Pharmacist")]
         public async Task<IActionResult> GetCategoryById(int id)
@@ -49,8 +48,7 @@ namespace Pharmacy_System.Controllers
             return Ok(category);
         }
 
-        // Only Admin can create categories
-        // POST: api/Category
+        // POST
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryDto dto)
@@ -76,8 +74,7 @@ namespace Pharmacy_System.Controllers
             }
         }
 
-        // Only Admin can update categories
-        // PUT: api/Category/1
+        // PUT
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateCategory( int id,[FromBody] UpdateCategoryDto dto)
@@ -111,8 +108,7 @@ namespace Pharmacy_System.Controllers
             }
         }
 
-        // Only Admin can delete categories
-        // DELETE: api/Category/1
+        // DELETE
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCategory(int id)

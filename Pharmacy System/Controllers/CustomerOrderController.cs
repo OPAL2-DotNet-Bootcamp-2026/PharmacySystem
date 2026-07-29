@@ -19,8 +19,7 @@ namespace Pharmacy_System.Controllers
             this.customerOrderService = customerOrderService;
         }
 
-        // Returns all customer orders
-        // GET: api/CustomerOrder
+        // GET
         [HttpGet]
         public async Task<IActionResult> GetAllCustomerOrders()
         {
@@ -30,8 +29,7 @@ namespace Pharmacy_System.Controllers
             return Ok(orders);
         }
 
-        // Returns one customer order by ID
-        // GET: api/CustomerOrder/1
+        // GET
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomerOrderById(int id)
         {
@@ -46,8 +44,7 @@ namespace Pharmacy_System.Controllers
             return Ok(order);
         }
 
-        // Creates a new customer order
-        // POST: api/CustomerOrder
+        // POST
         [HttpPost]
         public async Task<IActionResult> CreateCustomerOrder([FromBody] CreateCustomerOrderDto dto)
           
@@ -69,8 +66,7 @@ namespace Pharmacy_System.Controllers
             }
         }
 
-        // Updates customer order status
-        // PUT: api/CustomerOrder/1/status
+        // PUT
         [HttpPut("{id}/status")]
         public async Task<IActionResult> UpdateCustomerOrderStatus( int id, [FromBody] UpdateCustomerOrderStatusDto dto)
            
@@ -97,8 +93,8 @@ namespace Pharmacy_System.Controllers
             }
         }
 
-        // Deletes a customer order
-        // DELETE: api/CustomerOrder/1
+      
+        // DELETE
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
 
