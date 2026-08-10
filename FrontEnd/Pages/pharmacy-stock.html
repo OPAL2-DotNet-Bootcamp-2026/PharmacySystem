@@ -26,7 +26,7 @@
     <!-- Pharmacy Stock CSS -->
     <link
         rel="stylesheet"
-        href="../css/pharmacy-stock.css"
+        href="../CSS/pharmacy-stock.css"
     >
 </head>
 
@@ -39,9 +39,20 @@
     pharmacist
 -->
 
-<body data-role="pharmacist">
+<body>
 
-    <div class="container-fluid">
+
+    <!-- ==================================
+         ROLE FLAGS
+         The #fragment in the URL picks the role.
+         ================================== -->
+
+    <b id="admin" class="role-flag"></b>
+    <b id="manager" class="role-flag"></b>
+    <b id="pharmacist" class="role-flag"></b>
+
+
+    <div class="container-fluid app">
 
         <div class="row min-vh-100">
 
@@ -98,7 +109,30 @@
                 </p>
 
 
-                <a href="dashboard.html">
+                <a href="dashboard.html#admin"
+                    data-roles="admin">
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+                <a href="dashboard.html#manager"
+                    data-roles="manager">
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+                <a href="dashboard.html#pharmacist"
+                    data-roles="pharmacist">
 
                     <i class="bi bi-grid"></i>
 
@@ -121,8 +155,21 @@
 
 
                 <a
-                    href="suppliers.html"
-                    data-roles="admin manager"
+                    href="suppliers.html#admin"
+                    data-roles="admin"
+                >
+
+                    <i class="bi bi-building"></i>
+
+                    <span>
+                        Suppliers
+                    </span>
+
+                </a>
+
+                <a
+                    href="suppliers.html#manager"
+                    data-roles="manager"
                 >
 
                     <i class="bi bi-building"></i>
@@ -135,8 +182,21 @@
 
 
                 <a
-                    href="supply.html"
-                    data-roles="admin manager"
+                    href="supply.html#admin"
+                    data-roles="admin"
+                >
+
+                    <i class="bi bi-box-seam"></i>
+
+                    <span>
+                        Supplies
+                    </span>
+
+                </a>
+
+                <a
+                    href="supply.html#manager"
+                    data-roles="manager"
                 >
 
                     <i class="bi bi-box-seam"></i>
@@ -149,8 +209,21 @@
 
 
                 <a
-                    href="warehouse-stock.html"
-                    data-roles="admin manager"
+                    href="warehouse-stock.html#admin"
+                    data-roles="admin"
+                >
+
+                    <i class="bi bi-boxes"></i>
+
+                    <span>
+                        Warehouse Stock
+                    </span>
+
+                </a>
+
+                <a
+                    href="warehouse-stock.html#manager"
+                    data-roles="manager"
                 >
 
                     <i class="bi bi-boxes"></i>
@@ -170,7 +243,38 @@
                 </p>
 
 
-                <a href="pharmacist-order.html">
+                <a href="pharmacist-order.html#admin"
+                    data-roles="admin">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+                <a href="pharmacist-order.html#manager"
+                    data-roles="manager">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+                <a href="pharmacist-order.html#pharmacist"
+                    data-roles="pharmacist">
 
                     <i class="bi bi-clipboard2"></i>
 
@@ -185,7 +289,52 @@
                 </a>
 
 
-                <a href="transfer.html">
+                <a href="transfer.html#admin"
+                    data-roles="admin">
+
+                    <i class="bi bi-truck"></i>
+
+
+                    <span data-roles="admin manager">
+                        Transfers
+                    </span>
+
+
+                    <span data-roles="pharmacist">
+                        Incoming Transfers
+                    </span>
+
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+                <a href="transfer.html#manager"
+                    data-roles="manager">
+
+                    <i class="bi bi-truck"></i>
+
+
+                    <span data-roles="admin manager">
+                        Transfers
+                    </span>
+
+
+                    <span data-roles="pharmacist">
+                        Incoming Transfers
+                    </span>
+
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+                <a href="transfer.html#pharmacist"
+                    data-roles="pharmacist">
 
                     <i class="bi bi-truck"></i>
 
@@ -208,7 +357,36 @@
 
 
                 <a
-                    href="pharmacy-stock.html"
+                    href="pharmacy-stock.html#admin"
+                    data-roles="admin"
+                    class="active"
+                >
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+                <a
+                    href="pharmacy-stock.html#manager"
+                    data-roles="manager"
+                    class="active"
+                >
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+                <a
+                    href="pharmacy-stock.html#pharmacist"
+                    data-roles="pharmacist"
                     class="active"
                 >
 
@@ -233,7 +411,7 @@
 
 
                 <a
-                    href="create-user.html"
+                    href="create-user.html#admin"
                     data-roles="admin"
                 >
 
@@ -293,7 +471,7 @@
 
 
                     <a
-                        href="transfer.html"
+                        href="transfer.html#pharmacist"
                         class="incoming-btn"
                         data-roles="pharmacist"
                     >
