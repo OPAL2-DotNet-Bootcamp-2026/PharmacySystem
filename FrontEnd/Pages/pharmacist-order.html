@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pharmacist Orders | Pharmacy System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+  <div class="container-fluid app-shell">
+    <div class="row g-0">
+      <!-- Shared sidebar shell (Leader owns final shared layout) -->
+      <aside class="col-md-3 col-lg-2 sidebar-col">
+        <div class="sidebar">
+          <div class="sidebar-brand">
+            <div class="sidebar-brand__mark">+</div>
+            <div>
+              <div class="sidebar-brand__name">Pharmacy System</div>
+              <div class="sidebar-brand__sub">Supply chain</div>
+            </div>
+          </div>
+
+            <nav class="sidebar-nav">
+            <a href="dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+            <a href="#"><i class="bi bi-truck"></i> Suppliers</a>
+            <a href="#"><i class="bi bi-box-seam"></i> Supplies</a>
+            <a href="#"><i class="bi bi-building"></i> Warehouse Stock</a>
+            <a class="active" href="pharmacist-order.html"><i class="bi bi-clipboard2-pulse"></i> Pharmacist Orders</a>
+            <a href="#"><i class="bi bi-arrow-left-right"></i> Transfers</a>
+            <a href="#"><i class="bi bi-capsule"></i> Pharmacy Stock</a>
+            <a href="#"><i class="bi bi-person-plus"></i> Create User</a>
+          </nav>
+
+          <div class="sidebar-footer">
+            <a href="login.html"><i class="bi bi-box-arrow-right"></i> Sign Out</a>
+          </div>
+        </div>
+      </aside>
+
+      <main class="col-md-9 col-lg-10 main-content">
+        <div class="page-header d-flex flex-wrap justify-content-between align-items-end gap-3">
+          <div>
+            <h1>Pharmacist Orders</h1>
+            <p>Create a new order, then track Pending / Approved / Cancelled history.</p>
+          </div>
+          <span class="flow-note">
+            <i class="bi bi-diagram-3"></i>
+            Warehouse → Order → Transfer
+          </span>
+        </div>
+
+        <!-- Section A: Create New Order -->
+        <div class="page-card mb-4">
+          <h3 class="mb-1">Create New Pharmacist Order</h3>
+          <p class="text-secondary mb-3">
+            One order can contain several medicines (OrderDetails list).
+          </p>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label" for="pharmacistId">Pharmacist</label>
+              <select class="form-select" id="pharmacistId" name="pharmacistId">
+                <option value="1">Baraah Al Saadi</option>
+                <option value="2">Wajdan Al Mammari</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label" for="pharmacyId">Pharmacy</label>
+              <select class="form-select" id="pharmacyId" name="pharmacyId">
+                <option value="1">Muscat Pharmacy - Ruwi</option>
+                <option value="2">Seeb Pharmacy</option>
+              </select>
+            </div>
+
+            <div class="col-md-8">
+              <label class="form-label" for="medicineId">Medicine</label>
+              <select class="form-select" id="medicineId" name="medicineId">
+                <option value="1">Panadol Extra 500mg</option>
+                <option value="2">Amoxicillin 500mg</option>
+                <option value="3">Vitamin C 1000mg</option>
+                <option value="4">Cetirizine 10mg</option>
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="quantity">Quantity</label>
+              <input
+                type="number"
+                id="quantity"
+                class="form-control"
+                name="quantity"
+                min="1"
+                value="20"
+              >
+            </div>
+          </div>
+
+          <div class="order-form-actions mt-3">
+            <button type="button" class="btn btn-outline-success">
+              + Add Medicine
+            </button>
+          </div>
+
+          <hr>
+
+          <h5 class="mb-3">Order Lines</h5>
+          <div class="order-lines mb-3">
+            <div class="order-line">
+              <span class="order-line__name">Panadol Extra 500mg</span>
+              <span class="order-line__qty">x 20</span>
+            </div>
+            <div class="order-line">
+              <span class="order-line__name">Vitamin C 1000mg</span>
+              <span class="order-line__qty">x 10</span>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-pharmacy">
+            Submit Order
+          </button>
+        </div>
+
+          <!-- Section B: Order History -->
+        <div class="page-card">
+          <h3 class="mb-3">Order History</h3>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Pharmacist</th>
+                  <th>Pharmacy</th>
+                  <th>Medicines</th>
+                  <th>Order Date</th>
+                  <th>Total Cost</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr data-id="1001">
+                  <td>#1001</td>
+                  <td>Baraah Al Saadi</td>
+                  <td>Muscat Pharmacy - Ruwi</td>
+                  <td>Panadol x20, Vitamin C x10</td>
+                  <td>04 Aug 2026</td>
+                  <td>24.500 OMR</td>
+                  <td>
+                    <span class="badge text-bg-warning">Pending</span>
+                  </td>
+                  <td>
+                    <div class="history-actions">
+                      <button type="button" class="btn btn-sm btn-success">Approve</button>
+                      <button type="button" class="btn btn-sm btn-outline-danger">Cancel</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr data-id="1002">
+                  <td>#1002</td>
+                  <td>Wajdan Al Mammari</td>
+                  <td>Seeb Pharmacy</td>
+                  <td>Amoxicillin x40</td>
+                  <td>03 Aug 2026</td>
+                  <td>18.000 OMR</td>
+                  <td>
+                    <span class="badge text-bg-success">Approved</span>
+                  </td>
+                  <td>
+                    <div class="history-actions">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr data-id="1003">
+                  <td>#1003</td>
+                  <td>Baraah Al Saadi</td>
+                  <td>Muscat Pharmacy - Ruwi</td>
+                  <td>Cetirizine x15</td>
+                  <td>02 Aug 2026</td>
+                  <td>12.000 OMR</td>
+                  <td>
+                    <span class="badge text-bg-danger">Cancelled</span>
+                  </td>
+                  <td>
+                    <div class="history-actions">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
+
+
+
+            
+
+          
+          
+
+        
+        
