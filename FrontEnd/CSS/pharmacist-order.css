@@ -19,3 +19,7 @@
 .order-line:last-child {
   border-bottom: none;
 }
+
+.order-line__name {
+  font-weight: 500;
+}
