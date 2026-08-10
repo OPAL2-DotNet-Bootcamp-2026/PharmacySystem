@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Pharmacy Stock</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+
+    <!-- Pharmacy Stock CSS -->
+    <link
+        rel="stylesheet"
+        href="../css/pharmacy-stock.css"
+    >
+</head>
+
+
+<!--
+    STATIC ROLE
+
+    admin
+    manager
+    pharmacist
+-->
+
+<body data-role="pharmacist">
+
+    <div class="container-fluid">
+
+        <div class="row min-vh-100">
+
+
+            <!-- ==================================
+                 SIDEBAR
+            ================================== -->
+
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+
+
+                <!-- Brand -->
+
+                <div class="sidebar-brand">
+
+                    <div class="sidebar-logo">
+
+                        <i class="bi bi-plus-lg"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h4 class="mb-0">
+                            Pharmacy System
+                        </h4>
+
+
+                        <small data-roles="admin">
+                            ADMIN VIEW
+                        </small>
+
+
+                        <small data-roles="manager">
+                            MANAGER VIEW
+                        </small>
+
+
+                        <small data-roles="pharmacist">
+                            PHARMACIST VIEW
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- OVERVIEW -->
+
+                <p class="sidebar-title">
+                    OVERVIEW
+                </p>
+
+
+                <a href="dashboard.html">
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+
+                <!-- INTO WAREHOUSE -->
+
+                <p
+                    class="sidebar-title"
+                    data-roles="admin manager"
+                >
+                    INTO THE WAREHOUSE
+                </p>
+
+
+                <a
+                    href="suppliers.html"
+                    data-roles="admin manager"
+                >
+
+                    <i class="bi bi-building"></i>
+
+                    <span>
+                        Suppliers
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="supply.html"
+                    data-roles="admin manager"
+                >
+
+                    <i class="bi bi-box-seam"></i>
+
+                    <span>
+                        Supplies
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="warehouse-stock.html"
+                    data-roles="admin manager"
+                >
+
+                    <i class="bi bi-boxes"></i>
+
+                    <span>
+                        Warehouse Stock
+                    </span>
+
+                </a>
+
+
+
+                <!-- OUT TO PHARMACY -->
+
+                <p class="sidebar-title">
+                    OUT TO THE PHARMACY
+                </p>
+
+
+                <a href="pharmacist-order.html">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a href="transfer.html">
+
+                    <i class="bi bi-truck"></i>
+
+
+                    <span data-roles="admin manager">
+                        Transfers
+                    </span>
+
+
+                    <span data-roles="pharmacist">
+                        Incoming Transfers
+                    </span>
+
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="pharmacy-stock.html"
+                    class="active"
+                >
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+
+
+                <!-- USER MANAGEMENT -->
+
+                <p
+                    class="sidebar-title"
+                    data-roles="admin"
+                >
+                    USER MANAGEMENT
+                </p>
+
+
+                <a
+                    href="create-user.html"
+                    data-roles="admin"
+                >
+
+                    <i class="bi bi-person-plus"></i>
+
+                    <span>
+                        Create User
+                    </span>
+
+                </a>
+
+
+
+                <!-- SIGN OUT -->
+
+                <a
+                    href="login.html"
+                    class="sign-out"
+                >
+
+                    <i class="bi bi-box-arrow-right"></i>
+
+                    <span>
+                        Sign Out
+                    </span>
+
+                </a>
+
+            </div>
+
+
+
+            <!-- ==================================
+                 MAIN
+            ================================== -->
+
+            <main class="col-md-9 col-lg-10 main-content">
+
+
+                <!-- HEADER -->
+
+                <div class="page-header">
+
+                    <div>
+
+                        <h1>
+                            Pharmacy Stock
+                        </h1>
+
+
+                        <p>
+                            What is actually on the shelf.
+                            Every unit here arrived through a confirmed transfer.
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="transfer.html"
+                        class="incoming-btn"
+                        data-roles="pharmacist"
+                    >
+
+                        Incoming transfers
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     MUSCAT PHARMACY
+
+                     All roles
+                ================================== -->
+
+                <section
+                    class="stock-card"
+                    data-roles="admin manager pharmacist"
+                >
+
+                    <div class="stock-card-header">
+
+                        <div>
+
+                            <h2>
+                                Muscat Pharmacy — Ruwi
+                            </h2>
+
+
+                            <p>
+                                GET /api/PharmacyStock/by-pharmacy/1
+                            </p>
+
+                        </div>
+
+
+                        <span class="stock-summary">
+                            43 units · 2 lines
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="table-responsive">
+
+                        <table class="table stock-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        MEDICINE
+                                    </th>
+
+                                    <th>
+                                        CATEGORY
+                                    </th>
+
+                                    <th class="text-end">
+                                        QUANTITY
+                                    </th>
+
+                                    <th>
+                                        EXPIRY
+                                    </th>
+
+                                    <th class="text-end">
+                                        LEVEL
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+
+                                <!-- PANADOL -->
+
+                                <tr data-medicine-id="1">
+
+                                    <td>
+
+                                        <strong>
+                                            Panadol Extra 500mg
+                                        </strong>
+
+                                    </td>
+
+
+                                    <td class="muted-cell">
+                                        Analgesic
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="quantity-area">
+
+                                            <strong>
+                                                34
+                                            </strong>
+
+
+                                            <div class="stock-bar">
+
+                                                <div
+                                                    class="stock-fill healthy-fill"
+                                                    style="width:75%;"
+                                                >
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td class="expiry-date">
+                                        10 Jun 2028
+                                    </td>
+
+
+                                    <td class="text-end">
+
+                                        <span class="level healthy">
+
+                                            <span class="level-dot"></span>
+
+                                            HEALTHY
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+
+
+                                <!-- CETIRIZINE -->
+
+                                <tr data-medicine-id="4">
+
+                                    <td>
+
+                                        <strong>
+                                            Cetirizine 10mg
+                                        </strong>
+
+                                    </td>
+
+
+                                    <td class="muted-cell">
+                                        Antihistamine
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="quantity-area">
+
+                                            <strong>
+                                                9
+                                            </strong>
+
+
+                                            <div class="stock-bar">
+
+                                                <div
+                                                    class="stock-fill low-fill"
+                                                    style="width:25%;"
+                                                >
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td class="expiry-date">
+                                        15 Apr 2027
+                                    </td>
+
+
+                                    <td class="text-end">
+
+                                        <span class="level low">
+
+                                            <span class="level-dot"></span>
+
+                                            LOW
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ==================================
+                     SEEB PHARMACY
+
+                     Admin + Manager
+                ================================== -->
+
+                <section
+                    class="stock-card"
+                    data-roles="admin manager"
+                >
+
+                    <div class="stock-card-header">
+
+                        <div>
+
+                            <h2>
+                                Seeb Pharmacy
+                            </h2>
+
+
+                            <p>
+                                GET /api/PharmacyStock/by-pharmacy/2
+                            </p>
+
+                        </div>
+
+
+                        <span class="stock-summary">
+                            22 units · 1 line
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="table-responsive">
+
+                        <table class="table stock-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        MEDICINE
+                                    </th>
+
+                                    <th>
+                                        CATEGORY
+                                    </th>
+
+                                    <th class="text-end">
+                                        QUANTITY
+                                    </th>
+
+                                    <th>
+                                        EXPIRY
+                                    </th>
+
+                                    <th class="text-end">
+                                        LEVEL
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <tr data-medicine-id="2">
+
+                                    <td>
+
+                                        <strong>
+                                            Augmentin 625mg
+                                        </strong>
+
+                                    </td>
+
+
+                                    <td class="muted-cell">
+                                        Antibiotic
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="quantity-area">
+
+                                            <strong>
+                                                22
+                                            </strong>
+
+
+                                            <div class="stock-bar">
+
+                                                <div
+                                                    class="stock-fill healthy-fill"
+                                                    style="width:60%;"
+                                                >
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td class="expiry-date">
+                                        05 Dec 2027
+                                    </td>
+
+
+                                    <td class="text-end">
+
+                                        <span class="level healthy">
+
+                                            <span class="level-dot"></span>
+
+                                            HEALTHY
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ==================================
+                     LOW STOCK / OUT OF STOCK
+                     Admin + Manager
+                ================================== -->
+
+                <section
+                    class="stock-card"
+                    data-roles="admin manager"
+                >
+
+                    <div class="stock-card-header">
+
+                        <div>
+
+                            <h2>
+                                Low Stock
+                            </h2>
+
+
+                            <p>
+                                Stock level is calculated from the quantity.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="table-responsive">
+
+                        <table class="table stock-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        MEDICINE
+                                    </th>
+
+                                    <th>
+                                        CATEGORY
+                                    </th>
+
+                                    <th class="text-end">
+                                        QUANTITY
+                                    </th>
+
+                                    <th>
+                                        EXPIRY
+                                    </th>
+
+                                    <th class="text-end">
+                                        LEVEL
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <tr data-medicine-id="3">
+
+                                    <td>
+
+                                        <strong>
+                                            Vitamin C 1000mg
+                                        </strong>
+
+                                    </td>
+
+
+                                    <td class="muted-cell">
+                                        Supplement
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="quantity-area">
+
+                                            <strong>
+                                                0
+                                            </strong>
+
+
+                                            <div class="stock-bar">
+
+                                                <div
+                                                    class="stock-fill out-fill"
+                                                    style="width:0%;"
+                                                >
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td class="expiry-date">
+                                        02 Feb 2027
+                                    </td>
+
+
+                                    <td class="text-end">
+
+                                        <span class="level out">
+
+                                            <span class="level-dot"></span>
+
+                                            OUT OF STOCK
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+
+
+                <footer class="small-footer">
+
+                    <p>
+                        &copy; 2026 Pharmacy System
+                    </p>
+
+                </footer>
+
+            </main>
+
+        </div>
+
+    </div>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    >
+    </script>
+
+</body>
+
+</html>
