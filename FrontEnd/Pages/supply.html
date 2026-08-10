@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Supplies | Pharmacy System</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <!-- Supply Page CSS -->
+    <link rel="stylesheet" href="../css/supply.css">
+</head>
+
+<body data-role="manager">
+
+    <div class="container-fluid">
+
+        <div class="row min-vh-100">
+
+            <!-- ==================================
+                 SIDEBAR
+                 ================================== -->
+
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+
+                <!-- Brand -->
+
+                <div class="sidebar-brand">
+
+                    <div class="sidebar-logo">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+
+                    <div>
+
+                        <h4 class="mb-0">
+                            Pharmacy System
+                        </h4>
+
+                        <small data-roles="admin">
+                            ADMIN VIEW
+                        </small>
+
+                        <small data-roles="manager">
+                            MANAGER VIEW
+                        </small>
+
+                        <small data-roles="pharmacist">
+                            PHARMACIST VIEW
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================
+                     OVERVIEW
+                     ================================== -->
+
+                <p class="sidebar-title">
+                    OVERVIEW
+                </p>
+
+                <a href="dashboard.html">
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <!-- ==================================
+                     INTO THE WAREHOUSE
+                     ================================== -->
+
+                <p
+                    class="sidebar-title"
+                    data-roles="admin manager">
+
+                    INTO THE WAREHOUSE
+
+                </p>
+
+
+                <a
+                    href="suppliers.html"
+                    data-roles="admin manager">
+
+                    <i class="bi bi-building"></i>
+
+                    <span>
+                        Suppliers
+                    </span>
+
+                </a>
+
+
+                <!-- ACTIVE PAGE -->
+
+                <a
+                    href="supply.html"
+                    class="active"
+                    data-roles="admin manager">
+
+                    <i class="bi bi-box-seam"></i>
+
+                    <span>
+                        Supplies
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="warehouse-stock.html"
+                    data-roles="admin manager">
+
+                    <i class="bi bi-boxes"></i>
+
+                    <span>
+                        Warehouse Stock
+                    </span>
+
+                </a>
+
+
+                <!-- ==================================
+                     OUT TO THE PHARMACY
+                     ================================== -->
+
+                <p class="sidebar-title">
+                    OUT TO THE PHARMACY
+                </p>
+
+
+                <a href="pharmacist-order.html">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                </a>
+
+
+                <a href="transfer.html">
+
+                    <i class="bi bi-truck"></i>
+
+                    <span data-roles="admin manager">
+                        Transfers
+                    </span>
+
+                    <span data-roles="pharmacist">
+                        Incoming Transfers
+                    </span>
+
+                </a>
+
+
+                <a href="pharmacy-stock.html">
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+
+                <!-- ==================================
+                     USER MANAGEMENT
+                     ================================== -->
+
+                <p
+                    class="sidebar-title"
+                    data-roles="admin">
+
+                    USER MANAGEMENT
+
+                </p>
+
+
+                <a
+                    href="create-user.html"
+                    data-roles="admin">
+
+                    <i class="bi bi-person-plus"></i>
+
+                    <span>
+                        Create User
+                    </span>
+
+                </a>
+
+
+                <!-- Sign Out -->
+
+                <a
+                    href="login.html"
+                    class="sign-out">
+
+                    <i class="bi bi-box-arrow-right"></i>
+
+                    <span>
+                        Sign Out
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- ==================================
+                 MAIN CONTENT
+                 ================================== -->
+
+            <div class="col-md-9 col-lg-10 main-content p-4">
+
+
+                <!-- ==================================
+                     PAGE HEADER
+                     ================================== -->
+
+                <div class="supply-page-header mb-4">
+
+                    <div>
+
+                        <h2>
+                            Supplies
+                        </h2>
+
+                        <p>
+                            Record new medicine supplies received into the warehouse.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================
+                     CREATE NEW SUPPLY
+                     ================================== -->
+
+                <div class="supply-panel mb-4">
+
+                    <div class="supply-panel-header">
+
+                        <div>
+
+                            <h4>
+                                Create New Supply
+                            </h4>
+
+                            <p>
+                                Add a new medicine shipment to warehouse stock.
+                            </p>
+
+                        </div>
+
+                        <div class="supply-icon">
+                            <i class="bi bi-box-seam"></i>
+                        </div>
+
+                    </div>
+
+
+                    <div class="supply-form">
+
+                        <div class="row g-4">
+
+
+                            <!-- Supplier -->
+
+                            <div class="col-md-6">
+
+                                <label for="supplier">
+                                    Supplier
+                                </label>
+
+                                <select
+                                    id="supplier"
+                                    class="form-select">
+
+                                    <option selected>
+                                        Select supplier
+                                    </option>
+
+                                    <option>
+                                        Gulf Pharmaceutical
+                                    </option>
+
+                                    <option>
+                                        Oman Medical Supplies
+                                    </option>
+
+                                    <option>
+                                        Muscat Pharma
+                                    </option>
+
+                                    <option>
+                                        Al Noor Medical
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- Warehouse -->
+
+                            <div class="col-md-6">
+
+                                <label for="warehouse">
+                                    Warehouse
+                                </label>
+
+                                <select
+                                    id="warehouse"
+                                    class="form-select">
+
+                                    <option selected>
+                                        Select warehouse
+                                    </option>
+
+                                    <option>
+                                        Main Warehouse — Rusayl
+                                    </option>
+
+                                    <option>
+                                        Muscat Warehouse
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- Medicine -->
+
+                            <div class="col-md-6">
+
+                                <label for="medicine">
+                                    Medicine
+                                </label>
+
+                                <select
+                                    id="medicine"
+                                    class="form-select">
+
+                                    <option selected>
+                                        Select medicine
+                                    </option>
+
+                                    <option>
+                                        Panadol Extra 500mg
+                                    </option>
+
+                                    <option>
+                                        Amoxicillin 500mg
+                                    </option>
+
+                                    <option>
+                                        Insulin Glargine
+                                    </option>
+
+                                    <option>
+                                        Ventolin Inhaler
+                                    </option>
+
+                                    <option>
+                                        Vitamin C 1000mg
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- Batch Number -->
+
+                            <div class="col-md-6">
+
+                                <label for="batchNumber">
+                                    Batch Number
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="batchNumber"
+                                    class="form-control"
+                                    placeholder="Enter batch number">
+
+                            </div>
+
+
+                            <!-- Quantity -->
+
+                            <div class="col-md-6">
+
+                                <label for="quantity">
+                                    Quantity
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="quantity"
+                                    class="form-control"
+                                    placeholder="Enter quantity"
+                                    min="1">
+
+                            </div>
+
+
+                            <!-- Expiry Date -->
+
+                            <div class="col-md-6">
+
+                                <label for="expiryDate">
+                                    Expiry Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="expiryDate"
+                                    class="form-control">
+
+                            </div>
+
+
+                            <!-- Unit Cost -->
+
+                            <div class="col-md-6">
+
+                                <label for="unitCost">
+                                    Unit Cost
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="unitCost"
+                                    class="form-control"
+                                    placeholder="Enter unit cost"
+                                    min="0"
+                                    step="0.001">
+
+                            </div>
+
+
+                            <!-- Save Button -->
+
+                            <div class="col-md-6 supply-button-wrapper">
+
+                                <button
+                                    type="button"
+                                    class="btn btn-save-supply">
+
+                                    <i class="bi bi-check-lg me-2"></i>
+
+                                    Save Supply
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================
+                     SUPPLY HISTORY
+                     ================================== -->
+
+                <div class="supply-panel">
+
+                    <div class="supply-panel-header">
+
+                        <div>
+
+                            <h4>
+                                Supply History
+                            </h4>
+
+                            <p>
+                                Recently recorded medicine supplies.
+                            </p>
+
+                        </div>
+
+                        <i class="bi bi-clock-history supply-history-icon"></i>
+
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table class="table supply-history-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        DATE
+                                    </th>
+
+                                    <th>
+                                        SUPPLIER
+                                    </th>
+
+                                    <th>
+                                        MEDICINE
+                                    </th>
+
+                                    <th>
+                                        BATCH NO.
+                                    </th>
+
+                                    <th>
+                                        QTY
+                                    </th>
+
+                                    <th>
+                                        UNIT COST
+                                    </th>
+
+                                    <th>
+                                        WAREHOUSE
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>
+                                        25 Jul 2026
+                                    </td>
+
+                                    <td>
+                                        Oman Medical Supplies
+                                    </td>
+
+                                    <td>
+                                        Insulin Glargine
+                                    </td>
+
+                                    <td>
+                                        BN-2026-0043
+                                    </td>
+
+                                    <td>
+                                        <strong>120</strong>
+                                    </td>
+
+                                    <td>
+                                        OMR 3.500
+                                    </td>
+
+                                    <td>
+                                        Main Warehouse
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        20 Jul 2026
+                                    </td>
+
+                                    <td>
+                                        Gulf Pharmaceutical
+                                    </td>
+
+                                    <td>
+                                        Panadol Extra 500mg
+                                    </td>
+
+                                    <td>
+                                        BN-2026-0039
+                                    </td>
+
+                                    <td>
+                                        <strong>200</strong>
+                                    </td>
+
+                                    <td>
+                                        OMR 1.200
+                                    </td>
+
+                                    <td>
+                                        Main Warehouse
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        15 Jul 2026
+                                    </td>
+
+                                    <td>
+                                        Muscat Pharma
+                                    </td>
+
+                                    <td>
+                                        Amoxicillin 500mg
+                                    </td>
+
+                                    <td>
+                                        BN-2026-0034
+                                    </td>
+
+                                    <td>
+                                        <strong>150</strong>
+                                    </td>
+
+                                    <td>
+                                        OMR 2.100
+                                    </td>
+
+                                    <td>
+                                        Main Warehouse
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================
+                     FOOTER
+                     ================================== -->
+
+                <footer class="small-footer">
+
+                    <p>
+                        &copy; 2026 Pharmacy System
+                    </p>
+
+                </footer>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Bootstrap JS -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+</body>
+
+</html>
