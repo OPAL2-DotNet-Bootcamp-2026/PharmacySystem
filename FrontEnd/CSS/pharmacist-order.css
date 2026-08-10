@@ -23,3 +23,9 @@
 .order-line__name {
   font-weight: 500;
 }
+
+.order-line__qty {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  font-weight: 600;
+}
