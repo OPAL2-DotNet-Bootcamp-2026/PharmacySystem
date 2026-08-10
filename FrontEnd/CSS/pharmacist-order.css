@@ -36,3 +36,9 @@
   gap: 10px;
   align-items: center;
 }
+
+.history-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
