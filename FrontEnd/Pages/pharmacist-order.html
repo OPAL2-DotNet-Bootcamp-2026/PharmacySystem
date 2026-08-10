@@ -4,23 +4,18 @@
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Pharmacist Orders | Pharmacy System</title>
-
 
     <!-- Bootstrap CSS -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
-
     <!-- Bootstrap Icons -->
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
 
     <!-- Page CSS -->
     <link rel="stylesheet" href="../CSS/pharmacist-order.css">
@@ -30,7 +25,6 @@
 
 <!--
     ROLE
-
     All three roles use this page, but they see
     different things:
 
@@ -42,8 +36,6 @@
 -->
 
 <body>
-
-
     <!-- ==================================
          ROLE FLAGS
          The #fragment in the URL picks the role.
@@ -54,53 +46,39 @@
     <b id="pharmacist" class="role-flag"></b>
 
 
-
     <div class="container-fluid app">
-
         <div class="row min-vh-100">
-
-
             <!-- ==================================
                  SIDEBAR
                  ================================== -->
 
 <div class="col-md-3 col-lg-2 sidebar p-3">
-
-
                 <!-- Brand -->
 
                 <div class="sidebar-brand">
-
                     <div class="sidebar-logo">
 
                         <i class="bi bi-plus-lg"></i>
 
                     </div>
-
-
                     <div>
 
                         <h4 class="mb-0">
                             Pharmacy System
                         </h4>
 
-
                         <small data-roles="admin">
                             ADMIN VIEW
                         </small>
-
 
                         <small data-roles="manager">
                             MANAGER VIEW
                         </small>
 
-
                         <small data-roles="pharmacist">
                             PHARMACIST VIEW
                         </small>
-
                     </div>
-
                 </div>
 
 
@@ -112,48 +90,35 @@
                 <p class="sidebar-title">
                     OVERVIEW
                 </p>
-
-
                 <a
                     href="dashboard.html#admin"
                     data-roles="admin"
                                     >
-
                     <i class="bi bi-grid"></i>
-
                     <span>
                         Dashboard
                     </span>
-
                 </a>
 
                 <a
                     href="dashboard.html#manager"
                     data-roles="manager"
                                     >
-
                     <i class="bi bi-grid"></i>
-
                     <span>
                         Dashboard
                     </span>
-
                 </a>
 
                 <a
                     href="dashboard.html#pharmacist"
                     data-roles="pharmacist"
                                     >
-
                     <i class="bi bi-grid"></i>
-
                     <span>
                         Dashboard
                     </span>
-
                 </a>
-
-
 
                 <!-- ==================================
                      INTO THE WAREHOUSE
@@ -167,31 +132,25 @@
                     INTO THE WAREHOUSE
                 </p>
 
-
                 <a
                     href="suppliers.html#admin"
                     data-roles="admin"
                 >
-
                     <i class="bi bi-building"></i>
 
                     <span>
                         Suppliers
                     </span>
-
                 </a>
 
                 <a
                     href="suppliers.html#manager"
                     data-roles="manager"
                 >
-
                     <i class="bi bi-building"></i>
-
                     <span>
                         Suppliers
                     </span>
-
                 </a>
 
 
@@ -199,56 +158,42 @@
                     href="supply.html#admin"
                     data-roles="admin"
                 >
-
                     <i class="bi bi-box-seam"></i>
-
                     <span>
                         Supplies
                     </span>
-
                 </a>
 
                 <a
                     href="supply.html#manager"
                     data-roles="manager"
                 >
-
                     <i class="bi bi-box-seam"></i>
-
                     <span>
                         Supplies
                     </span>
-
                 </a>
-
 
                 <a
                     href="warehouse-stock.html#admin"
                     data-roles="admin"
                 >
-
                     <i class="bi bi-boxes"></i>
-
                     <span>
                         Warehouse Stock
                     </span>
-
                 </a>
 
                 <a
                     href="warehouse-stock.html#manager"
                     data-roles="manager"
                 >
-
                     <i class="bi bi-boxes"></i>
 
                     <span>
                         Warehouse Stock
                     </span>
-
                 </a>
-
-
 
                 <!-- ==================================
                      OUT TO THE PHARMACY
@@ -258,17 +203,14 @@
                     OUT TO THE PHARMACY
                 </p>
 
-
                 <a href="pharmacist-order.html#admin"
                     data-roles="admin"
                     class="active">
 
                     <i class="bi bi-clipboard2"></i>
-
                     <span>
                         Pharmacist Orders
                     </span>
-
                     <span class="sidebar-count">
                         1
                     </span>
@@ -278,140 +220,98 @@
                 <a href="pharmacist-order.html#manager"
                     data-roles="manager"
                     class="active">
-
                     <i class="bi bi-clipboard2"></i>
-
                     <span>
                         Pharmacist Orders
                     </span>
-
                     <span class="sidebar-count">
                         1
                     </span>
-
                 </a>
 
                 <a href="pharmacist-order.html#pharmacist"
                     data-roles="pharmacist"
                     class="active">
-
                     <i class="bi bi-clipboard2"></i>
-
                     <span>
                         Pharmacist Orders
                     </span>
-
                     <span class="sidebar-count">
                         1
                     </span>
-
                 </a>
-
 
                 <a href="transfer.html#admin"
                     data-roles="admin">
-
                     <i class="bi bi-truck"></i>
-
-
                     <span data-roles="admin manager">
                         Transfers
                     </span>
-
-
                     <span data-roles="pharmacist">
                         Incoming Transfers
                     </span>
-
                     <span class="sidebar-count">
                         1
                     </span>
-
                 </a>
 
                 <a href="transfer.html#manager"
                     data-roles="manager">
-
                     <i class="bi bi-truck"></i>
-
-
                     <span data-roles="admin manager">
                         Transfers
                     </span>
-
-
                     <span data-roles="pharmacist">
                         Incoming Transfers
                     </span>
-
                     <span class="sidebar-count">
                         1
                     </span>
-
                 </a>
 
                 <a href="transfer.html#pharmacist"
                     data-roles="pharmacist">
-
                     <i class="bi bi-truck"></i>
-
-
                     <span data-roles="admin manager">
                         Transfers
                     </span>
-
-
                     <span data-roles="pharmacist">
                         Incoming Transfers
                     </span>
-
                     <span class="sidebar-count">
                         1
                     </span>
-
                 </a>
 
 
                 <a href="pharmacy-stock.html#admin"
                     data-roles="admin">
-
                     <i class="bi bi-capsule"></i>
-
                     <span>
                         Pharmacy Stock
                     </span>
-
                 </a>
 
                 <a href="pharmacy-stock.html#manager"
                     data-roles="manager">
-
                     <i class="bi bi-capsule"></i>
-
                     <span>
                         Pharmacy Stock
                     </span>
-
                 </a>
 
                 <a href="pharmacy-stock.html#pharmacist"
                     data-roles="pharmacist">
-
                     <i class="bi bi-capsule"></i>
-
                     <span>
                         Pharmacy Stock
                     </span>
-
                 </a>
-
-
 
                 <!-- ==================================
                      USER MANAGEMENT
                      Admin Only
                      ================================== -->
-
                 <p
                     class="sidebar-title"
                     data-roles="admin"
@@ -419,21 +319,15 @@
                     USER MANAGEMENT
                 </p>
 
-
                 <a
                     href="create-user.html#admin"
                     data-roles="admin"
                 >
-
                     <i class="bi bi-person-plus"></i>
-
                     <span>
                         Create User
                     </span>
-
                 </a>
-
-
 
                 <!-- Sign Out -->
 
@@ -441,15 +335,11 @@
                     href="login.html"
                     class="sign-out"
                 >
-
                     <i class="bi bi-box-arrow-right"></i>
-
                     <span>
                         Sign Out
                     </span>
-
                 </a>
-
             </div>
 
             <!-- ==================================
@@ -457,7 +347,6 @@
                  ================================== -->
 
             <main class="col-md-9 col-lg-10 main-content">
-
 
                 <!-- ==================================
                      HEADER
@@ -469,20 +358,16 @@
                         Pharmacist orders
                     </h1>
 
-
                     <p data-roles="admin manager">
                         Approve what the pharmacies asked for,
                         then send it as a transfer.
                     </p>
-
 
                     <p data-roles="pharmacist">
                         Ask the warehouse for what your pharmacy needs.
                     </p>
 
                 </div>
-
-
 
                 <!-- ==================================
                      NEW ORDER
@@ -498,109 +383,78 @@
                     data-roles="admin pharmacist">
 
                     <div class="order-card-header">
-
                         <h2>
                             New order
                         </h2>
-
                         <p>
                             One order can hold several medicines
                             &middot;
                         </p>
-
                     </div>
 
 
                     <div class="order-card-body">
-
                         <div class="row g-3">
-
-
                             <!-- Pharmacy -->
 
                             <div class="col-lg-8">
-
                                 <label for="pharmacyId">
                                     Pharmacy
                                 </label>
-
                                 <select
                                     id="pharmacyId"
                                     name="pharmacyId"
                                     class="form-select">
-
                                     <option value="1">
                                         Muscat Pharmacy &mdash; Ruwi
                                     </option>
-
                                     <option value="2">
                                         Seeb Pharmacy
                                     </option>
-
                                 </select>
-
                             </div>
-
-
                             <!-- Add medicine -->
 
                             <div class="col-lg-4 add-medicine-wrapper">
-
                                 <button
                                     type="button"
                                     class="btn-add-medicine">
-
                                     <i class="bi bi-plus-lg"></i>
-
                                     Add medicine
-
                                 </button>
-
                             </div>
-
 
                             <!-- Medicine -->
 
                             <div class="col-lg-8">
-
                                 <label for="medicineId">
                                     Medicine
                                 </label>
-
                                 <select
                                     id="medicineId"
                                     name="medicineId"
                                     class="form-select">
-
                                     <option value="1">
                                         Panadol Extra 500mg
                                     </option>
-
                                     <option value="2">
                                         Amoxicillin 500mg
                                     </option>
-
                                     <option value="3">
                                         Vitamin C 1000mg
                                     </option>
-
                                     <option value="4">
                                         Cetirizine 10mg
                                     </option>
-
                                 </select>
-
                             </div>
-
 
                             <!-- Quantity -->
 
                             <div class="col-lg-4">
-
                                 <label for="quantity">
                                     Quantity
                                 </label>
-
                                 <input
                                     type="number"
                                     id="quantity"
@@ -608,12 +462,8 @@
                                     class="form-control"
                                     min="1"
                                     value="20">
-
                             </div>
-
                         </div>
-
-
 
                         <!-- ==================================
                              ORDER LINES
@@ -623,23 +473,18 @@
                              ================================== -->
 
                         <div class="order-lines-empty">
-
                             <h3>
                                 No medicines added yet
                             </h3>
-
                             <p>
                                 Pick a medicine and a quantity,
                                 then add it to the order.
                             </p>
-
                         </div>
-
                     </div>
 
 
                     <div class="order-card-footer">
-
                         <span class="order-total">
 
                             Estimated total
@@ -648,7 +493,6 @@
 
                         </span>
 
-
                         <button
                             type="button"
                             class="btn-submit-order">
@@ -656,12 +500,8 @@
                             Submit order
 
                         </button>
-
                     </div>
-
                 </section>
-
-
 
                 <!-- ==================================
                      ALL ORDERS
@@ -674,108 +514,72 @@
                 <section
                     class="order-card"
                     data-roles="admin manager">
-
                     <div class="order-card-header">
-
                         <h2>
                             All orders
                         </h2>
-
-                       
                     </div>
 
-
                     <div class="table-responsive">
-
                         <table class="table orders-table">
-
                             <thead>
-
                                 <tr>
-
                                     <th>
                                         Order
                                     </th>
-
                                     <th>
                                         Pharmacy
                                     </th>
-
                                     <th>
                                         Medicines
                                     </th>
-
                                     <th>
                                         Date
                                     </th>
-
                                     <th class="text-end">
                                         Total
                                     </th>
-
                                     <th>
                                         Status
                                     </th>
-
                                     <th class="text-end">
                                         Actions
                                     </th>
-
                                 </tr>
-
                             </thead>
 
-
                             <tbody>
-
                                 <tr>
-
                                     <td class="order-no">
                                         #2
                                     </td>
-
                                     <td>
-
                                         <strong>
                                             Seeb Pharmacy
                                         </strong>
-
                                         <span class="by-line">
                                             by Yousuf Al Amri
                                         </span>
-
                                     </td>
 
                                     <td>
-
                                         <span class="med-line">
-
                                             Panadol Extra 500mg
-
                                             <span class="med-qty">&times;40</span>
-
                                         </span>
-
                                     </td>
 
                                     <td class="date-cell">
                                         29 Jul 2026
                                     </td>
-
                                     <td class="money-cell">
                                         OMR 98.000
                                     </td>
-
                                     <td>
-
                                         <span class="pill pill-fulfilled">
-
                                             <span class="pill-dot"></span>
-
                                             Fulfilled
-
                                         </span>
-
                                     </td>
 
                                     <td class="text-end">
@@ -783,44 +587,28 @@
 
                                 </tr>
 
-
                                 <tr>
-
                                     <td class="order-no">
                                         #1
                                     </td>
-
                                     <td>
-
                                         <strong>
                                             Muscat Pharmacy &mdash; Ruwi
                                         </strong>
-
                                         <span class="by-line">
                                             by Mariam Al Saadi
                                         </span>
-
                                     </td>
-
                                     <td>
-
                                         <span class="med-line">
-
                                             Panadol Extra 500mg
-
                                             <span class="med-qty">&times;60</span>
-
                                         </span>
-
 
                                         <span class="med-line">
-
                                             Vitamin C 1000mg
-
                                             <span class="med-qty">&times;25</span>
-
                                         </span>
-
                                     </td>
 
                                     <td class="date-cell">
@@ -832,49 +620,32 @@
                                     </td>
 
                                     <td>
-
                                         <span class="pill pill-pending">
-
                                             <span class="pill-dot"></span>
-
                                             Pending
-
                                         </span>
-
                                     </td>
 
                                     <td class="text-end">
-
                                         <div class="row-actions">
-
                                             <button
                                                 type="button"
                                                 class="btn-approve">
                                                 Approve
                                             </button>
 
-
                                             <button
                                                 type="button"
                                                 class="btn-reject">
                                                 Reject
                                             </button>
-
                                         </div>
-
                                     </td>
-
                                 </tr>
-
                             </tbody>
-
                         </table>
-
                     </div>
-
                 </section>
-
-
 
                 <!-- ==================================
                      MY ORDERS
@@ -888,100 +659,70 @@
                 <section
                     class="order-card"
                     data-roles="pharmacist">
-
                     <div class="order-card-header">
 
                         <h2>
                             My orders
                         </h2>
 
-                       
-
                     </div>
 
 
                     <div class="table-responsive">
-
                         <table class="table orders-table">
-
                             <thead>
-
                                 <tr>
-
                                     <th>
                                         Order
                                     </th>
-
                                     <th>
                                         Pharmacy
                                     </th>
-
                                     <th>
                                         Medicines
                                     </th>
-
                                     <th>
                                         Date
                                     </th>
-
                                     <th class="text-end">
                                         Total
                                     </th>
-
                                     <th>
                                         Status
                                     </th>
-
                                 </tr>
-
                             </thead>
 
-
                             <tbody>
-
                                 <tr>
-
                                     <td class="order-no">
                                         #1
                                     </td>
 
                                     <td>
-
                                         <strong>
                                             Muscat Pharmacy &mdash; Ruwi
                                         </strong>
-
                                         <span class="by-line">
                                             by Mariam Al Saadi
                                         </span>
-
                                     </td>
 
                                     <td>
-
                                         <span class="med-line">
-
                                             Panadol Extra 500mg
-
                                             <span class="med-qty">&times;60</span>
-
                                         </span>
-
 
                                         <span class="med-line">
-
                                             Vitamin C 1000mg
-
                                             <span class="med-qty">&times;25</span>
-
                                         </span>
-
                                     </td>
 
                                     <td class="date-cell">
                                         01 Aug 2026
                                     </td>
-
                                     <td class="money-cell">
                                         OMR 149.500
                                     </td>
@@ -989,37 +730,22 @@
                                     <td>
 
                                         <span class="pill pill-pending">
-
                                             <span class="pill-dot"></span>
-
                                             Pending
-
                                         </span>
-
                                     </td>
-
                                 </tr>
-
                             </tbody>
-
                         </table>
-
                     </div>
-
 
                     <p class="small-footer">
                         A pharmacist can raise an order and follow it,
                         but only a manager or an admin can approve it.
                     </p>
-
                 </section>
-
             </main>
-
         </div>
-
     </div>
-
 </body>
-
 </html>
