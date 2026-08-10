@@ -6,3 +6,12 @@
   background: #fff;
 }
 
+.order-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--line);
+  background-color: white;
+  gap: 12px;
+}
