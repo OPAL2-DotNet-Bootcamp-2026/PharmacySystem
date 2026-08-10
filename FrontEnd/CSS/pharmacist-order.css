@@ -15,3 +15,7 @@
   background-color: white;
   gap: 12px;
 }
+
+.order-line:last-child {
+  border-bottom: none;
+}
