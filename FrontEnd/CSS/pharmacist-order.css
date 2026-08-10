@@ -1,56 +1,976 @@
+:root {
 
-.order-lines {
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  overflow: hidden;
-  background: #fff;
+    --dark-green: #0C2B24;
+    --green: #1F8A70;
+    --green-dark: #17705B;
+    --mint: #79D5BC;
+
+    --page-bg: #EDF1EE;
+
+    --text: #16241F;
+    --muted: #5E6F66;
+
+    --line: #DCE4DE;
+
+    --amber: #B57314;
+    --amber-bg: #FFF0D9;
+
+    --red: #AC4238;
+    --red-bg: #F8E5E2;
+
 }
 
-.order-line {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 15px;
-  border-bottom: 1px solid var(--line);
-  background-color: white;
-  gap: 12px;
+
+/* =========================================
+   GENERAL
+========================================= */
+
+* {
+    box-sizing: border-box;
 }
 
-.order-line:last-child {
-  border-bottom: none;
+
+body {
+
+    margin: 0;
+
+    background-color: var(--page-bg);
+
+    color: var(--text);
+
+    font-family: Arial, sans-serif;
+
 }
 
-.order-line__name {
-  font-weight: 500;
+
+/* ==================================
+   ROLE VISIBILITY
+
+   The role is carried by the #fragment
+   in the URL:
+
+       dashboard.html#admin
+       dashboard.html#manager
+       dashboard.html#pharmacist
+
+   Every link inside the page keeps that
+   fragment, so the role follows the user
+   from page to page.
+   ================================== */
+
+.role-flag {
+
+    display: none;
 }
 
-.order-line__qty {
-  font-variant-numeric: tabular-nums;
-  color: var(--muted);
-  font-weight: 600;
+
+#admin:target ~ .app
+[data-roles]:not([data-roles~="admin"]),
+
+#manager:target ~ .app
+[data-roles]:not([data-roles~="manager"]),
+
+#pharmacist:target ~ .app
+[data-roles]:not([data-roles~="pharmacist"]) {
+
+    display: none !important;
 }
 
-.order-form-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
+
+/* No fragment in the URL yet -> show the admin view.
+   Kept in its own block on purpose: if a very old
+   browser does not know :has(), only this fallback
+   is ignored, never the rules above.                */
+
+body:not(:has(.role-flag:target)) .app
+[data-roles]:not([data-roles~="admin"]) {
+
+    display: none !important;
 }
 
-.history-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.sidebar {
+
+    min-height: 100vh;
+
+    background-color: var(--dark-green);
+
+    color: white;
+
+    display: flex;
+
+    flex-direction: column;
+
 }
 
-.flow-note {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--light-green);
-  color: var(--green-dark);
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 600;
+
+.sidebar-brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.sidebar-logo {
+
+    width: 47px;
+
+    height: 47px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background-color: var(--mint);
+
+    color: var(--dark-green);
+
+    font-size: 25px;
+
+}
+
+
+.sidebar-brand h4 {
+
+    color: white;
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+}
+
+
+.sidebar-brand small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: #65D6BB;
+
+    font-family: monospace;
+
+    font-size: 11px;
+
+    letter-spacing: 1.8px;
+
+}
+
+
+/* =========================================
+   SIDEBAR TITLE
+========================================= */
+
+.sidebar-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin: 20px 10px 10px;
+
+    color: #72AFA0;
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+
+}
+
+
+.sidebar-title::after {
+
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background-color: #285048;
+
+}
+
+
+/* =========================================
+   SIDEBAR LINKS
+========================================= */
+
+.sidebar a {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-height: 48px;
+
+    margin-bottom: 2px;
+
+    padding: 0 13px;
+
+    border-radius: 10px;
+
+    color: #CFE1DC;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+}
+
+
+.sidebar a i {
+
+    width: 19px;
+
+    color: #A7C7BF;
+
+    font-size: 16px;
+
+}
+
+
+.sidebar a:hover {
+
+    background-color: rgba(255, 255, 255, 0.05);
+
+    color: white;
+
+}
+
+
+.sidebar a.active {
+
+    background-color: var(--mint);
+
+    color: var(--dark-green);
+
+    font-weight: bold;
+
+}
+
+
+.sidebar a.active i {
+
+    color: var(--dark-green);
+
+}
+
+
+.sidebar-count {
+
+    min-width: 23px;
+
+    height: 23px;
+
+    margin-left: auto;
+
+    padding: 0 6px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background-color: rgba(255, 255, 255, 0.1);
+
+    font-size: 11px;
+
+}
+
+
+.sign-out {
+
+    margin-top: auto !important;
+
+}
+
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.main-content {
+
+    padding: 36px 38px 45px;
+
+}
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.page-header {
+
+    margin-bottom: 26px;
+
+}
+
+
+.page-header h1 {
+
+    margin: 0 0 8px;
+
+    font-size: 35px;
+
+    font-weight: 800;
+
+}
+
+
+.page-header p {
+
+    margin: 0;
+
+    max-width: 620px;
+
+    color: var(--muted);
+
+    font-size: 15px;
+
+}
+
+
+/* =========================================
+   ORDER CARD  (shared shell)
+========================================= */
+
+.order-card {
+
+    overflow: hidden;
+
+    margin-bottom: 22px;
+
+    border: 1px solid var(--line);
+
+    border-radius: 14px;
+
+    background-color: white;
+
+}
+
+
+.order-card-header {
+
+    padding: 20px 24px;
+
+    border-bottom: 1px solid var(--line);
+
+}
+
+
+.order-card-header h2 {
+
+    margin: 0 0 4px;
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+}
+
+
+.order-card-header p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+.endpoint {
+
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+
+    font-size: 12.5px;
+
+}
+
+
+.order-card-body {
+
+    padding: 24px;
+
+}
+
+
+/* =========================================
+   FORM FIELDS
+========================================= */
+
+.order-card-body label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--muted);
+
+    font-size: 11.5px;
+
+    font-weight: bold;
+
+    letter-spacing: 0.6px;
+
+    text-transform: uppercase;
+
+}
+
+
+.order-card-body .form-select,
+.order-card-body .form-control {
+
+    height: 48px;
+
+    padding: 0 14px;
+
+    border: 1px solid #DCE4DE;
+
+    border-radius: 10px;
+
+    background-color: #FCFDFC;
+
+    color: var(--text);
+
+    font-size: 14.5px;
+
+}
+
+
+.order-card-body .form-select:focus,
+.order-card-body .form-control:focus {
+
+    border-color: var(--green);
+
+    box-shadow: 0 0 0 3px rgba(31, 138, 112, 0.15);
+
+}
+
+
+/* The add button sits on the same line as the
+   pharmacy select, so it needs the label space
+   pushed off the top.                          */
+
+.add-medicine-wrapper {
+
+    display: flex;
+
+    align-items: flex-end;
+
+}
+
+
+.btn-add-medicine {
+
+    width: 100%;
+
+    height: 48px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    border: 1px solid #DCE4DE;
+
+    border-radius: 10px;
+
+    background-color: white;
+
+    color: var(--text);
+
+    font-size: 14.5px;
+
+    font-weight: 600;
+
+    transition: border-color .15s ease,
+                background-color .15s ease;
+
+}
+
+
+.btn-add-medicine:hover {
+
+    border-color: var(--green);
+
+    background-color: var(--light-green);
+
+}
+
+
+/* =========================================
+   ORDER LINES — EMPTY STATE
+========================================= */
+
+.order-lines-empty {
+
+    padding: 54px 20px 60px;
+
+    text-align: center;
+
+}
+
+
+.order-lines-empty h3 {
+
+    margin: 0 0 8px;
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+}
+
+
+.order-lines-empty p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 14.5px;
+
+}
+
+
+/* =========================================
+   CARD FOOTER
+========================================= */
+
+.order-card-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding: 20px 24px;
+
+    border-top: 1px solid var(--line);
+
+}
+
+
+.order-total {
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+}
+
+
+.order-total strong {
+
+    margin-left: 6px;
+
+    color: var(--text);
+
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+
+    font-weight: bold;
+
+}
+
+
+/* Disabled look on purpose: nothing has been
+   added to the order yet.                      */
+
+.btn-submit-order {
+
+    padding: 13px 24px;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    background-color: #9AD6C2;
+
+    color: white;
+
+    font-size: 14.5px;
+
+    font-weight: bold;
+
+    cursor: not-allowed;
+
+}
+
+
+/* =========================================
+   ORDERS TABLE
+========================================= */
+
+.orders-table {
+
+    margin: 0;
+
+    font-size: 14px;
+
+}
+
+
+.orders-table thead th {
+
+    padding: 14px 24px;
+
+    border-bottom: 1px solid var(--line);
+
+    background-color: #F7FAF8;
+
+    color: var(--muted);
+
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+
+}
+
+
+.orders-table tbody td {
+
+    padding: 17px 24px;
+
+    border-bottom: 1px solid var(--line);
+
+    vertical-align: middle;
+
+}
+
+
+.orders-table tbody tr:last-child td {
+
+    border-bottom: 0;
+
+}
+
+
+.order-no {
+
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+}
+
+
+.orders-table strong {
+
+    display: block;
+
+    font-size: 14.5px;
+
+    font-weight: 600;
+
+}
+
+
+.by-line {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+.med-line {
+
+    display: block;
+
+    line-height: 1.6;
+
+}
+
+
+.med-qty {
+
+    margin-left: 3px;
+
+    color: var(--muted);
+
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+
+    font-size: 12.5px;
+
+}
+
+
+.date-cell,
+.money-cell {
+
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+
+    font-size: 13.5px;
+
+    white-space: nowrap;
+
+}
+
+
+.money-cell {
+
+    text-align: right;
+
+}
+
+
+/* =========================================
+   STATUS PILLS
+========================================= */
+
+.pill {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 5px 12px;
+
+    border-radius: 20px;
+
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 0.6px;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+}
+
+
+.pill-dot {
+
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
+
+    background-color: currentColor;
+
+}
+
+
+.pill-pending {
+
+    background-color: #FBF1DE;
+
+    color: #A9741A;
+
+}
+
+
+.pill-fulfilled {
+
+    background-color: #E7EDEA;
+
+    color: #5E6F66;
+
+}
+
+
+.pill-approved {
+
+    background-color: #E0F3EC;
+
+    color: #17705B;
+
+}
+
+
+.pill-cancelled {
+
+    background-color: #F7E7E2;
+
+    color: #B4523A;
+
+}
+
+
+/* =========================================
+   ROW ACTIONS
+========================================= */
+
+.row-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+}
+
+
+.btn-approve {
+
+    padding: 9px 18px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background-color: var(--green);
+
+    color: white;
+
+    font-size: 13.5px;
+
+    font-weight: bold;
+
+}
+
+
+.btn-approve:hover {
+
+    background-color: var(--dark-green);
+
+}
+
+
+.btn-reject {
+
+    padding: 9px 18px;
+
+    border: 1px solid #E3C4BB;
+
+    border-radius: 8px;
+
+    background-color: white;
+
+    color: #C0563C;
+
+    font-size: 13.5px;
+
+    font-weight: bold;
+
+}
+
+
+.btn-reject:hover {
+
+    background-color: #FBEDE9;
+
+}
+
+
+/* =========================================
+   FOOTER NOTE
+========================================= */
+
+.small-footer {
+
+    margin: 0;
+
+    padding: 15px 24px;
+
+    border-top: 1px solid var(--line);
+
+    background-color: var(--page-bg);
+
+    color: var(--muted);
+
+    font-size: 12.5px;
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 991px) {
+
+    .main-content {
+
+        padding: 26px 20px 36px;
+
+    }
+
+
+    .page-header h1 {
+
+        font-size: 28px;
+
+    }
+
+
+    .add-medicine-wrapper {
+
+        align-items: stretch;
+
+    }
+
+
+    .order-card-footer {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 12px;
+
+    }
+
+
+    .btn-submit-order {
+
+        width: 100%;
+
+    }
+
 }

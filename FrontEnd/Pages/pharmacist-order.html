@@ -1,218 +1,1025 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pharmacist Orders | Pharmacy System</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/pharmacist-order.css">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pharmacist Orders | Pharmacy System</title>
+
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../CSS/pharmacist-order.css">
+
 </head>
 
+
+<!--
+    ROLE
+
+    All three roles use this page, but they see
+    different things:
+
+        #pharmacist  ->  New order  +  My orders
+        #manager     ->  All orders  (approve / reject)
+        #admin       ->  New order  +  All orders
+
+    The role comes from the #fragment in the URL.
+-->
+
 <body>
-  <div class="container-fluid app-shell">
-    <div class="row g-0">
-      <!-- Shared sidebar shell (Leader owns final shared layout) -->
-      <aside class="col-md-3 col-lg-2 sidebar-col">
-        <div class="sidebar">
-          <div class="sidebar-brand">
-            <div class="sidebar-brand__mark">+</div>
-            <div>
-              <div class="sidebar-brand__name">Pharmacy System</div>
-              <div class="sidebar-brand__sub">Supply chain</div>
-            </div>
-          </div>
 
-            <nav class="sidebar-nav">
-            <a href="dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
-            <a href="#"><i class="bi bi-truck"></i> Suppliers</a>
-            <a href="#"><i class="bi bi-box-seam"></i> Supplies</a>
-            <a href="#"><i class="bi bi-building"></i> Warehouse Stock</a>
-            <a class="active" href="pharmacist-order.html"><i class="bi bi-clipboard2-pulse"></i> Pharmacist Orders</a>
-            <a href="#"><i class="bi bi-arrow-left-right"></i> Transfers</a>
-            <a href="#"><i class="bi bi-capsule"></i> Pharmacy Stock</a>
-            <a href="#"><i class="bi bi-person-plus"></i> Create User</a>
-          </nav>
 
-          <div class="sidebar-footer">
-            <a href="login.html"><i class="bi bi-box-arrow-right"></i> Sign Out</a>
-          </div>
-        </div>
-      </aside>
+    <!-- ==================================
+         ROLE FLAGS
+         The #fragment in the URL picks the role.
+         ================================== -->
 
-      <main class="col-md-9 col-lg-10 main-content">
-        <div class="page-header d-flex flex-wrap justify-content-between align-items-end gap-3">
-          <div>
-            <h1>Pharmacist Orders</h1>
-            <p>Create a new order, then track Pending / Approved / Cancelled history.</p>
-          </div>
-          <span class="flow-note">
-            <i class="bi bi-diagram-3"></i>
-            Warehouse → Order → Transfer
-          </span>
-        </div>
+    <b id="admin" class="role-flag"></b>
+    <b id="manager" class="role-flag"></b>
+    <b id="pharmacist" class="role-flag"></b>
 
-        <!-- Section A: Create New Order -->
-        <div class="page-card mb-4">
-          <h3 class="mb-1">Create New Pharmacist Order</h3>
-          <p class="text-secondary mb-3">
-            One order can contain several medicines (OrderDetails list).
-          </p>
 
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label class="form-label" for="pharmacistId">Pharmacist</label>
-              <select class="form-select" id="pharmacistId" name="pharmacistId">
-                <option value="1">Baraah Al Saadi</option>
-                <option value="2">Wajdan Al Mammari</option>
-              </select>
-            </div>
 
-            <div class="col-md-6">
-              <label class="form-label" for="pharmacyId">Pharmacy</label>
-              <select class="form-select" id="pharmacyId" name="pharmacyId">
-                <option value="1">Muscat Pharmacy - Ruwi</option>
-                <option value="2">Seeb Pharmacy</option>
-              </select>
-            </div>
+    <div class="container-fluid app">
 
-            <div class="col-md-8">
-              <label class="form-label" for="medicineId">Medicine</label>
-              <select class="form-select" id="medicineId" name="medicineId">
-                <option value="1">Panadol Extra 500mg</option>
-                <option value="2">Amoxicillin 500mg</option>
-                <option value="3">Vitamin C 1000mg</option>
-                <option value="4">Cetirizine 10mg</option>
-              </select>
-            </div>
+        <div class="row min-vh-100">
 
-            <div class="col-md-4">
-              <label class="form-label" for="quantity">Quantity</label>
-              <input
-                type="number"
-                id="quantity"
-                class="form-control"
-                name="quantity"
-                min="1"
-                value="20"
-              >
-            </div>
-          </div>
 
-          <div class="order-form-actions mt-3">
-            <button type="button" class="btn btn-outline-success">
-              + Add Medicine
-            </button>
-          </div>
+            <!-- ==================================
+                 SIDEBAR
+                 ================================== -->
 
-          <hr>
+<div class="col-md-3 col-lg-2 sidebar p-3">
 
-          <h5 class="mb-3">Order Lines</h5>
-          <div class="order-lines mb-3">
-            <div class="order-line">
-              <span class="order-line__name">Panadol Extra 500mg</span>
-              <span class="order-line__qty">x 20</span>
-            </div>
-            <div class="order-line">
-              <span class="order-line__name">Vitamin C 1000mg</span>
-              <span class="order-line__qty">x 10</span>
-            </div>
-          </div>
 
-          <button type="button" class="btn btn-pharmacy">
-            Submit Order
-          </button>
-        </div>
+                <!-- Brand -->
 
-          <!-- Section B: Order History -->
-        <div class="page-card">
-          <h3 class="mb-3">Order History</h3>
-          <div class="table-responsive">
-            <table class="table table-hover align-middle">
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Pharmacist</th>
-                  <th>Pharmacy</th>
-                  <th>Medicines</th>
-                  <th>Order Date</th>
-                  <th>Total Cost</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
+                <div class="sidebar-brand">
 
-              <tbody>
-                <tr data-id="1001">
-                  <td>#1001</td>
-                  <td>Baraah Al Saadi</td>
-                  <td>Muscat Pharmacy - Ruwi</td>
-                  <td>Panadol x20, Vitamin C x10</td>
-                  <td>04 Aug 2026</td>
-                  <td>24.500 OMR</td>
-                  <td>
-                    <span class="badge text-bg-warning">Pending</span>
-                  </td>
-                  <td>
-                    <div class="history-actions">
-                      <button type="button" class="btn btn-sm btn-success">Approve</button>
-                      <button type="button" class="btn btn-sm btn-outline-danger">Cancel</button>
+                    <div class="sidebar-logo">
+
+                        <i class="bi bi-plus-lg"></i>
+
                     </div>
-                  </td>
-                </tr>
 
-                <tr data-id="1002">
-                  <td>#1002</td>
-                  <td>Wajdan Al Mammari</td>
-                  <td>Seeb Pharmacy</td>
-                  <td>Amoxicillin x40</td>
-                  <td>03 Aug 2026</td>
-                  <td>18.000 OMR</td>
-                  <td>
-                    <span class="badge text-bg-success">Approved</span>
-                  </td>
-                  <td>
-                    <div class="history-actions">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    </div>
-                  </td>
-                </tr>
 
-                <tr data-id="1003">
-                  <td>#1003</td>
-                  <td>Baraah Al Saadi</td>
-                  <td>Muscat Pharmacy - Ruwi</td>
-                  <td>Cetirizine x15</td>
-                  <td>02 Aug 2026</td>
-                  <td>12.000 OMR</td>
-                  <td>
-                    <span class="badge text-bg-danger">Cancelled</span>
-                  </td>
-                  <td>
-                    <div class="history-actions">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    <div>
+
+                        <h4 class="mb-0">
+                            Pharmacy System
+                        </h4>
+
+
+                        <small data-roles="admin">
+                            ADMIN VIEW
+                        </small>
+
+
+                        <small data-roles="manager">
+                            MANAGER VIEW
+                        </small>
+
+
+                        <small data-roles="pharmacist">
+                            PHARMACIST VIEW
+                        </small>
+
                     </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     OVERVIEW
+                     ================================== -->
+
+                <p class="sidebar-title">
+                    OVERVIEW
+                </p>
+
+
+                <a
+                    href="dashboard.html#admin"
+                    data-roles="admin"
+                                    >
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+                <a
+                    href="dashboard.html#manager"
+                    data-roles="manager"
+                                    >
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+                <a
+                    href="dashboard.html#pharmacist"
+                    data-roles="pharmacist"
+                                    >
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+
+                <!-- ==================================
+                     INTO THE WAREHOUSE
+                     Admin + Manager
+                     ================================== -->
+
+                <p
+                    class="sidebar-title"
+                    data-roles="admin manager"
+                >
+                    INTO THE WAREHOUSE
+                </p>
+
+
+                <a
+                    href="suppliers.html#admin"
+                    data-roles="admin"
+                >
+
+                    <i class="bi bi-building"></i>
+
+                    <span>
+                        Suppliers
+                    </span>
+
+                </a>
+
+                <a
+                    href="suppliers.html#manager"
+                    data-roles="manager"
+                >
+
+                    <i class="bi bi-building"></i>
+
+                    <span>
+                        Suppliers
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="supply.html#admin"
+                    data-roles="admin"
+                >
+
+                    <i class="bi bi-box-seam"></i>
+
+                    <span>
+                        Supplies
+                    </span>
+
+                </a>
+
+                <a
+                    href="supply.html#manager"
+                    data-roles="manager"
+                >
+
+                    <i class="bi bi-box-seam"></i>
+
+                    <span>
+                        Supplies
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="warehouse-stock.html#admin"
+                    data-roles="admin"
+                >
+
+                    <i class="bi bi-boxes"></i>
+
+                    <span>
+                        Warehouse Stock
+                    </span>
+
+                </a>
+
+                <a
+                    href="warehouse-stock.html#manager"
+                    data-roles="manager"
+                >
+
+                    <i class="bi bi-boxes"></i>
+
+                    <span>
+                        Warehouse Stock
+                    </span>
+
+                </a>
+
+
+
+                <!-- ==================================
+                     OUT TO THE PHARMACY
+                     ================================== -->
+
+                <p class="sidebar-title">
+                    OUT TO THE PHARMACY
+                </p>
+
+
+                <a href="pharmacist-order.html#admin"
+                    data-roles="admin"
+                    class="active">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+                <a href="pharmacist-order.html#manager"
+                    data-roles="manager"
+                    class="active">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+                <a href="pharmacist-order.html#pharmacist"
+                    data-roles="pharmacist"
+                    class="active">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a href="transfer.html#admin"
+                    data-roles="admin">
+
+                    <i class="bi bi-truck"></i>
+
+
+                    <span data-roles="admin manager">
+                        Transfers
+                    </span>
+
+
+                    <span data-roles="pharmacist">
+                        Incoming Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+                <a href="transfer.html#manager"
+                    data-roles="manager">
+
+                    <i class="bi bi-truck"></i>
+
+
+                    <span data-roles="admin manager">
+                        Transfers
+                    </span>
+
+
+                    <span data-roles="pharmacist">
+                        Incoming Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+                <a href="transfer.html#pharmacist"
+                    data-roles="pharmacist">
+
+                    <i class="bi bi-truck"></i>
+
+
+                    <span data-roles="admin manager">
+                        Transfers
+                    </span>
+
+
+                    <span data-roles="pharmacist">
+                        Incoming Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a href="pharmacy-stock.html#admin"
+                    data-roles="admin">
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+                <a href="pharmacy-stock.html#manager"
+                    data-roles="manager">
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+                <a href="pharmacy-stock.html#pharmacist"
+                    data-roles="pharmacist">
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+
+
+                <!-- ==================================
+                     USER MANAGEMENT
+                     Admin Only
+                     ================================== -->
+
+                <p
+                    class="sidebar-title"
+                    data-roles="admin"
+                >
+                    USER MANAGEMENT
+                </p>
+
+
+                <a
+                    href="create-user.html#admin"
+                    data-roles="admin"
+                >
+
+                    <i class="bi bi-person-plus"></i>
+
+                    <span>
+                        Create User
+                    </span>
+
+                </a>
+
+
+
+                <!-- Sign Out -->
+
+                <a
+                    href="login.html"
+                    class="sign-out"
+                >
+
+                    <i class="bi bi-box-arrow-right"></i>
+
+                    <span>
+                        Sign Out
+                    </span>
+
+                </a>
+
+            </div>
+
+            <!-- ==================================
+                 MAIN
+                 ================================== -->
+
+            <main class="col-md-9 col-lg-10 main-content">
+
+
+                <!-- ==================================
+                     HEADER
+                     ================================== -->
+
+                <div class="page-header">
+
+                    <h1>
+                        Pharmacist orders
+                    </h1>
+
+
+                    <p data-roles="admin manager">
+                        Approve what the pharmacies asked for,
+                        then send it as a transfer.
+                    </p>
+
+
+                    <p data-roles="pharmacist">
+                        Ask the warehouse for what your pharmacy needs.
+                    </p>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     NEW ORDER
+
+                     Admin + Pharmacist.
+                     A manager approves orders, they do
+                     not raise them, so this card is
+                     hidden for the manager.
+                     ================================== -->
+
+                <section
+                    class="order-card"
+                    data-roles="admin pharmacist">
+
+                    <div class="order-card-header">
+
+                        <h2>
+                            New order
+                        </h2>
+
+                        <p>
+                            One order can hold several medicines
+                            &middot;
+                        </p>
+
+                    </div>
+
+
+                    <div class="order-card-body">
+
+                        <div class="row g-3">
+
+
+                            <!-- Pharmacy -->
+
+                            <div class="col-lg-8">
+
+                                <label for="pharmacyId">
+                                    Pharmacy
+                                </label>
+
+                                <select
+                                    id="pharmacyId"
+                                    name="pharmacyId"
+                                    class="form-select">
+
+                                    <option value="1">
+                                        Muscat Pharmacy &mdash; Ruwi
+                                    </option>
+
+                                    <option value="2">
+                                        Seeb Pharmacy
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- Add medicine -->
+
+                            <div class="col-lg-4 add-medicine-wrapper">
+
+                                <button
+                                    type="button"
+                                    class="btn-add-medicine">
+
+                                    <i class="bi bi-plus-lg"></i>
+
+                                    Add medicine
+
+                                </button>
+
+                            </div>
+
+
+                            <!-- Medicine -->
+
+                            <div class="col-lg-8">
+
+                                <label for="medicineId">
+                                    Medicine
+                                </label>
+
+                                <select
+                                    id="medicineId"
+                                    name="medicineId"
+                                    class="form-select">
+
+                                    <option value="1">
+                                        Panadol Extra 500mg
+                                    </option>
+
+                                    <option value="2">
+                                        Amoxicillin 500mg
+                                    </option>
+
+                                    <option value="3">
+                                        Vitamin C 1000mg
+                                    </option>
+
+                                    <option value="4">
+                                        Cetirizine 10mg
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- Quantity -->
+
+                            <div class="col-lg-4">
+
+                                <label for="quantity">
+                                    Quantity
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="quantity"
+                                    name="quantity"
+                                    class="form-control"
+                                    min="1"
+                                    value="20">
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- ==================================
+                             ORDER LINES
+
+                             Empty state. Replace it with real
+                             rows when the order is built.
+                             ================================== -->
+
+                        <div class="order-lines-empty">
+
+                            <h3>
+                                No medicines added yet
+                            </h3>
+
+                            <p>
+                                Pick a medicine and a quantity,
+                                then add it to the order.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-card-footer">
+
+                        <span class="order-total">
+
+                            Estimated total
+
+                            <strong>OMR 0.000</strong>
+
+                        </span>
+
+
+                        <button
+                            type="button"
+                            class="btn-submit-order">
+
+                            Submit order
+
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ==================================
+                     ALL ORDERS
+
+                     Admin + Manager.
+                     Every pharmacy, with the approve and
+                     reject actions on pending rows.
+                     ================================== -->
+
+                <section
+                    class="order-card"
+                    data-roles="admin manager">
+
+                    <div class="order-card-header">
+
+                        <h2>
+                            All orders
+                        </h2>
+
+                       
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table class="table orders-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Order
+                                    </th>
+
+                                    <th>
+                                        Pharmacy
+                                    </th>
+
+                                    <th>
+                                        Medicines
+                                    </th>
+
+                                    <th>
+                                        Date
+                                    </th>
+
+                                    <th class="text-end">
+                                        Total
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th class="text-end">
+                                        Actions
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td class="order-no">
+                                        #2
+                                    </td>
+
+                                    <td>
+
+                                        <strong>
+                                            Seeb Pharmacy
+                                        </strong>
+
+                                        <span class="by-line">
+                                            by Yousuf Al Amri
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span class="med-line">
+
+                                            Panadol Extra 500mg
+
+                                            <span class="med-qty">&times;40</span>
+
+                                        </span>
+
+                                    </td>
+
+                                    <td class="date-cell">
+                                        29 Jul 2026
+                                    </td>
+
+                                    <td class="money-cell">
+                                        OMR 98.000
+                                    </td>
+
+                                    <td>
+
+                                        <span class="pill pill-fulfilled">
+
+                                            <span class="pill-dot"></span>
+
+                                            Fulfilled
+
+                                        </span>
+
+                                    </td>
+
+                                    <td class="text-end">
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td class="order-no">
+                                        #1
+                                    </td>
+
+                                    <td>
+
+                                        <strong>
+                                            Muscat Pharmacy &mdash; Ruwi
+                                        </strong>
+
+                                        <span class="by-line">
+                                            by Mariam Al Saadi
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span class="med-line">
+
+                                            Panadol Extra 500mg
+
+                                            <span class="med-qty">&times;60</span>
+
+                                        </span>
+
+
+                                        <span class="med-line">
+
+                                            Vitamin C 1000mg
+
+                                            <span class="med-qty">&times;25</span>
+
+                                        </span>
+
+                                    </td>
+
+                                    <td class="date-cell">
+                                        01 Aug 2026
+                                    </td>
+
+                                    <td class="money-cell">
+                                        OMR 149.500
+                                    </td>
+
+                                    <td>
+
+                                        <span class="pill pill-pending">
+
+                                            <span class="pill-dot"></span>
+
+                                            Pending
+
+                                        </span>
+
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        <div class="row-actions">
+
+                                            <button
+                                                type="button"
+                                                class="btn-approve">
+                                                Approve
+                                            </button>
+
+
+                                            <button
+                                                type="button"
+                                                class="btn-reject">
+                                                Reject
+                                            </button>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ==================================
+                     MY ORDERS
+
+                     Pharmacist only.
+                     Their own pharmacy, read only. A
+                     pharmacist cannot approve their own
+                     request.
+                     ================================== -->
+
+                <section
+                    class="order-card"
+                    data-roles="pharmacist">
+
+                    <div class="order-card-header">
+
+                        <h2>
+                            My orders
+                        </h2>
+
+                       
+
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table class="table orders-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Order
+                                    </th>
+
+                                    <th>
+                                        Pharmacy
+                                    </th>
+
+                                    <th>
+                                        Medicines
+                                    </th>
+
+                                    <th>
+                                        Date
+                                    </th>
+
+                                    <th class="text-end">
+                                        Total
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td class="order-no">
+                                        #1
+                                    </td>
+
+                                    <td>
+
+                                        <strong>
+                                            Muscat Pharmacy &mdash; Ruwi
+                                        </strong>
+
+                                        <span class="by-line">
+                                            by Mariam Al Saadi
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span class="med-line">
+
+                                            Panadol Extra 500mg
+
+                                            <span class="med-qty">&times;60</span>
+
+                                        </span>
+
+
+                                        <span class="med-line">
+
+                                            Vitamin C 1000mg
+
+                                            <span class="med-qty">&times;25</span>
+
+                                        </span>
+
+                                    </td>
+
+                                    <td class="date-cell">
+                                        01 Aug 2026
+                                    </td>
+
+                                    <td class="money-cell">
+                                        OMR 149.500
+                                    </td>
+
+                                    <td>
+
+                                        <span class="pill pill-pending">
+
+                                            <span class="pill-dot"></span>
+
+                                            Pending
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <p class="small-footer">
+                        A pharmacist can raise an order and follow it,
+                        but only a manager or an admin can approve it.
+                    </p>
+
+                </section>
+
+            </main>
+
         </div>
-      </main>
+
     </div>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../js/main.js"></script>
 </body>
+
 </html>
-
-
-
-            
-
-          
-          
-
-        
-        
