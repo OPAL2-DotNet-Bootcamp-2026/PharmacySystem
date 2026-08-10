@@ -1,0 +1,320 @@
+/* ==================================
+   SUPPLY PAGE
+   ================================== */
+
+.supply-page-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+
+.supply-page-header h2 {
+
+    color: var(--dark-green);
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+
+.supply-page-header p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+
+/* ==================================
+   SUPPLY PANEL
+   ================================== */
+
+.supply-panel {
+
+    background-color: white;
+
+    border: 1px solid var(--line);
+
+    border-radius: 16px;
+
+    overflow: hidden;
+}
+
+
+/* ==================================
+   PANEL HEADER
+   ================================== */
+
+.supply-panel-header {
+
+    padding: 20px 24px;
+
+    border-bottom: 1px solid var(--line);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+
+.supply-panel-header h4 {
+
+    margin: 0 0 5px;
+
+    color: var(--dark-green);
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+
+.supply-panel-header p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+/* ==================================
+   SUPPLY ICON
+   ================================== */
+
+.supply-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 11px;
+
+    background-color: var(--light-green);
+
+    color: var(--green);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 19px;
+}
+
+
+/* ==================================
+   FORM
+   ================================== */
+
+.supply-form {
+
+    padding: 25px;
+}
+
+
+.supply-form label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--dark-green);
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+.supply-form .form-control,
+.supply-form .form-select {
+
+    height: 42px;
+
+    border: 1px solid var(--line);
+
+    border-radius: 8px;
+
+    color: var(--text);
+
+    font-size: 13px;
+
+    background-color: white;
+}
+
+
+.supply-form .form-control::placeholder {
+
+    color: #9AA8A1;
+
+    font-size: 12px;
+}
+
+
+.supply-form .form-control:focus,
+.supply-form .form-select:focus {
+
+    border-color: var(--mint);
+
+    box-shadow: 0 0 0 3px rgba(111, 211, 180, 0.15);
+}
+
+
+/* ==================================
+   SAVE BUTTON
+   ================================== */
+
+.supply-button-wrapper {
+
+    display: flex;
+
+    align-items: end;
+}
+
+
+.btn-save-supply {
+
+    background-color: var(--green);
+
+    color: white;
+
+    border: none;
+
+    height: 42px;
+
+    padding: 0 22px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+.btn-save-supply:hover {
+
+    background-color: #17705B;
+
+    color: white;
+}
+
+
+/* ==================================
+   HISTORY ICON
+   ================================== */
+
+.supply-history-icon {
+
+    color: var(--green);
+
+    font-size: 20px;
+}
+
+
+/* ==================================
+   HISTORY TABLE
+   ================================== */
+
+.supply-history-table {
+
+    margin-bottom: 0;
+
+    font-size: 12px;
+}
+
+
+.supply-history-table thead th {
+
+    background-color: #F8FAF9;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+
+    border-bottom: 1px solid var(--line);
+
+    padding: 13px 18px;
+
+    white-space: nowrap;
+}
+
+
+.supply-history-table tbody td {
+
+    padding: 15px 18px;
+
+    border-color: var(--line);
+
+    color: var(--text);
+
+    vertical-align: middle;
+
+    white-space: nowrap;
+}
+
+
+.supply-history-table tbody tr:hover {
+
+    background-color: #F8FBF9;
+}
+
+
+.supply-history-table tbody td strong {
+
+    color: var(--green);
+
+    font-weight: bold;
+}
+
+
+/* ==================================
+   RESPONSIVE
+   ================================== */
+
+@media (max-width: 767px) {
+
+    .supply-page-header {
+
+        align-items: flex-start;
+    }
+
+
+    .supply-form {
+
+        padding: 18px;
+    }
+
+
+    .supply-panel-header {
+
+        padding: 18px;
+    }
+
+
+    .supply-button-wrapper {
+
+        align-items: stretch;
+    }
+
+
+    .btn-save-supply {
+
+        width: 100%;
+    }
+
+}
