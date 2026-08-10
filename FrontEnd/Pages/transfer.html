@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Transfers</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+
+    <!-- Transfer CSS -->
+    <link
+        rel="stylesheet"
+        href="../css/transfer.css"
+    >
+</head>
+
+
+<!--
+    STATIC ROLE
+
+    admin
+    manager
+    pharmacist
+-->
+
+<body data-role="pharmacist">
+
+    <div class="container-fluid">
+
+        <div class="row min-vh-100">
+
+
+            <!-- ==================================
+                 SIDEBAR
+            ================================== -->
+
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+
+
+                <!-- Brand -->
+
+                <div class="sidebar-brand">
+
+                    <div class="sidebar-logo">
+
+                        <i class="bi bi-plus-lg"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h4 class="mb-0">
+                            Pharmacy System
+                        </h4>
+
+
+                        <small data-roles="admin">
+                            ADMIN VIEW
+                        </small>
+
+
+                        <small data-roles="manager">
+                            MANAGER VIEW
+                        </small>
+
+
+                        <small data-roles="pharmacist">
+                            PHARMACIST VIEW
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     OVERVIEW
+                ================================== -->
+
+                <p class="sidebar-title">
+                    OVERVIEW
+                </p>
+
+
+                <a href="dashboard.html">
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+
+                <!-- ==================================
+                     INTO THE WAREHOUSE
+                     Admin + Manager
+                ================================== -->
+
+                <p
+                    class="sidebar-title"
+                    data-roles="admin manager"
+                >
+                    INTO THE WAREHOUSE
+                </p>
+
+
+                <a
+                    href="suppliers.html"
+                    data-roles="admin manager"
+                >
+
+                    <i class="bi bi-building"></i>
+
+                    <span>
+                        Suppliers
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="supply.html"
+                    data-roles="admin manager"
+                >
+
+                    <i class="bi bi-box-seam"></i>
+
+                    <span>
+                        Supplies
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="warehouse-stock.html"
+                    data-roles="admin manager"
+                >
+
+                    <i class="bi bi-boxes"></i>
+
+                    <span>
+                        Warehouse Stock
+                    </span>
+
+                </a>
+
+
+
+                <!-- ==================================
+                     OUT TO THE PHARMACY
+                ================================== -->
+
+                <p class="sidebar-title">
+                    OUT TO THE PHARMACY
+                </p>
+
+
+                <a href="pharmacist-order.html">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="transfer.html"
+                    class="active"
+                >
+
+                    <i class="bi bi-truck"></i>
+
+
+                    <span data-roles="admin manager">
+                        Transfers
+                    </span>
+
+
+                    <span data-roles="pharmacist">
+                        Incoming Transfers
+                    </span>
+
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a href="pharmacy-stock.html">
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+
+
+                <!-- ==================================
+                     USER MANAGEMENT
+                     Admin only
+                ================================== -->
+
+                <p
+                    class="sidebar-title"
+                    data-roles="admin"
+                >
+                    USER MANAGEMENT
+                </p>
+
+
+                <a
+                    href="create-user.html"
+                    data-roles="admin"
+                >
+
+                    <i class="bi bi-person-plus"></i>
+
+                    <span>
+                        Create User
+                    </span>
+
+                </a>
+
+
+
+                <!-- Sign Out -->
+
+                <a
+                    href="login.html"
+                    class="sign-out"
+                >
+
+                    <i class="bi bi-box-arrow-right"></i>
+
+                    <span>
+                        Sign Out
+                    </span>
+
+                </a>
+
+            </div>
+
+
+
+            <!-- ==================================
+                 MAIN CONTENT
+            ================================== -->
+
+            <main class="col-md-9 col-lg-10 main-content">
+
+
+                <!-- ==================================
+                     ADMIN + MANAGER HEADER
+                ================================== -->
+
+                <div
+                    class="page-header"
+                    data-roles="admin manager"
+                >
+
+                    <h1>
+                        Transfers
+                    </h1>
+
+                    <p>
+                        Move approved orders out of the warehouse
+                        and towards the pharmacy.
+                    </p>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     PHARMACIST HEADER
+                ================================== -->
+
+                <div
+                    class="page-header"
+                    data-roles="pharmacist"
+                >
+
+                    <h1>
+                        Transfers
+                    </h1>
+
+                    <p>
+                        What is on its way to your pharmacy.
+                        Confirm it when the box arrives.
+                    </p>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     ADMIN + MANAGER
+                     ON THE ROAD
+                ================================== -->
+
+                <section
+                    class="content-card"
+                    data-roles="admin manager"
+                >
+
+                    <div class="card-header-custom">
+
+                        <h2>
+                            On the road
+                        </h2>
+
+                        <p>
+                            1 shipment between a warehouse
+                            and a pharmacy right now
+                        </p>
+
+                    </div>
+
+
+                    <div class="road-content">
+
+                        <div class="road-place">
+
+                            <span>
+                                LEFT
+                            </span>
+
+                            <strong>
+                                Main Warehouse — Rusayl
+                            </strong>
+
+                        </div>
+
+
+                        <div class="road">
+
+                            <div class="road-line"></div>
+
+
+                            <div class="truck">
+
+                                <i class="bi bi-truck"></i>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="road-place road-place-right">
+
+                            <span>
+                                HEADING TO
+                            </span>
+
+                            <strong>
+                                Seeb Pharmacy
+                            </strong>
+
+                            <small>
+                                #1 · 40 units
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ==================================
+                     ADMIN + MANAGER
+                     ALL TRANSFERS
+                ================================== -->
+
+                <section
+                    class="content-card"
+                    data-roles="admin manager"
+                >
+
+                    <div class="card-header-custom">
+
+                        <h2>
+                            All transfers
+                        </h2>
+
+                        <p>
+                            3 transfers · GET /api/Transfer
+                        </p>
+
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table class="table transfer-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        TRANSFER
+                                    </th>
+
+                                    <th>
+                                        FROM
+                                    </th>
+
+                                    <th>
+                                        TO
+                                    </th>
+
+                                    <th>
+                                        CONTENTS
+                                    </th>
+
+                                    <th>
+                                        SENT
+                                    </th>
+
+                                    <th>
+                                        STATUS
+                                    </th>
+
+                                    <th class="text-end">
+                                        ACTIONS
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+
+                                <!-- Shipped -->
+
+                                <tr data-id="1">
+
+                                    <td>
+                                        <strong>#1</strong>
+                                    </td>
+
+
+                                    <td>
+                                        Main Warehouse — Rusayl
+                                    </td>
+
+
+                                    <td>
+                                        Seeb Pharmacy
+                                    </td>
+
+
+                                    <td>
+
+                                        Amoxicillin 500mg
+
+                                        <span class="quantity-muted">
+                                            ×40
+                                        </span>
+
+                                    </td>
+
+
+                                    <td class="date-text">
+                                        30 Jul 2026
+                                    </td>
+
+
+                                    <td>
+
+                                        <span class="status shipped">
+
+                                            <span class="status-dot"></span>
+
+                                            SHIPPED
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <td class="text-end">
+
+                                        <button class="confirm-btn">
+
+                                            Confirm receive
+
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+
+
+                                <!-- Pending -->
+
+                                <tr data-id="2">
+
+                                    <td>
+                                        <strong>#2</strong>
+                                    </td>
+
+
+                                    <td>
+                                        Main Warehouse — Rusayl
+                                    </td>
+
+
+                                    <td>
+                                        Muscat Pharmacy — Ruwi
+                                    </td>
+
+
+                                    <td>
+
+                                        Vitamin C 1000mg
+
+                                        <span class="quantity-muted">
+                                            ×60
+                                        </span>
+
+                                    </td>
+
+
+                                    <td class="date-text">
+                                        09 Aug 2026
+                                    </td>
+
+
+                                    <td>
+
+                                        <span class="status pending">
+
+                                            <span class="status-dot"></span>
+
+                                            PENDING
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <td class="text-end">
+
+                                        <button class="ship-btn">
+                                            Mark shipped
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+
+
+                                <!-- Received -->
+
+                                <tr data-id="3">
+
+                                    <td>
+                                        <strong>#3</strong>
+                                    </td>
+
+
+                                    <td>
+                                        Sohar
+                                    </td>
+
+
+                                    <td>
+                                        Seeb Pharmacy
+                                    </td>
+
+
+                                    <td>
+
+                                        Cetirizine 10mg
+
+                                        <span class="quantity-muted">
+                                            ×30
+                                        </span>
+
+                                    </td>
+
+
+                                    <td class="date-text">
+                                        01 Aug 2026
+                                    </td>
+
+
+                                    <td>
+
+                                        <span class="status received">
+
+                                            <span class="status-dot"></span>
+
+                                            RECEIVED
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <td class="text-end received-date">
+
+                                        Received 02 Aug
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ==================================
+                     PHARMACIST
+                     INCOMING TRANSFERS
+                ================================== -->
+
+                <section
+                    class="content-card"
+                    data-roles="pharmacist"
+                >
+
+                    <div class="card-header-custom">
+
+                        <h2>
+                            Incoming transfers
+                        </h2>
+
+                        <p>
+                            1 transfer · GET /api/Transfer
+                        </p>
+
+                    </div>
+
+
+                    <div class="incoming-transfer-row">
+
+                        <div>
+
+                            <span class="small-label">
+                                TRANSFER
+                            </span>
+
+                            <strong>
+                                #1
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="small-label">
+                                FROM
+                            </span>
+
+                            <strong>
+                                Main Warehouse — Rusayl
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="small-label">
+                                CONTENTS
+                            </span>
+
+                            <strong>
+                                Amoxicillin 500mg ×40
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="status shipped">
+
+                                <span class="status-dot"></span>
+
+                                SHIPPED
+
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <button class="confirm-btn">
+
+                                Confirm receive
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <footer class="small-footer">
+
+                    <p>
+                        &copy; 2026 Pharmacy System
+                    </p>
+
+                </footer>
+
+            </main>
+
+        </div>
+
+    </div>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    >
+    </script>
+
+</body>
+
+</html>

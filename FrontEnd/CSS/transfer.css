@@ -1,0 +1,741 @@
+:root {
+
+    --dark-green: #0C2B24;
+    --green: #1F8A70;
+    --green-dark: #17705B;
+    --mint: #79D5BC;
+
+    --page-bg: #EDF1EE;
+
+    --text: #16241F;
+    --muted: #5E6F66;
+
+    --line: #DCE4DE;
+
+    --amber: #B57314;
+    --amber-bg: #FFF0D9;
+
+    --red: #AC4238;
+}
+
+
+/* =========================================
+   GENERAL
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    background-color: var(--page-bg);
+
+    color: var(--text);
+
+    font-family: Arial, sans-serif;
+
+}
+
+
+/* =========================================
+   ROLE VISIBILITY
+========================================= */
+
+body[data-role="admin"]
+[data-roles]:not([data-roles~="admin"]),
+
+body[data-role="manager"]
+[data-roles]:not([data-roles~="manager"]),
+
+body[data-role="pharmacist"]
+[data-roles]:not([data-roles~="pharmacist"]) {
+
+    display: none !important;
+
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.sidebar {
+
+    min-height: 100vh;
+
+    background-color: var(--dark-green);
+
+    color: white;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.sidebar-brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.sidebar-logo {
+
+    width: 47px;
+
+    height: 47px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background-color: var(--mint);
+
+    color: var(--dark-green);
+
+    font-size: 25px;
+
+}
+
+
+.sidebar-brand h4 {
+
+    color: white;
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+}
+
+
+.sidebar-brand small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: #65D6BB;
+
+    font-family: monospace;
+
+    font-size: 11px;
+
+    letter-spacing: 1.8px;
+
+}
+
+
+/* =========================================
+   SIDEBAR TITLES
+========================================= */
+
+.sidebar-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin: 20px 10px 10px;
+
+    color: #72AFA0;
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+
+}
+
+
+.sidebar-title::after {
+
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background-color: #285048;
+
+}
+
+
+/* =========================================
+   SIDEBAR LINKS
+========================================= */
+
+.sidebar a {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-height: 48px;
+
+    margin-bottom: 2px;
+
+    padding: 0 13px;
+
+    border-radius: 10px;
+
+    color: #CFE1DC;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+}
+
+
+.sidebar a i {
+
+    width: 19px;
+
+    color: #A7C7BF;
+
+    font-size: 16px;
+
+}
+
+
+.sidebar a:hover {
+
+    background-color: rgba(255, 255, 255, 0.05);
+
+    color: white;
+
+}
+
+
+.sidebar a.active {
+
+    background-color: var(--mint);
+
+    color: var(--dark-green);
+
+    font-weight: bold;
+
+}
+
+
+.sidebar a.active i {
+
+    color: var(--dark-green);
+
+}
+
+
+.sidebar-count {
+
+    min-width: 23px;
+
+    height: 23px;
+
+    margin-left: auto;
+
+    padding: 0 6px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background-color: rgba(255, 255, 255, 0.1);
+
+    font-size: 11px;
+
+}
+
+
+.sign-out {
+
+    margin-top: auto !important;
+
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.main-content {
+
+    padding: 36px 38px 45px;
+
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.page-header {
+
+    margin-bottom: 31px;
+
+}
+
+
+.page-header h1 {
+
+    margin: 0 0 9px;
+
+    font-size: 35px;
+
+    font-weight: 800;
+
+}
+
+
+.page-header p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 15px;
+
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.content-card {
+
+    overflow: hidden;
+
+    margin-bottom: 22px;
+
+    border: 1px solid var(--line);
+
+    border-radius: 20px;
+
+    background-color: white;
+
+    box-shadow: 0 8px 24px rgba(12, 43, 36, 0.06);
+
+}
+
+
+.card-header-custom {
+
+    padding: 25px 27px;
+
+    border-bottom: 1px solid var(--line);
+
+}
+
+
+.card-header-custom h2 {
+
+    margin: 0 0 6px;
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+}
+
+
+.card-header-custom p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================
+   ROAD
+========================================= */
+
+.road-content {
+
+    display: grid;
+
+    grid-template-columns: 260px 1fr 260px;
+
+    align-items: center;
+
+    gap: 28px;
+
+    padding: 28px 27px;
+
+}
+
+
+.road-place span {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--muted);
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+
+}
+
+
+.road-place strong {
+
+    font-size: 14px;
+
+}
+
+
+.road-place small {
+
+    display: block;
+
+    margin-top: 6px;
+
+    color: var(--muted);
+
+    font-family: monospace;
+
+}
+
+
+.road-place-right {
+
+    text-align: right;
+
+}
+
+
+.road {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+.road-line {
+
+    width: 100%;
+
+    border-top: 3px dashed #C3D2CC;
+
+}
+
+
+.truck {
+
+    position: absolute;
+
+    width: 30px;
+
+    height: 30px;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background-color: #BF7506;
+
+    color: white;
+
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+
+.transfer-table {
+
+    margin: 0;
+
+}
+
+
+.transfer-table thead th {
+
+    padding: 15px 25px;
+
+    background-color: #F6F8F7;
+
+    color: #60736B;
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    font-weight: normal;
+
+    letter-spacing: 1.4px;
+
+}
+
+
+.transfer-table tbody td {
+
+    padding: 17px 25px;
+
+    border-color: var(--line);
+
+    vertical-align: middle;
+
+    font-size: 14px;
+
+}
+
+
+.quantity-muted {
+
+    color: var(--muted);
+
+    font-family: monospace;
+
+}
+
+
+.date-text {
+
+    font-family: monospace;
+
+}
+
+
+.received-date {
+
+    color: var(--muted) !important;
+
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 6px 12px;
+
+    border-radius: 30px;
+
+    font-family: monospace;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+}
+
+
+.status-dot {
+
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
+
+    background-color: currentColor;
+
+}
+
+
+.status.shipped {
+
+    background-color: var(--amber-bg);
+
+    color: var(--amber);
+
+}
+
+
+.status.pending {
+
+    background-color: #EEF1F0;
+
+    color: #66766F;
+
+}
+
+
+.status.received {
+
+    background-color: #E2F2ED;
+
+    color: var(--green-dark);
+
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.confirm-btn,
+.ship-btn {
+
+    border: none;
+
+    border-radius: 9px;
+
+    padding: 10px 16px;
+
+    color: white;
+
+    font-family: monospace;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+}
+
+
+.confirm-btn {
+
+    background-color: var(--green);
+
+}
+
+
+.ship-btn {
+
+    background-color: var(--dark-green);
+
+}
+
+
+/* =========================================
+   PHARMACIST TRANSFER
+========================================= */
+
+.incoming-transfer-row {
+
+    display: grid;
+
+    grid-template-columns: 90px 1.4fr 1.4fr auto auto;
+
+    align-items: center;
+
+    gap: 24px;
+
+    padding: 30px 27px;
+
+}
+
+
+.small-label {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--muted);
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 1.3px;
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.small-footer {
+
+    margin-top: 30px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 991px) {
+
+    .road-content {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .road {
+
+        display: none;
+
+    }
+
+
+    .road-place-right {
+
+        text-align: left;
+
+    }
+
+
+    .incoming-transfer-row {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}

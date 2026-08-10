@@ -1,0 +1,706 @@
+:root {
+
+    --dark-green: #0C2B24;
+    --green: #1F8A70;
+    --green-dark: #17705B;
+    --mint: #79D5BC;
+
+    --page-bg: #EDF1EE;
+
+    --text: #16241F;
+    --muted: #5E6F66;
+
+    --line: #DCE4DE;
+
+    --amber: #B57314;
+    --amber-bg: #FFF0D9;
+
+    --red: #AC4238;
+    --red-bg: #F8E5E2;
+
+}
+
+
+/* =========================================
+   GENERAL
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    background-color: var(--page-bg);
+
+    color: var(--text);
+
+    font-family: Arial, sans-serif;
+
+}
+
+
+/* =========================================
+   ROLE VISIBILITY
+========================================= */
+
+body[data-role="admin"]
+[data-roles]:not([data-roles~="admin"]),
+
+body[data-role="manager"]
+[data-roles]:not([data-roles~="manager"]),
+
+body[data-role="pharmacist"]
+[data-roles]:not([data-roles~="pharmacist"]) {
+
+    display: none !important;
+
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.sidebar {
+
+    min-height: 100vh;
+
+    background-color: var(--dark-green);
+
+    color: white;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.sidebar-brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.sidebar-logo {
+
+    width: 47px;
+
+    height: 47px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background-color: var(--mint);
+
+    color: var(--dark-green);
+
+    font-size: 25px;
+
+}
+
+
+.sidebar-brand h4 {
+
+    color: white;
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+}
+
+
+.sidebar-brand small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: #65D6BB;
+
+    font-family: monospace;
+
+    font-size: 11px;
+
+    letter-spacing: 1.8px;
+
+}
+
+
+/* =========================================
+   SIDEBAR TITLE
+========================================= */
+
+.sidebar-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin: 20px 10px 10px;
+
+    color: #72AFA0;
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+
+}
+
+
+.sidebar-title::after {
+
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background-color: #285048;
+
+}
+
+
+/* =========================================
+   SIDEBAR LINKS
+========================================= */
+
+.sidebar a {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-height: 48px;
+
+    margin-bottom: 2px;
+
+    padding: 0 13px;
+
+    border-radius: 10px;
+
+    color: #CFE1DC;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+}
+
+
+.sidebar a i {
+
+    width: 19px;
+
+    color: #A7C7BF;
+
+    font-size: 16px;
+
+}
+
+
+.sidebar a:hover {
+
+    background-color: rgba(255, 255, 255, 0.05);
+
+    color: white;
+
+}
+
+
+.sidebar a.active {
+
+    background-color: var(--mint);
+
+    color: var(--dark-green);
+
+    font-weight: bold;
+
+}
+
+
+.sidebar a.active i {
+
+    color: var(--dark-green);
+
+}
+
+
+.sidebar-count {
+
+    min-width: 23px;
+
+    height: 23px;
+
+    margin-left: auto;
+
+    padding: 0 6px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background-color: rgba(255, 255, 255, 0.1);
+
+    font-size: 11px;
+
+}
+
+
+.sign-out {
+
+    margin-top: auto !important;
+
+}
+
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.main-content {
+
+    padding: 36px 38px 45px;
+
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.page-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.page-header h1 {
+
+    margin: 0 0 8px;
+
+    font-size: 35px;
+
+    font-weight: 800;
+
+}
+
+
+.page-header p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 15px;
+
+}
+
+
+/* =========================================
+   INCOMING TRANSFER BUTTON
+========================================= */
+
+.incoming-btn {
+
+    flex-shrink: 0;
+
+    padding: 13px 18px;
+
+    border: 1px solid #C4D0C8;
+
+    border-radius: 10px;
+
+    color: var(--text);
+
+    background-color: transparent;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+}
+
+
+.incoming-btn:hover {
+
+    background-color: white;
+
+    color: var(--text);
+
+}
+
+
+/* =========================================
+   STOCK CARD
+========================================= */
+
+.stock-card {
+
+    overflow: hidden;
+
+    margin-bottom: 21px;
+
+    border: 1px solid var(--line);
+
+    border-radius: 20px;
+
+    background-color: white;
+
+    box-shadow: 0 8px 24px rgba(12, 43, 36, 0.06);
+
+}
+
+
+/* =========================================
+   CARD HEADER
+========================================= */
+
+.stock-card-header {
+
+    min-height: 100px;
+
+    padding: 23px 27px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom: 1px solid var(--line);
+
+}
+
+
+.stock-card-header h2 {
+
+    margin: 0 0 7px;
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+}
+
+
+.stock-card-header p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+}
+
+
+.stock-summary {
+
+    color: var(--muted);
+
+    font-family: monospace;
+
+    font-size: 13px;
+
+    letter-spacing: 1px;
+
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+
+.stock-table {
+
+    margin: 0;
+
+}
+
+
+.stock-table thead th {
+
+    padding: 15px 27px;
+
+    background-color: #F6F8F7;
+
+    color: #60736B;
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    font-weight: normal;
+
+    letter-spacing: 1.4px;
+
+}
+
+
+.stock-table tbody td {
+
+    padding: 16px 27px;
+
+    border-color: var(--line);
+
+    vertical-align: middle;
+
+    font-size: 14px;
+
+}
+
+
+.stock-table tbody tr:last-child td {
+
+    border-bottom: none;
+
+}
+
+
+.muted-cell {
+
+    color: var(--muted) !important;
+
+}
+
+
+.expiry-date {
+
+    font-family: monospace;
+
+}
+
+
+/* =========================================
+   QUANTITY
+========================================= */
+
+.quantity-area {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 11px;
+
+}
+
+
+.quantity-area strong {
+
+    min-width: 24px;
+
+    text-align: right;
+
+}
+
+
+/* =========================================
+   STOCK BAR
+========================================= */
+
+.stock-bar {
+
+    width: 90px;
+
+    height: 7px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background-color: #DEE6E2;
+
+}
+
+
+.stock-fill {
+
+    height: 100%;
+
+    border-radius: 20px;
+
+}
+
+
+.healthy-fill {
+
+    background: linear-gradient(
+        to right,
+        var(--green-dark),
+        #69D2B8
+    );
+
+}
+
+
+.low-fill {
+
+    background-color: var(--amber);
+
+}
+
+
+.out-fill {
+
+    background-color: var(--red);
+
+}
+
+
+/* =========================================
+   LEVEL
+========================================= */
+
+.level {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 6px 12px;
+
+    border-radius: 30px;
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+}
+
+
+.level-dot {
+
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
+
+    background-color: currentColor;
+
+}
+
+
+.level.healthy {
+
+    background-color: #E2F2ED;
+
+    color: var(--green-dark);
+
+}
+
+
+.level.low {
+
+    background-color: var(--amber-bg);
+
+    color: var(--amber);
+
+}
+
+
+.level.out {
+
+    background-color: var(--red-bg);
+
+    color: var(--red);
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.small-footer {
+
+    margin-top: 30px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 767px) {
+
+    .sidebar {
+
+        min-height: auto;
+
+    }
+
+
+    .page-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+    .stock-card-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+}
