@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Pharmacy System</title>
+
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+
+
+    <!-- Dashboard CSS -->
+    <link
+        rel="stylesheet"
+        href="../css/dashboard.css"
+    >
+
+</head>
+
+
+<!--
+    STATIC ROLE
+
+    Change it:
+
+    admin
+    manager
+    pharmacist
+-->
+
+<body data-role="admin">
+
+
+    <div class="container-fluid">
+
+        <div class="row min-vh-100">
+
+
+            <!-- ==================================
+                 SIDEBAR
+                 ================================== -->
+
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+
+
+                <!-- Brand -->
+
+                <div class="sidebar-brand">
+
+                    <div class="sidebar-logo">
+
+                        <i class="bi bi-plus-lg"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h4 class="mb-0">
+                            Pharmacy System
+                        </h4>
+
+
+                        <small data-roles="admin">
+                            ADMIN VIEW
+                        </small>
+
+
+                        <small data-roles="manager">
+                            MANAGER VIEW
+                        </small>
+
+
+                        <small data-roles="pharmacist">
+                            PHARMACIST VIEW
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     OVERVIEW
+                     ================================== -->
+
+                <p class="sidebar-title">
+                    OVERVIEW
+                </p>
+
+
+                <a
+                    href="dashboard.html"
+                    class="active"
+                >
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+
+                <!-- ==================================
+                     INTO THE WAREHOUSE
+                     Admin + Manager
+                     ================================== -->
+
+                <p
+                    class="sidebar-title"
+                    data-roles="admin manager"
+                >
+                    INTO THE WAREHOUSE
+                </p>
+
+
+                <a
+                    href="suppliers.html"
+                    data-roles="admin manager"
+                >
+
+                    <i class="bi bi-building"></i>
+
+                    <span>
+                        Suppliers
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="supply.html"
+                    data-roles="admin manager"
+                >
+
+                    <i class="bi bi-box-seam"></i>
+
+                    <span>
+                        Supplies
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="warehouse-stock.html"
+                    data-roles="admin manager"
+                >
+
+                    <i class="bi bi-boxes"></i>
+
+                    <span>
+                        Warehouse Stock
+                    </span>
+
+                </a>
+
+
+
+                <!-- ==================================
+                     OUT TO THE PHARMACY
+                     ================================== -->
+
+                <p class="sidebar-title">
+                    OUT TO THE PHARMACY
+                </p>
+
+
+                <a href="pharmacist-order.html">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                </a>
+
+
+                <a href="transfer.html">
+
+                    <i class="bi bi-truck"></i>
+
+
+                    <span data-roles="admin manager">
+                        Transfers
+                    </span>
+
+
+                    <span data-roles="pharmacist">
+                        Incoming Transfers
+                    </span>
+
+                </a>
+
+
+                <a href="pharmacy-stock.html">
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+
+
+                <!-- ==================================
+                     USER MANAGEMENT
+                     Admin Only
+                     ================================== -->
+
+                <p
+                    class="sidebar-title"
+                    data-roles="admin"
+                >
+                    USER MANAGEMENT
+                </p>
+
+
+                <a
+                    href="create-user.html"
+                    data-roles="admin"
+                >
+
+                    <i class="bi bi-person-plus"></i>
+
+                    <span>
+                        Create User
+                    </span>
+
+                </a>
+
+
+
+                <!-- Sign Out -->
+
+                <a
+                    href="login.html"
+                    class="sign-out"
+                >
+
+                    <i class="bi bi-box-arrow-right"></i>
+
+                    <span>
+                        Sign Out
+                    </span>
+
+                </a>
+
+            </div>
+
+
+
+            <!-- ==================================
+                 MAIN CONTENT
+                 ================================== -->
+
+            <div class="col-md-9 col-lg-10 main-content p-4">
+
+
+                <!-- ==================================
+                     HEADER
+                     ================================== -->
+
+                <div class="dashboard-header mb-4">
+
+                    <div>
+
+
+                        <!-- Admin -->
+
+                        <h2 data-roles="admin">
+                            Good day, Admin
+                        </h2>
+
+
+                        <!-- Manager -->
+
+                        <h2 data-roles="manager">
+                            Good day, Manager
+                        </h2>
+
+
+                        <!-- Pharmacist -->
+
+                        <h2 data-roles="pharmacist">
+                            Good day, Pharmacist
+                        </h2>
+
+
+                        <!-- Admin + Manager -->
+
+                        <p data-roles="admin manager">
+                            Here is where every unit of stock is sitting right now.
+                        </p>
+
+
+                        <!-- Pharmacist -->
+
+                        <p data-roles="pharmacist">
+                            Here are your orders, incoming transfers and pharmacy stock.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- Record Supply -->
+
+                    <a
+                        href="supply.html"
+                        class="btn btn-pharmacy"
+                        data-roles="admin manager"
+                    >
+
+                        <i class="bi bi-plus-lg me-2"></i>
+
+                        Record Supply
+
+                    </a>
+
+
+
+                    <!-- New Order -->
+
+                    <a
+                        href="pharmacist-order.html"
+                        class="btn btn-pharmacy"
+                        data-roles="pharmacist"
+                    >
+
+                        <i class="bi bi-plus-lg me-2"></i>
+
+                        New Order
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     GREEN LIVE PIPELINE
+                     Admin + Manager
+                     ================================== -->
+
+                <div
+                    class="pipeline"
+                    data-roles="admin manager"
+                >
+
+
+                    <!-- Pipeline Header -->
+
+                    <div class="pipeline__top">
+
+                        <h2>
+                            The chain, right now
+                        </h2>
+
+
+                        <span>
+
+                            <i class="livedot"></i>
+
+                            LIVE · 09 AUG 2026 · 16:19:00
+
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- Pipeline Nodes -->
+
+                    <div class="pipe">
+
+
+                        <!-- Supplier -->
+
+                        <div class="node node--live">
+
+                            <div class="node__rail"></div>
+
+
+                            <div
+                                class="node__pulse"
+                                style="--dist:130px;"
+                            >
+                            </div>
+
+
+                            <div
+                                class="node__pulse node__pulse--b"
+                                style="
+                                    --dist:130px;
+                                    animation-delay:1.3s;
+                                "
+                            >
+                            </div>
+
+
+                            <div class="node__badge">
+
+                                <i class="bi bi-building"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <div>
+
+                                    <span class="node__val">
+                                        4
+                                    </span>
+
+                                    <span class="node__unit">
+                                        active
+                                    </span>
+
+                                </div>
+
+
+                                <div class="node__label">
+                                    Suppliers
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Warehouse -->
+
+                        <div class="node node--live">
+
+                            <div class="node__rail"></div>
+
+
+                            <div
+                                class="node__pulse"
+                                style="
+                                    --dist:130px;
+                                    animation-delay:.5s;
+                                "
+                            >
+                            </div>
+
+
+                            <div
+                                class="node__pulse node__pulse--b"
+                                style="
+                                    --dist:130px;
+                                    animation-delay:1.8s;
+                                "
+                            >
+                            </div>
+
+
+                            <div class="node__badge">
+
+                                <i class="bi bi-box-seam"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <div>
+
+                                    <span class="node__val">
+                                        923
+                                    </span>
+
+                                    <span class="node__unit">
+                                        units
+                                    </span>
+
+                                </div>
+
+
+                                <div class="node__label">
+                                    In the warehouse
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Order -->
+
+                        <div class="node node--live">
+
+                            <div class="node__rail"></div>
+
+
+                            <div
+                                class="node__pulse"
+                                style="
+                                    --dist:130px;
+                                    animation-delay:1s;
+                                "
+                            >
+                            </div>
+
+
+                            <div
+                                class="node__pulse node__pulse--b"
+                                style="
+                                    --dist:130px;
+                                    animation-delay:2.3s;
+                                "
+                            >
+                            </div>
+
+
+                            <div class="node__badge">
+
+                                <i class="bi bi-clipboard2"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <div>
+
+                                    <span class="node__val">
+                                        1
+                                    </span>
+
+                                    <span class="node__unit">
+                                        waiting
+                                    </span>
+
+                                </div>
+
+
+                                <div class="node__label">
+                                    Orders to approve
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Transfer -->
+
+                        <div class="node node--live">
+
+                            <div class="node__rail"></div>
+
+
+                            <div
+                                class="node__pulse"
+                                style="
+                                    --dist:100px;
+                                    animation-delay:1.5s;
+                                "
+                            >
+                            </div>
+
+
+                            <div
+                                class="node__pulse node__pulse--b"
+                                style="
+                                    --dist:100px;
+                                    animation-delay:2.8s;
+                                "
+                            >
+                            </div>
+
+
+                            <div class="node__badge">
+
+                                <i class="bi bi-truck"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <div>
+
+                                    <span class="node__val">
+                                        1
+                                    </span>
+
+                                    <span class="node__unit">
+                                        moving
+                                    </span>
+
+                                </div>
+
+
+                                <div class="node__label">
+                                    Transfers in transit
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Pharmacy -->
+
+                        <div class="node node--live">
+
+
+                            <div class="node__badge">
+
+                                <i class="bi bi-capsule"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <div>
+
+                                    <span class="node__val">
+                                        65
+                                    </span>
+
+                                    <span class="node__unit">
+                                        units
+                                    </span>
+
+                                </div>
+
+
+                                <div class="node__label">
+                                    On pharmacy shelves
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     ADMIN + MANAGER STATISTICS
+                     ================================== -->
+
+                <div
+                    class="row g-3 mb-4"
+                    data-roles="admin manager"
+                >
+
+
+                    <!-- Suppliers -->
+
+                    <div class="col-md-6 col-lg-3">
+
+                        <div class="dashboard-stat">
+
+                            <p class="dashboard-stat-title">
+                                SUPPLIERS
+                            </p>
+
+
+                            <h2>
+                                5
+                            </h2>
+
+
+                            <p class="dashboard-stat-info">
+                                1 inactive
+                            </p>
+
+
+                            <div class="mini-line">
+
+                                <span class="mini-line-dot"></span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Supplies Received -->
+
+                    <div class="col-md-6 col-lg-3">
+
+                        <div class="dashboard-stat">
+
+                            <p class="dashboard-stat-title">
+                                SUPPLIES RECEIVED
+                            </p>
+
+
+                            <h2>
+                                3
+                            </h2>
+
+
+                            <p class="dashboard-stat-info">
+                                Last: 25 Jul 2026
+                            </p>
+
+
+                            <div class="mini-line">
+
+                                <span class="mini-line-dot"></span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Pending Orders -->
+
+                    <div class="col-md-6 col-lg-3">
+
+                        <div class="dashboard-stat dashboard-stat-warning">
+
+                            <p class="dashboard-stat-title">
+                                PENDING ORDERS
+                            </p>
+
+
+                            <h2>
+                                1
+                            </h2>
+
+
+                            <p class="dashboard-stat-info">
+                                2 orders in total
+                            </p>
+
+
+                            <div class="mini-line mini-line-warning">
+
+                                <span class="mini-line-dot"></span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Low Stock -->
+
+                    <div class="col-md-6 col-lg-3">
+
+                        <div class="dashboard-stat dashboard-stat-warning">
+
+                            <p class="dashboard-stat-title">
+                                LOW STOCK LINES
+                            </p>
+
+
+                            <h2>
+                                2
+                            </h2>
+
+
+                            <p class="dashboard-stat-info">
+                                1 warehouse · 1 pharmacy
+                            </p>
+
+
+                            <div class="mini-line mini-line-warning">
+
+                                <span class="mini-line-dot"></span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     STOCK LOCATION + MEDICINES
+                     Admin + Manager
+                     ================================== -->
+
+                <div
+                    class="row g-3 mb-4"
+                    data-roles="admin manager"
+                >
+
+
+                    <!-- ==================================
+                         WHERE STOCK IS SITTING
+                         ================================== -->
+
+                    <div class="col-lg-6">
+
+                        <div class="dashboard-panel">
+
+
+                            <div class="dashboard-panel-header">
+
+                                <h4>
+                                    Where the stock is sitting
+                                </h4>
+
+
+                                <p>
+                                    Every unit is in exactly one of these three places
+                                </p>
+
+                            </div>
+
+
+
+                            <div class="stock-location-content">
+
+
+                                <!-- Donut -->
+
+                                <div class="donut-chart">
+
+                                    <div class="donut-center">
+
+                                        <strong>
+                                            1028
+                                        </strong>
+
+                                        <small>
+                                            UNITS
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- Legend -->
+
+                                <div class="stock-legend">
+
+
+                                    <div>
+
+                                        <span
+                                            class="legend-square warehouse-color"
+                                        >
+                                        </span>
+
+
+                                        <span>
+                                            In the warehouse
+                                        </span>
+
+
+                                        <strong>
+                                            923
+                                        </strong>
+
+                                    </div>
+
+
+
+                                    <div>
+
+                                        <span
+                                            class="legend-square road-color"
+                                        >
+                                        </span>
+
+
+                                        <span>
+                                            On the road
+                                        </span>
+
+
+                                        <strong>
+                                            40
+                                        </strong>
+
+                                    </div>
+
+
+
+                                    <div>
+
+                                        <span
+                                            class="legend-square shelf-color"
+                                        >
+                                        </span>
+
+
+                                        <span>
+                                            On the shelf
+                                        </span>
+
+
+                                        <strong>
+                                            65
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ==================================
+                         MOST HELD MEDICINES
+                         ================================== -->
+
+                    <div class="col-lg-6">
+
+                        <div class="dashboard-panel">
+
+
+                            <div class="dashboard-panel-header">
+
+                                <h4>
+                                    Most-held medicines
+                                </h4>
+
+
+                                <p>
+                                    Warehouse and pharmacy quantities combined
+                                </p>
+
+                            </div>
+
+
+
+                            <div class="medicine-bars">
+
+
+                                <!-- Medicine 1 -->
+
+                                <div class="medicine-bar">
+
+                                    <div class="medicine-bar-top">
+
+                                        <span>
+                                            Panadol Extra 500mg
+                                        </span>
+
+
+                                        <span>
+                                            Analgesic
+                                        </span>
+
+
+                                        <strong>
+                                            434
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="bar-track">
+
+                                        <div
+                                            class="bar-fill"
+                                            style="width:100%;"
+                                        >
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- Medicine 2 -->
+
+                                <div class="medicine-bar">
+
+                                    <div class="medicine-bar-top">
+
+                                        <span>
+                                            Amoxicillin 500mg
+                                        </span>
+
+
+                                        <span>
+                                            Antibiotic
+                                        </span>
+
+
+                                        <strong>
+                                            250
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="bar-track">
+
+                                        <div
+                                            class="bar-fill"
+                                            style="width:58%;"
+                                        >
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- Medicine 3 -->
+
+                                <div class="medicine-bar">
+
+                                    <div class="medicine-bar-top">
+
+                                        <span>
+                                            Insulin Glargine
+                                        </span>
+
+
+                                        <span>
+                                            Cold chain
+                                        </span>
+
+
+                                        <strong>
+                                            120
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="bar-track">
+
+                                        <div
+                                            class="bar-fill"
+                                            style="width:28%;"
+                                        >
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- Medicine 4 -->
+
+                                <div class="medicine-bar">
+
+                                    <div class="medicine-bar-top">
+
+                                        <span>
+                                            Ventolin Inhaler
+                                        </span>
+
+
+                                        <span>
+                                            Respiratory
+                                        </span>
+
+
+                                        <strong>
+                                            75
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="bar-track">
+
+                                        <div
+                                            class="bar-fill"
+                                            style="width:18%;"
+                                        >
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- Medicine 5 -->
+
+                                <div class="medicine-bar">
+
+                                    <div class="medicine-bar-top">
+
+                                        <span>
+                                            Vitamin C 1000mg
+                                        </span>
+
+
+                                        <span>
+                                            Supplement
+                                        </span>
+
+
+                                        <strong>
+                                            60
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="bar-track">
+
+                                        <div
+                                            class="bar-fill"
+                                            style="width:14%;"
+                                        >
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     ACTIVITY + RUNNING LOW
+                     Admin + Manager
+                     ================================== -->
+
+                <div
+                    class="row g-3 mb-4"
+                    data-roles="admin manager"
+                >
+
+
+                    <!-- ==================================
+                         WHAT HAPPENED LATELY
+                         ================================== -->
+
+                    <div class="col-lg-6">
+
+                        <div class="dashboard-panel">
+
+
+                            <div class="dashboard-panel-header">
+
+                                <h4>
+                                    What happened lately
+                                </h4>
+
+                                <p>
+                                    Newest first
+                                </p>
+
+                            </div>
+
+
+
+                            <div class="activity-list">
+
+
+                                <!-- Activity 1 -->
+
+                                <div class="activity-item">
+
+                                    <span
+                                        class="activity-dot amber-dot"
+                                    >
+                                    </span>
+
+
+                                    <span>
+                                        Transfer #1 left Main Warehouse for Seeb Pharmacy
+                                    </span>
+
+
+                                    <small>
+                                        30 Jul
+                                    </small>
+
+                                </div>
+
+
+
+                                <!-- Activity 2 -->
+
+                                <div class="activity-item">
+
+                                    <span
+                                        class="activity-dot green-dot"
+                                    >
+                                    </span>
+
+
+                                    <span>
+                                        Order #2 approved by Huda Al Balushi
+                                    </span>
+
+
+                                    <small>
+                                        29 Jul
+                                    </small>
+
+                                </div>
+
+
+
+                                <!-- Activity 3 -->
+
+                                <div class="activity-item">
+
+                                    <span
+                                        class="activity-dot green-dot"
+                                    >
+                                    </span>
+
+
+                                    <span>
+                                        Supply BN-2026-0043 added 120 units of Insulin Glargine
+                                    </span>
+
+
+                                    <small>
+                                        25 Jul
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ==================================
+                         RUNNING LOW
+                         ================================== -->
+
+                    <div class="col-lg-6">
+
+                        <div class="dashboard-panel">
+
+
+                            <div class="dashboard-panel-header">
+
+                                <h4>
+                                    Running low
+                                </h4>
+
+
+                                <p>
+                                    Warehouse under 50 · pharmacy under 15
+                                </p>
+
+                            </div>
+
+
+
+                            <div class="table-responsive">
+
+                                <table class="table low-stock-table">
+
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th>
+                                                MEDICINE
+                                            </th>
+
+                                            <th>
+                                                HELD AT
+                                            </th>
+
+                                            <th class="text-end">
+                                                LEFT
+                                            </th>
+
+                                        </tr>
+
+                                    </thead>
+
+
+                                    <tbody>
+
+
+                                        <tr>
+
+                                            <td>
+
+                                                <strong>
+                                                    Cetirizine 10mg
+                                                </strong>
+
+                                            </td>
+
+
+                                            <td>
+                                                Main Warehouse — Rusayl
+                                            </td>
+
+
+                                            <td class="text-end low-number">
+                                                18
+                                            </td>
+
+                                        </tr>
+
+
+
+                                        <tr>
+
+                                            <td>
+
+                                                <strong>
+                                                    Cetirizine 10mg
+                                                </strong>
+
+                                            </td>
+
+
+                                            <td>
+                                                Muscat Pharmacy — Ruwi
+                                            </td>
+
+
+                                            <td class="text-end low-number">
+                                                9
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+             
+
+                <!-- ==================================
+                     PHARMACIST DASHBOARD
+                     ================================== -->
+
+                <div
+                    class="row g-3 mb-4"
+                    data-roles="pharmacist"
+                >
+
+
+                    <!-- My Pending Orders -->
+
+                    <div class="col-md-4">
+
+                        <div class="dashboard-stat dashboard-stat-warning">
+
+                            <p class="dashboard-stat-title">
+                                MY PENDING ORDERS
+                            </p>
+
+                            <h2>
+                                3
+                            </h2>
+
+                            <p class="dashboard-stat-info">
+                                Waiting for approval
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Incoming Transfers -->
+
+                    <div class="col-md-4">
+
+                        <div class="dashboard-stat dashboard-stat-warning">
+
+                            <p class="dashboard-stat-title">
+                                INCOMING TRANSFERS
+                            </p>
+
+                            <h2>
+                                1
+                            </h2>
+
+                            <p class="dashboard-stat-info">
+                                In transit
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- My Pharmacy Stock -->
+
+                    <div class="col-md-4">
+
+                        <div class="dashboard-stat">
+
+                            <p class="dashboard-stat-title">
+                                MY PHARMACY STOCK
+                            </p>
+
+                            <h2>
+                                65
+                            </h2>
+
+                            <p class="dashboard-stat-info">
+                                Units on shelf
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     FOOTER
+                     ================================== -->
+
+                <footer class="small-footer">
+
+                    <p>
+                        &copy; 2026 Pharmacy System
+                    </p>
+
+                </footer>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Bootstrap JS -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    >
+    </script>
+
+
+</body>
+
+</html>
