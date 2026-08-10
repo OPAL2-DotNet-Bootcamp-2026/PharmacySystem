@@ -1,0 +1,8 @@
+
+.order-lines {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+
