@@ -42,3 +42,15 @@
   flex-wrap: wrap;
   gap: 6px;
 }
+
+.flow-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--light-green);
+  color: var(--green-dark);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
