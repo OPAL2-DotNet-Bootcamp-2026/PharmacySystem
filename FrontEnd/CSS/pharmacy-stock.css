@@ -701,34 +701,3 @@ body:not(:has(.role-flag:target)) .app
 }
 
 
-/* =========================================
-   RESPONSIVE
-========================================= */
-
-@media (max-width: 767px) {
-
-    .sidebar {
-
-        min-height: auto;
-
-    }
-
-
-    .page-header {
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-    }
-
-
-    .stock-card-header {
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-    }
-
-}
