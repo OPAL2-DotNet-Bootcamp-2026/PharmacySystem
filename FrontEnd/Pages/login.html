@@ -7,22 +7,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/login.css">
 </head>
 
 <body>
-  <div class="login">
-    <!-- Left brand panel -->
-    <div class="login__brandside">
-      <div
-        class="orb"
-        style="width:340px;height:340px;background:radial-gradient(circle at 35% 35%, rgba(111,211,180,.55), transparent 65%);top:-90px;left:-60px;"
-      ></div>
-      <div
-        class="orb"
-        style="width:280px;height:280px;background:radial-gradient(circle at 40% 40%, rgba(31,138,112,.55), transparent 65%);bottom:8%;right:-40px;animation-delay:-7s;"
-      ></div>
+   <!-- LEFT: dark brand panel -->
+    <section class="login__brandside">
+      <div class="orb orb--a" aria-hidden="true"></div>
+      <div class="orb orb--b" aria-hidden="true"></div>
 
       <div class="caps" aria-hidden="true">
         <i style="--w:74px;--rot:-18deg;--d:16s;--dl:0s;top:12%;left:62%"></i>
@@ -73,8 +65,13 @@
           <div class="chain__dot" style="--n:4"></div>
           <div class="chain__label">Pharmacy</div>
         </div>
+        </div>
 
     </div>
+    </section>
+
+    <!-- RIGHT: white sign-in form -->
+    <section class="login__formside">
     <!-- Right sign-in form -->
     <div class="login__formside">
       <div class="loginbox">
@@ -105,6 +102,7 @@
           >
         </div>
 
+        <a href="dashboard.html" class="signin-btn">Sign in</a>
          <!-- Static stage: opens dashboard (no API / JWT yet) -->
         <a href="dashboard.html" class="btn btn--primary btn--block">Sign in</a>
         <div class="demorow">
@@ -116,7 +114,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </body>
 </html>
