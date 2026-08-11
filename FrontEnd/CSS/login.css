@@ -188,3 +188,9 @@ a { color: inherit; text-decoration: none; }
   color: transparent;
   animation: gradmove 6s linear infinite;
 }
+
+.login__pitch p {
+  color: #B8CEC6;
+  margin: 0;
+  max-width: 44ch;
+}
