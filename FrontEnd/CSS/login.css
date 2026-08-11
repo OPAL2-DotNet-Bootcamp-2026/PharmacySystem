@@ -27,3 +27,10 @@ body {
 }
 
 a { color: inherit; text-decoration: none; }
+
+@keyframes drift {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(46px, -34px) scale(1.12); }
+  66% { transform: translate(-34px, 26px) scale(0.92); }
+  100% { transform: translate(0, 0) scale(1); }
+}
