@@ -313,3 +313,8 @@ a { color: inherit; text-decoration: none; }
   font: inherit;
   color: inherit;
 }
+
+.btn--primary:hover {
+  background: var(--green-dark);
+  color: #fff;
+}
