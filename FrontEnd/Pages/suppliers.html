@@ -2,7 +2,580 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
+
+    <title>Suppliers | Pharmacy System</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="../CSS/dashboard.css">
+
+    <!-- Suppliers CSS -->
+    <link rel="stylesheet" href="../CSS/suppliers.css">
+
 </head>
+<body>
+    <!-- ==================================
+         ROLE FLAGS
+         ================================== -->
+    <b id="admin" class="role-flag"></b>
+    <b id="manager" class="role-flag"></b>
+    <b id="pharmacist" class="role-flag"></b>
+       <!-- MAIN APP -->
+        <div class="container-fluid app">
+        <div class="row min-vh-100">
+        <div class="col-md-3 col-lg-2 sidebar p-3">
+
+    <!-- Brand -->
+
+    <div class="sidebar-brand">
+
+        <div class="sidebar-logo">
+
+            <i class="bi bi-plus-lg"></i>
+
+        </div>
+
+
+        <div>
+
+            <h4 class="mb-0">
+                Pharmacy System
+            </h4>
+
+            <small data-roles="admin">
+                ADMIN VIEW
+            </small>
+
+            <small data-roles="manager">
+                MANAGER VIEW
+            </small>
+
+            <small data-roles="pharmacist">
+                PHARMACIST VIEW
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <!-- Overview -->
+
+    <p class="sidebar-title">
+        OVERVIEW
+    </p>
+
+
+    <a href="dashboard.html#admin"
+       data-roles="admin">
+
+        <i class="bi bi-grid"></i>
+
+        <span>
+            Dashboard
+        </span>
+
+    </a>
+
+
+    <a href="dashboard.html#manager"
+       data-roles="manager">
+
+        <i class="bi bi-grid"></i>
+
+        <span>
+            Dashboard
+        </span>
+
+    </a>
+
+
+    <a href="dashboard.html#pharmacist"
+       data-roles="pharmacist">
+
+        <i class="bi bi-grid"></i>
+
+        <span>
+            Dashboard
+        </span>
+
+    </a>
+
+
+    <!-- Into the Warehouse -->
+
+    <p class="sidebar-title"
+       data-roles="admin manager">
+
+        INTO THE WAREHOUSE
+
+    </p>
+
+
+    <!-- Suppliers -->
+
+    <a href="suppliers.html#admin"
+       data-roles="admin"
+       class="active">
+
+        <i class="bi bi-building"></i>
+
+        <span>
+            Suppliers
+        </span>
+
+    </a>
+
+
+    <a href="suppliers.html#manager"
+       data-roles="manager"
+       class="active">
+
+        <i class="bi bi-building"></i>
+
+        <span>
+            Suppliers
+        </span>
+
+    </a>
+
+
+    <!-- Supplies -->
+
+    <a href="supply.html#admin"
+       data-roles="admin">
+
+        <i class="bi bi-box-seam"></i>
+
+        <span>
+            Supplies
+        </span>
+
+    </a>
+
+
+    <a href="supply.html#manager"
+       data-roles="manager">
+
+        <i class="bi bi-box-seam"></i>
+
+        <span>
+            Supplies
+        </span>
+
+    </a>
+
+
+    <!-- Warehouse Stock -->
+
+    <a href="warehouse-stock.html#admin"
+       data-roles="admin">
+
+        <i class="bi bi-boxes"></i>
+
+        <span>
+            Warehouse Stock
+        </span>
+
+    </a>
+
+
+    <a href="warehouse-stock.html#manager"
+       data-roles="manager">
+
+        <i class="bi bi-boxes"></i>
+
+        <span>
+            Warehouse Stock
+        </span>
+
+    </a>
+
+
+    <!-- Out to Pharmacy -->
+
+    <p class="sidebar-title">
+        OUT TO THE PHARMACY
+    </p>
+
+
+    <a href="pharmacist-order.html#admin"
+       data-roles="admin">
+
+        <i class="bi bi-clipboard2"></i>
+
+        <span>
+            Pharmacist Orders
+        </span>
+
+        <span class="sidebar-count">
+            1
+        </span>
+
+    </a>
+
+
+    <a href="pharmacist-order.html#manager"
+       data-roles="manager">
+
+        <i class="bi bi-clipboard2"></i>
+
+        <span>
+            Pharmacist Orders
+        </span>
+
+        <span class="sidebar-count">
+            1
+        </span>
+
+    </a>
+
+
+    <a href="pharmacist-order.html#pharmacist"
+       data-roles="pharmacist">
+
+        <i class="bi bi-clipboard2"></i>
+
+        <span>
+            Pharmacist Orders
+        </span>
+
+        <span class="sidebar-count">
+            1
+        </span>
+
+    </a>
+
+
+    <!-- Transfers -->
+
+    <a href="transfer.html#admin"
+       data-roles="admin">
+
+        <i class="bi bi-truck"></i>
+
+        <span>
+            Transfers
+        </span>
+
+        <span class="sidebar-count">
+            1
+        </span>
+
+    </a>
+
+
+    <a href="transfer.html#manager"
+       data-roles="manager">
+
+        <i class="bi bi-truck"></i>
+
+        <span>
+            Transfers
+        </span>
+
+        <span class="sidebar-count">
+            1
+        </span>
+
+    </a>
+
+
+    <a href="transfer.html#pharmacist"
+       data-roles="pharmacist">
+
+        <i class="bi bi-truck"></i>
+
+        <span>
+            Incoming Transfers
+        </span>
+
+        <span class="sidebar-count">
+            1
+        </span>
+
+    </a>
+
+
+    <!-- Pharmacy Stock -->
+
+    <a href="pharmacy-stock.html#admin"
+       data-roles="admin">
+
+        <i class="bi bi-capsule"></i>
+
+        <span>
+            Pharmacy Stock
+        </span>
+
+    </a>
+
+
+    <a href="pharmacy-stock.html#manager"
+       data-roles="manager">
+
+        <i class="bi bi-capsule"></i>
+
+        <span>
+            Pharmacy Stock
+        </span>
+
+    </a>
+
+
+    <a href="pharmacy-stock.html#pharmacist"
+       data-roles="pharmacist">
+
+        <i class="bi bi-capsule"></i>
+
+        <span>
+            Pharmacy Stock
+        </span>
+
+    </a>
+
+
+    <!-- User Management -->
+
+    <p class="sidebar-title"
+       data-roles="admin">
+
+        USER MANAGEMENT
+
+    </p>
+
+
+    <a href="create-user.html#admin"
+       data-roles="admin">
+
+        <i class="bi bi-person-plus"></i>
+
+        <span>
+            Create User
+        </span>
+
+    </a>
+
+
+    <!-- Sign Out -->
+
+    <a href="login.html"
+       class="sign-out">
+
+        <i class="bi bi-box-arrow-right"></i>
+
+        <span>
+            Sign Out
+        </span>
+
+    </a>
+</div>
+<div class="col-md-9 col-lg-10 main-content p-4">
+
+    <div data-roles="admin manager">
+
+        <!-- Page Header -->
+
+        <div class="suppliers-page-header mb-4">
+
+            <div>
+
+                <h2>
+                    Suppliers
+                </h2>
+
+                <p>
+                    Manage medicine suppliers and their information.
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="btn-add-supplier">
+
+                <i class="bi bi-plus-lg me-2"></i>
+
+                Add Supplier
+
+            </button>
+
+        </div>
+
+    </div>
+    <div class="suppliers-panel">
+
+    <div class="table-responsive">
+
+        <table class="table suppliers-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>SUPPLIER</th>
+
+                    <th>EMAIL</th>
+
+                    <th>PHONE</th>
+
+                    <th>LOCATION</th>
+
+                    <th>STATUS</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+
+                    <td>ABC Pharma</td>
+
+                    <td>info@abc.com</td>
+
+                    <td>555-123-4567</td>
+
+                    <td>Nairobi, Kenya</td>
+
+                    <td>
+                        <span class="status active">
+                            Active
+                        </span>
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>MedSupplies Ltd</td>
+
+                    <td>contact@medsup.com</td>
+
+                    <td>555-234-5678</td>
+
+                    <td>Mombasa, Kenya</td>
+
+                    <td>
+                        <span class="status active">
+                            Active
+                        </span>
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>HealthCorp</td>
+
+                    <td>sales@healthcorp.com</td>
+
+                    <td>555-345-6789</td>
+
+                    <td>Kisumu, Kenya</td>
+
+                    <td>
+                        <span class="status active">
+                            Active
+                        </span>
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>LifeCare Distributors</td>
+
+                    <td>info@lifecare.com</td>
+
+                    <td>555-456-7890</td>
+
+                    <td>Eldoret, Kenya</td>
+
+                    <td>
+                        <span class="status inactive">
+                            Inactive
+                        </span>
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>Global Meds</td>
+
+                    <td>support@globalmeds.com</td>
+
+                    <td>555-567-8901</td>
+
+                    <td>Nakuru, Kenya</td>
+
+                    <td>
+                        <span class="status active">
+                            Active
+                        </span>
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- Pagination -->
+
+    <div class="suppliers-pagination">
+
+        <button class="page-btn">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+
+        <button class="page-btn active">
+            1
+        </button>
+
+        <button class="page-btn">
+            2
+        </button>
+
+        <button class="page-btn">
+            3
+        </button>
+
+        <button class="page-btn">
+            <i class="bi bi-chevron-right"></i>
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+        </div>
+    </div>
+</body>
+
+</html>
