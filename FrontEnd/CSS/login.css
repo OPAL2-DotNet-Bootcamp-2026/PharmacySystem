@@ -34,3 +34,8 @@ a { color: inherit; text-decoration: none; }
   66% { transform: translate(-34px, 26px) scale(0.92); }
   100% { transform: translate(0, 0) scale(1); }
 }
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-30px) rotate(calc(var(--rot, 0deg) + 14deg)); }
+}
