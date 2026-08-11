@@ -67,3 +67,10 @@ a { color: inherit; text-decoration: none; }
   to { opacity: 1; transform: none; }
 }
 
+.login {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
