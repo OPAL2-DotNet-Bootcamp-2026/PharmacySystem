@@ -1,0 +1,17 @@
+
+:root {
+  --ink-900: #08211C;
+  --ink-800: #0C2B24;
+  --green: #1F8A70;
+  --green-dark: #17705B;
+  --green-soft: #E3F1EC;
+  --mint: #6FD3B4;
+  --card: #FFFFFF;
+  --line-strong: #C4D0C8;
+  --text: #16241F;
+  --muted: #5E6F66;
+  --r-sm: 8px;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
