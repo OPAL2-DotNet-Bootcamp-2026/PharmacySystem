@@ -132,3 +132,19 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   z-index: 1;
 }
+
+.mark__cross {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: var(--mint);
+  color: var(--ink-900);
+  display: grid;
+  place-items: center;
+  flex: none;
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1;
+  animation: bob 4s ease-in-out infinite;
+  box-shadow: 0 8px 24px -10px rgba(111, 211, 180, 0.9);
+}
