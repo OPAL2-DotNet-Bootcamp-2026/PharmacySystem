@@ -374,3 +374,9 @@ a { color: inherit; text-decoration: none; }
     grid-template-columns: 1fr;
   }
 
+    .login__brandside {
+    padding: 34px 26px;
+    min-height: auto;
+  }
+}
+
