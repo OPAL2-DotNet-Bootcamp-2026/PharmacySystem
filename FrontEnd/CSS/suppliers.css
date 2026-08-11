@@ -94,7 +94,7 @@
 
     margin-bottom: 0;
 
-    font-size: 13px;
+    font-size: 15px;
 
 }
 
@@ -105,7 +105,7 @@
 
     color: var(--muted);
 
-    font-size: 9px;
+    font-size: 11px;
 
     letter-spacing: 1.5px;
 
@@ -120,7 +120,7 @@
 
 .suppliers-table tbody td {
 
-    padding: 17px 18px;
+    padding: 18px 18px;
 
     border-color: var(--line);
 
@@ -129,6 +129,7 @@
     vertical-align: middle;
 
     white-space: nowrap;
+     font-size: 15px;
 
 }
 
@@ -148,11 +149,11 @@
 
     display: inline-block;
 
-    padding: 5px 12px;
+    padding: 6px 13px;
 
     border-radius: 7px;
 
-    font-size: 11px;
+    font-size: 13px;
 
     font-weight: bold;
 
