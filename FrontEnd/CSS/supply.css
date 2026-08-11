@@ -1,10 +1,5 @@
 /* ==================================
    SUPPLY PAGE
-
-   The sidebar and the role rules come
-   from dashboard.css, which this page
-   also links. Only page specific styles
-   live here.
    ================================== */
 
 .supply-page-header {
@@ -385,40 +380,3 @@
     color: white;
 }
 
-
-/* ==================================
-   RESPONSIVE
-   ================================== */
-
-@media (max-width: 767px) {
-
-    .supply-page-header {
-
-        align-items: flex-start;
-    }
-
-
-    .supply-form {
-
-        padding: 18px;
-    }
-
-
-    .supply-panel-header {
-
-        padding: 18px;
-    }
-
-
-    .supply-button-wrapper {
-
-        align-items: stretch;
-    }
-
-
-    .btn-save-supply {
-
-        width: 100%;
-    }
-
-}
