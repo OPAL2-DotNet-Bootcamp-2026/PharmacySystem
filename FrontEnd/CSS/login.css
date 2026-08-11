@@ -282,3 +282,9 @@ a { color: inherit; text-decoration: none; }
   margin: 0 0 6px;
   font-weight: 700;
 }
+
+.loginbox .sub {
+  color: var(--muted);
+  margin: 0 0 28px;
+  font-size: 14px;
+}
