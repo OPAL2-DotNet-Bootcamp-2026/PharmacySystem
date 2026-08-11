@@ -163,3 +163,9 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
   color: var(--mint);
 }
+
+.login__pitch {
+  position: relative;
+  z-index: 1;
+  max-width: 520px;
+}
