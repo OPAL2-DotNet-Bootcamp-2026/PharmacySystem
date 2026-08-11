@@ -45,17 +45,6 @@ body {
 
 /* ==================================
    ROLE VISIBILITY
-
-   The role is carried by the #fragment
-   in the URL:
-
-       dashboard.html#admin
-       dashboard.html#manager
-       dashboard.html#pharmacist
-
-   Every link inside the page keeps that
-   fragment, so the role follows the user
-   from page to page.
    ================================== */
 
 .role-flag {
@@ -77,10 +66,6 @@ body {
 }
 
 
-/* No fragment in the URL yet -> show the admin view.
-   Kept in its own block on purpose: if a very old
-   browser does not know :has(), only this fallback
-   is ignored, never the rules above.                */
 
 body:not(:has(.role-flag:target)) .app
 [data-roles]:not([data-roles~="admin"]) {
@@ -1222,40 +1207,3 @@ body:not(:has(.role-flag:target)) .app
 
 }
 
-
-/* =========================================
-   RESPONSIVE
-========================================= */
-
-@media (max-width: 991px) {
-
-    .main-content {
-
-        padding: 26px 20px 36px;
-
-    }
-
-
-    .page-header {
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-    }
-
-
-    .page-header h1 {
-
-        font-size: 28px;
-
-    }
-
-
-    .info-card {
-
-        margin-top: 4px;
-
-    }
-
-}

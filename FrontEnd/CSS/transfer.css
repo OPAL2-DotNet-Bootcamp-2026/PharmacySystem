@@ -43,17 +43,6 @@ body {
 
 /* ==================================
    ROLE VISIBILITY
-
-   The role is carried by the #fragment
-   in the URL:
-
-       dashboard.html#admin
-       dashboard.html#manager
-       dashboard.html#pharmacist
-
-   Every link inside the page keeps that
-   fragment, so the role follows the user
-   from page to page.
    ================================== */
 
 .role-flag {
@@ -75,10 +64,6 @@ body {
 }
 
 
-/* No fragment in the URL yet -> show the admin view.
-   Kept in its own block on purpose: if a very old
-   browser does not know :has(), only this fallback
-   is ignored, never the rules above.                */
 
 body:not(:has(.role-flag:target)) .app
 [data-roles]:not([data-roles~="admin"]) {
@@ -469,47 +454,44 @@ body:not(:has(.role-flag:target)) .app
 
 
 .road {
-
     position: relative;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
+    min-height: 40px;
 }
-
 
 .road-line {
-
     width: 100%;
-
     border-top: 3px dashed #C3D2CC;
-
 }
 
-
 .truck {
-
     position: absolute;
-
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
     width: 30px;
-
     height: 30px;
-
     border-radius: 8px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     background-color: #BF7506;
-
     color: white;
+    box-shadow: 0 8px 18px rgba(191, 117, 6, 0.25);
 
+    animation: truckMoveForward 5s linear infinite;
+}
+
+@keyframes truckMoveForward {
+    from {
+        left: 0;
+    }
+
+    to {
+        left: calc(100% - 30px);
+    }
 }
 
 
@@ -732,38 +714,3 @@ body:not(:has(.role-flag:target)) .app
 
 }
 
-
-/* =========================================
-   RESPONSIVE
-========================================= */
-
-@media (max-width: 991px) {
-
-    .road-content {
-
-        grid-template-columns: 1fr;
-
-    }
-
-
-    .road {
-
-        display: none;
-
-    }
-
-
-    .road-place-right {
-
-        text-align: left;
-
-    }
-
-
-    .incoming-transfer-row {
-
-        grid-template-columns: 1fr;
-
-    }
-
-}
