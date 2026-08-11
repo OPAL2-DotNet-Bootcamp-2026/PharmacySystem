@@ -112,3 +112,15 @@ a { color: inherit; text-decoration: none; }
   pointer-events: none;
   z-index: 0;
 }
+
+.caps i {
+  position: absolute;
+  display: block;
+  width: var(--w, 60px);
+  height: calc(var(--w, 60px) / 2.3);
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--mint) 0 50%, rgba(255, 255, 255, 0.5) 50%);
+  opacity: 0.11;
+  animation: floaty var(--d, 15s) ease-in-out infinite;
+  animation-delay: var(--dl, 0s);
+}
