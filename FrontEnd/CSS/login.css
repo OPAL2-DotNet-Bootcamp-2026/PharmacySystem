@@ -155,3 +155,11 @@ a { color: inherit; text-decoration: none; }
   font-size: 17px;
   letter-spacing: -0.01em;
 }
+
+.mark__sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mint);
+}
