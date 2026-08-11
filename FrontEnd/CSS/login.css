@@ -85,3 +85,13 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   overflow: hidden;
 }
+
+.login__brandside::after {
+  content: "";
+  position: absolute;
+  inset: auto -140px -180px auto;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(111, 211, 180, 0.20), transparent 62%);
+}
