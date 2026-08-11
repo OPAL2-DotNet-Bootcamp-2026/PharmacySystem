@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In | Pharmacy System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body>
+  <div class="login">
+    <!-- Left brand panel -->
+    <div class="login__brandside">
+      <div
+        class="orb"
+        style="width:340px;height:340px;background:radial-gradient(circle at 35% 35%, rgba(111,211,180,.55), transparent 65%);top:-90px;left:-60px;"
+      ></div>
+      <div
+        class="orb"
+        style="width:280px;height:280px;background:radial-gradient(circle at 40% 40%, rgba(31,138,112,.55), transparent 65%);bottom:8%;right:-40px;animation-delay:-7s;"
+      ></div>
+
+      <div class="caps" aria-hidden="true">
+        <i style="--w:74px;--rot:-18deg;--d:16s;--dl:0s;top:12%;left:62%"></i>
+        <i style="--w:52px;--rot:24deg;--d:13s;--dl:-3s;top:34%;left:14%"></i>
+        <i style="--w:96px;--rot:-8deg;--d:19s;--dl:-6s;top:58%;left:74%"></i>
+        <i style="--w:44px;--rot:40deg;--d:11s;--dl:-9s;top:74%;left:34%"></i>
+        <i style="--w:64px;--rot:-32deg;--d:17s;--dl:-2s;top:88%;left:8%"></i>
+        <i style="--w:38px;--rot:12deg;--d:14s;--dl:-11s;top:20%;left:40%"></i>
+      </div>
+
+      <div class="mark">
+        <div class="mark__cross" aria-hidden="true">+</div>
+        <div>
+          <div class="mark__name">Pharmacy System</div>
+          <div class="mark__sub">Supply chain console</div>
+        </div>
+      </div>
+
+      <div class="login__pitch">
+        <h1>
+          Every box of medicine,<br>
+          <em>tracked</em> from the supplier<br>
+          to the shelf.
+        </h1>
+        <p>
+          One chain, five checkpoints. Stock only moves when someone with the
+          right role says it moves — and the numbers update the moment they do.
+        </p>
+
+        <div class="chain">
+          <div class="chain__step">
+            <div class="chain__dot" style="--n:0"></div>
+            <div class="chain__label">Supplier</div>
+          </div>
+          <div class="chain__step">
+            <div class="chain__dot" style="--n:1"></div>
+            <div class="chain__label">Warehouse</div>
+          </div>
+          <div class="chain__step">
+            <div class="chain__dot" style="--n:2"></div>
+            <div class="chain__label">Order</div>
+          </div>
+          <div class="chain__step">
+            <div class="chain__dot" style="--n:3"></div>
+            <div class="chain__label">Transfer</div>
+          </div>
+          <div class="chain__step">
+            <div class="chain__dot" style="--n:4"></div>
+            <div class="chain__label">Pharmacy</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="login__meta">JWT · ROLE-BASED ACCESS · ASP.NET CORE API</div>
+    </div>
+
+    <!-- Right sign-in form -->
+    <div class="login__formside">
+      <div class="loginbox">
+        <h2>Sign in</h2>
+        <p class="sub">Your role decides which part of the chain you can move.</p>
+        <div class="field">
+          <label for="email">Email</label>
+          <input
+            class="input"
+            id="email"
+            type="email"
+            placeholder="name@pharmacy.com"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input
+            class="input"
+            id="password"
+            type="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            minlength="8"
+            required
+          >
+        </div>
+
+         <!-- Static stage: opens dashboard (no API / JWT yet). -->
+        <a href="dashboard.html" class="btn btn--primary btn--block">Sign in</a>
+        <div class="demorow">
+          <p>Demo accounts</p>
+          <div class="demochips">
+            <span class="chip" style="--i:0">Admin</span>
+            <span class="chip" style="--i:1">Manager</span>
+            <span class="chip" style="--i:2">Pharmacist</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
