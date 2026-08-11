@@ -148,3 +148,10 @@ a { color: inherit; text-decoration: none; }
   animation: bob 4s ease-in-out infinite;
   box-shadow: 0 8px 24px -10px rgba(111, 211, 180, 0.9);
 }
+
+.mark__name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
