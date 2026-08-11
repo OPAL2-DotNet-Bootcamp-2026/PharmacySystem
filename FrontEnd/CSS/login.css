@@ -238,3 +238,17 @@ a { color: inherit; text-decoration: none; }
 .chain__step:last-child .chain__dot::after {
   display: none;
 }
+
+.chain__label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9FBDB3;
+  padding-right: 10px;
+  transition: color 0.25s;
+}
+
+.chain__step:hover .chain__label {
+  color: var(--mint);
+}
