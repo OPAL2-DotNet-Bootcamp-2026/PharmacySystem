@@ -454,47 +454,44 @@ body:not(:has(.role-flag:target)) .app
 
 
 .road {
-
     position: relative;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
+    min-height: 40px;
 }
-
 
 .road-line {
-
     width: 100%;
-
     border-top: 3px dashed #C3D2CC;
-
 }
 
-
 .truck {
-
     position: absolute;
-
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
     width: 30px;
-
     height: 30px;
-
     border-radius: 8px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     background-color: #BF7506;
-
     color: white;
+    box-shadow: 0 8px 18px rgba(191, 117, 6, 0.25);
 
+    animation: truckMoveForward 5s linear infinite;
+}
+
+@keyframes truckMoveForward {
+    from {
+        left: 0;
+    }
+
+    to {
+        left: calc(100% - 30px);
+    }
 }
 
 
