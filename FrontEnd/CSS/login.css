@@ -124,3 +124,11 @@ a { color: inherit; text-decoration: none; }
   animation: floaty var(--d, 15s) ease-in-out infinite;
   animation-delay: var(--dl, 0s);
 }
+
+.mark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
