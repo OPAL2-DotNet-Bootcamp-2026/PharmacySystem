@@ -382,5 +382,9 @@ a { color: inherit; text-decoration: none; }
   .caps i {
     display: none;
   }
+
+  .login__pitch h1 {
+    font-size: clamp(28px, 7vw, 40px);
+  }
 }
 
