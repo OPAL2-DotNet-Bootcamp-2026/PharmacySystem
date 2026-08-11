@@ -104,3 +104,11 @@ a { color: inherit; text-decoration: none; }
   animation: drift 20s ease-in-out infinite;
   pointer-events: none;
 }
+
+.caps {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
