@@ -256,15 +256,6 @@ a { color: inherit; text-decoration: none; }
   color: var(--mint);
 }
 
-.login__meta {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: #7D9C92;
-  letter-spacing: 0.08em;
-  position: relative;
-  z-index: 1;
-}
-
 .login__formside {
   display: grid;
   place-items: center;
