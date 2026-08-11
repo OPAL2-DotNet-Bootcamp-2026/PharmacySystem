@@ -224,3 +224,13 @@ a { color: inherit; text-decoration: none; }
   animation: halo 3.2s ease-out infinite;
   animation-delay: calc(var(--n, 0) * 0.4s);
 }
+
+.chain__dot::after {
+  content: "";
+  position: absolute;
+  top: 4.5px;
+  left: 11px;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(111, 211, 180, 0.65), rgba(111, 211, 180, 0.1));
+}
