@@ -334,3 +334,12 @@ a { color: inherit; text-decoration: none; }
   padding-top: 22px;
   border-top: 1px dashed var(--line-strong);
 }
+
+.demorow p {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
