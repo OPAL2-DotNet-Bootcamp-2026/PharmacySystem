@@ -368,3 +368,9 @@ a { color: inherit; text-decoration: none; }
   color: var(--green-dark);
   background: var(--green-soft);
 }
+
+@media (max-width: 900px) {
+  .login {
+    grid-template-columns: 1fr;
+  }
+
