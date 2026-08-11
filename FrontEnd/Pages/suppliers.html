@@ -26,8 +26,6 @@
     <link rel="stylesheet" href="../CSS/suppliers.css">
 
 </head>
-
-
 <body>
     <!-- ==================================
          ROLE FLAGS
@@ -38,6 +36,354 @@
        <!-- MAIN APP -->
         <div class="container-fluid app">
         <div class="row min-vh-100">
+        <div class="col-md-3 col-lg-2 sidebar p-3">
+
+    <!-- Brand -->
+
+    <div class="sidebar-brand">
+
+        <div class="sidebar-logo">
+
+            <i class="bi bi-plus-lg"></i>
+
+        </div>
+
+
+        <div>
+
+            <h4 class="mb-0">
+                Pharmacy System
+            </h4>
+
+            <small data-roles="admin">
+                ADMIN VIEW
+            </small>
+
+            <small data-roles="manager">
+                MANAGER VIEW
+            </small>
+
+            <small data-roles="pharmacist">
+                PHARMACIST VIEW
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <!-- Overview -->
+
+    <p class="sidebar-title">
+        OVERVIEW
+    </p>
+
+
+    <a href="dashboard.html#admin"
+       data-roles="admin">
+
+        <i class="bi bi-grid"></i>
+
+        <span>
+            Dashboard
+        </span>
+
+    </a>
+
+
+    <a href="dashboard.html#manager"
+       data-roles="manager">
+
+        <i class="bi bi-grid"></i>
+
+        <span>
+            Dashboard
+        </span>
+
+    </a>
+
+
+    <a href="dashboard.html#pharmacist"
+       data-roles="pharmacist">
+
+        <i class="bi bi-grid"></i>
+
+        <span>
+            Dashboard
+        </span>
+
+    </a>
+
+
+    <!-- Into the Warehouse -->
+
+    <p class="sidebar-title"
+       data-roles="admin manager">
+
+        INTO THE WAREHOUSE
+
+    </p>
+
+
+    <!-- Suppliers -->
+
+    <a href="suppliers.html#admin"
+       data-roles="admin"
+       class="active">
+
+        <i class="bi bi-building"></i>
+
+        <span>
+            Suppliers
+        </span>
+
+    </a>
+
+
+    <a href="suppliers.html#manager"
+       data-roles="manager"
+       class="active">
+
+        <i class="bi bi-building"></i>
+
+        <span>
+            Suppliers
+        </span>
+
+    </a>
+
+
+    <!-- Supplies -->
+
+    <a href="supply.html#admin"
+       data-roles="admin">
+
+        <i class="bi bi-box-seam"></i>
+
+        <span>
+            Supplies
+        </span>
+
+    </a>
+
+
+    <a href="supply.html#manager"
+       data-roles="manager">
+
+        <i class="bi bi-box-seam"></i>
+
+        <span>
+            Supplies
+        </span>
+
+    </a>
+
+
+    <!-- Warehouse Stock -->
+
+    <a href="warehouse-stock.html#admin"
+       data-roles="admin">
+
+        <i class="bi bi-boxes"></i>
+
+        <span>
+            Warehouse Stock
+        </span>
+
+    </a>
+
+
+    <a href="warehouse-stock.html#manager"
+       data-roles="manager">
+
+        <i class="bi bi-boxes"></i>
+
+        <span>
+            Warehouse Stock
+        </span>
+
+    </a>
+
+
+    <!-- Out to Pharmacy -->
+
+    <p class="sidebar-title">
+        OUT TO THE PHARMACY
+    </p>
+
+
+    <a href="pharmacist-order.html#admin"
+       data-roles="admin">
+
+        <i class="bi bi-clipboard2"></i>
+
+        <span>
+            Pharmacist Orders
+        </span>
+
+        <span class="sidebar-count">
+            1
+        </span>
+
+    </a>
+
+
+    <a href="pharmacist-order.html#manager"
+       data-roles="manager">
+
+        <i class="bi bi-clipboard2"></i>
+
+        <span>
+            Pharmacist Orders
+        </span>
+
+        <span class="sidebar-count">
+            1
+        </span>
+
+    </a>
+
+
+    <a href="pharmacist-order.html#pharmacist"
+       data-roles="pharmacist">
+
+        <i class="bi bi-clipboard2"></i>
+
+        <span>
+            Pharmacist Orders
+        </span>
+
+        <span class="sidebar-count">
+            1
+        </span>
+
+    </a>
+
+
+    <!-- Transfers -->
+
+    <a href="transfer.html#admin"
+       data-roles="admin">
+
+        <i class="bi bi-truck"></i>
+
+        <span>
+            Transfers
+        </span>
+
+        <span class="sidebar-count">
+            1
+        </span>
+
+    </a>
+
+
+    <a href="transfer.html#manager"
+       data-roles="manager">
+
+        <i class="bi bi-truck"></i>
+
+        <span>
+            Transfers
+        </span>
+
+        <span class="sidebar-count">
+            1
+        </span>
+
+    </a>
+
+
+    <a href="transfer.html#pharmacist"
+       data-roles="pharmacist">
+
+        <i class="bi bi-truck"></i>
+
+        <span>
+            Incoming Transfers
+        </span>
+
+        <span class="sidebar-count">
+            1
+        </span>
+
+    </a>
+
+
+    <!-- Pharmacy Stock -->
+
+    <a href="pharmacy-stock.html#admin"
+       data-roles="admin">
+
+        <i class="bi bi-capsule"></i>
+
+        <span>
+            Pharmacy Stock
+        </span>
+
+    </a>
+
+
+    <a href="pharmacy-stock.html#manager"
+       data-roles="manager">
+
+        <i class="bi bi-capsule"></i>
+
+        <span>
+            Pharmacy Stock
+        </span>
+
+    </a>
+
+
+    <a href="pharmacy-stock.html#pharmacist"
+       data-roles="pharmacist">
+
+        <i class="bi bi-capsule"></i>
+
+        <span>
+            Pharmacy Stock
+        </span>
+
+    </a>
+
+
+    <!-- User Management -->
+
+    <p class="sidebar-title"
+       data-roles="admin">
+
+        USER MANAGEMENT
+
+    </p>
+
+
+    <a href="create-user.html#admin"
+       data-roles="admin">
+
+        <i class="bi bi-person-plus"></i>
+
+        <span>
+            Create User
+        </span>
+
+    </a>
+
+
+    <!-- Sign Out -->
+
+    <a href="login.html"
+       class="sign-out">
+
+        <i class="bi bi-box-arrow-right"></i>
+
+        <span>
+            Sign Out
+        </span>
+
+    </a>
+
+</div>
         </div>
     </div>
 </body>
