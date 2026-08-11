@@ -343,3 +343,9 @@ a { color: inherit; text-decoration: none; }
   color: var(--muted);
   margin: 0 0 10px;
 }
+
+.demochips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
