@@ -799,76 +799,45 @@ body:not(:has(.role-flag:target)) .app
 /* ==================================
    SMALL GRAPH UNDER STAT
    ================================== */
-
 .mini-line {
-
-    height: 20px;
-
-    border-bottom: 2px solid var(--green);
-
     position: relative;
-
-    margin-top: 12px;
-
-    transform: skewY(-1deg);
+    height: 34px;
+    margin-top: 14px;
 }
 
-
-.mini-line::before {
-
-    content: "";
-
-    position: absolute;
-
-    left: 25%;
-
-    bottom: -2px;
-
-    width: 45%;
-
-    height: 5px;
-
-    border-top: 2px solid var(--green);
-
-    transform: skewY(4deg);
+.mini-line svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
 }
 
+.mini-line polyline {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+}
 
 .mini-line-dot {
-
     position: absolute;
-
     width: 7px;
-
     height: 7px;
-
     border-radius: 50%;
-
     background-color: var(--green);
-
-    right: 0;
-
-    bottom: -4px;
+    right: -1px;
+    bottom: calc(72.5% - 3.5px);
 }
 
-
-.mini-line-warning {
-
-    border-color: var(--amber);
+.mini-line-warning polyline {
+    stroke: var(--amber);
 }
-
-
-.mini-line-warning::before {
-
-    border-color: var(--amber);
-}
-
 
 .mini-line-warning .mini-line-dot {
-
     background-color: var(--amber);
 }
-
 
 /* ==================================
    DASHBOARD PANELS
