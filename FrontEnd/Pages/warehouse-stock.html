@@ -18,41 +18,744 @@
     <link rel="stylesheet" href="../CSS/warehouse-stock.css">
 </head>
 <body>
-      <!-- ==================================
+
+    <!-- ==================================
          ROLE FLAGS
          ================================== -->
+
     <b id="admin" class="role-flag"></b>
     <b id="manager" class="role-flag"></b>
     <b id="pharmacist" class="role-flag"></b>
-     <div class="container-fluid app">
+
+
+    <!-- ==================================
+         MAIN APP
+         ================================== -->
+
+    <div class="container-fluid app">
+
         <div class="row min-vh-100">
 
-            <!-- SIDEBAR -->
-             <a href="warehouse-stock.html#admin"
-   data-roles="admin"
-   class="active">
 
-    <i class="bi bi-boxes"></i>
+            <!-- ==================================
+                 SIDEBAR
+                 ================================== -->
 
-    <span>
-        Warehouse Stock
-    </span>
+            <div class="col-md-3 col-lg-2 sidebar p-3">
 
-</a>
-<a href="warehouse-stock.html#manager"
-   data-roles="manager"
-   class="active">
 
-    <i class="bi bi-boxes"></i>
+                <!-- Brand -->
 
-    <span>
-        Warehouse Stock
-    </span>
+                <div class="sidebar-brand">
 
-</a>
-            <!-- MAIN CONTENT -->
+                    <div class="sidebar-logo">
+
+                        <i class="bi bi-plus-lg"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h4 class="mb-0">
+                            Pharmacy System
+                        </h4>
+
+
+                        <small data-roles="admin">
+                            ADMIN VIEW
+                        </small>
+
+
+                        <small data-roles="manager">
+                            MANAGER VIEW
+                        </small>
+
+
+                        <small data-roles="pharmacist">
+                            PHARMACIST VIEW
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     OVERVIEW
+                     ================================== -->
+
+                <p class="sidebar-title">
+                    OVERVIEW
+                </p>
+
+
+                <!-- Dashboard Admin -->
+
+                <a href="dashboard.html#admin"
+                   data-roles="admin">
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <!-- Dashboard Manager -->
+
+                <a href="dashboard.html#manager"
+                   data-roles="manager">
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <!-- Dashboard Pharmacist -->
+
+                <a href="dashboard.html#pharmacist"
+                   data-roles="pharmacist">
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+
+                <!-- ==================================
+                     INTO THE WAREHOUSE
+                     Admin + Manager
+                     ================================== -->
+
+                <p class="sidebar-title"
+                   data-roles="admin manager">
+
+                    INTO THE WAREHOUSE
+
+                </p>
+
+
+                <!-- Suppliers -->
+
+                <a href="suppliers.html#admin"
+                   data-roles="admin">
+
+                    <i class="bi bi-building"></i>
+
+                    <span>
+                        Suppliers
+                    </span>
+
+                </a>
+
+
+                <a href="suppliers.html#manager"
+                   data-roles="manager">
+
+                    <i class="bi bi-building"></i>
+
+                    <span>
+                        Suppliers
+                    </span>
+
+                </a>
+
+
+                <!-- Supplies -->
+
+                <a href="supply.html#admin"
+                   data-roles="admin">
+
+                    <i class="bi bi-box-seam"></i>
+
+                    <span>
+                        Supplies
+                    </span>
+
+                </a>
+
+
+                <a href="supply.html#manager"
+                   data-roles="manager">
+
+                    <i class="bi bi-box-seam"></i>
+
+                    <span>
+                        Supplies
+                    </span>
+
+                </a>
+
+
+                <!-- Warehouse Stock - ACTIVE -->
+
+                <a href="warehouse-stock.html#admin"
+                   data-roles="admin"
+                   class="active">
+
+                    <i class="bi bi-boxes"></i>
+
+                    <span>
+                        Warehouse Stock
+                    </span>
+
+                </a>
+
+
+                <a href="warehouse-stock.html#manager"
+                   data-roles="manager"
+                   class="active">
+
+                    <i class="bi bi-boxes"></i>
+
+                    <span>
+                        Warehouse Stock
+                    </span>
+
+                </a>
+
+
+
+                <!-- ==================================
+                     OUT TO THE PHARMACY
+                     ================================== -->
+
+                <p class="sidebar-title">
+                    OUT TO THE PHARMACY
+                </p>
+
+
+                <!-- Pharmacist Orders -->
+
+                <a href="pharmacist-order.html#admin"
+                   data-roles="admin">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a href="pharmacist-order.html#manager"
+                   data-roles="manager">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a href="pharmacist-order.html#pharmacist"
+                   data-roles="pharmacist">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+
+                <!-- Transfers -->
+
+                <a href="transfer.html#admin"
+                   data-roles="admin">
+
+                    <i class="bi bi-truck"></i>
+
+                    <span>
+                        Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a href="transfer.html#manager"
+                   data-roles="manager">
+
+                    <i class="bi bi-truck"></i>
+
+                    <span>
+                        Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a href="transfer.html#pharmacist"
+                   data-roles="pharmacist">
+
+                    <i class="bi bi-truck"></i>
+
+                    <span>
+                        Incoming Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+
+                <!-- Pharmacy Stock -->
+
+                <a href="pharmacy-stock.html#admin"
+                   data-roles="admin">
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+
+                <a href="pharmacy-stock.html#manager"
+                   data-roles="manager">
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+
+                <a href="pharmacy-stock.html#pharmacist"
+                   data-roles="pharmacist">
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+
+
+                <!-- ==================================
+                     USER MANAGEMENT
+                     Admin Only
+                     ================================== -->
+
+                <p class="sidebar-title"
+                   data-roles="admin">
+
+                    USER MANAGEMENT
+
+                </p>
+
+
+                <!-- Create User -->
+
+                <a href="create-user.html#admin"
+                   data-roles="admin">
+
+                    <i class="bi bi-person-plus"></i>
+
+                    <span>
+                        Create User
+                    </span>
+
+                </a>
+
+
+
+                <!-- ==================================
+                     SIGN OUT
+                     ================================== -->
+
+                <a href="login.html"
+                   class="sign-out">
+
+                    <i class="bi bi-box-arrow-right"></i>
+
+                    <span>
+                        Sign Out
+                    </span>
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- ==================================
+                 MAIN CONTENT
+                 ================================== -->
+
+            <div class="col-md-9 col-lg-10 main-content p-4">
+
+
+                <!-- Admin + Manager -->
+
+                <div data-roles="admin manager">
+
+
+                    <!-- ==================================
+                         PAGE HEADER
+                         ================================== -->
+
+                    <div class="warehouse-page-header mb-4">
+
+                        <div>
+
+                            <h2>
+                                Warehouse Stock
+                            </h2>
+
+                            <p>
+                                Monitor medicine quantities and expiry dates in the warehouse.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ==================================
+                         WAREHOUSE STOCK PANEL
+                         ================================== -->
+
+                    <div class="warehouse-stock-panel">
+
+
+                        <!-- Panel Header -->
+
+                        <div class="warehouse-panel-header">
+
+                            <div>
+
+                                <h4>
+                                    Warehouse Stock
+                                </h4>
+
+                                <p>
+                                    Current medicine stock available in the warehouse.
+                                </p>
+
+                            </div>
+
+
+                            <div class="warehouse-stock-icon">
+
+                                <i class="bi bi-boxes"></i>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- ==================================
+                             STOCK TABLE
+                             ================================== -->
+
+                        <div class="table-responsive">
+
+                            <table class="table warehouse-stock-table">
+
+
+                                <!-- Table Header -->
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            MEDICINE
+                                        </th>
+
+                                        <th>
+                                            QUANTITY
+                                        </th>
+
+                                        <th>
+                                            EXPIRY DATE
+                                        </th>
+
+                                        <th>
+                                            STOCK LEVEL
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+
+                                <!-- Table Body -->
+
+                                <tbody>
+
+
+                                    <!-- Medicine 1 -->
+
+                                    <tr>
+
+                                        <td>
+                                            Panadol Extra 500mg
+                                        </td>
+
+                                        <td>
+                                            <strong>
+                                                200
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            25 Dec 2027
+                                        </td>
+
+                                        <td>
+
+                                            <span class="stock-level high">
+                                                High
+                                            </span>
+
+                                        </td>
+
+                                    </tr>
+
+
+
+                                    <!-- Medicine 2 -->
+
+                                    <tr>
+
+                                        <td>
+                                            Amoxicillin 500mg
+                                        </td>
+
+                                        <td>
+                                            <strong>
+                                                80
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            15 Oct 2026
+                                        </td>
+
+                                        <td>
+
+                                            <span class="stock-level medium">
+                                                Medium
+                                            </span>
+
+                                        </td>
+
+                                    </tr>
+
+
+
+                                    <!-- Medicine 3 -->
+
+                                    <tr>
+
+                                        <td>
+                                            Insulin Glargine
+                                        </td>
+
+                                        <td>
+                                            <strong>
+                                                30
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            10 Sep 2026
+                                        </td>
+
+                                        <td>
+
+                                            <span class="stock-level low">
+                                                Low
+                                            </span>
+
+                                        </td>
+
+                                    </tr>
+
+
+
+                                    <!-- Medicine 4 -->
+
+                                    <tr>
+
+                                        <td>
+                                            Ventolin Inhaler
+                                        </td>
+
+                                        <td>
+                                            <strong>
+                                                150
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            20 Mar 2027
+                                        </td>
+
+                                        <td>
+
+                                            <span class="stock-level high">
+                                                High
+                                            </span>
+
+                                        </td>
+
+                                    </tr>
+
+
+
+                                    <!-- Medicine 5 -->
+
+                                    <tr>
+
+                                        <td>
+                                            Vitamin C 1000mg
+                                        </td>
+
+                                        <td>
+                                            <strong>
+                                                15
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            05 Aug 2026
+                                        </td>
+
+                                        <td>
+
+                                            <span class="stock-level low">
+                                                Low
+                                            </span>
+
+                                        </td>
+
+                                    </tr>
+
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+
+                        <!-- ==================================
+                             PAGINATION
+                             ================================== -->
+
+                        <div class="warehouse-pagination">
+
+                            <button class="page-btn">
+
+                                <i class="bi bi-chevron-left"></i>
+
+                            </button>
+
+
+                            <button class="page-btn active">
+                                1
+                            </button>
+
+
+                            <button class="page-btn">
+                                2
+                            </button>
+
+
+                            <button class="page-btn">
+                                3
+                            </button>
+
+
+                            <button class="page-btn">
+
+                                <i class="bi bi-chevron-right"></i>
+
+                            </button>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- ==================================
+                         FOOTER
+                         ================================== -->
+
+                    <footer class="small-footer">
+
+                        <p>
+                            &copy; 2026 Pharmacy System
+                        </p>
+
+                    </footer>
+
+
+                </div>
+
+
+            </div>
+
 
         </div>
+
     </div>
+
 </body>
 </html>
