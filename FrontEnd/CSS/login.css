@@ -337,6 +337,7 @@ input {
   font-size: 17px;
   cursor: pointer;
   transition: color 0.15s, background 0.15s;
+  decoration: none;
 }
 
 .signin-btn:hover,
