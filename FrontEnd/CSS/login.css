@@ -44,7 +44,7 @@ input {
 /* The two desktop panels always take exactly half of the viewport. */
 .login {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
