@@ -367,22 +367,45 @@ input {
 }
 
 .chip {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   padding: 8px 17px;
+
   border: 1px solid var(--line-strong);
   border-radius: 999px;
-  background: #fff;
+
+  color: var(--text);
+  background: #ffffff;
+
+  font-family: var(--body);
   font-size: 15px;
   font-weight: 500;
+  text-decoration: none;
+
+  cursor: pointer;
+
   animation: reveal 0.5s ease both;
   animation-delay: calc(0.35s + var(--i, 0) * 80ms);
-  transition: color 0.15s, border-color 0.15s, background 0.15s;
+
+  transition:
+    color 0.15s,
+    border-color 0.15s,
+    background 0.15s,
+    transform 0.15s;
 }
 
 .chip:hover {
   border-color: var(--green);
   color: var(--green-dark);
   background: var(--green-soft);
+  transform: translateY(-2px);
+}
+
+.chip:focus-visible {
+  outline: 3px solid rgba(31, 138, 112, 0.2);
+  outline-offset: 2px;
 }
 
 @keyframes drift {
