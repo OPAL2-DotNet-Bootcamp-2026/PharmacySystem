@@ -4,29 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign In | Pharmacy System</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/login.css">
-    <!--font css-->
-    <link rel="stylesheet"
-    href="../CSS/font.css"
-    >
+  <link rel="stylesheet" href="../CSS/login.css">
 </head>
 
 <body>
-   <!-- LEFT: dark brand panel -->
-    <section class="login__brandside">
+  <main class="login">
+    <!-- Left half: pharmacy introduction -->
+    <section class="login__brandside" aria-labelledby="brand-heading">
       <div class="orb orb--a" aria-hidden="true"></div>
       <div class="orb orb--b" aria-hidden="true"></div>
 
       <div class="caps" aria-hidden="true">
-        <i style="--w:74px;--rot:-18deg;--d:16s;--dl:0s;top:12%;left:62%"></i>
-        <i style="--w:52px;--rot:24deg;--d:13s;--dl:-3s;top:34%;left:14%"></i>
-        <i style="--w:96px;--rot:-8deg;--d:19s;--dl:-6s;top:58%;left:74%"></i>
-        <i style="--w:44px;--rot:40deg;--d:11s;--dl:-9s;top:74%;left:34%"></i>
-        <i style="--w:64px;--rot:-32deg;--d:17s;--dl:-2s;top:88%;left:8%"></i>
-        <i style="--w:38px;--rot:12deg;--d:14s;--dl:-11s;top:20%;left:40%"></i>
+        <i style="--w: 74px; --rot: -18deg; --d: 16s; --dl: 0s; top: 12%; left: 62%;"></i>
+        <i style="--w: 52px; --rot: 24deg; --d: 13s; --dl: -3s; top: 34%; left: 14%;"></i>
+        <i style="--w: 96px; --rot: -8deg; --d: 19s; --dl: -6s; top: 58%; left: 74%;"></i>
+        <i style="--w: 44px; --rot: 40deg; --d: 11s; --dl: -9s; top: 74%; left: 34%;"></i>
+        <i style="--w: 64px; --rot: -32deg; --d: 17s; --dl: -2s; top: 88%; left: 8%;"></i>
+        <i style="--w: 38px; --rot: 12deg; --d: 14s; --dl: -11s; top: 20%; left: 40%;"></i>
       </div>
 
       <div class="brand">
@@ -38,54 +36,54 @@
       </div>
 
       <div class="login__pitch">
-        <h1>
+        <h1 id="brand-heading">
           Every box of medicine,<br>
           <em>tracked</em> from the supplier<br>
           to the shelf.
         </h1>
+
         <p>
           One chain, five checkpoints. Stock only moves when someone with the
-          right role says it moves — and the numbers update the moment they do.
+          right role says it moves &mdash; and the numbers update the moment they do.
         </p>
 
-        <div class="chain">
-        <div class="chain__step">
-          <div class="chain__dot" style="--n:0"></div>
-          <div class="chain__label">Supplier</div>
+        <div class="chain" aria-label="Medicine supply chain">
+          <div class="chain__step">
+            <div class="chain__dot" style="--n: 0"></div>
+            <div class="chain__label">Supplier</div>
+          </div>
+          <div class="chain__step">
+            <div class="chain__dot" style="--n: 1"></div>
+            <div class="chain__label">Warehouse</div>
+          </div>
+          <div class="chain__step">
+            <div class="chain__dot" style="--n: 2"></div>
+            <div class="chain__label">Order</div>
+          </div>
+          <div class="chain__step">
+            <div class="chain__dot" style="--n: 3"></div>
+            <div class="chain__label">Transfer</div>
+          </div>
+          <div class="chain__step">
+            <div class="chain__dot" style="--n: 4"></div>
+            <div class="chain__label">Pharmacy</div>
+          </div>
         </div>
-        <div class="chain__step">
-          <div class="chain__dot" style="--n:1"></div>
-          <div class="chain__label">Warehouse</div>
-        </div>
-        <div class="chain__step">
-          <div class="chain__dot" style="--n:2"></div>
-          <div class="chain__label">Order</div>
-        </div>
-        <div class="chain__step">
-          <div class="chain__dot" style="--n:3"></div>
-          <div class="chain__label">Transfer</div>
-        </div>
-        <div class="chain__step">
-          <div class="chain__dot" style="--n:4"></div>
-          <div class="chain__label">Pharmacy</div>
-        </div>
-        </div>
-
-    </div>
+      </div>
     </section>
 
-    <!-- RIGHT: white sign-in form -->
-    <section class="login__formside">
-    <!-- Right sign-in form -->
-    <div class="login__formside">
-      <div class="loginbox">
-        <h2>Sign in</h2>
+    <!-- Right half: sign-in form -->
+    <section class="login__formside" aria-labelledby="signin-heading">
+      <form class="loginbox" action="dashboard.html">
+        <h2 id="signin-heading">Sign in</h2>
         <p class="sub">Your role decides which part of the chain you can move.</p>
+
         <div class="field">
           <label for="email">Email</label>
           <input
             class="input"
             id="email"
+            name="email"
             type="email"
             placeholder="name@pharmacy.com"
             autocomplete="username"
@@ -98,6 +96,7 @@
           <input
             class="input"
             id="password"
+            name="password"
             type="password"
             placeholder="••••••••"
             autocomplete="current-password"
@@ -106,19 +105,18 @@
           >
         </div>
 
-        <a href="dashboard.html" class="signin-btn">Sign in</a>
-         <!-- Static stage: opens dashboard (no API / JWT yet) -->
-        <a href="dashboard.html" class="btn btn--primary btn--block">Sign in</a>
+        <button class="signin-btn" type="submit">Sign in</button>
+
         <div class="demorow">
           <p>Demo accounts</p>
           <div class="demochips">
-            <span class="chip" style="--i:0">Admin</span>
-            <span class="chip" style="--i:1">Manager</span>
-            <span class="chip" style="--i:2">Pharmacist</span>
+            <span class="chip" style="--i: 0">Admin</span>
+            <span class="chip" style="--i: 1">Manager</span>
+            <span class="chip" style="--i: 2">Pharmacist</span>
           </div>
         </div>
-      </div>
+      </form>
     </section>
-  </div>
+  </main>
 </body>
 </html>
