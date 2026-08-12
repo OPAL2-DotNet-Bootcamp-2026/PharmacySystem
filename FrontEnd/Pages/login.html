@@ -74,7 +74,11 @@
 
     <!-- Right half: sign-in form -->
     <section class="login__formside" aria-labelledby="signin-heading">
-      <form class="loginbox" action="dashboard.html">
+      <form
+        class="loginbox"
+        action="dashboard.html"
+        onsubmit="event.preventDefault(); window.location.assign(this.action);"
+      >
         <h2 id="signin-heading">Sign in</h2>
         <p class="sub">Your role decides which part of the chain you can move.</p>
 
