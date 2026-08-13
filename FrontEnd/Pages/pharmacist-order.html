@@ -20,20 +20,18 @@
     <!-- Page CSS -->
     <link rel="stylesheet" href="../CSS/pharmacist-order.css">
 
-      <!--font css-->
-    <link rel="stylesheet"
-    href="../CSS/font.css"
-    >
+    <!-- Font CSS -->
+    <link
+        rel="stylesheet"
+        href="../CSS/font.css">
 
 </head>
 
 
-
-
 <body>
+
     <!-- ==================================
          ROLE FLAGS
-         The #fragment in the URL picks the role.
          ================================== -->
 
     <b id="admin" class="role-flag"></b>
@@ -42,38 +40,51 @@
 
 
     <div class="container-fluid app">
+
         <div class="row min-vh-100">
+
+
             <!-- ==================================
                  SIDEBAR
                  ================================== -->
 
-<div class="col-md-3 col-lg-2 sidebar p-3">
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+
+
                 <!-- Brand -->
 
                 <div class="sidebar-brand">
+
                     <div class="sidebar-logo">
 
                         <i class="bi bi-plus-lg"></i>
 
                     </div>
+
+
                     <div>
 
                         <h4 class="mb-0">
                             Pharmacy System
                         </h4>
 
+
                         <small data-roles="admin">
                             ADMIN VIEW
                         </small>
+
 
                         <small data-roles="manager">
                             MANAGER VIEW
                         </small>
 
+
                         <small data-roles="pharmacist">
                             PHARMACIST VIEW
                         </small>
+
                     </div>
+
                 </div>
 
 
@@ -85,110 +96,145 @@
                 <p class="sidebar-title">
                     OVERVIEW
                 </p>
+
+
                 <a
                     href="dashboard.html#admin"
-                    data-roles="admin"
-                                    >
+                    data-roles="admin">
+
                     <i class="bi bi-grid"></i>
+
                     <span>
                         Dashboard
                     </span>
+
                 </a>
+
 
                 <a
                     href="dashboard.html#manager"
-                    data-roles="manager"
-                                    >
+                    data-roles="manager">
+
                     <i class="bi bi-grid"></i>
+
                     <span>
                         Dashboard
                     </span>
+
                 </a>
+
 
                 <a
                     href="dashboard.html#pharmacist"
-                    data-roles="pharmacist"
-                                    >
+                    data-roles="pharmacist">
+
                     <i class="bi bi-grid"></i>
+
                     <span>
                         Dashboard
                     </span>
+
                 </a>
+
+
 
                 <!-- ==================================
                      INTO THE WAREHOUSE
-                     Admin + Manager
                      ================================== -->
 
                 <p
                     class="sidebar-title"
-                    data-roles="admin manager"
-                >
+                    data-roles="admin manager">
+
                     INTO THE WAREHOUSE
+
                 </p>
+
+
+                <!-- Suppliers -->
 
                 <a
                     href="suppliers.html#admin"
-                    data-roles="admin"
-                >
+                    data-roles="admin">
+
                     <i class="bi bi-building"></i>
 
                     <span>
                         Suppliers
                     </span>
+
                 </a>
+
 
                 <a
                     href="suppliers.html#manager"
-                    data-roles="manager"
-                >
+                    data-roles="manager">
+
                     <i class="bi bi-building"></i>
+
                     <span>
                         Suppliers
                     </span>
+
                 </a>
 
+
+                <!-- Supplies -->
 
                 <a
                     href="supply.html#admin"
-                    data-roles="admin"
-                >
+                    data-roles="admin">
+
                     <i class="bi bi-box-seam"></i>
+
                     <span>
                         Supplies
                     </span>
+
                 </a>
+
 
                 <a
                     href="supply.html#manager"
-                    data-roles="manager"
-                >
+                    data-roles="manager">
+
                     <i class="bi bi-box-seam"></i>
+
                     <span>
                         Supplies
                     </span>
+
                 </a>
+
+
+                <!-- Warehouse Stock -->
 
                 <a
                     href="warehouse-stock.html#admin"
-                    data-roles="admin"
-                >
+                    data-roles="admin">
+
                     <i class="bi bi-boxes"></i>
+
                     <span>
                         Warehouse Stock
                     </span>
+
                 </a>
+
 
                 <a
                     href="warehouse-stock.html#manager"
-                    data-roles="manager"
-                >
+                    data-roles="manager">
+
                     <i class="bi bi-boxes"></i>
 
                     <span>
                         Warehouse Stock
                     </span>
+
                 </a>
+
+
 
                 <!-- ==================================
                      OUT TO THE PHARMACY
@@ -198,150 +244,224 @@
                     OUT TO THE PHARMACY
                 </p>
 
-                <a href="pharmacist-order.html#admin"
+
+                <!-- Pharmacist Orders -->
+
+                <a
+                    href="pharmacist-order.html#admin"
                     data-roles="admin"
                     class="active">
 
                     <i class="bi bi-clipboard2"></i>
+
                     <span>
                         Pharmacist Orders
                     </span>
+
                     <span class="sidebar-count">
                         1
                     </span>
 
                 </a>
 
-                <a href="pharmacist-order.html#manager"
+
+                <a
+                    href="pharmacist-order.html#manager"
                     data-roles="manager"
                     class="active">
+
                     <i class="bi bi-clipboard2"></i>
+
                     <span>
                         Pharmacist Orders
                     </span>
+
                     <span class="sidebar-count">
                         1
                     </span>
+
                 </a>
 
-                <a href="pharmacist-order.html#pharmacist"
+
+                <a
+                    href="pharmacist-order.html#pharmacist"
                     data-roles="pharmacist"
                     class="active">
+
                     <i class="bi bi-clipboard2"></i>
+
                     <span>
                         Pharmacist Orders
                     </span>
+
                     <span class="sidebar-count">
                         1
                     </span>
+
                 </a>
 
-                <a href="transfer.html#admin"
+
+
+                <!-- Transfers -->
+
+                <a
+                    href="transfer.html#admin"
                     data-roles="admin">
+
                     <i class="bi bi-truck"></i>
+
                     <span data-roles="admin manager">
                         Transfers
                     </span>
+
                     <span data-roles="pharmacist">
                         Incoming Transfers
                     </span>
+
                     <span class="sidebar-count">
                         1
                     </span>
+
                 </a>
 
-                <a href="transfer.html#manager"
+
+                <a
+                    href="transfer.html#manager"
                     data-roles="manager">
+
                     <i class="bi bi-truck"></i>
+
                     <span data-roles="admin manager">
                         Transfers
                     </span>
+
                     <span data-roles="pharmacist">
                         Incoming Transfers
                     </span>
+
                     <span class="sidebar-count">
                         1
                     </span>
+
                 </a>
 
-                <a href="transfer.html#pharmacist"
+
+                <a
+                    href="transfer.html#pharmacist"
                     data-roles="pharmacist">
+
                     <i class="bi bi-truck"></i>
+
                     <span data-roles="admin manager">
                         Transfers
                     </span>
+
                     <span data-roles="pharmacist">
                         Incoming Transfers
                     </span>
+
                     <span class="sidebar-count">
                         1
                     </span>
+
                 </a>
 
 
-                <a href="pharmacy-stock.html#admin"
+
+                <!-- Pharmacy Stock -->
+
+                <a
+                    href="pharmacy-stock.html#admin"
                     data-roles="admin">
+
                     <i class="bi bi-capsule"></i>
+
                     <span>
                         Pharmacy Stock
                     </span>
+
                 </a>
 
-                <a href="pharmacy-stock.html#manager"
+
+                <a
+                    href="pharmacy-stock.html#manager"
                     data-roles="manager">
+
                     <i class="bi bi-capsule"></i>
+
                     <span>
                         Pharmacy Stock
                     </span>
+
                 </a>
 
-                <a href="pharmacy-stock.html#pharmacist"
+
+                <a
+                    href="pharmacy-stock.html#pharmacist"
                     data-roles="pharmacist">
+
                     <i class="bi bi-capsule"></i>
+
                     <span>
                         Pharmacy Stock
                     </span>
+
                 </a>
+
+
 
                 <!-- ==================================
                      USER MANAGEMENT
-                     Admin Only
                      ================================== -->
+
                 <p
                     class="sidebar-title"
-                    data-roles="admin"
-                >
+                    data-roles="admin">
+
                     USER MANAGEMENT
+
                 </p>
+
 
                 <a
                     href="create-user.html#admin"
-                    data-roles="admin"
-                >
+                    data-roles="admin">
+
                     <i class="bi bi-person-plus"></i>
+
                     <span>
                         Create User
                     </span>
+
                 </a>
+
+
 
                 <!-- Sign Out -->
 
                 <a
                     href="login.html"
-                    class="sign-out"
-                >
+                    class="sign-out">
+
                     <i class="bi bi-box-arrow-right"></i>
+
                     <span>
                         Sign Out
                     </span>
+
                 </a>
+
             </div>
 
+
+
             <!-- ==================================
-                 MAIN
+                 MAIN CONTENT
                  ================================== -->
 
-            <main class="col-md-9 col-lg-10 main-content">
+            <main
+                class="col-md-9 col-lg-10 main-content d-flex flex-column min-vh-100">
+
 
                 <!-- ==================================
                      HEADER
@@ -353,103 +473,146 @@
                         Pharmacist orders
                     </h1>
 
+
                     <p data-roles="admin manager">
+
                         Approve what the pharmacies asked for,
                         then send it as a transfer.
+
                     </p>
 
+
                     <p data-roles="pharmacist">
+
                         Ask the warehouse for what your pharmacy needs.
+
                     </p>
 
                 </div>
 
+
+
                 <!-- ==================================
                      NEW ORDER
-
-                     Admin + Pharmacist.
-                     A manager approves orders, they do
-                     not raise them, so this card is
-                     hidden for the manager.
                      ================================== -->
 
                 <section
                     class="order-card"
                     data-roles="admin pharmacist">
 
+
                     <div class="order-card-header">
+
                         <h2>
                             New order
                         </h2>
+
+
                         <p>
                             One order can hold several medicines
                             &middot;
                         </p>
+
                     </div>
 
 
+
                     <div class="order-card-body">
+
                         <div class="row g-3">
+
+
                             <!-- Pharmacy -->
 
                             <div class="col-lg-8">
+
                                 <label for="pharmacyId">
                                     Pharmacy
                                 </label>
+
+
                                 <select
                                     id="pharmacyId"
                                     name="pharmacyId"
                                     class="form-select">
+
                                     <option value="1">
                                         Muscat Pharmacy &mdash; Ruwi
                                     </option>
+
                                     <option value="2">
                                         Seeb Pharmacy
                                     </option>
+
                                 </select>
+
                             </div>
-                            <!-- Add medicine -->
+
+
+
+                            <!-- Add Medicine -->
 
                             <div class="col-lg-4 add-medicine-wrapper">
+
                                 <button
                                     type="button"
                                     class="btn-add-medicine">
+
                                     <i class="bi bi-plus-lg"></i>
+
                                     Add medicine
+
                                 </button>
+
                             </div>
+
+
 
                             <!-- Medicine -->
 
                             <div class="col-lg-8">
+
                                 <label for="medicineId">
                                     Medicine
                                 </label>
+
+
                                 <select
                                     id="medicineId"
                                     name="medicineId"
                                     class="form-select">
+
                                     <option value="1">
                                         Panadol Extra 500mg
                                     </option>
+
                                     <option value="2">
                                         Amoxicillin 500mg
                                     </option>
+
                                     <option value="3">
                                         Vitamin C 1000mg
                                     </option>
+
                                     <option value="4">
                                         Cetirizine 10mg
                                     </option>
+
                                 </select>
+
                             </div>
+
+
 
                             <!-- Quantity -->
 
                             <div class="col-lg-4">
+
                                 <label for="quantity">
                                     Quantity
                                 </label>
+
+
                                 <input
                                     type="number"
                                     id="quantity"
@@ -457,36 +620,45 @@
                                     class="form-control"
                                     min="1"
                                     value="20">
+
                             </div>
+
                         </div>
 
-                        <!-- ==================================
-                             ORDER LINES
 
-                             Empty state. Replace it with real
-                             rows when the order is built.
-                             ================================== -->
+
+                        <!-- Empty Order -->
 
                         <div class="order-lines-empty">
+
                             <h3>
                                 No medicines added yet
                             </h3>
+
+
                             <p>
                                 Pick a medicine and a quantity,
                                 then add it to the order.
                             </p>
+
                         </div>
+
                     </div>
 
 
+
                     <div class="order-card-footer">
+
                         <span class="order-total">
 
                             Estimated total
 
-                            <strong>OMR 0.000</strong>
+                            <strong>
+                                OMR 0.000
+                            </strong>
 
                         </span>
+
 
                         <button
                             type="button"
@@ -495,165 +667,264 @@
                             Submit order
 
                         </button>
+
                     </div>
+
                 </section>
+
+
 
                 <!-- ==================================
                      ALL ORDERS
-
-                     Admin + Manager.
-                     Every pharmacy, with the approve and
-                     reject actions on pending rows.
                      ================================== -->
 
                 <section
                     class="order-card"
                     data-roles="admin manager">
+
+
                     <div class="order-card-header">
+
                         <h2>
                             All orders
                         </h2>
+
                     </div>
 
+
+
                     <div class="table-responsive">
+
                         <table class="table orders-table">
+
+
                             <thead>
+
                                 <tr>
+
                                     <th>
                                         Order
                                     </th>
+
                                     <th>
                                         Pharmacy
                                     </th>
+
                                     <th>
                                         Medicines
                                     </th>
+
                                     <th>
                                         Date
                                     </th>
+
                                     <th class="text-end">
                                         Total
                                     </th>
+
                                     <th>
                                         Status
                                     </th>
+
                                     <th class="text-end">
                                         Actions
                                     </th>
+
                                 </tr>
+
                             </thead>
 
+
+
                             <tbody>
+
+
+                                <!-- Fulfilled -->
+
                                 <tr>
+
                                     <td class="order-no">
                                         #2
                                     </td>
+
+
                                     <td>
+
                                         <strong>
                                             Seeb Pharmacy
                                         </strong>
+
                                         <span class="by-line">
-                                            by Yousuf Al Amri
+                                            by Malak Al Amri
                                         </span>
+
                                     </td>
 
+
                                     <td>
+
                                         <span class="med-line">
+
                                             Panadol Extra 500mg
-                                            <span class="med-qty">&times;40</span>
+
+                                            <span class="med-qty">
+                                                &times;40
+                                            </span>
+
                                         </span>
+
                                     </td>
+
 
                                     <td class="date-cell">
                                         29 Jul 2026
                                     </td>
+
+
                                     <td class="money-cell">
                                         OMR 98.000
                                     </td>
+
+
                                     <td>
+
                                         <span class="pill pill-fulfilled">
+
                                             <span class="pill-dot"></span>
+
                                             Fulfilled
+
                                         </span>
+
                                     </td>
+
 
                                     <td class="text-end">
                                     </td>
 
                                 </tr>
 
+
+
+                                <!-- Pending -->
+
                                 <tr>
+
                                     <td class="order-no">
                                         #1
                                     </td>
+
+
                                     <td>
+
                                         <strong>
                                             Muscat Pharmacy &mdash; Ruwi
                                         </strong>
+
                                         <span class="by-line">
                                             by Mariam Al Saadi
                                         </span>
+
                                     </td>
+
+
                                     <td>
-                                        <span class="med-line">
-                                            Panadol Extra 500mg
-                                            <span class="med-qty">&times;60</span>
-                                        </span>
 
                                         <span class="med-line">
-                                            Vitamin C 1000mg
-                                            <span class="med-qty">&times;25</span>
+
+                                            Panadol Extra 500mg
+
+                                            <span class="med-qty">
+                                                &times;60
+                                            </span>
+
                                         </span>
+
+
+                                        <span class="med-line">
+
+                                            Vitamin C 1000mg
+
+                                            <span class="med-qty">
+                                                &times;25
+                                            </span>
+
+                                        </span>
+
                                     </td>
+
 
                                     <td class="date-cell">
                                         01 Aug 2026
                                     </td>
 
+
                                     <td class="money-cell">
                                         OMR 149.500
                                     </td>
 
+
                                     <td>
+
                                         <span class="pill pill-pending">
+
                                             <span class="pill-dot"></span>
+
                                             Pending
+
                                         </span>
+
                                     </td>
 
+
                                     <td class="text-end">
+
                                         <div class="row-actions">
+
+
                                             <button
                                                 type="button"
                                                 class="btn-approve">
+
                                                 Approve
+
                                             </button>
+
 
                                             <button
                                                 type="button"
                                                 class="btn-reject">
+
                                                 Reject
+
                                             </button>
+
+
                                         </div>
+
                                     </td>
+
                                 </tr>
+
                             </tbody>
+
                         </table>
+
                     </div>
+
                 </section>
+
+
 
                 <!-- ==================================
                      MY ORDERS
-
-                     Pharmacist only.
-                     Their own pharmacy, read only. A
-                     pharmacist cannot approve their own
-                     request.
                      ================================== -->
 
                 <section
                     class="order-card"
                     data-roles="pharmacist">
+
+
                     <div class="order-card-header">
 
                         <h2>
@@ -663,84 +934,149 @@
                     </div>
 
 
+
                     <div class="table-responsive">
+
                         <table class="table orders-table">
+
+
                             <thead>
+
                                 <tr>
+
                                     <th>
                                         Order
                                     </th>
+
                                     <th>
                                         Pharmacy
                                     </th>
+
                                     <th>
                                         Medicines
                                     </th>
+
                                     <th>
                                         Date
                                     </th>
+
                                     <th class="text-end">
                                         Total
                                     </th>
+
                                     <th>
                                         Status
                                     </th>
+
                                 </tr>
+
                             </thead>
 
+
+
                             <tbody>
+
                                 <tr>
+
+
                                     <td class="order-no">
                                         #1
                                     </td>
 
+
                                     <td>
+
                                         <strong>
                                             Muscat Pharmacy &mdash; Ruwi
                                         </strong>
+
+
                                         <span class="by-line">
                                             by Mariam Al Saadi
                                         </span>
+
                                     </td>
+
 
                                     <td>
-                                        <span class="med-line">
-                                            Panadol Extra 500mg
-                                            <span class="med-qty">&times;60</span>
-                                        </span>
 
                                         <span class="med-line">
-                                            Vitamin C 1000mg
-                                            <span class="med-qty">&times;25</span>
+
+                                            Panadol Extra 500mg
+
+                                            <span class="med-qty">
+                                                &times;60
+                                            </span>
+
                                         </span>
+
+
+                                        <span class="med-line">
+
+                                            Vitamin C 1000mg
+
+                                            <span class="med-qty">
+                                                &times;25
+                                            </span>
+
+                                        </span>
+
                                     </td>
+
 
                                     <td class="date-cell">
                                         01 Aug 2026
                                     </td>
+
+
                                     <td class="money-cell">
                                         OMR 149.500
                                     </td>
 
+
                                     <td>
 
                                         <span class="pill pill-pending">
+
                                             <span class="pill-dot"></span>
+
                                             Pending
+
                                         </span>
+
                                     </td>
+
                                 </tr>
+
                             </tbody>
+
                         </table>
+
                     </div>
 
-                    <p class="small-footer">
-                        A pharmacist can raise an order and follow it,
-                        but only a manager or an admin can approve it.
-                    </p>
                 </section>
+
+
+
+                <!-- ==================================
+                     FOOTER
+                     ================================== -->
+
+                <footer class="mt-auto text-center py-3">
+
+                    <p class="small-footer">
+                        &copy; 2026 Pharmacy System
+                    </p>
+
+                </footer>
+
+
             </main>
+
         </div>
+
     </div>
+
 </body>
+
 </html>
