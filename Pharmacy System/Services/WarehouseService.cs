@@ -121,6 +121,5 @@ namespace Pharmacy_System.Services
             }).ToList();
         }
 
-        //delete warehouse => do not needed because our system has one permanent warehouse.
     }
 }

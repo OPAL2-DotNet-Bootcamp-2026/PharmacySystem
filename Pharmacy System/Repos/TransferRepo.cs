@@ -36,6 +36,12 @@ namespace Pharmacy_System.Repos
                 .FirstOrDefaultAsync(t => t.TransferId == id);
         }
 
+        public async Task<Transfer?> GetByPharmacistOrderId(int pharmacistOrderId)
+        {
+            return await context.Transfers
+                .FirstOrDefaultAsync(t => t.PharmacistOrderId == pharmacistOrderId);
+                   
+        }
         // Adds a new transfer with its transfer details
         public async Task Add(Transfer transfer)
         {
