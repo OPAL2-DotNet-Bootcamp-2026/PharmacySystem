@@ -20,12 +20,14 @@ namespace Pharmacy_System.Repos
                                                 .ToListAsync();
         }
 
-       
+
         public async Task<List<WarehouseStock>> GetByMedicine(int medicineId)
         {
-            return await context.warehouseStocks.Where(ws => ws.MedicineID == medicineId)
-                                                .Include(ws => ws.Warehouse)
-                                                .ToListAsync();
+            return await context.warehouseStocks
+                .Where(ws => ws.MedicineID == medicineId)
+                .Include(ws => ws.Medicine)
+                .Include(ws => ws.Warehouse)
+                .ToListAsync();
         }
 
         public async Task<WarehouseStock?> GetStock(int warehouseId,int medicineId)

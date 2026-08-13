@@ -143,45 +143,45 @@ namespace Pharmacy_System.Services
             return supply.SupplyId;
         }
 
-   //update
+        //update
+
         public async Task<bool> UpdateSupply(int id, UpdateSupplyDto dto)
         {
             Supply? supply = await supplyRepo.GetSupplyById(id);
-
 
             if (supply == null)
             {
                 return false;
             }
 
-            // Check that the new supplier exists
-            Supplier? supplier = await supplierRepo.GetSupplierById(dto.SupplierID);
-
+            // Check supplier
+            Supplier? supplier =
+                await supplierRepo.GetSupplierById(dto.SupplierID);
 
             if (supplier == null)
             {
                 throw new Exception("Supplier not found");
             }
 
-            // Check that the new medicine exists
-            Medicine? medicine = await medicineRepo.GetMedicineById(dto.MedicineID);
-
+            // Check medicine
+            Medicine? medicine =
+                await medicineRepo.GetMedicineById(dto.MedicineID);
 
             if (medicine == null)
             {
                 throw new Exception("Medicine not found");
             }
 
-            // Check that the new warehouse exists
-            Warehouse? warehouse = await warehouseRepo.GetWarehouseById(dto.WarehouseID);
-
+            // Check warehouse
+            Warehouse? warehouse =
+                await warehouseRepo.GetWarehouseById(dto.WarehouseID);
 
             if (warehouse == null)
             {
                 throw new Exception("Warehouse not found");
             }
 
-            // Check that the expiry date was provided
+            // Check expiry date
             if (dto.ExpiryDate == null)
             {
                 throw new Exception("Expiry date is required");
@@ -192,43 +192,129 @@ namespace Pharmacy_System.Services
                 throw new Exception("Expiry date must be later than today");
             }
 
-            // Update
-            supply.BatchNumber = dto.BatchNumber;
-            supply.Quantity = dto.Quantity;
-            supply.UnitCost = dto.UnitCost;
+            // Save OLD values before updating
+            int oldWarehouseId = supply.WarehouseID;
+            int oldMedicineId = supply.MedicineID;
+            int oldQuantity = supply.Quantity;
 
-            supply.TotalCost = dto.Quantity * dto.UnitCost;
+            using var tx = await context.Database.BeginTransactionAsync();
 
+            try
+            {
+                /*
+                 * CASE 1:
+                 * Same warehouse and same medicine.
+                 * We only update the quantity difference.
+                 */
+                if (oldWarehouseId == dto.WarehouseID &&
+                    oldMedicineId == dto.MedicineID)
+                {
+                    int difference = dto.Quantity - oldQuantity;
 
-            supply.ExpiryDate = dto.ExpiryDate.Value;
-            supply.SupplierID = dto.SupplierID;
-            supply.MedicineID = dto.MedicineID;
-            supply.WarehouseID = dto.WarehouseID;
+                    // Quantity increased
+                    if (difference > 0)
+                    {
+                        await warehouseStockService.Increase(
+                            dto.WarehouseID,
+                            dto.MedicineID,
+                            difference,
+                            DateOnly.FromDateTime(dto.ExpiryDate.Value)
+                        );
+                    }
 
-            // Save 
-            await supplyRepo.SupplyUpdate();
+                    // Quantity decreased
+                    else if (difference < 0)
+                    {
+                        await warehouseStockService.Decrease(
+                            oldWarehouseId,
+                            oldMedicineId,
+                            Math.Abs(difference)
+                        );
+                    }
+                }
 
+                /*
+                 * CASE 2:
+                 * Warehouse or Medicine changed.
+                 *
+                 * Remove quantity from old stock,
+                 * then add it to the new stock.
+                 */
+                else
+                {
+                    await warehouseStockService.Decrease(
+                        oldWarehouseId,
+                        oldMedicineId,
+                        oldQuantity
+                    );
 
-            return true;
+                    await warehouseStockService.Increase(
+                        dto.WarehouseID,
+                        dto.MedicineID,
+                        dto.Quantity,
+                        DateOnly.FromDateTime(dto.ExpiryDate.Value)
+                    );
+                }
+
+                // Update Supply information
+                supply.BatchNumber = dto.BatchNumber;
+                supply.Quantity = dto.Quantity;
+                supply.UnitCost = dto.UnitCost;
+                supply.TotalCost = dto.Quantity * dto.UnitCost;
+
+                supply.ExpiryDate = dto.ExpiryDate.Value;
+                supply.SupplierID = dto.SupplierID;
+                supply.MedicineID = dto.MedicineID;
+                supply.WarehouseID = dto.WarehouseID;
+
+                await supplyRepo.SupplyUpdate();
+
+                await tx.CommitAsync();
+
+                return true;
+            }
+            catch
+            {
+                await tx.RollbackAsync();
+                throw;
+            }
         }
 
         //delete
+
         public async Task<bool> DeleteSupply(int id)
         {
             Supply? supply = await supplyRepo.GetSupplyById(id);
-
 
             if (supply == null)
             {
                 return false;
             }
 
-            await supplyRepo.SupplyDelete(supply);
+            using var tx = await context.Database.BeginTransactionAsync();
 
-            return true;
+            try
+            {
+                // Remove supply quantity from warehouse stock
+                await warehouseStockService.Decrease(
+                    supply.WarehouseID,
+                    supply.MedicineID,
+                    supply.Quantity
+                );
+
+                // Delete / deactivate supply
+                await supplyRepo.SupplyDelete(supply);
+
+                await tx.CommitAsync();
+
+                return true;
+            }
+            catch
+            {
+                await tx.RollbackAsync();
+                throw;
+            }
         }
-
-        
         private SupplyDto ConvertToDto(Supply supply)
         {
             SupplyDto dto = new SupplyDto();
