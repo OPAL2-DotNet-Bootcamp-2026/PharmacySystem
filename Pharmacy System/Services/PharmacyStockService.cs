@@ -210,6 +210,7 @@ namespace Pharmacy_System.Services
                 PharmacyID = stock.PharmacyID,
                 MedicineID = stock.MedicineID,
                 MedicineName = stock.medicine.MedicineName,
+                CategoryName = stock.medicine.Category.CategoryName,
                 Quantity = stock.Quantity,
                 ExpiryDate = stock.ExpiryDate
             };
