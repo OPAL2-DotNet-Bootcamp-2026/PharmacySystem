@@ -14,22 +14,22 @@ namespace Pharmacy_System.Repos
 
         public async Task<List<PharmacyStock>> GetPharmacyStockByPharmacyId(int id)
         {
-            return await context.pharmacyStocks.Where(p => p.PharmacyID == id).ToListAsync();
+            return await context.pharmacyStocks.Include(p => p.medicine).Where(p => p.PharmacyID == id).ToListAsync();
         }
 
         public async Task<List<PharmacyStock>> GetPharmacyStockByMedicineId(int id)
         {
-            return await context.pharmacyStocks.Where(p => p.MedicineID == id).ToListAsync();
+            return await context.pharmacyStocks.Include(p => p.medicine).Where(p => p.MedicineID == id).ToListAsync();
         }
 
         public async Task<PharmacyStock?> GetPharmacyStockAndMedicineById(int pid, int mid)
         {
-            return await context.pharmacyStocks.FirstOrDefaultAsync(p => p.PharmacyID == pid && p.MedicineID == mid);
+            return await context.pharmacyStocks.Include(p => p.medicine).FirstOrDefaultAsync(p => p.PharmacyID == pid && p.MedicineID == mid);
         }
 
         public async Task<List<PharmacyStock>> GetPharmacyStockByLowStock(int id, int lowStock = 10)
         {
-            return await context.pharmacyStocks.Where(p => p.PharmacyID == id && p.Quantity < lowStock).OrderBy(p => p.Quantity).ToListAsync();
+            return await context.pharmacyStocks.Include(p => p.medicine).Where(p => p.PharmacyID == id && p.Quantity < lowStock).OrderBy(p => p.Quantity).ToListAsync();
         }
 
         public async Task Add(PharmacyStock stock)

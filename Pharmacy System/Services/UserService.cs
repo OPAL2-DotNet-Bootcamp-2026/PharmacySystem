@@ -73,7 +73,14 @@ namespace Pharmacy_System.Services
                 return null;
             }
 
-     
+            if (!user.IsActive)
+            {
+                logger.LogWarning(   "Login blocked - account {Email} is inactive", dto.Email );
+  
+                return null;
+            }
+
+
             if (user.LockedUntil != null && user.LockedUntil > DateTime.UtcNow) //if the account is still locked
             {
                 logger.LogWarning(
