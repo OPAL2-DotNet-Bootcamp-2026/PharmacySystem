@@ -115,8 +115,7 @@ namespace Pharmacy_System.Services
 
 
             // Keep the nearest expiry date
-            if (stock.ExpiryDate == null ||
-                expiryDate < stock.ExpiryDate)
+            if (expiryDate < stock.ExpiryDate)
             {
                 stock.ExpiryDate = expiryDate;
             }
@@ -210,6 +209,7 @@ namespace Pharmacy_System.Services
                 PharmacyStockID = stock.PharmacyStockID,
                 PharmacyID = stock.PharmacyID,
                 MedicineID = stock.MedicineID,
+                MedicineName = stock.medicine.MedicineName,
                 Quantity = stock.Quantity,
                 ExpiryDate = stock.ExpiryDate
             };

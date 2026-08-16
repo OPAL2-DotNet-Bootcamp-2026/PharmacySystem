@@ -186,13 +186,13 @@ namespace Pharmacy_System.Services
             }
 
             string status = dto.Status.Trim();
-
             string[] allowedStatuses =
             {
-                "Pending",
-                "Approved",
-                "Cancelled"
-            };
+               "Pending",
+               "Approved",
+               "Cancelled",
+               "Completed"
+             };
 
             // Find the correct status 
             string? correctStatus = allowedStatuses.FirstOrDefault(s => s.ToLower() == status.ToLower());
@@ -200,7 +200,8 @@ namespace Pharmacy_System.Services
 
             if (correctStatus == null)
             {
-                throw new Exception("Status must be Pending, Approved or Cancelled");
+                throw new Exception("Status must be Pending, Approved, Cancelled or Completed");
+
 
             }
 
