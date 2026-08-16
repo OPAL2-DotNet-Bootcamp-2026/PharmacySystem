@@ -469,24 +469,344 @@
                 <!-- ==================================
                      ADMIN + MANAGER HEADER
                 ================================== -->
+<!-- ==================================
+     HIDDEN CHECKBOX
+================================== -->
 
-                <div
-                    class="page-header"
-                    data-roles="admin manager"
-                >
+<input
+    type="checkbox"
+    id="showCreateTransfer"
+    class="create-transfer-toggle"
+>
 
-                    <h1>
-                        Transfers
-                    </h1>
+
+<!-- ==================================
+     ADMIN + MANAGER HEADER
+================================== -->
+
+<div
+    class="page-header"
+    data-roles="admin manager"
+>
+
+    <div class="page-header-text">
+
+        <h1>
+            Transfers
+        </h1>
+
+        <p>
+            Move approved orders out of the warehouse
+            and towards the pharmacy.
+        </p>
+
+    </div>
+
+
+    <!-- Open Create Transfer Card -->
+
+    <label
+        for="showCreateTransfer"
+        class="create-transfer-btn"
+    >
+
+        <i class="bi bi-plus-lg"></i>
+
+        Create Transfer
+
+    </label>
+
+</div>
+
+
+<!-- ==================================
+     CREATE TRANSFER OVERLAY
+================================== -->
+
+<div
+    class="create-transfer-overlay"
+    data-roles="admin manager"
+>
+
+    <div class="create-transfer-modal-card">
+
+
+        <!-- Card Header -->
+
+        <div class="create-transfer-card-header">
+
+            <div>
+
+                <h2>
+                    Create Transfer
+                </h2>
+
+                <p>
+                    Create a transfer from an approved pharmacist order.
+                </p>
+
+            </div>
+
+
+            <!-- Close -->
+
+            <label
+                for="showCreateTransfer"
+                class="create-transfer-close"
+            >
+
+                <i class="bi bi-x-lg"></i>
+
+            </label>
+
+        </div>
+
+
+        <!-- Form -->
+
+        <form class="transfer-form">
+
+
+            <div class="row g-3">
+
+
+                <!-- Approved Order -->
+
+                <div class="col-md-6">
+
+                    <label
+                        for="pharmacistOrder"
+                        class="form-label"
+                    >
+                        Approved Pharmacist Order
+                    </label>
+
+
+                    <select
+                        id="pharmacistOrder"
+                        class="form-select"
+                    >
+
+                        <option selected disabled>
+                            Select approved order
+                        </option>
+
+                        <option value="1">
+                            Order #1 — Seeb Pharmacy
+                        </option>
+
+                        <option value="2">
+                            Order #2 — Muscat Pharmacy
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Warehouse -->
+
+                <div class="col-md-6">
+
+                    <label
+                        for="warehouse"
+                        class="form-label"
+                    >
+                        Warehouse
+                    </label>
+
+
+                    <select
+                        id="warehouse"
+                        class="form-select"
+                    >
+
+                        <option selected disabled>
+                            Select warehouse
+                        </option>
+
+                        <option value="1">
+                            Main Warehouse — Rusayl
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Pharmacy -->
+
+                <div class="col-md-6">
+
+                    <label
+                        for="pharmacy"
+                        class="form-label"
+                    >
+                        Pharmacy
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="pharmacy"
+                        class="form-control"
+                        value="Seeb Pharmacy"
+                        readonly
+                    >
+
+                </div>
+
+
+                <!-- Status -->
+
+                <div class="col-md-6">
+
+                    <label
+                        for="orderStatus"
+                        class="form-label"
+                    >
+                        Order Status
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="orderStatus"
+                        class="form-control"
+                        value="Approved"
+                        readonly
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- Medicines -->
+
+            <div class="transfer-medicines">
+
+
+                <div class="transfer-medicines-header">
+
+                    <h5>
+                        Order Medicines
+                    </h5>
 
                     <p>
-                        Move approved orders out of the warehouse
-                        and towards the pharmacy.
+                        All medicines and quantities will be transferred.
                     </p>
 
                 </div>
 
 
+                <div class="table-responsive">
+
+                    <table class="table transfer-create-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    MEDICINE
+                                </th>
+
+                                <th>
+                                    CATEGORY
+                                </th>
+
+                                <th class="text-end">
+                                    QUANTITY
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        Panadol Extra 500mg
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    Analgesic
+                                </td>
+
+                                <td class="text-end">
+                                    20
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        Amoxicillin 500mg
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    Antibiotic
+                                </td>
+
+                                <td class="text-end">
+                                    10
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- Buttons -->
+
+            <div class="transfer-form-actions">
+
+
+                <label
+                    for="showCreateTransfer"
+                    class="cancel-transfer-btn"
+                >
+                    Cancel
+                </label>
+
+
+                <button
+                    type="submit"
+                    class="submit-transfer-btn"
+                >
+
+                    <i class="bi bi-truck"></i>
+
+                    Create Transfer
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
 
                 <!-- ==================================
                      PHARMACIST HEADER
@@ -936,7 +1256,7 @@
                <p class="small-footer">
                 &copy; 2026 Pharmacy System
                </p>
-               </footer>>
+               </footer>
 
             </main>
 
