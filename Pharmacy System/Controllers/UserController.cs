@@ -5,111 +5,242 @@ using Pharmacy_System.Services;
 
 namespace Pharmacy_System.Controllers
 {
-
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] 
     public class UserController : ControllerBase
     {
-        private UserService userService;
+        private readonly UserService userService;
 
-        public UserController(UserService _userService)
+
+        public UserController(
+            UserService _userService
+        )
         {
             userService = _userService;
         }
 
 
+        // =====================================
+        // CREATE USER
+        // =====================================
 
         [HttpPost("create")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> CreateUser([FromBody] RegisterUserDto dto)
-        {
-            UserResponseDto? created = await userService.CreateUser(dto);
 
-            if (created == null)
+        public async Task<IActionResult> CreateUser(
+            RegisterUserDto dto
+        )
+        {
+            bool emailExists =
+                await userService.EmailExists(
+                    dto.Email
+                );
+
+
+            if (emailExists)
             {
-                return BadRequest(new
-                {
-                    message = "Email is already registered."
-                });
+                return BadRequest(
+                    new
+                    {
+                        message =
+                            "This email is already used."
+                    }
+                );
             }
 
-            return Ok(created);
-        }
+
+            bool usernameExists =
+                await userService.UsernameExists(
+                    dto.Username
+                );
 
 
-
-        [HttpPost("login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] LoginDto dto)
-        {
-            LoginResponseDto? result = await userService.Login(dto);
-
-            if (result == null)
+            if (usernameExists)
             {
-                return Unauthorized(new
-                {
-                    message = "Invalid email or password"
-                });
+                return BadRequest(
+                    new
+                    {
+                        message =
+                            "This username is already used."
+                    }
+                );
             }
 
-            return Ok(result);
-        }
 
+            UserResponseDto? user =
+                await userService.CreateUser(
+                    dto
+                );
 
-        // GET user/GetAllUsers 
-        [HttpGet("GetAllUsers")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            List<UserResponseDto> users =
-                await userService.GetAllUsers();
-
-            return Ok(users);
-        }
-
-
-        // GET user/GetUserData/3
-        [HttpGet("GetUserData/{id}")]
-        [Authorize(Roles = "Admin,Manager,Pharmacist")]
-        public async Task<IActionResult> GetUserData(int id)
-        {
-            UserResponseDto? user = await userService.GetUserById(id);
 
             if (user == null)
             {
-                return NotFound(new
-                {
-                    message = $"User with ID {id} was not found."
-                });
+                return BadRequest(
+                    new
+                    {
+                        message =
+                            "Could not create user."
+                    }
+                );
             }
+
 
             return Ok(user);
         }
 
 
-        // DELETE user/DeleteUser/3 
+        // =====================================
+        // LOGIN
+        // =====================================
+
+        [HttpPost("login")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> Login(
+            LoginDto dto
+        )
+        {
+            LoginResponseDto? result =
+                await userService.Login(
+                    dto
+                );
+
+
+            if (result == null)
+            {
+                return Unauthorized(
+                    new
+                    {
+                        message =
+                            "Invalid email or password."
+                    }
+                );
+            }
+
+
+            return Ok(result);
+        }
+
+
+        // =====================================
+        // GET ALL USERS
+        // =====================================
+
+        [HttpGet("GetAllUsers")]
+        [Authorize(Roles = "Admin")]
+
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users =
+                await userService.GetAllUsers();
+
+
+            return Ok(users);
+        }
+
+
+        // =====================================
+        // GET USER BY ID
+        // =====================================
+
+        [HttpGet("GetUserById/{id}")]
+        [Authorize(Roles = "Admin")]
+
+        public async Task<IActionResult> GetUserById(
+            int id
+        )
+        {
+            var user =
+                await userService.GetUserById(
+                    id
+                );
+
+
+            if (user == null)
+            {
+                return NotFound(
+                    new
+                    {
+                        message =
+                            "User not found."
+                    }
+                );
+            }
+
+
+            return Ok(user);
+        }
+
+
+        // =====================================
+        // GET USER BY EMAIL
+        // =====================================
+
+        [HttpGet("GetUserByEmail/{email}")]
+        [Authorize(Roles = "Admin")]
+
+        public async Task<IActionResult> GetUserByEmail(
+            string email
+        )
+        {
+            var user =
+                await userService.GetUserByEmail(
+                    email
+                );
+
+
+            if (user == null)
+            {
+                return NotFound(
+                    new
+                    {
+                        message =
+                            "User not found."
+                    }
+                );
+            }
+
+
+            return Ok(user);
+        }
+
+
+        // =====================================
+        // DELETE USER
+        // =====================================
 
         [HttpDelete("DeleteUser/{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteUser(int id)
+
+        public async Task<IActionResult> DeleteUser(
+            int id
+        )
         {
-            bool deleted = await userService.UserDelete(id);
+            bool deleted =
+                await userService.UserDelete(
+                    id
+                );
+
 
             if (!deleted)
             {
-                return NotFound(new
-                {
-                    message = $"User with ID {id} was not found"
-                });
+                return NotFound(
+                    new
+                    {
+                        message =
+                            "User not found."
+                    }
+                );
             }
 
-            return Ok(new
-            {
-                message = "User deactivated successfully"
-            });
+
+            return Ok(
+                new
+                {
+                    message =
+                        "User deleted successfully."
+                }
+            );
         }
     }
-
 }
-
