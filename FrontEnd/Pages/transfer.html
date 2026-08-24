@@ -78,7 +78,6 @@
 
                 <div class="sidebar-brand">
 
-
                     <div class="sidebar-logo">
 
                         <i class="bi bi-plus-lg"></i>
@@ -163,7 +162,9 @@
 
 
 
-                <!-- INTO THE WAREHOUSE -->
+                <!-- ==================================
+                     INTO THE WAREHOUSE
+                ================================== -->
 
                 <p
                     class="sidebar-title"
@@ -258,7 +259,9 @@
 
 
 
-                <!-- OUT TO THE PHARMACY -->
+                <!-- ==================================
+                     OUT TO THE PHARMACY
+                ================================== -->
 
                 <p class="sidebar-title">
                     OUT TO THE PHARMACY
@@ -276,6 +279,10 @@
                         Pharmacist Orders
                     </span>
 
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
                 </a>
 
 
@@ -288,6 +295,10 @@
 
                     <span>
                         Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
                     </span>
 
                 </a>
@@ -304,11 +315,15 @@
                         Pharmacist Orders
                     </span>
 
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
                 </a>
 
 
 
-                <!-- TRANSFERS -->
+                <!-- Transfers -->
 
                 <a
                     href="transfer.html#admin"
@@ -318,8 +333,16 @@
 
                     <i class="bi bi-truck"></i>
 
-                    <span>
+                    <span data-roles="admin manager">
                         Transfers
+                    </span>
+
+                    <span data-roles="pharmacist">
+                        Incoming Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
                     </span>
 
                 </a>
@@ -333,8 +356,16 @@
 
                     <i class="bi bi-truck"></i>
 
-                    <span>
+                    <span data-roles="admin manager">
                         Transfers
+                    </span>
+
+                    <span data-roles="pharmacist">
+                        Incoming Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
                     </span>
 
                 </a>
@@ -348,15 +379,23 @@
 
                     <i class="bi bi-truck"></i>
 
-                    <span>
+                    <span data-roles="admin manager">
+                        Transfers
+                    </span>
+
+                    <span data-roles="pharmacist">
                         Incoming Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
                     </span>
 
                 </a>
 
 
 
-                <!-- PHARMACY STOCK -->
+                <!-- Pharmacy Stock -->
 
                 <a
                     href="pharmacy-stock.html#admin"
@@ -401,7 +440,9 @@
 
 
 
-                <!-- USER MANAGEMENT -->
+                <!-- ==================================
+                     USER MANAGEMENT
+                ================================== -->
 
                 <p
                     class="sidebar-title"
@@ -441,6 +482,7 @@
 
                 </a>
 
+
             </div>
 
 
@@ -455,7 +497,7 @@
 
 
                 <!-- ==================================
-                     CREATE TRANSFER TOGGLE
+                     HIDDEN CHECKBOX
                 ================================== -->
 
                 <input
@@ -474,6 +516,7 @@
                     class="page-header"
                     data-roles="admin manager"
                 >
+
 
                     <div class="page-header-text">
 
@@ -500,6 +543,7 @@
 
                     </label>
 
+
                 </div>
 
 
@@ -513,12 +557,12 @@
                     data-roles="admin manager"
                 >
 
+
                     <div class="create-transfer-modal-card">
 
 
-                        <!-- Header -->
-
                         <div class="create-transfer-card-header">
+
 
                             <div>
 
@@ -542,13 +586,12 @@
 
                             </label>
 
+
                         </div>
 
 
 
-                        <!-- ==================================
-                             FORM
-                        ================================== -->
+                        <!-- Form -->
 
                         <form
                             id="transferForm"
@@ -562,6 +605,7 @@
                                 <!-- Approved Order -->
 
                                 <div class="col-md-6">
+
 
                                     <label
                                         for="pharmacistOrder"
@@ -586,6 +630,7 @@
 
                                     </select>
 
+
                                 </div>
 
 
@@ -593,6 +638,7 @@
                                 <!-- Warehouse -->
 
                                 <div class="col-md-6">
+
 
                                     <label
                                         for="warehouse"
@@ -617,6 +663,7 @@
 
                                     </select>
 
+
                                 </div>
 
 
@@ -624,6 +671,7 @@
                                 <!-- Pharmacy -->
 
                                 <div class="col-md-6">
+
 
                                     <label
                                         for="pharmacy"
@@ -640,6 +688,7 @@
                                         readonly
                                     >
 
+
                                 </div>
 
 
@@ -647,6 +696,7 @@
                                 <!-- Status -->
 
                                 <div class="col-md-6">
+
 
                                     <label
                                         for="orderStatus"
@@ -663,15 +713,15 @@
                                         readonly
                                     >
 
+
                                 </div>
+
 
                             </div>
 
 
 
-                            <!-- ==================================
-                                 MEDICINES
-                            ================================== -->
+                            <!-- Medicines -->
 
                             <div class="transfer-medicines">
 
@@ -691,7 +741,9 @@
 
                                 <div class="table-responsive">
 
+
                                     <table class="table transfer-create-table">
+
 
                                         <thead>
 
@@ -718,9 +770,12 @@
 
                                         </tbody>
 
+
                                     </table>
 
+
                                 </div>
+
 
                             </div>
 
@@ -750,12 +805,15 @@
 
                                 </button>
 
+
                             </div>
 
 
                         </form>
 
+
                     </div>
+
 
                 </div>
 
@@ -784,7 +842,6 @@
 
 
                 <!-- ==================================
-                     ADMIN + MANAGER
                      ON THE ROAD
                 ================================== -->
 
@@ -792,6 +849,7 @@
                     class="content-card"
                     data-roles="admin manager"
                 >
+
 
                     <div class="card-header-custom">
 
@@ -813,12 +871,12 @@
 
                     </div>
 
+
                 </section>
 
 
 
                 <!-- ==================================
-                     ADMIN + MANAGER
                      ALL TRANSFERS
                 ================================== -->
 
@@ -827,6 +885,7 @@
                     data-roles="admin manager"
                 >
 
+
                     <div class="card-header-custom">
 
                         <h2>
@@ -834,88 +893,18 @@
                         </h2>
 
                         <p id="transferCount">
-                            Loading...
+                            Loading transfers...
                         </p>
 
                     </div>
 
 
 
-                    <!-- ==================================
-                         SEARCH + FILTER
-                    ================================== -->
-
-                    <div class="row g-3 mb-4">
-
-
-                        <div class="col-md-6">
-
-                            <label
-                                for="searchInput"
-                                class="form-label"
-                            >
-                                Search
-                            </label>
-
-
-                            <input
-                                type="text"
-                                id="searchInput"
-                                class="form-control"
-                                placeholder="Search by transfer ID or status"
-                            >
-
-                        </div>
-
-
-
-                        <div class="col-md-6">
-
-                            <label
-                                for="statusFilter"
-                                class="form-label"
-                            >
-                                Status
-                            </label>
-
-
-                            <select
-                                id="statusFilter"
-                                class="form-select"
-                            >
-
-                                <option value="All">
-                                    All Statuses
-                                </option>
-
-                                <option value="Pending">
-                                    Pending
-                                </option>
-
-                                <option value="Shipped">
-                                    Shipped
-                                </option>
-
-                                <option value="Received">
-                                    Received
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                    </div>
-
-
-
-                    <!-- ==================================
-                         TRANSFER TABLE
-                    ================================== -->
-
                     <div class="table-responsive">
 
+
                         <table class="table transfer-table">
+
 
                             <thead>
 
@@ -958,23 +947,26 @@
 
                             </tbody>
 
+
                         </table>
 
+
                     </div>
+
 
                 </section>
 
 
 
                 <!-- ==================================
-                     PHARMACIST
-                     INCOMING TRANSFERS
+                     PHARMACIST INCOMING TRANSFERS
                 ================================== -->
 
                 <section
                     class="content-card"
                     data-roles="pharmacist"
                 >
+
 
                     <div class="card-header-custom">
 
@@ -983,7 +975,7 @@
                         </h2>
 
                         <p id="incomingTransferCount">
-                            Loading...
+                            Loading transfers...
                         </p>
 
                     </div>
@@ -992,6 +984,7 @@
                     <div id="incomingTransfers">
 
                     </div>
+
 
                 </section>
 
@@ -1012,7 +1005,9 @@
 
             </main>
 
+
         </div>
+
 
     </div>
 
@@ -1026,7 +1021,7 @@
     </script>
 
 
-    <!-- Transfers JavaScript -->
+    <!-- Transfer JavaScript -->
 
     <script src="../JS/transfers.js"></script>
 
