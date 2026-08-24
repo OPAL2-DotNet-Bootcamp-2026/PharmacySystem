@@ -31,32 +31,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // FORM ELEMENTS
     // =========================================
 
-    const form =
-        document.getElementById("create-user-form");
+    const form = document.getElementById("create-user-form");
 
+    const usernameInput =document.getElementById("username");
 
-    const usernameInput =
-        document.getElementById("username");
+    const emailInput =document.getElementById("email");
 
+    const passwordInput =document.getElementById("password");
 
-    const emailInput =
-        document.getElementById("email");
-
-
-    const passwordInput =
-        document.getElementById("password");
-
-
-    const roleInput =
-        document.getElementById("role");
-
-
-    const button =
-        document.querySelector(".btn-create");
-
-
-    const messageBox =
-        document.getElementById("create-user-message");
+    const roleInput =document.getElementById("role");
+ 
+    const button =document.querySelector(".btn-create");
+        
+    const messageBox =document.getElementById("create-user-message");
+        
 
 
 
@@ -64,16 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // TABLE ELEMENTS
     // =========================================
 
-    const usersTableBody =
-        document.getElementById("users-table-body");
-
-
-    const usersSummary =
-        document.getElementById("users-summary");
-
-
-    const usersMessage =
-        document.getElementById("users-message");
+    const usersTableBody = document.getElementById("users-table-body");
+       
+    const usersSummary =document.getElementById("users-summary");
+        
+    const usersMessage =document.getElementById("users-message");
+        
 
 
 
@@ -85,26 +69,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
 
-            usersMessage.style.color =
-                "#5E6F66";
+            usersMessage.style.color ="#5E6F66";      
 
-
-            usersMessage.textContent =
-                "Loading users...";
-
-
+            usersMessage.textContent ="Loading users...";
+                
             // Call Backend
-            const users =
-                await Api.get(
-                    "/User/GetAllUsers"
-                );
-
-
-            console.log(
-                "Users:",
-                users
-            );
-
+            const users =await Api.get("/User/GetAllUsers" );
+                
+            console.log("Users:",users);
+                
+                
 
             // Clear old table
             usersTableBody.innerHTML = "";
@@ -153,27 +127,27 @@ document.addEventListener("DOMContentLoaded", () => {
             users.forEach(user => {
 
 
-                const row =
-                    document.createElement("tr");
+                const row = document.createElement("tr");
+                   
 
 
 
                 // Role color
-                let roleClass =
-                    "badge-pharmacist";
+                let roleClass ="badge-pharmacist";
+                    
 
 
                 if (user.role === "Admin") {
 
-                    roleClass =
-                        "badge-admin";
+                    roleClass ="badge-admin";
+                        
 
                 }
 
                 else if (user.role === "Manager") {
 
-                    roleClass =
-                        "badge-manager";
+                    roleClass ="badge-manager";
+                        
 
                 }
 
@@ -236,20 +210,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         catch (err) {
 
-            console.error(
-                "Load users error:",
-                err
-            );
+            console.error("Load users error:", err );          
 
+            usersMessage.style.color = "#d33";
+               
+            usersMessage.textContent ="Could not load users: " +err.message;
 
-            usersMessage.style.color =
-                "#d33";
-
-
-            usersMessage.textContent =
-                "Could not load users: " +
-                err.message;
-
+                
+                
         }
 
     }
@@ -270,20 +238,14 @@ document.addEventListener("DOMContentLoaded", () => {
             messageBox.textContent = "";
 
 
-            const username =
-                usernameInput.value.trim();
+            const username =usernameInput.value.trim();
+                
+            const email =emailInput.value.trim();   
 
-
-            const email =
-                emailInput.value.trim();
-
-
-            const password =
-                passwordInput.value;
-
-
-            const role =
-                roleInput.value;
+            const password = passwordInput.value;
+               
+            const role =roleInput.value;
+                
 
 
 
@@ -298,14 +260,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 !role
             ) {
 
-                messageBox.style.color =
-                    "#d33";
+                messageBox.style.color = "#d33";               
 
-
-                messageBox.textContent =
-                    "Please complete all fields.";
-
-
+                messageBox.textContent = "Please complete all fields.";
+                   
                 return;
             }
 
@@ -313,14 +271,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (password.length < 8) {
 
-                messageBox.style.color =
-                    "#d33";
-
-
-                messageBox.textContent =
-                    "Password must be at least 8 characters.";
-
-
+                messageBox.style.color ="#d33";
+                    
+                messageBox.textContent ="Password must be at least 8 characters.";
+ 
                 return;
             }
 
@@ -332,14 +286,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             button.disabled = true;
 
+            const originalText =button.innerHTML;           
 
-            const originalText =
-                button.innerHTML;
-
-
-            button.textContent =
-                "Creating...";
-
+            button.textContent ="Creating...";
 
 
             try {
@@ -350,8 +299,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 // =================================
 
                 const result =
-                    await Api.post(
-                        "/User/create",
+                    await Api.post("/User/create",
+                        
                         {
                             username: username,
                             email: email,
@@ -362,21 +311,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-                console.log(
-                    "Created user:",
-                    result
-                );
-
-
+                console.log("Created user:",result );
+                    
+                    
+            
 
                 // =================================
                 // SUCCESS
                 // =================================
 
-                messageBox.style.color =
-                    "#1F8A70";
-
-
+                messageBox.style.color ="#1F8A70";
+                    
                 messageBox.textContent ="User created successfully.";
                     
 
@@ -386,24 +331,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 form.reset();
 
 
-
-                // =================================
-                // IMPORTANT
-                // Reload table from database
-                // =================================
-
                 await loadUsers();
 
             }
 
             catch (err) {
 
-                messageBox.style.color =
-                    "#d33";
+                messageBox.style.color = "#d33";
 
-
-                messageBox.textContent =
-                    err.message;
+                messageBox.textContent =err.message;
+                    
 
             }
 
@@ -412,8 +349,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 button.disabled = false;
 
 
-                button.innerHTML =
-                    originalText;
+                button.innerHTML =originalText;
+                    
 
             }
 
@@ -448,8 +385,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const userId =deleteButton.dataset.userId;
                 
 
-
-
             if (!userId) {
 
                 return;
@@ -458,11 +393,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-            const confirmed =
-                confirm(
-                    "Are you sure you want to deactivate this user?"
-                );
-
+            const confirmed = confirm("Are you sure you want to deactivate this user?");
+               
+                    
 
             if (!confirmed) {
 
@@ -475,26 +408,26 @@ document.addEventListener("DOMContentLoaded", () => {
             deleteButton.disabled = true;
 
 
-            deleteButton.textContent =
-                "Deleting...";
+            deleteButton.textContent ="Deleting...";
+                
 
 
 
             try {
 
 
-                await Api.del(
-                    `/User/DeleteUser/${userId}`
-                );
+                await Api.del(`/User/DeleteUser/${userId}`);
+
+                    
+              
 
 
+                usersMessage.style.color = "#1F8A70";
+                   
 
-                usersMessage.style.color =
-                    "#1F8A70";
 
-
-                usersMessage.textContent =
-                    "User deactivated successfully.";
+                usersMessage.textContent ="User deactivated successfully.";
+                    
 
 
 
@@ -506,22 +439,15 @@ document.addEventListener("DOMContentLoaded", () => {
             catch (err) {
 
 
-                usersMessage.style.color =
-                    "#d33";
+                usersMessage.style.color =  "#d33";           
 
+                usersMessage.textContent = err.message;
+                
+                deleteButton.disabled =false;
+                    
+                deleteButton.textContent ="Delete";
 
-                usersMessage.textContent =
-                    err.message;
-
-
-
-                deleteButton.disabled =
-                    false;
-
-
-                deleteButton.textContent =
-                    "Delete";
-
+                    
             }
 
         }
