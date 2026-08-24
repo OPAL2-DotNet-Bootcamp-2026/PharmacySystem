@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,34 +34,22 @@
         href="../CSS/create-user.css"
     >
 
-    <!--font css-->
-    <link rel="stylesheet"
-    href="../CSS/font.css"
+
+    <!-- Font CSS -->
+    <link
+        rel="stylesheet"
+        href="../CSS/font.css"
     >
 
 </head>
 
-
-<!--
-    ROLE
-
-    This page is Admin only.
-
-    The role comes from the #fragment in the URL,
-    so this page is always opened as:
-
-        create-user.html#admin
-
-    Any other role sees the "no access" panel.
--->
 
 <body>
 
 
     <!-- ==================================
          ROLE FLAGS
-         The #fragment in the URL picks the role.
-         ================================== -->
+    ================================== -->
 
     <b id="admin" class="role-flag"></b>
     <b id="manager" class="role-flag"></b>
@@ -75,39 +64,62 @@
 
             <!-- ==================================
                  SIDEBAR
-                 ================================== -->
-<div class="col-md-3 col-lg-2 sidebar p-3">
+            ================================== -->
+
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+
+
                 <!-- Brand -->
+
                 <div class="sidebar-brand">
+
                     <div class="sidebar-logo">
+
                         <i class="bi bi-plus-lg"></i>
+
                     </div>
+
+
                     <div>
+
                         <h4 class="mb-0">
                             Pharmacy System
                         </h4>
+
+
                         <small data-roles="admin">
                             ADMIN VIEW
                         </small>
+
+
                         <small data-roles="manager">
                             MANAGER VIEW
                         </small>
+
+
                         <small data-roles="pharmacist">
                             PHARMACIST VIEW
                         </small>
+
                     </div>
+
                 </div>
+
+
+
                 <!-- ==================================
                      OVERVIEW
-                     ================================== -->
+                ================================== -->
 
                 <p class="sidebar-title">
                     OVERVIEW
                 </p>
+
+
                 <a
                     href="dashboard.html#admin"
                     data-roles="admin"
-                                    >
+                >
 
                     <i class="bi bi-grid"></i>
 
@@ -116,11 +128,12 @@
                     </span>
 
                 </a>
+
 
                 <a
                     href="dashboard.html#manager"
                     data-roles="manager"
-                                    >
+                >
 
                     <i class="bi bi-grid"></i>
 
@@ -130,10 +143,11 @@
 
                 </a>
 
+
                 <a
                     href="dashboard.html#pharmacist"
                     data-roles="pharmacist"
-                                    >
+                >
 
                     <i class="bi bi-grid"></i>
 
@@ -147,8 +161,7 @@
 
                 <!-- ==================================
                      INTO THE WAREHOUSE
-                     Admin + Manager
-                     ================================== -->
+                ================================== -->
 
                 <p
                     class="sidebar-title"
@@ -157,6 +170,8 @@
                     INTO THE WAREHOUSE
                 </p>
 
+
+                <!-- Suppliers -->
 
                 <a
                     href="suppliers.html#admin"
@@ -170,6 +185,7 @@
                     </span>
 
                 </a>
+
 
                 <a
                     href="suppliers.html#manager"
@@ -185,6 +201,9 @@
                 </a>
 
 
+
+                <!-- Supplies -->
+
                 <a
                     href="supply.html#admin"
                     data-roles="admin"
@@ -197,6 +216,7 @@
                     </span>
 
                 </a>
+
 
                 <a
                     href="supply.html#manager"
@@ -212,6 +232,9 @@
                 </a>
 
 
+
+                <!-- Warehouse Stock -->
+
                 <a
                     href="warehouse-stock.html#admin"
                     data-roles="admin"
@@ -224,6 +247,7 @@
                     </span>
 
                 </a>
+
 
                 <a
                     href="warehouse-stock.html#manager"
@@ -242,45 +266,20 @@
 
                 <!-- ==================================
                      OUT TO THE PHARMACY
-                     ================================== -->
+                ================================== -->
 
                 <p class="sidebar-title">
                     OUT TO THE PHARMACY
                 </p>
 
 
-                <a href="pharmacist-order.html#admin"
-                    data-roles="admin">
 
-                    <i class="bi bi-clipboard2"></i>
+                <!-- Pharmacist Orders -->
 
-                    <span>
-                        Pharmacist Orders
-                    </span>
-
-                    <span class="sidebar-count">
-                        1
-                    </span>
-
-                </a>
-
-                <a href="pharmacist-order.html#manager"
-                    data-roles="manager">
-
-                    <i class="bi bi-clipboard2"></i>
-
-                    <span>
-                        Pharmacist Orders
-                    </span>
-
-                    <span class="sidebar-count">
-                        1
-                    </span>
-
-                </a>
-
-                <a href="pharmacist-order.html#pharmacist"
-                    data-roles="pharmacist">
+                <a
+                    href="pharmacist-order.html#admin"
+                    data-roles="admin"
+                >
 
                     <i class="bi bi-clipboard2"></i>
 
@@ -295,61 +294,15 @@
                 </a>
 
 
-                <a href="transfer.html#admin"
-                    data-roles="admin">
+                <a
+                    href="pharmacist-order.html#manager"
+                    data-roles="manager"
+                >
 
-                    <i class="bi bi-truck"></i>
+                    <i class="bi bi-clipboard2"></i>
 
-
-                    <span data-roles="admin manager">
-                        Transfers
-                    </span>
-
-
-                    <span data-roles="pharmacist">
-                        Incoming Transfers
-                    </span>
-
-                    <span class="sidebar-count">
-                        1
-                    </span>
-
-                </a>
-
-                <a href="transfer.html#manager"
-                    data-roles="manager">
-
-                    <i class="bi bi-truck"></i>
-
-
-                    <span data-roles="admin manager">
-                        Transfers
-                    </span>
-
-
-                    <span data-roles="pharmacist">
-                        Incoming Transfers
-                    </span>
-
-                    <span class="sidebar-count">
-                        1
-                    </span>
-
-                </a>
-
-                <a href="transfer.html#pharmacist"
-                    data-roles="pharmacist">
-
-                    <i class="bi bi-truck"></i>
-
-
-                    <span data-roles="admin manager">
-                        Transfers
-                    </span>
-
-
-                    <span data-roles="pharmacist">
-                        Incoming Transfers
+                    <span>
+                        Pharmacist Orders
                     </span>
 
                     <span class="sidebar-count">
@@ -359,8 +312,88 @@
                 </a>
 
 
-                <a href="pharmacy-stock.html#admin"
-                    data-roles="admin">
+                <a
+                    href="pharmacist-order.html#pharmacist"
+                    data-roles="pharmacist"
+                >
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+
+                <!-- Transfers -->
+
+                <a
+                    href="transfer.html#admin"
+                    data-roles="admin"
+                >
+
+                    <i class="bi bi-truck"></i>
+
+                    <span>
+                        Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="transfer.html#manager"
+                    data-roles="manager"
+                >
+
+                    <i class="bi bi-truck"></i>
+
+                    <span>
+                        Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="transfer.html#pharmacist"
+                    data-roles="pharmacist"
+                >
+
+                    <i class="bi bi-truck"></i>
+
+                    <span>
+                        Incoming Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+
+                <!-- Pharmacy Stock -->
+
+                <a
+                    href="pharmacy-stock.html#admin"
+                    data-roles="admin"
+                >
 
                     <i class="bi bi-capsule"></i>
 
@@ -370,8 +403,11 @@
 
                 </a>
 
-                <a href="pharmacy-stock.html#manager"
-                    data-roles="manager">
+
+                <a
+                    href="pharmacy-stock.html#manager"
+                    data-roles="manager"
+                >
 
                     <i class="bi bi-capsule"></i>
 
@@ -381,8 +417,11 @@
 
                 </a>
 
-                <a href="pharmacy-stock.html#pharmacist"
-                    data-roles="pharmacist">
+
+                <a
+                    href="pharmacy-stock.html#pharmacist"
+                    data-roles="pharmacist"
+                >
 
                     <i class="bi bi-capsule"></i>
 
@@ -396,8 +435,7 @@
 
                 <!-- ==================================
                      USER MANAGEMENT
-                     Admin Only
-                     ================================== -->
+                ================================== -->
 
                 <p
                     class="sidebar-title"
@@ -423,11 +461,14 @@
 
 
 
-                <!-- Sign Out -->
+                <!-- ==================================
+                     SIGN OUT
+                ================================== -->
 
                 <a
-                    href="login.html"
+                    href="#"
                     class="sign-out"
+                    onclick="Auth.logout(); return false;"
                 >
 
                     <i class="bi bi-box-arrow-right"></i>
@@ -438,73 +479,28 @@
 
                 </a>
 
+
             </div>
 
+
+
             <!-- ==================================
-                 MAIN
-                 ================================== -->
+                 MAIN CONTENT
+            ================================== -->
 
             <main class="col-md-9 col-lg-10 main-content">
 
 
                 <!-- ==================================
-                     NO ACCESS
-
-                     Shown to Manager and Pharmacist.
-                     This only hides the screen. The real
-                     block is [Authorize(Roles = "Admin")]
-                     on UserController.CreateUser.
-                     ================================== -->
-
-                <div
-                    class="no-access"
-                    data-roles="manager pharmacist"
-                >
-
-                    <i class="bi bi-shield-lock"></i>
-
-
-                    <h2>
-                        Admin access only
-                    </h2>
-
-
-                    <p>
-                        User accounts can only be created by an
-                        administrator. If you need a new account,
-                        contact your system administrator.
-                    </p>
-
-
-                    <a
-                        href="dashboard.html#manager"
-                        class="back-link"
-                        data-roles="manager"
-                    >
-                        Back to dashboard
-                    </a>
-
-
-                    <a
-                        href="dashboard.html#pharmacist"
-                        class="back-link"
-                        data-roles="pharmacist"
-                    >
-                        Back to dashboard
-                    </a>
-
-                </div>
-
-
-
-                <!-- ==================================
                      ADMIN VIEW
-                     ================================== -->
+                ================================== -->
 
                 <div data-roles="admin">
 
 
-                    <!-- HEADER -->
+                    <!-- ==================================
+                         HEADER
+                    ================================== -->
 
                     <div class="page-header">
 
@@ -525,15 +521,10 @@
 
 
                             <p>
-                                Add a staff account and give it a role.
-                                The role decides which pages that person
-                                can open after signing in.
+                               Add a new staff member and assign the right system role.
                             </p>
 
                         </div>
-
-
-                      
 
                     </div>
 
@@ -543,12 +534,13 @@
 
 
                         <!-- ==================================
-                             FORM
-                             ================================== -->
+                             CREATE USER FORM
+                        ================================== -->
 
                         <div class="col-lg-7">
 
                             <section class="form-card">
+
 
                                 <div class="form-card-header">
 
@@ -564,10 +556,10 @@
                                 </div>
 
 
+
                                 <form
                                     class="form-card-body"
-                                    method="post"
-                                    action="#"
+                                    id="create-user-form"
                                 >
 
 
@@ -612,14 +604,13 @@
                                             id="email"
                                             name="email"
                                             maxlength="100"
-                                            pattern=".+@.+\.com"
                                             placeholder="layla@pharmacy.com"
                                             required
                                         >
 
 
                                         <small>
-                                            Must contain @ and end with .com
+                                            Enter a valid email address.
                                         </small>
 
                                     </div>
@@ -647,8 +638,8 @@
 
 
                                         <small>
-                                            Minimum 8 characters. Stored as a hash,
-                                            never as plain text.
+                                            Minimum 8 characters.
+                                            Password is stored as a hash.
                                         </small>
 
                                     </div>
@@ -670,17 +661,24 @@
                                             required
                                         >
 
-                                            <option value="" selected disabled>
+                                            <option
+                                                value=""
+                                                selected
+                                                disabled
+                                            >
                                                 Choose a role
                                             </option>
+
 
                                             <option value="Admin">
                                                 Admin
                                             </option>
 
+
                                             <option value="Manager">
                                                 Manager
                                             </option>
+
 
                                             <option value="Pharmacist">
                                                 Pharmacist
@@ -697,39 +695,25 @@
 
 
 
-                                    <!-- Active -->
+                                    <!-- ==================================
+                                         CREATE MESSAGE
+                                    ================================== -->
 
-                                    <div class="field-inline">
-
-                                        <input
-                                            type="checkbox"
-                                            id="isActive"
-                                            name="isActive"
-                                            checked
-                                        >
-
-
-                                        <label for="isActive">
-
-                                            <strong>
-                                                Active account
-                                            </strong>
-
-
-                                            <span>
-                                                An inactive account exists but
-                                                cannot sign in.
-                                            </span>
-
-                                        </label>
-
-                                    </div>
+                                    <p
+                                        id="create-user-message"
+                                        style="
+                                            min-height:22px;
+                                            margin:0;
+                                            font-size:14px;
+                                        "
+                                    ></p>
 
 
 
                                     <!-- Actions -->
 
                                     <div class="form-actions">
+
 
                                         <button
                                             type="submit"
@@ -738,9 +722,12 @@
 
                                             <i class="bi bi-person-plus"></i>
 
-                                            Create user
+                                            <span>
+                                                Create user
+                                            </span>
 
                                         </button>
+
 
 
                                         <button
@@ -750,9 +737,12 @@
                                             Clear
                                         </button>
 
+
                                     </div>
 
+
                                 </form>
+
 
                             </section>
 
@@ -761,17 +751,21 @@
 
 
                         <!-- ==================================
-                             ROLE REFERENCE
-                             ================================== -->
+                             ROLE INFORMATION
+                        ================================== -->
 
                         <div class="col-lg-5">
 
                             <section class="info-card">
 
+
                                 <h2>
                                     What each role can open
                                 </h2>
 
+
+
+                                <!-- Admin -->
 
                                 <div class="role-row role-row--admin">
 
@@ -794,6 +788,9 @@
                                 </div>
 
 
+
+                                <!-- Manager -->
+
                                 <div class="role-row role-row--manager">
 
                                     <span class="role-dot"></span>
@@ -807,14 +804,17 @@
 
 
                                         <p>
-                                            Warehouse stock, suppliers, supply
-                                            records and transfers.
+                                            Warehouse stock, suppliers,
+                                            supply records and transfers.
                                         </p>
 
                                     </div>
 
                                 </div>
 
+
+
+                                <!-- Pharmacist -->
 
                                 <div class="role-row role-row--pharmacist">
 
@@ -829,8 +829,8 @@
 
 
                                         <p>
-                                            Orders, incoming transfers and
-                                            pharmacy shelf stock.
+                                            Orders, incoming transfers
+                                            and pharmacy shelf stock.
                                         </p>
 
                                     </div>
@@ -838,19 +838,21 @@
                                 </div>
 
 
+
                                 <p class="info-note">
 
                                     <i class="bi bi-info-circle"></i>
 
-                                    A role cannot be changed from this form.
-                                    Delete the account and create it again,
-                                    or add an update endpoint.
+                                    Deleting an account deactivates
+                                    the user so they cannot sign in.
 
                                 </p>
+
 
                             </section>
 
                         </div>
+
 
                     </div>
 
@@ -858,11 +860,13 @@
 
                     <!-- ==================================
                          EXISTING USERS
-                         ================================== -->
+                    ================================== -->
 
                     <section class="users-card">
 
+
                         <div class="users-card-header">
+
 
                             <div>
 
@@ -871,21 +875,35 @@
                                 </h2>
 
 
-                              
+                                <p
+                                    id="users-message"
+                                    style="
+                                        margin:0;
+                                        font-size:14px;
+                                    "
+                                ></p>
 
                             </div>
 
 
-                            <span class="users-summary">
-                                4 accounts
+
+                            <span
+                                class="users-summary"
+                                id="users-summary"
+                            >
+                                0 accounts
                             </span>
+
 
                         </div>
 
 
+
                         <div class="table-responsive">
 
+
                             <table class="table users-table">
+
 
                                 <thead>
 
@@ -916,190 +934,78 @@
                                 </thead>
 
 
-                                <tbody>
 
-                                    <tr>
+                                <!-- ==================================
+                                     USERS FROM DATABASE
+                                ================================== -->
 
-                                        <td>
-                                            Salim Al Balushi
-                                        </td>
-
-                                        <td class="muted-cell">
-                                            salim@pharmacy.com
-                                        </td>
-
-                                        <td>
-
-                                            <span class="badge-role badge-admin">
-                                                Admin
-                                            </span>
-
-                                        </td>
-
-                                        <td>
-
-                                            <span class="badge-status badge-on">
-                                                Active
-                                            </span>
-
-                                        </td>
-
-                                        <td class="text-end">
-
-                                            <button
-                                                type="button"
-                                                class="btn-delete"
-                                                disabled
-                                            >
-                                                Delete
-                                            </button>
-
-                                        </td>
-
-                                    </tr>
-
-
-                                    <tr>
-
-                                        <td>
-                                            Maryam Al Saidi
-                                        </td>
-
-                                        <td class="muted-cell">
-                                            maryam@pharmacy.com
-                                        </td>
-
-                                        <td>
-
-                                            <span class="badge-role badge-manager">
-                                                Manager
-                                            </span>
-
-                                        </td>
-
-                                        <td>
-
-                                            <span class="badge-status badge-on">
-                                                Active
-                                            </span>
-
-                                        </td>
-
-                                        <td class="text-end">
-
-                                            <button
-                                                type="button"
-                                                class="btn-delete"
-                                            >
-                                                Delete
-                                            </button>
-
-                                        </td>
-
-                                    </tr>
-
-
-                                    <tr>
-
-                                        <td>
-                                            Layla Al Harthy
-                                        </td>
-
-                                        <td class="muted-cell">
-                                            layla@pharmacy.com
-                                        </td>
-
-                                        <td>
-
-                                            <span class="badge-role badge-pharmacist">
-                                                Pharmacist
-                                            </span>
-
-                                        </td>
-
-                                        <td>
-
-                                            <span class="badge-status badge-on">
-                                                Active
-                                            </span>
-
-                                        </td>
-
-                                        <td class="text-end">
-
-                                            <button
-                                                type="button"
-                                                class="btn-delete"
-                                            >
-                                                Delete
-                                            </button>
-
-                                        </td>
-
-                                    </tr>
-
-
-                                    <tr>
-
-                                        <td>
-                                            Yousuf Al Amri
-                                        </td>
-
-                                        <td class="muted-cell">
-                                            yousuf@pharmacy.com
-                                        </td>
-
-                                        <td>
-
-                                            <span class="badge-role badge-pharmacist">
-                                                Pharmacist
-                                            </span>
-
-                                        </td>
-
-                                        <td>
-
-                                            <span class="badge-status badge-off">
-                                                Inactive
-                                            </span>
-
-                                        </td>
-
-                                        <td class="text-end">
-
-                                            <button
-                                                type="button"
-                                                class="btn-delete"
-                                            >
-                                                Delete
-                                            </button>
-
-                                        </td>
-
-                                    </tr>
+                                <tbody id="users-table-body">
 
                                 </tbody>
 
+
                             </table>
+
 
                         </div>
 
 
-                       
-
                     </section>
 
+
                 </div>
-               <footer class="mt-auto text-center py-3">
-                <p class="small-footer">
-                &copy; 2026 Pharmacy System
-                </p>
-            </footer>
+
+
+
+                <!-- ==================================
+                     FOOTER
+                ================================== -->
+
+                <footer class="mt-auto text-center py-3">
+
+                    <p class="small-footer">
+
+                        &copy; 2026 Pharmacy System
+
+                    </p>
+
+                </footer>
+
+
             </main>
+
 
         </div>
 
     </div>
+
+
+
+    <!-- ==================================
+         JAVASCRIPT
+    ================================== -->
+
+
+    <!-- Bootstrap JS -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    >
+    </script>
+
+
+    <!-- Shared JS -->
+
+    <script src="../JS/Config.js" defer></script>
+
+    <script src="../JS/Auth.js" defer></script>
+
+    <script src="../JS/Api.js" defer></script>
+
+
+    <!-- Create User JS -->
+
+    <script src="../JS/Create-user.js" defer></script>
+
 
 </body>
 
