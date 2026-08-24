@@ -81,6 +81,13 @@ form.addEventListener("submit", async (e) => {
                 role: result.role
             });
 
+// Go to dashboard
+            window.location.href =
+                "dashboard.html#" +
+                result.role.toLowerCase();
+
+        }
+
 
 })
 
