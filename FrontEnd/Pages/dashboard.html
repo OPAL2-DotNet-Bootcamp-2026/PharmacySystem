@@ -38,29 +38,22 @@
         rel="stylesheet"
         href="../CSS/font.css"
     >
-<link rel="stylesheet" href="../components/footer.css">
+
+
+    <!-- Footer CSS -->
+    <link
+        rel="stylesheet"
+        href="../components/footer.css"
+    >
+
 </head>
 
-
-<!--
-    ROLE
-
-    The role is no longer written in this file.
-    It comes from the #fragment in the URL:
-
-        dashboard.html#admin
-        dashboard.html#manager
-        dashboard.html#pharmacist
-
-    Open Pages/login.html to pick one.
--->
 
 <body>
 
 
     <!-- ==================================
          ROLE FLAGS
-         The #fragment in the URL picks the role.
          ================================== -->
 
     <b id="admin" class="role-flag"></b>
@@ -142,6 +135,7 @@
 
                 </a>
 
+
                 <a
                     href="dashboard.html#manager"
                     data-roles="manager"
@@ -155,6 +149,7 @@
                     </span>
 
                 </a>
+
 
                 <a
                     href="dashboard.html#pharmacist"
@@ -174,7 +169,6 @@
 
                 <!-- ==================================
                      INTO THE WAREHOUSE
-                     Admin + Manager
                      ================================== -->
 
                 <p
@@ -197,6 +191,7 @@
                     </span>
 
                 </a>
+
 
                 <a
                     href="suppliers.html#manager"
@@ -225,6 +220,7 @@
 
                 </a>
 
+
                 <a
                     href="supply.html#manager"
                     data-roles="manager"
@@ -252,6 +248,7 @@
 
                 </a>
 
+
                 <a
                     href="warehouse-stock.html#manager"
                     data-roles="manager"
@@ -276,38 +273,10 @@
                 </p>
 
 
-                <a href="pharmacist-order.html#admin"
-                    data-roles="admin">
-
-                    <i class="bi bi-clipboard2"></i>
-
-                    <span>
-                        Pharmacist Orders
-                    </span>
-
-                    <span class="sidebar-count">
-                        1
-                    </span>
-
-                </a>
-
-                <a href="pharmacist-order.html#manager"
-                    data-roles="manager">
-
-                    <i class="bi bi-clipboard2"></i>
-
-                    <span>
-                        Pharmacist Orders
-                    </span>
-
-                    <span class="sidebar-count">
-                        1
-                    </span>
-
-                </a>
-
-                <a href="pharmacist-order.html#pharmacist"
-                    data-roles="pharmacist">
+                <a
+                    href="pharmacist-order.html#admin"
+                    data-roles="admin"
+                >
 
                     <i class="bi bi-clipboard2"></i>
 
@@ -322,61 +291,15 @@
                 </a>
 
 
-                <a href="transfer.html#admin"
-                    data-roles="admin">
+                <a
+                    href="pharmacist-order.html#manager"
+                    data-roles="manager"
+                >
 
-                    <i class="bi bi-truck"></i>
+                    <i class="bi bi-clipboard2"></i>
 
-
-                    <span data-roles="admin manager">
-                        Transfers
-                    </span>
-
-
-                    <span data-roles="pharmacist">
-                        Incoming Transfers
-                    </span>
-
-                    <span class="sidebar-count">
-                        1
-                    </span>
-
-                </a>
-
-                <a href="transfer.html#manager"
-                    data-roles="manager">
-
-                    <i class="bi bi-truck"></i>
-
-
-                    <span data-roles="admin manager">
-                        Transfers
-                    </span>
-
-
-                    <span data-roles="pharmacist">
-                        Incoming Transfers
-                    </span>
-
-                    <span class="sidebar-count">
-                        1
-                    </span>
-
-                </a>
-
-                <a href="transfer.html#pharmacist"
-                    data-roles="pharmacist">
-
-                    <i class="bi bi-truck"></i>
-
-
-                    <span data-roles="admin manager">
-                        Transfers
-                    </span>
-
-
-                    <span data-roles="pharmacist">
-                        Incoming Transfers
+                    <span>
+                        Pharmacist Orders
                     </span>
 
                     <span class="sidebar-count">
@@ -386,8 +309,88 @@
                 </a>
 
 
-                <a href="pharmacy-stock.html#admin"
-                    data-roles="admin">
+                <a
+                    href="pharmacist-order.html#pharmacist"
+                    data-roles="pharmacist"
+                >
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+
+                <!-- Transfers -->
+
+                <a
+                    href="transfer.html#admin"
+                    data-roles="admin"
+                >
+
+                    <i class="bi bi-truck"></i>
+
+                    <span>
+                        Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="transfer.html#manager"
+                    data-roles="manager"
+                >
+
+                    <i class="bi bi-truck"></i>
+
+                    <span>
+                        Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="transfer.html#pharmacist"
+                    data-roles="pharmacist"
+                >
+
+                    <i class="bi bi-truck"></i>
+
+                    <span>
+                        Incoming Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+
+                <!-- Pharmacy Stock -->
+
+                <a
+                    href="pharmacy-stock.html#admin"
+                    data-roles="admin"
+                >
 
                     <i class="bi bi-capsule"></i>
 
@@ -397,8 +400,11 @@
 
                 </a>
 
-                <a href="pharmacy-stock.html#manager"
-                    data-roles="manager">
+
+                <a
+                    href="pharmacy-stock.html#manager"
+                    data-roles="manager"
+                >
 
                     <i class="bi bi-capsule"></i>
 
@@ -408,8 +414,11 @@
 
                 </a>
 
-                <a href="pharmacy-stock.html#pharmacist"
-                    data-roles="pharmacist">
+
+                <a
+                    href="pharmacy-stock.html#pharmacist"
+                    data-roles="pharmacist"
+                >
 
                     <i class="bi bi-capsule"></i>
 
@@ -423,7 +432,6 @@
 
                 <!-- ==================================
                      USER MANAGEMENT
-                     Admin Only
                      ================================== -->
 
                 <p
@@ -449,11 +457,14 @@
 
 
 
-                <!-- Sign Out -->
+                <!-- ==================================
+                     SIGN OUT
+                     ================================== -->
 
                 <a
-                    href="login.html"
+                    href="#"
                     class="sign-out"
+                    onclick="Auth.logout(); return false;"
                 >
 
                     <i class="bi bi-box-arrow-right"></i>
@@ -484,35 +495,25 @@
                     <div>
 
 
-                        <!-- Admin -->
-
                         <h2 data-roles="admin">
                             Good day, Admin
                         </h2>
 
-
-                        <!-- Manager -->
 
                         <h2 data-roles="manager">
                             Good day, Manager
                         </h2>
 
 
-                        <!-- Pharmacist -->
-
                         <h2 data-roles="pharmacist">
                             Good day, Pharmacist
                         </h2>
 
 
-                        <!-- Admin + Manager -->
-
                         <p data-roles="admin manager">
                             Here is where every unit of stock is sitting right now.
                         </p>
 
-
-                        <!-- Pharmacist -->
 
                         <p data-roles="pharmacist">
                             Here are your orders, incoming transfers and pharmacy stock.
@@ -535,6 +536,7 @@
                         Record Supply
 
                     </a>
+
 
                     <a
                         href="supply.html#manager"
@@ -570,7 +572,6 @@
 
                 <!-- ==================================
                      GREEN LIVE PIPELINE
-                     Admin + Manager
                      ================================== -->
 
                 <div
@@ -578,8 +579,6 @@
                     data-roles="admin manager"
                 >
 
-
-                    <!-- Pipeline Header -->
 
                     <div class="pipeline__top">
 
@@ -600,8 +599,6 @@
 
 
 
-                    <!-- Pipeline Nodes -->
-
                     <div class="pipe">
 
 
@@ -611,13 +608,11 @@
 
                             <div class="node__rail"></div>
 
-
                             <div
                                 class="node__pulse"
                                 style="--dist:130px;"
                             >
                             </div>
-
 
                             <div
                                 class="node__pulse node__pulse--b"
@@ -667,7 +662,6 @@
 
                             <div class="node__rail"></div>
 
-
                             <div
                                 class="node__pulse"
                                 style="
@@ -676,7 +670,6 @@
                                 "
                             >
                             </div>
-
 
                             <div
                                 class="node__pulse node__pulse--b"
@@ -726,7 +719,6 @@
 
                             <div class="node__rail"></div>
 
-
                             <div
                                 class="node__pulse"
                                 style="
@@ -735,7 +727,6 @@
                                 "
                             >
                             </div>
-
 
                             <div
                                 class="node__pulse node__pulse--b"
@@ -785,7 +776,6 @@
 
                             <div class="node__rail"></div>
 
-
                             <div
                                 class="node__pulse"
                                 style="
@@ -794,7 +784,6 @@
                                 "
                             >
                             </div>
-
 
                             <div
                                 class="node__pulse node__pulse--b"
@@ -889,8 +878,6 @@
                 >
 
 
-                    <!-- Suppliers -->
-
                     <div class="col-md-6 col-lg-3">
 
                         <div class="dashboard-stat">
@@ -899,16 +886,13 @@
                                 SUPPLIERS
                             </p>
 
-
                             <h2>
                                 5
                             </h2>
 
-
                             <p class="dashboard-stat-info">
                                 1 inactive
                             </p>
-
 
                             <div class="mini-line">
 
@@ -929,8 +913,6 @@
 
 
 
-                    <!-- Supplies Received -->
-
                     <div class="col-md-6 col-lg-3">
 
                         <div class="dashboard-stat">
@@ -939,16 +921,13 @@
                                 SUPPLIES RECEIVED
                             </p>
 
-
                             <h2>
                                 3
                             </h2>
 
-
                             <p class="dashboard-stat-info">
                                 Last: 25 Jul 2026
                             </p>
-
 
                             <div class="mini-line">
 
@@ -969,8 +948,6 @@
 
 
 
-                    <!-- Pending Orders -->
-
                     <div class="col-md-6 col-lg-3">
 
                         <div class="dashboard-stat dashboard-stat-warning">
@@ -979,16 +956,13 @@
                                 PENDING ORDERS
                             </p>
 
-
                             <h2>
                                 1
                             </h2>
 
-
                             <p class="dashboard-stat-info">
                                 2 orders in total
                             </p>
-
 
                             <div class="mini-line mini-line-warning">
 
@@ -1009,8 +983,6 @@
 
 
 
-                    <!-- Low Stock -->
-
                     <div class="col-md-6 col-lg-3">
 
                         <div class="dashboard-stat dashboard-stat-warning">
@@ -1019,16 +991,13 @@
                                 LOW STOCK LINES
                             </p>
 
-
                             <h2>
                                 2
                             </h2>
 
-
                             <p class="dashboard-stat-info">
                                 1 warehouse · 1 pharmacy
                             </p>
-
 
                             <div class="mini-line mini-line-warning">
 
@@ -1053,7 +1022,6 @@
 
                 <!-- ==================================
                      STOCK LOCATION + MEDICINES
-                     Admin + Manager
                      ================================== -->
 
                 <div
@@ -1061,10 +1029,6 @@
                     data-roles="admin manager"
                 >
 
-
-                    <!-- ==================================
-                         WHERE STOCK IS SITTING
-                         ================================== -->
 
                     <div class="col-lg-6">
 
@@ -1077,7 +1041,6 @@
                                     Where the stock is sitting
                                 </h4>
 
-
                                 <p>
                                     Every unit is in exactly one of these three places
                                 </p>
@@ -1088,8 +1051,6 @@
 
                             <div class="stock-location-content">
 
-
-                                <!-- Donut -->
 
                                 <div class="donut-chart">
 
@@ -1109,8 +1070,6 @@
 
 
 
-                                <!-- Legend -->
-
                                 <div class="stock-legend">
 
 
@@ -1121,11 +1080,9 @@
                                         >
                                         </span>
 
-
                                         <span>
                                             In the warehouse
                                         </span>
-
 
                                         <strong>
                                             923
@@ -1142,11 +1099,9 @@
                                         >
                                         </span>
 
-
                                         <span>
                                             On the road
                                         </span>
-
 
                                         <strong>
                                             40
@@ -1163,11 +1118,9 @@
                                         >
                                         </span>
 
-
                                         <span>
                                             On the shelf
                                         </span>
-
 
                                         <strong>
                                             65
@@ -1185,10 +1138,6 @@
 
 
 
-                    <!-- ==================================
-                         MOST HELD MEDICINES
-                         ================================== -->
-
                     <div class="col-lg-6">
 
                         <div class="dashboard-panel">
@@ -1199,7 +1148,6 @@
                                 <h4>
                                     Most-held medicines
                                 </h4>
-
 
                                 <p>
                                     Warehouse and pharmacy quantities combined
@@ -1212,8 +1160,6 @@
                             <div class="medicine-bars">
 
 
-                                <!-- Medicine 1 -->
-
                                 <div class="medicine-bar">
 
                                     <div class="medicine-bar-top">
@@ -1222,11 +1168,9 @@
                                             Panadol Extra 500mg
                                         </span>
 
-
                                         <span>
                                             Analgesic
                                         </span>
-
 
                                         <strong>
                                             434
@@ -1249,8 +1193,6 @@
 
 
 
-                                <!-- Medicine 2 -->
-
                                 <div class="medicine-bar">
 
                                     <div class="medicine-bar-top">
@@ -1259,11 +1201,9 @@
                                             Amoxicillin 500mg
                                         </span>
 
-
                                         <span>
                                             Antibiotic
                                         </span>
-
 
                                         <strong>
                                             250
@@ -1286,8 +1226,6 @@
 
 
 
-                                <!-- Medicine 3 -->
-
                                 <div class="medicine-bar">
 
                                     <div class="medicine-bar-top">
@@ -1296,11 +1234,9 @@
                                             Insulin Glargine
                                         </span>
 
-
                                         <span>
                                             Cold chain
                                         </span>
-
 
                                         <strong>
                                             120
@@ -1323,8 +1259,6 @@
 
 
 
-                                <!-- Medicine 4 -->
-
                                 <div class="medicine-bar">
 
                                     <div class="medicine-bar-top">
@@ -1333,11 +1267,9 @@
                                             Ventolin Inhaler
                                         </span>
 
-
                                         <span>
                                             Respiratory
                                         </span>
-
 
                                         <strong>
                                             75
@@ -1360,8 +1292,6 @@
 
 
 
-                                <!-- Medicine 5 -->
-
                                 <div class="medicine-bar">
 
                                     <div class="medicine-bar-top">
@@ -1370,11 +1300,9 @@
                                             Vitamin C 1000mg
                                         </span>
 
-
                                         <span>
                                             Supplement
                                         </span>
-
 
                                         <strong>
                                             60
@@ -1407,7 +1335,6 @@
 
                 <!-- ==================================
                      ACTIVITY + RUNNING LOW
-                     Admin + Manager
                      ================================== -->
 
                 <div
@@ -1415,10 +1342,6 @@
                     data-roles="admin manager"
                 >
 
-
-                    <!-- ==================================
-                         WHAT HAPPENED LATELY
-                         ================================== -->
 
                     <div class="col-lg-6">
 
@@ -1442,20 +1365,13 @@
                             <div class="activity-list">
 
 
-                                <!-- Activity 1 -->
-
                                 <div class="activity-item">
 
-                                    <span
-                                        class="activity-dot amber-dot"
-                                    >
-                                    </span>
-
+                                    <span class="activity-dot amber-dot"></span>
 
                                     <span>
                                         Transfer #1 left Main Warehouse for Seeb Pharmacy
                                     </span>
-
 
                                     <small>
                                         30 Jul
@@ -1465,20 +1381,13 @@
 
 
 
-                                <!-- Activity 2 -->
-
                                 <div class="activity-item">
 
-                                    <span
-                                        class="activity-dot green-dot"
-                                    >
-                                    </span>
-
+                                    <span class="activity-dot green-dot"></span>
 
                                     <span>
                                         Order #2 approved by Huda Al Balushi
                                     </span>
-
 
                                     <small>
                                         29 Jul
@@ -1488,20 +1397,13 @@
 
 
 
-                                <!-- Activity 3 -->
-
                                 <div class="activity-item">
 
-                                    <span
-                                        class="activity-dot green-dot"
-                                    >
-                                    </span>
-
+                                    <span class="activity-dot green-dot"></span>
 
                                     <span>
                                         Supply BN-2026-0043 added 120 units of Insulin Glargine
                                     </span>
-
 
                                     <small>
                                         25 Jul
@@ -1517,10 +1419,6 @@
 
 
 
-                    <!-- ==================================
-                         RUNNING LOW
-                         ================================== -->
-
                     <div class="col-lg-6">
 
                         <div class="dashboard-panel">
@@ -1531,7 +1429,6 @@
                                 <h4>
                                     Running low
                                 </h4>
-
 
                                 <p>
                                     Warehouse under 50 · pharmacy under 15
@@ -1630,8 +1527,6 @@
 
 
 
-             
-
                 <!-- ==================================
                      PHARMACIST DASHBOARD
                      ================================== -->
@@ -1641,8 +1536,6 @@
                     data-roles="pharmacist"
                 >
 
-
-                    <!-- My Pending Orders -->
 
                     <div class="col-md-4">
 
@@ -1666,8 +1559,6 @@
 
 
 
-                    <!-- Incoming Transfers -->
-
                     <div class="col-md-4">
 
                         <div class="dashboard-stat dashboard-stat-warning">
@@ -1689,8 +1580,6 @@
                     </div>
 
 
-
-                    <!-- My Pharmacy Stock -->
 
                     <div class="col-md-4">
 
@@ -1714,11 +1603,18 @@
 
                 </div>
 
+
+
+                <!-- Footer -->
+
                 <footer class="small-footer">
-                    <p>&copy; 2026 Pharmacy System</p>
+
+                    <p>
+                        &copy; 2026 Pharmacy System
+                    </p>
+
                 </footer>
 
-              
 
             </div>
 
@@ -1727,12 +1623,29 @@
     </div>
 
 
-    <!-- Bootstrap JS -->
 
+    <!-- ==================================
+         JAVASCRIPT
+         ================================== -->
+
+
+    <!-- Bootstrap JS -->
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     >
     </script>
+
+
+    <!-- API URL -->
+    <script src="../JS/Config.js"></script>
+
+
+    <!-- Authentication -->
+    <script src="../JS/Auth.js"></script>
+
+
+    <!-- API Requests -->
+    <script src="../JS/Api.js"></script>
 
 
 </body>
