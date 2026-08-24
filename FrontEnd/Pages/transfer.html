@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -11,50 +12,54 @@
 
     <title>Transfers</title>
 
+
     <!-- Bootstrap CSS -->
+
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
+
     <!-- Bootstrap Icons -->
+
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
     >
 
+
     <!-- Transfer CSS -->
+
     <link
         rel="stylesheet"
         href="../CSS/transfer.css"
     >
 
-      <!--font css-->
-    <link rel="stylesheet"
-    href="../CSS/font.css"
+
+    <!-- Font CSS -->
+
+    <link
+        rel="stylesheet"
+        href="../CSS/font.css"
     >
+
 </head>
 
-
-<!--
-    STATIC ROLE
-
-    admin
-    manager
-    pharmacist
--->
 
 <body>
 
 
     <!-- ==================================
          ROLE FLAGS
-         The #fragment in the URL picks the role.
-         ================================== -->
+    ================================== -->
 
     <b id="admin" class="role-flag"></b>
+
     <b id="manager" class="role-flag"></b>
+
     <b id="pharmacist" class="role-flag"></b>
+
 
 
     <div class="container-fluid app">
@@ -107,17 +112,17 @@
 
 
 
-                <!-- ==================================
-                     OVERVIEW
-                ================================== -->
+                <!-- OVERVIEW -->
 
                 <p class="sidebar-title">
                     OVERVIEW
                 </p>
 
 
-                <a href="dashboard.html#admin"
-                    data-roles="admin">
+                <a
+                    href="dashboard.html#admin"
+                    data-roles="admin"
+                >
 
                     <i class="bi bi-grid"></i>
 
@@ -127,8 +132,11 @@
 
                 </a>
 
-                <a href="dashboard.html#manager"
-                    data-roles="manager">
+
+                <a
+                    href="dashboard.html#manager"
+                    data-roles="manager"
+                >
 
                     <i class="bi bi-grid"></i>
 
@@ -138,8 +146,11 @@
 
                 </a>
 
-                <a href="dashboard.html#pharmacist"
-                    data-roles="pharmacist">
+
+                <a
+                    href="dashboard.html#pharmacist"
+                    data-roles="pharmacist"
+                >
 
                     <i class="bi bi-grid"></i>
 
@@ -153,7 +164,6 @@
 
                 <!-- ==================================
                      INTO THE WAREHOUSE
-                     Admin + Manager
                 ================================== -->
 
                 <p
@@ -176,6 +186,7 @@
                     </span>
 
                 </a>
+
 
                 <a
                     href="suppliers.html#manager"
@@ -204,6 +215,7 @@
 
                 </a>
 
+
                 <a
                     href="supply.html#manager"
                     data-roles="manager"
@@ -231,6 +243,7 @@
 
                 </a>
 
+
                 <a
                     href="warehouse-stock.html#manager"
                     data-roles="manager"
@@ -255,8 +268,10 @@
                 </p>
 
 
-                <a href="pharmacist-order.html#admin"
-                    data-roles="admin">
+                <a
+                    href="pharmacist-order.html#admin"
+                    data-roles="admin"
+                >
 
                     <i class="bi bi-clipboard2"></i>
 
@@ -270,8 +285,11 @@
 
                 </a>
 
-                <a href="pharmacist-order.html#manager"
-                    data-roles="manager">
+
+                <a
+                    href="pharmacist-order.html#manager"
+                    data-roles="manager"
+                >
 
                     <i class="bi bi-clipboard2"></i>
 
@@ -285,8 +303,11 @@
 
                 </a>
 
-                <a href="pharmacist-order.html#pharmacist"
-                    data-roles="pharmacist">
+
+                <a
+                    href="pharmacist-order.html#pharmacist"
+                    data-roles="pharmacist"
+                >
 
                     <i class="bi bi-clipboard2"></i>
 
@@ -300,6 +321,9 @@
 
                 </a>
 
+
+
+                <!-- Transfers -->
 
                 <a
                     href="transfer.html#admin"
@@ -309,22 +333,20 @@
 
                     <i class="bi bi-truck"></i>
 
-
                     <span data-roles="admin manager">
                         Transfers
                     </span>
 
-
                     <span data-roles="pharmacist">
                         Incoming Transfers
                     </span>
-
 
                     <span class="sidebar-count">
                         1
                     </span>
 
                 </a>
+
 
                 <a
                     href="transfer.html#manager"
@@ -334,22 +356,20 @@
 
                     <i class="bi bi-truck"></i>
 
-
                     <span data-roles="admin manager">
                         Transfers
                     </span>
 
-
                     <span data-roles="pharmacist">
                         Incoming Transfers
                     </span>
-
 
                     <span class="sidebar-count">
                         1
                     </span>
 
                 </a>
+
 
                 <a
                     href="transfer.html#pharmacist"
@@ -359,16 +379,13 @@
 
                     <i class="bi bi-truck"></i>
 
-
                     <span data-roles="admin manager">
                         Transfers
                     </span>
 
-
                     <span data-roles="pharmacist">
                         Incoming Transfers
                     </span>
-
 
                     <span class="sidebar-count">
                         1
@@ -377,8 +394,13 @@
                 </a>
 
 
-                <a href="pharmacy-stock.html#admin"
-                    data-roles="admin">
+
+                <!-- Pharmacy Stock -->
+
+                <a
+                    href="pharmacy-stock.html#admin"
+                    data-roles="admin"
+                >
 
                     <i class="bi bi-capsule"></i>
 
@@ -388,8 +410,11 @@
 
                 </a>
 
-                <a href="pharmacy-stock.html#manager"
-                    data-roles="manager">
+
+                <a
+                    href="pharmacy-stock.html#manager"
+                    data-roles="manager"
+                >
 
                     <i class="bi bi-capsule"></i>
 
@@ -399,8 +424,11 @@
 
                 </a>
 
-                <a href="pharmacy-stock.html#pharmacist"
-                    data-roles="pharmacist">
+
+                <a
+                    href="pharmacy-stock.html#pharmacist"
+                    data-roles="pharmacist"
+                >
 
                     <i class="bi bi-capsule"></i>
 
@@ -414,7 +442,6 @@
 
                 <!-- ==================================
                      USER MANAGEMENT
-                     Admin only
                 ================================== -->
 
                 <p
@@ -455,6 +482,7 @@
 
                 </a>
 
+
             </div>
 
 
@@ -463,350 +491,333 @@
                  MAIN CONTENT
             ================================== -->
 
-            <main class="col-md-9 col-lg-10 main-content d-flex flex-column min-vh-100">
+            <main
+                class="col-md-9 col-lg-10 main-content d-flex flex-column min-vh-100"
+            >
+
+
+                <!-- ==================================
+                     HIDDEN CHECKBOX
+                ================================== -->
+
+                <input
+                    type="checkbox"
+                    id="showCreateTransfer"
+                    class="create-transfer-toggle"
+                >
+
 
 
                 <!-- ==================================
                      ADMIN + MANAGER HEADER
                 ================================== -->
-<!-- ==================================
-     HIDDEN CHECKBOX
-================================== -->
 
-<input
-    type="checkbox"
-    id="showCreateTransfer"
-    class="create-transfer-toggle"
->
-
-
-<!-- ==================================
-     ADMIN + MANAGER HEADER
-================================== -->
-
-<div
-    class="page-header"
-    data-roles="admin manager"
->
-
-    <div class="page-header-text">
-
-        <h1>
-            Transfers
-        </h1>
-
-        <p>
-            Move approved orders out of the warehouse
-            and towards the pharmacy.
-        </p>
-
-    </div>
-
-
-    <!-- Open Create Transfer Card -->
-
-    <label
-        for="showCreateTransfer"
-        class="create-transfer-btn"
-    >
-
-        <i class="bi bi-plus-lg"></i>
-
-        Create Transfer
-
-    </label>
-
-</div>
-
-
-<!-- ==================================
-     CREATE TRANSFER OVERLAY
-================================== -->
-
-<div
-    class="create-transfer-overlay"
-    data-roles="admin manager"
->
-
-    <div class="create-transfer-modal-card">
-
-
-        <!-- Card Header -->
-
-        <div class="create-transfer-card-header">
-
-            <div>
-
-                <h2>
-                    Create Transfer
-                </h2>
-
-                <p>
-                    Create a transfer from an approved pharmacist order.
-                </p>
-
-            </div>
-
-
-            <!-- Close -->
-
-            <label
-                for="showCreateTransfer"
-                class="create-transfer-close"
-            >
-
-                <i class="bi bi-x-lg"></i>
-
-            </label>
-
-        </div>
-
-
-        <!-- Form -->
-
-        <form class="transfer-form">
-
-
-            <div class="row g-3">
-
-
-                <!-- Approved Order -->
-
-                <div class="col-md-6">
-
-                    <label
-                        for="pharmacistOrder"
-                        class="form-label"
-                    >
-                        Approved Pharmacist Order
-                    </label>
-
-
-                    <select
-                        id="pharmacistOrder"
-                        class="form-select"
-                    >
-
-                        <option selected disabled>
-                            Select approved order
-                        </option>
-
-                        <option value="1">
-                            Order #1 — Seeb Pharmacy
-                        </option>
-
-                        <option value="2">
-                            Order #2 — Muscat Pharmacy
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- Warehouse -->
-
-                <div class="col-md-6">
-
-                    <label
-                        for="warehouse"
-                        class="form-label"
-                    >
-                        Warehouse
-                    </label>
-
-
-                    <select
-                        id="warehouse"
-                        class="form-select"
-                    >
-
-                        <option selected disabled>
-                            Select warehouse
-                        </option>
-
-                        <option value="1">
-                            Main Warehouse — Rusayl
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- Pharmacy -->
-
-                <div class="col-md-6">
-
-                    <label
-                        for="pharmacy"
-                        class="form-label"
-                    >
-                        Pharmacy
-                    </label>
-
-
-                    <input
-                        type="text"
-                        id="pharmacy"
-                        class="form-control"
-                        value="Seeb Pharmacy"
-                        readonly
-                    >
-
-                </div>
-
-
-                <!-- Status -->
-
-                <div class="col-md-6">
-
-                    <label
-                        for="orderStatus"
-                        class="form-label"
-                    >
-                        Order Status
-                    </label>
-
-
-                    <input
-                        type="text"
-                        id="orderStatus"
-                        class="form-control"
-                        value="Approved"
-                        readonly
-                    >
-
-                </div>
-
-            </div>
-
-
-            <!-- Medicines -->
-
-            <div class="transfer-medicines">
-
-
-                <div class="transfer-medicines-header">
-
-                    <h5>
-                        Order Medicines
-                    </h5>
-
-                    <p>
-                        All medicines and quantities will be transferred.
-                    </p>
-
-                </div>
-
-
-                <div class="table-responsive">
-
-                    <table class="table transfer-create-table">
-
-                        <thead>
-
-                            <tr>
-
-                                <th>
-                                    MEDICINE
-                                </th>
-
-                                <th>
-                                    CATEGORY
-                                </th>
-
-                                <th class="text-end">
-                                    QUANTITY
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-
-                            <tr>
-
-                                <td>
-                                    <strong>
-                                        Panadol Extra 500mg
-                                    </strong>
-                                </td>
-
-                                <td>
-                                    Analgesic
-                                </td>
-
-                                <td class="text-end">
-                                    20
-                                </td>
-
-                            </tr>
-
-
-                            <tr>
-
-                                <td>
-                                    <strong>
-                                        Amoxicillin 500mg
-                                    </strong>
-                                </td>
-
-                                <td>
-                                    Antibiotic
-                                </td>
-
-                                <td class="text-end">
-                                    10
-                                </td>
-
-                            </tr>
-
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-
-            <!-- Buttons -->
-
-            <div class="transfer-form-actions">
-
-
-                <label
-                    for="showCreateTransfer"
-                    class="cancel-transfer-btn"
-                >
-                    Cancel
-                </label>
-
-
-                <button
-                    type="submit"
-                    class="submit-transfer-btn"
+                <div
+                    class="page-header"
+                    data-roles="admin manager"
                 >
 
-                    <i class="bi bi-truck"></i>
 
-                    Create Transfer
+                    <div class="page-header-text">
 
-                </button>
+                        <h1>
+                            Transfers
+                        </h1>
 
-            </div>
+                        <p>
+                            Move approved orders out of the warehouse
+                            and towards the pharmacy.
+                        </p>
+
+                    </div>
 
 
-        </form>
+                    <label
+                        for="showCreateTransfer"
+                        class="create-transfer-btn"
+                    >
 
-    </div>
+                        <i class="bi bi-plus-lg"></i>
 
-</div>
+                        Create Transfer
+
+                    </label>
+
+
+                </div>
+
+
+
+                <!-- ==================================
+                     CREATE TRANSFER OVERLAY
+                ================================== -->
+
+                <div
+                    class="create-transfer-overlay"
+                    data-roles="admin manager"
+                >
+
+
+                    <div class="create-transfer-modal-card">
+
+
+                        <div class="create-transfer-card-header">
+
+
+                            <div>
+
+                                <h2>
+                                    Create Transfer
+                                </h2>
+
+                                <p>
+                                    Create a transfer from an approved pharmacist order.
+                                </p>
+
+                            </div>
+
+
+                            <label
+                                for="showCreateTransfer"
+                                class="create-transfer-close"
+                            >
+
+                                <i class="bi bi-x-lg"></i>
+
+                            </label>
+
+
+                        </div>
+
+
+
+                        <!-- Form -->
+
+                        <form
+                            id="transferForm"
+                            class="transfer-form"
+                        >
+
+
+                            <div class="row g-3">
+
+
+                                <!-- Approved Order -->
+
+                                <div class="col-md-6">
+
+
+                                    <label
+                                        for="pharmacistOrder"
+                                        class="form-label"
+                                    >
+                                        Approved Pharmacist Order
+                                    </label>
+
+
+                                    <select
+                                        id="pharmacistOrder"
+                                        class="form-select"
+                                    >
+
+                                        <option
+                                            value=""
+                                            selected
+                                            disabled
+                                        >
+                                            Select approved order
+                                        </option>
+
+                                    </select>
+
+
+                                </div>
+
+
+
+                                <!-- Warehouse -->
+
+                                <div class="col-md-6">
+
+
+                                    <label
+                                        for="warehouse"
+                                        class="form-label"
+                                    >
+                                        Warehouse
+                                    </label>
+
+
+                                    <select
+                                        id="warehouse"
+                                        class="form-select"
+                                    >
+
+                                        <option
+                                            value=""
+                                            selected
+                                            disabled
+                                        >
+                                            Select warehouse
+                                        </option>
+
+                                    </select>
+
+
+                                </div>
+
+
+
+                                <!-- Pharmacy -->
+
+                                <div class="col-md-6">
+
+
+                                    <label
+                                        for="pharmacy"
+                                        class="form-label"
+                                    >
+                                        Pharmacy
+                                    </label>
+
+
+                                    <input
+                                        type="text"
+                                        id="pharmacy"
+                                        class="form-control"
+                                        readonly
+                                    >
+
+
+                                </div>
+
+
+
+                                <!-- Status -->
+
+                                <div class="col-md-6">
+
+
+                                    <label
+                                        for="orderStatus"
+                                        class="form-label"
+                                    >
+                                        Order Status
+                                    </label>
+
+
+                                    <input
+                                        type="text"
+                                        id="orderStatus"
+                                        class="form-control"
+                                        readonly
+                                    >
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- Medicines -->
+
+                            <div class="transfer-medicines">
+
+
+                                <div class="transfer-medicines-header">
+
+                                    <h5>
+                                        Order Medicines
+                                    </h5>
+
+                                    <p>
+                                        All medicines and quantities will be transferred.
+                                    </p>
+
+                                </div>
+
+
+                                <div class="table-responsive">
+
+
+                                    <table class="table transfer-create-table">
+
+
+                                        <thead>
+
+                                            <tr>
+
+                                                <th>
+                                                    MEDICINE
+                                                </th>
+
+                                                <th>
+                                                    CATEGORY
+                                                </th>
+
+                                                <th class="text-end">
+                                                    QUANTITY
+                                                </th>
+
+                                            </tr>
+
+                                        </thead>
+
+
+                                        <tbody id="transferMedicinesBody">
+
+                                        </tbody>
+
+
+                                    </table>
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- Buttons -->
+
+                            <div class="transfer-form-actions">
+
+
+                                <label
+                                    for="showCreateTransfer"
+                                    class="cancel-transfer-btn"
+                                >
+                                    Cancel
+                                </label>
+
+
+                                <button
+                                    type="submit"
+                                    class="submit-transfer-btn"
+                                >
+
+                                    <i class="bi bi-truck"></i>
+
+                                    Create Transfer
+
+                                </button>
+
+
+                            </div>
+
+
+                        </form>
+
+
+                    </div>
+
+
+                </div>
+
+
 
                 <!-- ==================================
                      PHARMACIST HEADER
@@ -831,7 +842,6 @@
 
 
                 <!-- ==================================
-                     ADMIN + MANAGER
                      ON THE ROAD
                 ================================== -->
 
@@ -840,73 +850,33 @@
                     data-roles="admin manager"
                 >
 
+
                     <div class="card-header-custom">
 
                         <h2>
                             On the road
                         </h2>
 
-                        <p>
-                            1 shipment between a warehouse
-                            and a pharmacy right now
+                        <p id="roadSummary">
+                            Loading transfers...
                         </p>
 
                     </div>
 
 
-                    <div class="road-content">
-
-                        <div class="road-place">
-
-                            <span>
-                                LEFT
-                            </span>
-
-                            <strong>
-                                Main Warehouse — Rusayl
-                            </strong>
-
-                        </div>
-
-
-                        <div class="road">
-
-                            <div class="road-line"></div>
-
-
-                            <div class="truck">
-
-                                <i class="bi bi-truck"></i>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="road-place road-place-right">
-
-                            <span>
-                                HEADING TO
-                            </span>
-
-                            <strong>
-                                Seeb Pharmacy
-                            </strong>
-
-                            <small>
-                                #1 · 40 units
-                            </small>
-
-                        </div>
+                    <div
+                        id="roadContent"
+                        class="road-content"
+                    >
 
                     </div>
+
 
                 </section>
 
 
 
                 <!-- ==================================
-                     ADMIN + MANAGER
                      ALL TRANSFERS
                 ================================== -->
 
@@ -915,22 +885,26 @@
                     data-roles="admin manager"
                 >
 
+
                     <div class="card-header-custom">
 
                         <h2>
                             All transfers
                         </h2>
 
-                        <p>
-                            3 transfers · GET /api/Transfer
+                        <p id="transferCount">
+                            Loading transfers...
                         </p>
 
                     </div>
 
 
+
                     <div class="table-responsive">
 
+
                         <table class="table transfer-table">
+
 
                             <thead>
 
@@ -969,200 +943,23 @@
                             </thead>
 
 
-                            <tbody>
-
-
-                                <!-- Shipped -->
-
-                                <tr data-id="1">
-
-                                    <td>
-                                        <strong>#1</strong>
-                                    </td>
-
-
-                                    <td>
-                                        Main Warehouse — Rusayl
-                                    </td>
-
-
-                                    <td>
-                                        Seeb Pharmacy
-                                    </td>
-
-
-                                    <td>
-
-                                        Amoxicillin 500mg
-
-                                        <span class="quantity-muted">
-                                            ×40
-                                        </span>
-
-                                    </td>
-
-
-                                    <td class="date-text">
-                                        30 Jul 2026
-                                    </td>
-
-
-                                    <td>
-
-                                        <span class="status shipped">
-
-                                            <span class="status-dot"></span>
-
-                                            SHIPPED
-
-                                        </span>
-
-                                    </td>
-
-
-                                    <td class="text-end">
-
-                                        <button class="confirm-btn">
-
-                                            Confirm receive
-
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
-
-
-                                <!-- Pending -->
-
-                                <tr data-id="2">
-
-                                    <td>
-                                        <strong>#2</strong>
-                                    </td>
-
-
-                                    <td>
-                                        Main Warehouse — Rusayl
-                                    </td>
-
-
-                                    <td>
-                                        Muscat Pharmacy — Ruwi
-                                    </td>
-
-
-                                    <td>
-
-                                        Vitamin C 1000mg
-
-                                        <span class="quantity-muted">
-                                            ×60
-                                        </span>
-
-                                    </td>
-
-
-                                    <td class="date-text">
-                                        09 Aug 2026
-                                    </td>
-
-
-                                    <td>
-
-                                        <span class="status pending">
-
-                                            <span class="status-dot"></span>
-
-                                            PENDING
-
-                                        </span>
-
-                                    </td>
-
-
-                                    <td class="text-end">
-
-                                        <button class="ship-btn">
-                                            Mark shipped
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
-
-
-                                <!-- Received -->
-
-                                <tr data-id="3">
-
-                                    <td>
-                                        <strong>#3</strong>
-                                    </td>
-
-
-                                    <td>
-                                        Sohar
-                                    </td>
-
-
-                                    <td>
-                                        Seeb Pharmacy
-                                    </td>
-
-
-                                    <td>
-
-                                        Cetirizine 10mg
-
-                                        <span class="quantity-muted">
-                                            ×30
-                                        </span>
-
-                                    </td>
-
-
-                                    <td class="date-text">
-                                        01 Aug 2026
-                                    </td>
-
-
-                                    <td>
-
-                                        <span class="status received">
-
-                                            <span class="status-dot"></span>
-
-                                            RECEIVED
-
-                                        </span>
-
-                                    </td>
-
-
-                                    <td class="text-end received-date">
-
-                                        Received 02 Aug
-
-                                    </td>
-
-                                </tr>
+                            <tbody id="transferTableBody">
 
                             </tbody>
 
+
                         </table>
 
+
                     </div>
+
 
                 </section>
 
 
 
                 <!-- ==================================
-                     PHARMACIST
-                     INCOMING TRANSFERS
+                     PHARMACIST INCOMING TRANSFERS
                 ================================== -->
 
                 <section
@@ -1170,105 +967,64 @@
                     data-roles="pharmacist"
                 >
 
+
                     <div class="card-header-custom">
 
                         <h2>
                             Incoming transfers
                         </h2>
 
-                        <p>
-                            1 transfer · GET /api/Transfer
+                        <p id="incomingTransferCount">
+                            Loading transfers...
                         </p>
 
                     </div>
 
 
-                    <div class="incoming-transfer-row">
-
-                        <div>
-
-                            <span class="small-label">
-                                TRANSFER
-                            </span>
-
-                            <strong>
-                                #1
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span class="small-label">
-                                FROM
-                            </span>
-
-                            <strong>
-                                Main Warehouse — Rusayl
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span class="small-label">
-                                CONTENTS
-                            </span>
-
-                            <strong>
-                                Amoxicillin 500mg ×40
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span class="status shipped">
-
-                                <span class="status-dot"></span>
-
-                                SHIPPED
-
-                            </span>
-
-                        </div>
-
-
-                        <div>
-
-                            <button class="confirm-btn">
-
-                                Confirm receive
-
-                            </button>
-
-                        </div>
+                    <div id="incomingTransfers">
 
                     </div>
+
 
                 </section>
 
 
-              <footer class="mt-auto text-center py-3">
-               <p class="small-footer">
-                &copy; 2026 Pharmacy System
-               </p>
-               </footer>
+
+                <!-- Footer -->
+
+                <footer class="mt-auto text-center py-3">
+
+                    <p class="small-footer">
+
+                        &copy; 2026 Pharmacy System
+
+                    </p>
+
+                </footer>
+
 
             </main>
 
+
         </div>
+
 
     </div>
 
+
+
+    <!-- Bootstrap -->
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     >
     </script>
+
+
+    <!-- Transfer JavaScript -->
+
+    <script src="../JS/transfers.js"></script>
+
 
 </body>
 
