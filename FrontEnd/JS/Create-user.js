@@ -2,15 +2,13 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
 
-        // =====================================
         // CHECK LOGIN
-        // =====================================
 
         if (!Auth.isLoggedIn()) {
 
-            window.location.href =
-                "login.html";
+            window.location.href ="login.html";
 
+                
             return;
         }
 
@@ -23,87 +21,45 @@ document.addEventListener(
             Auth.role() !== "Admin"
         ) {
 
-            window.location.href =
-                "dashboard.html#" +
-                Auth.role().toLowerCase();
-
+            window.location.href ="dashboard.html#" +Auth.role().toLowerCase();
+                
+            
             return;
         }
 
 
-        // =====================================
         // ELEMENTS
-        // =====================================
 
-        const form =
-            document.getElementById(
-                "create-user-form"
-            );
+        const form =document.getElementById("create-user-form");
 
+        const usernameInput =document.getElementById( "username");
+            
+        const emailInput =document.getElementById("email");
+  
+        const passwordInput =document.getElementById("password" );
+            
+        const roleInput =document.getElementById( "role" );
+            
+        const createMessage =document.getElementById( "create-user-message" );
 
-        const usernameInput =
-            document.getElementById(
-                "username"
-            );
+        const usersMessage =document.getElementById("users-message" );
 
+        const usersSummary =document.getElementById("users-summary" );
+            
+        const usersTableBody =document.getElementById("users-table-body");  
 
-        const emailInput =
-            document.getElementById(
-                "email"
-            );
-
-
-        const passwordInput =
-            document.getElementById(
-                "password"
-            );
-
-
-        const roleInput =
-            document.getElementById(
-                "role"
-            );
+        const createButton =form.querySelector(".btn-create" );
+            
+                
+           
 
 
-        const createMessage =
-            document.getElementById(
-                "create-user-message"
-            );
-
-
-        const usersMessage =
-            document.getElementById(
-                "users-message"
-            );
-
-
-        const usersSummary =
-            document.getElementById(
-                "users-summary"
-            );
-
-
-        const usersTableBody =
-            document.getElementById(
-                "users-table-body"
-            );
-
-
-        const createButton =
-            form.querySelector(
-                ".btn-create"
-            );
-
-
-        // =====================================
         // LOAD USERS
-        // =====================================
 
         async function loadUsers() {
 
-            usersMessage.textContent =
-                "Loading users...";
-
+            usersMessage.textContent ="Loading users...";
+                
 
             try {
 
@@ -113,18 +69,13 @@ document.addEventListener(
                     );
 
 
-                usersTableBody.innerHTML =
-                    "";
-
-
+                usersTableBody.innerHTML = "";
+                   
                 users.forEach(
                     user => {
 
-                        const row =
-                            document.createElement(
-                                "tr"
-                            );
-
+                        const row = document.createElement( "tr"  );
+                                           
 
                         row.innerHTML = `
 
@@ -165,35 +116,29 @@ document.addEventListener(
                         `;
 
 
-                        usersTableBody.appendChild(
-                            row
-                        );
-
+                        usersTableBody.appendChild( row);
+                           
                     }
                 );
 
 
-                usersSummary.textContent =
-                    `${users.length} accounts`;
-
-
-                usersMessage.textContent =
-                    "";
+                usersSummary.textContent =`${users.length} accounts`;
+                   
+                usersMessage.textContent =  "";
+                  
 
             }
 
             catch (error) {
 
-                usersMessage.textContent =
-                    error.message;
+                usersMessage.textContent =error.message;
+                    
 
             }
         }
 
 
-        // =====================================
         // CREATE USER
-        // =====================================
 
         form.addEventListener(
             "submit",
@@ -202,24 +147,16 @@ document.addEventListener(
                 event.preventDefault();
 
 
-                createMessage.textContent =
-                    "";
-
-
-                const username =
-                    usernameInput.value.trim();
-
-
-                const email =
-                    emailInput.value.trim();
-
-
-                const password =
-                    passwordInput.value;
-
-
-                const role =
-                    roleInput.value;
+                createMessage.textContent = "";
+                   
+                const username = usernameInput.value.trim();
+                   
+                const email = emailInput.value.trim();
+                   
+                const password =passwordInput.value;
+                
+                const role =roleInput.value;
+                    
 
 
                 if (
@@ -229,23 +166,18 @@ document.addEventListener(
                     !role
                 ) {
 
-                    createMessage.textContent =
-                        "Please complete all fields.";
-
+                    createMessage.textContent ="Please complete all fields.";
+                        
                     return;
                 }
 
 
-                createButton.disabled =
-                    true;
+                createButton.disabled =true;
+                    
+                const oldText =createButton.innerHTML;      
 
-
-                const oldText =
-                    createButton.innerHTML;
-
-
-                createButton.innerHTML =
-                    "Creating...";
+                createButton.innerHTML ="Creating...";
+                    
 
 
                 try {
@@ -253,25 +185,17 @@ document.addEventListener(
                     await Api.post(
                         "/User/create",
                         {
-                            username:
-                                username,
-
-                            email:
-                                email,
-
-                            password:
-                                password,
-
-                            role:
-                                role
+                            username:username,                     
+                             email: email,
+                            password: password,
+                            role: role
+                               
                         }
                     );
 
 
-                    createMessage.textContent =
-                        "User created successfully.";
-
-
+                    createMessage.textContent ="User created successfully.";
+                        
                     form.reset();
 
 
@@ -281,19 +205,15 @@ document.addEventListener(
 
                 catch (error) {
 
-                    createMessage.textContent =
-                        error.message;
+                    createMessage.textContent =error.message;
 
                 }
 
                 finally {
 
-                    createButton.disabled =
-                        false;
-
-
-                    createButton.innerHTML =
-                        oldText;
+                    createButton.disabled =false;          
+                    createButton.innerHTML =oldText;
+                        
 
                 }
 
@@ -301,9 +221,8 @@ document.addEventListener(
         );
 
 
-        // =====================================
+        
         // DELETE USER
-        // =====================================
 
         usersTableBody.addEventListener(
             "click",
@@ -320,48 +239,39 @@ document.addEventListener(
                 }
 
 
-                const userId =
-                    deleteButton.dataset.userId;
+                const userId =deleteButton.dataset.userId;
+                    
 
 
-                const confirmed =
-                    confirm(
-                        "Are you sure you want to delete this user?"
-                    );
-
+                const confirmed =confirm("Are you sure you want to delete this user?" );
+                    
+                    
 
                 if (!confirmed) {
                     return;
                 }
 
 
-                deleteButton.disabled =
-                    true;
+                deleteButton.disabled =true;
+                    
 
 
                 try {
 
-                    await Api.del(
-                        `/User/DeleteUser/${userId}`
-                    );
-
-
-                    usersMessage.textContent =
-                        "User deleted successfully.";
-
-
+                    await Api.del( `/User/DeleteUser/${userId}`);
+                       
+                    usersMessage.textContent = "User deleted successfully.";
+                       
                     await loadUsers();
 
                 }
 
                 catch (error) {
 
-                    usersMessage.textContent =
-                        error.message;
-
-
-                    deleteButton.disabled =
-                        false;
+                    usersMessage.textContent =error.message;
+                        
+                    deleteButton.disabled =false;
+                        
 
                 }
 
@@ -369,9 +279,7 @@ document.addEventListener(
         );
 
 
-        // =====================================
-        // FIRST LOAD
-        // =====================================
+        //  LOAD
 
         loadUsers();
 
