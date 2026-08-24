@@ -5,586 +5,1013 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Suppliers | Pharmacy System</title>
+
 
     <!-- Bootstrap CSS -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
+
     <!-- Bootstrap Icons -->
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
+
     <!-- Dashboard CSS -->
-    <link rel="stylesheet" href="../CSS/dashboard.css">
+    <link rel="stylesheet"
+          href="../CSS/dashboard.css">
+
 
     <!-- Suppliers CSS -->
-    <link rel="stylesheet" href="../CSS/suppliers.css">
-
-      <!--font css-->
     <link rel="stylesheet"
-    href="../CSS/font.css"
-    >
+          href="../CSS/suppliers.css">
+
+
+    <!-- Font CSS -->
+    <link rel="stylesheet"
+          href="../CSS/font.css">
+
 </head>
+
+
 <body>
+
+
     <!-- ==================================
          ROLE FLAGS
          ================================== -->
-    <b id="admin" class="role-flag"></b>
-    <b id="manager" class="role-flag"></b>
-    <b id="pharmacist" class="role-flag"></b>
-       <!-- MAIN APP -->
-        <div class="container-fluid app">
+
+    <b id="admin"
+       class="role-flag"></b>
+
+    <b id="manager"
+       class="role-flag"></b>
+
+    <b id="pharmacist"
+       class="role-flag"></b>
+
+
+
+    <!-- ==================================
+         MAIN APP
+         ================================== -->
+
+    <div class="container-fluid app">
+
         <div class="row min-vh-100">
-        <div class="col-md-3 col-lg-2 sidebar p-3">
 
-    <!-- Brand -->
 
-    <div class="sidebar-brand">
+            <!-- ==================================
+                 SIDEBAR
+                 ================================== -->
 
-        <div class="sidebar-logo">
+            <div class="col-md-3 col-lg-2 sidebar p-3">
 
-            <i class="bi bi-plus-lg"></i>
 
-        </div>
+                <!-- Brand -->
 
+                <div class="sidebar-brand">
 
-        <div>
+                    <div class="sidebar-logo">
 
-            <h4 class="mb-0">
-                Pharmacy System
-            </h4>
+                        <i class="bi bi-plus-lg"></i>
 
-            <small data-roles="admin">
-                ADMIN VIEW
-            </small>
+                    </div>
 
-            <small data-roles="manager">
-                MANAGER VIEW
-            </small>
 
-            <small data-roles="pharmacist">
-                PHARMACIST VIEW
-            </small>
+                    <div>
 
-        </div>
+                        <h4 class="mb-0">
+                            Pharmacy System
+                        </h4>
 
-    </div>
 
+                        <small data-roles="admin">
+                            ADMIN VIEW
+                        </small>
 
-    <!-- Overview -->
 
-    <p class="sidebar-title">
-        OVERVIEW
-    </p>
+                        <small data-roles="manager">
+                            MANAGER VIEW
+                        </small>
 
 
-    <a href="dashboard.html#admin"
-       data-roles="admin">
+                        <small data-roles="pharmacist">
+                            PHARMACIST VIEW
+                        </small>
 
-        <i class="bi bi-grid"></i>
+                    </div>
 
-        <span>
-            Dashboard
-        </span>
+                </div>
 
-    </a>
 
 
-    <a href="dashboard.html#manager"
-       data-roles="manager">
+                <!-- Overview -->
 
-        <i class="bi bi-grid"></i>
-
-        <span>
-            Dashboard
-        </span>
-
-    </a>
-
-
-    <a href="dashboard.html#pharmacist"
-       data-roles="pharmacist">
-
-        <i class="bi bi-grid"></i>
-
-        <span>
-            Dashboard
-        </span>
-
-    </a>
-
-
-    <!-- Into the Warehouse -->
-
-    <p class="sidebar-title"
-       data-roles="admin manager">
-
-        INTO THE WAREHOUSE
-
-    </p>
-
-
-    <!-- Suppliers -->
-
-    <a href="suppliers.html#admin"
-       data-roles="admin"
-       class="active">
-
-        <i class="bi bi-building"></i>
-
-        <span>
-            Suppliers
-        </span>
-
-    </a>
-
-
-    <a href="suppliers.html#manager"
-       data-roles="manager"
-       class="active">
-
-        <i class="bi bi-building"></i>
-
-        <span>
-            Suppliers
-        </span>
-
-    </a>
-
-
-    <!-- Supplies -->
-
-    <a href="supply.html#admin"
-       data-roles="admin">
-
-        <i class="bi bi-box-seam"></i>
-
-        <span>
-            Supplies
-        </span>
-
-    </a>
-
-
-    <a href="supply.html#manager"
-       data-roles="manager">
-
-        <i class="bi bi-box-seam"></i>
-
-        <span>
-            Supplies
-        </span>
-
-    </a>
-
-
-    <!-- Warehouse Stock -->
-
-    <a href="warehouse-stock.html#admin"
-       data-roles="admin">
-
-        <i class="bi bi-boxes"></i>
-
-        <span>
-            Warehouse Stock
-        </span>
-
-    </a>
-
-
-    <a href="warehouse-stock.html#manager"
-       data-roles="manager">
-
-        <i class="bi bi-boxes"></i>
-
-        <span>
-            Warehouse Stock
-        </span>
-
-    </a>
-
-
-    <!-- Out to Pharmacy -->
-
-    <p class="sidebar-title">
-        OUT TO THE PHARMACY
-    </p>
-
-
-    <a href="pharmacist-order.html#admin"
-       data-roles="admin">
-
-        <i class="bi bi-clipboard2"></i>
-
-        <span>
-            Pharmacist Orders
-        </span>
-
-        <span class="sidebar-count">
-            1
-        </span>
-
-    </a>
-
-
-    <a href="pharmacist-order.html#manager"
-       data-roles="manager">
-
-        <i class="bi bi-clipboard2"></i>
-
-        <span>
-            Pharmacist Orders
-        </span>
-
-        <span class="sidebar-count">
-            1
-        </span>
-
-    </a>
-
-
-    <a href="pharmacist-order.html#pharmacist"
-       data-roles="pharmacist">
-
-        <i class="bi bi-clipboard2"></i>
-
-        <span>
-            Pharmacist Orders
-        </span>
-
-        <span class="sidebar-count">
-            1
-        </span>
-
-    </a>
-
-
-    <!-- Transfers -->
-
-    <a href="transfer.html#admin"
-       data-roles="admin">
-
-        <i class="bi bi-truck"></i>
-
-        <span>
-            Transfers
-        </span>
-
-        <span class="sidebar-count">
-            1
-        </span>
-
-    </a>
-
-
-    <a href="transfer.html#manager"
-       data-roles="manager">
-
-        <i class="bi bi-truck"></i>
-
-        <span>
-            Transfers
-        </span>
-
-        <span class="sidebar-count">
-            1
-        </span>
-
-    </a>
-
-
-    <a href="transfer.html#pharmacist"
-       data-roles="pharmacist">
-
-        <i class="bi bi-truck"></i>
-
-        <span>
-            Incoming Transfers
-        </span>
-
-        <span class="sidebar-count">
-            1
-        </span>
-
-    </a>
-
-
-    <!-- Pharmacy Stock -->
-
-    <a href="pharmacy-stock.html#admin"
-       data-roles="admin">
-
-        <i class="bi bi-capsule"></i>
-
-        <span>
-            Pharmacy Stock
-        </span>
-
-    </a>
-
-
-    <a href="pharmacy-stock.html#manager"
-       data-roles="manager">
-
-        <i class="bi bi-capsule"></i>
-
-        <span>
-            Pharmacy Stock
-        </span>
-
-    </a>
-
-
-    <a href="pharmacy-stock.html#pharmacist"
-       data-roles="pharmacist">
-
-        <i class="bi bi-capsule"></i>
-
-        <span>
-            Pharmacy Stock
-        </span>
-
-    </a>
-
-
-    <!-- User Management -->
-
-    <p class="sidebar-title"
-       data-roles="admin">
-
-        USER MANAGEMENT
-
-    </p>
-
-
-    <a href="create-user.html#admin"
-       data-roles="admin">
-
-        <i class="bi bi-person-plus"></i>
-
-        <span>
-            Create User
-        </span>
-
-    </a>
-
-
-    <!-- Sign Out -->
-
-    <a href="login.html"
-       class="sign-out">
-
-        <i class="bi bi-box-arrow-right"></i>
-
-        <span>
-            Sign Out
-        </span>
-
-    </a>
-</div>
-<div class="col-md-9 col-lg-10 main-content p-4">
-
-    <div data-roles="admin manager">
-
-        <!-- Page Header -->
-
-        <div class="suppliers-page-header mb-4">
-
-            <div>
-
-                <h2>
-                    Suppliers
-                </h2>
-
-                <p>
-                    Manage medicine suppliers and their information.
+                <p class="sidebar-title">
+                    OVERVIEW
                 </p>
+
+
+                <a href="dashboard.html#admin"
+                   data-roles="admin">
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <a href="dashboard.html#manager"
+                   data-roles="manager">
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <a href="dashboard.html#pharmacist"
+                   data-roles="pharmacist">
+
+                    <i class="bi bi-grid"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+
+                <!-- Into the Warehouse -->
+
+                <p class="sidebar-title"
+                   data-roles="admin manager">
+
+                    INTO THE WAREHOUSE
+
+                </p>
+
+
+
+                <!-- Suppliers Admin -->
+
+                <a href="suppliers.html#admin"
+                   data-roles="admin"
+                   class="active">
+
+                    <i class="bi bi-building"></i>
+
+                    <span>
+                        Suppliers
+                    </span>
+
+                </a>
+
+
+                <!-- Suppliers Manager -->
+
+                <a href="suppliers.html#manager"
+                   data-roles="manager"
+                   class="active">
+
+                    <i class="bi bi-building"></i>
+
+                    <span>
+                        Suppliers
+                    </span>
+
+                </a>
+
+
+
+                <!-- Supplies Admin -->
+
+                <a href="supply.html#admin"
+                   data-roles="admin">
+
+                    <i class="bi bi-box-seam"></i>
+
+                    <span>
+                        Supplies
+                    </span>
+
+                </a>
+
+
+                <!-- Supplies Manager -->
+
+                <a href="supply.html#manager"
+                   data-roles="manager">
+
+                    <i class="bi bi-box-seam"></i>
+
+                    <span>
+                        Supplies
+                    </span>
+
+                </a>
+
+
+
+                <!-- Warehouse Stock Admin -->
+
+                <a href="warehouse-stock.html#admin"
+                   data-roles="admin">
+
+                    <i class="bi bi-boxes"></i>
+
+                    <span>
+                        Warehouse Stock
+                    </span>
+
+                </a>
+
+
+                <!-- Warehouse Stock Manager -->
+
+                <a href="warehouse-stock.html#manager"
+                   data-roles="manager">
+
+                    <i class="bi bi-boxes"></i>
+
+                    <span>
+                        Warehouse Stock
+                    </span>
+
+                </a>
+
+
+
+                <!-- Out to Pharmacy -->
+
+                <p class="sidebar-title">
+                    OUT TO THE PHARMACY
+                </p>
+
+
+
+                <!-- Pharmacist Orders -->
+
+                <a href="pharmacist-order.html#admin"
+                   data-roles="admin">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a href="pharmacist-order.html#manager"
+                   data-roles="manager">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a href="pharmacist-order.html#pharmacist"
+                   data-roles="pharmacist">
+
+                    <i class="bi bi-clipboard2"></i>
+
+                    <span>
+                        Pharmacist Orders
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+
+                <!-- Transfers -->
+
+                <a href="transfer.html#admin"
+                   data-roles="admin">
+
+                    <i class="bi bi-truck"></i>
+
+                    <span>
+                        Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a href="transfer.html#manager"
+                   data-roles="manager">
+
+                    <i class="bi bi-truck"></i>
+
+                    <span>
+                        Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+                <a href="transfer.html#pharmacist"
+                   data-roles="pharmacist">
+
+                    <i class="bi bi-truck"></i>
+
+                    <span>
+                        Incoming Transfers
+                    </span>
+
+                    <span class="sidebar-count">
+                        1
+                    </span>
+
+                </a>
+
+
+
+                <!-- Pharmacy Stock -->
+
+                <a href="pharmacy-stock.html#admin"
+                   data-roles="admin">
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+
+                <a href="pharmacy-stock.html#manager"
+                   data-roles="manager">
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+
+                <a href="pharmacy-stock.html#pharmacist"
+                   data-roles="pharmacist">
+
+                    <i class="bi bi-capsule"></i>
+
+                    <span>
+                        Pharmacy Stock
+                    </span>
+
+                </a>
+
+
+
+                <!-- User Management -->
+
+                <p class="sidebar-title"
+                   data-roles="admin">
+
+                    USER MANAGEMENT
+
+                </p>
+
+
+                <a href="create-user.html#admin"
+                   data-roles="admin">
+
+                    <i class="bi bi-person-plus"></i>
+
+                    <span>
+                        Create User
+                    </span>
+
+                </a>
+
+
+
+                <!-- Sign Out -->
+
+                <a href="login.html"
+                   class="sign-out">
+
+                    <i class="bi bi-box-arrow-right"></i>
+
+                    <span>
+                        Sign Out
+                    </span>
+
+                </a>
+
 
             </div>
 
 
-            <button
-                type="button"
-                class="btn-add-supplier">
 
-                <i class="bi bi-plus-lg me-2"></i>
+            <!-- ==================================
+                 MAIN CONTENT
+                 ================================== -->
 
-                Add Supplier
+            <div class="col-md-9 col-lg-10 main-content p-4">
 
-            </button>
 
-        </div>
+                <div data-roles="admin manager">
 
-    </div>
-    <div class="suppliers-panel">
 
-    <div class="table-responsive">
+                    <!-- ==================================
+                         PAGE HEADER
+                         ================================== -->
 
-        <table class="table suppliers-table">
+                    <div class="suppliers-page-header mb-4">
 
-            <thead>
+                        <div>
 
-                <tr>
+                            <h2>
+                                Suppliers
+                            </h2>
 
-                    <th>SUPPLIER</th>
+                            <p>
+                                Who we buy medicine from.
+                                Deleting a supplier is Admin-only.
+                            </p>
 
-                    <th>EMAIL</th>
+                        </div>
 
-                    <th>PHONE</th>
 
-                    <th>LOCATION</th>
+                        <button
+                            id="addSupplierBtn"
+                            class="btn-add-supplier">
 
-                    <th>STATUS</th>
+                            <i class="bi bi-plus-lg"></i>
 
-                </tr>
+                            Add supplier
 
-            </thead>
+                        </button>
 
+                    </div>
 
-            <tbody>
 
-                <tr>
 
-                    <td>ABC Pharma</td>
+                    <!-- ==================================
+                         SUPPLIERS PANEL
+                         ================================== -->
 
-                    <td>info@abc.com</td>
+                    <div class="suppliers-panel">
 
-                    <td>555-123-4567</td>
 
-                    <td>Nairobi, Kenya</td>
+                        <!-- Panel Header -->
 
-                    <td>
-                        <span class="status active">
-                            Active
-                        </span>
-                    </td>
+                        <div class="suppliers-panel-header">
 
-                </tr>
+                            <div>
 
+                                <h5>
+                                    All suppliers
+                                </h5>
 
-                <tr>
+                                <p id="supplierCount">
+                                    5 records
+                                </p>
 
-                    <td>MedSupplies Ltd</td>
+                            </div>
 
-                    <td>contact@medsup.com</td>
+                        </div>
 
-                    <td>555-234-5678</td>
 
-                    <td>Mombasa, Kenya</td>
 
-                    <td>
-                        <span class="status active">
-                            Active
-                        </span>
-                    </td>
+                        <!-- TABLE -->
 
-                </tr>
+                        <div class="table-responsive">
 
+                            <table class="table suppliers-table">
 
-                <tr>
+                                <thead>
 
-                    <td>HealthCorp</td>
+                                    <tr>
 
-                    <td>sales@healthcorp.com</td>
+                                        <th>
+                                            SUPPLIER
+                                        </th>
 
-                    <td>555-345-6789</td>
+                                        <th>
+                                            PHONE
+                                        </th>
 
-                    <td>Kisumu, Kenya</td>
+                                        <th>
+                                            LOCATION
+                                        </th>
 
-                    <td>
-                        <span class="status active">
-                            Active
-                        </span>
-                    </td>
+                                        <th>
+                                            STATUS
+                                        </th>
 
-                </tr>
+                                        <th class="text-end">
+                                            ACTIONS
+                                        </th>
 
+                                    </tr>
 
-                <tr>
+                                </thead>
 
-                    <td>LifeCare Distributors</td>
 
-                    <td>info@lifecare.com</td>
+                                <!-- JavaScript fills this -->
+<tbody id="supplierTableBody">
 
-                    <td>555-456-7890</td>
+    <tr>
+        <td>
+            <span class="supplier-name">
+                Gulf Pharma Distribution
+            </span>
 
-                    <td>Eldoret, Kenya</td>
+            <span class="supplier-email">
+                orders@gulfpharma.com
+            </span>
+        </td>
 
-                    <td>
-                        <span class="status inactive">
-                            Inactive
-                        </span>
-                    </td>
+        <td>
+            +96824561200
+        </td>
 
-                </tr>
+        <td>
+            Rusayl, Muscat
+        </td>
 
+        <td>
+            <span class="status active">
+                <span class="status-dot"></span>
+                ACTIVE
+            </span>
+        </td>
 
-                <tr>
+        <td>
+            <div class="supplier-actions">
 
-                    <td>Global Meds</td>
+                <button class="btn-edit-supplier">
+                    Edit
+                </button>
 
-                    <td>support@globalmeds.com</td>
+                <button class="btn-delete-supplier">
+                    Delete
+                </button>
+
+            </div>
+        </td>
+    </tr>
+
 
-                    <td>555-567-8901</td>
+    <tr>
+        <td>
+            <span class="supplier-name">
+                Muscat Medical Supplies
+            </span>
+
+            <span class="supplier-email">
+                sales@muscatmed.com
+            </span>
+        </td>
+
+        <td>
+            +96824778101
+        </td>
+
+        <td>
+            Ghala, Muscat
+        </td>
+
+        <td>
+            <span class="status active">
+                <span class="status-dot"></span>
+                ACTIVE
+            </span>
+        </td>
+
+        <td>
+            <div class="supplier-actions">
 
-                    <td>Nakuru, Kenya</td>
+                <button class="btn-edit-supplier">
+                    Edit
+                </button>
 
-                    <td>
-                        <span class="status active">
-                            Active
-                        </span>
-                    </td>
+                <button class="btn-delete-supplier">
+                    Delete
+                </button>
+
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td>
+            <span class="supplier-name">
+                Al Rawahi Pharma
+            </span>
+
+            <span class="supplier-email">
+                info@alrawahi.com
+            </span>
+        </td>
+
+        <td>
+            +96826443311
+        </td>
+
+        <td>
+            Nizwa, Dakhiliyah
+        </td>
+
+        <td>
+            <span class="status active">
+                <span class="status-dot"></span>
+                ACTIVE
+            </span>
+        </td>
+
+        <td>
+            <div class="supplier-actions">
+
+                <button class="btn-edit-supplier">
+                    Edit
+                </button>
 
-                </tr>
+                <button class="btn-delete-supplier">
+                    Delete
+                </button>
 
-            </tbody>
+            </div>
+        </td>
+    </tr>
 
-        </table>
 
-    </div>
+    <tr>
+        <td>
+            <span class="supplier-name">
+                Oman Drug House
+            </span>
 
+            <span class="supplier-email">
+                contact@odh.com
+            </span>
+        </td>
 
-    <!-- Pagination -->
+        <td>
+            +96824900744
+        </td>
 
-    <div class="suppliers-pagination">
+        <td>
+            Sohar, Batinah
+        </td>
 
-        <button class="page-btn">
-            <i class="bi bi-chevron-left"></i>
-        </button>
+        <td>
+            <span class="status active">
+                <span class="status-dot"></span>
+                ACTIVE
+            </span>
+        </td>
 
-        <button class="page-btn active">
-            1
-        </button>
+        <td>
+            <div class="supplier-actions">
 
-        <button class="page-btn">
-            2
-        </button>
+                <button class="btn-edit-supplier">
+                    Edit
+                </button>
 
-        <button class="page-btn">
-            3
-        </button>
+                <button class="btn-delete-supplier">
+                    Delete
+                </button>
 
-        <button class="page-btn">
-            <i class="bi bi-chevron-right"></i>
-        </button>
+            </div>
+        </td>
+    </tr>
 
-    </div>
-    
 
-</div>
-<div>
-                        <footer class="small-footer">
-                    <p>&copy; 2026 Pharmacy System</p>
+    <tr>
+        <td>
+            <span class="supplier-name">
+                Delta Med Trading
+            </span>
+
+            <span class="supplier-email">
+                hello@deltamed.com
+            </span>
+        </td>
+
+        <td>
+            +96823336890
+        </td>
+
+        <td>
+            Salalah, Dhofar
+        </td>
+
+        <td>
+            <span class="status inactive">
+                <span class="status-dot"></span>
+                INACTIVE
+            </span>
+        </td>
+
+        <td>
+            <div class="supplier-actions">
+
+                <button class="btn-edit-supplier">
+                    Edit
+                </button>
+
+                <button class="btn-delete-supplier">
+                    Delete
+                </button>
+
+            </div>
+        </td>
+    </tr>
+
+</tbody>
+</table>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Footer -->
+
+                <footer class="small-footer">
+
+                    <p>
+                        &copy; 2026 Pharmacy System
+                    </p>
+
                 </footer>
-    </div>
-</div>
+
+
+            </div>
+
         </div>
+
     </div>
+
+
+
+    <!-- ==================================
+         ADD / EDIT SUPPLIER MODAL
+         ================================== -->
+
+    <div id="supplierModal"
+         class="supplier-modal">
+
+
+        <div class="supplier-modal-box">
+
+
+            <!-- Modal Header -->
+
+            <div class="supplier-modal-header">
+
+                <div>
+
+                    <h3 id="modalTitle">
+                        Add supplier
+                    </h3>
+
+                    <p id="modalDescription">
+                        Enter supplier information.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="closeModalBtn"
+                    class="modal-close-btn">
+
+                    <i class="bi bi-x-lg"></i>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- Form -->
+
+            <form id="supplierForm">
+
+
+                <!-- Supplier Name -->
+
+                <div class="supplier-form-group">
+
+                    <label for="supplierName">
+                        FULL NAME
+                    </label>
+
+                    <input
+                        type="text"
+                        id="supplierName"
+                        placeholder="Gulf Pharma Distribution"
+                        required>
+
+                </div>
+
+
+
+                <!-- Phone and Email -->
+
+                <div class="supplier-form-row">
+
+
+                    <!-- Phone -->
+
+                    <div class="supplier-form-group">
+
+                        <label for="supplierPhone">
+                            PHONE
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="supplierPhone"
+                            placeholder="+968..."
+                            required>
+
+                    </div>
+
+
+
+                    <!-- Email -->
+
+                    <div class="supplier-form-group">
+
+                        <label for="supplierEmail">
+                            EMAIL
+                        </label>
+
+                        <input
+                            type="email"
+                            id="supplierEmail"
+                            placeholder="orders@company.com"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Location -->
+
+                <div class="supplier-form-group">
+
+                    <label for="supplierLocation">
+                        LOCATION
+                    </label>
+
+                    <input
+                        type="text"
+                        id="supplierLocation"
+                        placeholder="Rusayl, Muscat"
+                        required>
+
+                </div>
+
+
+
+                <!-- Status -->
+
+                <div class="supplier-form-group">
+
+                    <label for="supplierStatus">
+                        STATUS
+                    </label>
+
+                    <select id="supplierStatus">
+
+                        <option value="Active">
+                            Active
+                        </option>
+
+                        <option value="Inactive">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Modal Buttons -->
+
+                <div class="supplier-modal-actions">
+
+                    <button
+                        type="button"
+                        id="cancelSupplierBtn"
+                        class="btn-cancel">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        id="saveSupplierBtn"
+                        class="btn-save-supplier">
+
+                        Add supplier
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================
+         SUCCESS MESSAGE
+         ================================== -->
+
+    <div id="successMessage"
+         class="supplier-success-message">
+
+        <div class="success-check">
+
+            <i class="bi bi-check-lg"></i>
+
+        </div>
+
+        <div>
+
+            <strong id="successTitle">
+                Supplier added
+            </strong>
+
+            <p id="successText">
+                Supplier added successfully.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- JavaScript -->
+
+    <script src="../JS/supplier.js"></script>
+
+
 </body>
 
 </html>
