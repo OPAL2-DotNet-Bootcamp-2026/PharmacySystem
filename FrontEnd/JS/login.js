@@ -88,7 +88,19 @@ form.addEventListener("submit", async (e) => {
 
         }
 
+catch (err) {
 
-})
+            // Show error from Backend
+            errorBox.textContent = err.message;
 
-})
+        }
+
+        finally {
+
+            // Enable button again
+            button.disabled = false;
+
+            button.textContent = originalText;
+}
+});
+});
