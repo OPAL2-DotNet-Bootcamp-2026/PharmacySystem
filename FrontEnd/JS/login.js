@@ -33,5 +33,28 @@ const button = document.querySelector(".signin-btn");
 );
 }
 
+form.addEventListener("submit", async (e) => {
+
+        // Stop the form from refreshing the page
+        e.preventDefault();
+
+        errorBox.textContent = "";
+
+
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+
+
+        // Check fields
+        if (!email || !password) {
+            errorBox.textContent =
+                "Please enter email and password.";
+            return;
+        }
+
+
+})
 
 })
