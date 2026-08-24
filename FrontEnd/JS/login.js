@@ -54,6 +54,33 @@ form.addEventListener("submit", async (e) => {
             return;
         }
 
+// Disable button while login is happening
+        button.disabled = true;
+
+        const originalText = button.textContent;
+
+        button.textContent = "Signing in...";
+
+
+
+        try {
+
+            // Send email and password to Backend
+            const result = await Api.post(
+                "/User/login",
+                {
+                    email: email,
+                    password: password
+                }
+            );
+
+// Save token, username and role
+            Auth.save({
+                token: result.token,
+                username: result.username,
+                role: result.role
+            });
+
 
 })
 
