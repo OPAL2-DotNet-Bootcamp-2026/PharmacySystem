@@ -406,6 +406,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                     item.medicineID === medicineId
             );
 
+            if (existingMedicine) {
+
+            existingMedicine.quantity +=
+                quantity;
+
+        }
+
 
 
          
