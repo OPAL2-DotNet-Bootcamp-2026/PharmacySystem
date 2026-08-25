@@ -298,6 +298,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         `;
 
+         if (!pharmacyId) {
+
+            return;
+        }
+
 
 
          
