@@ -164,6 +164,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+     // ==========================================
+    // LOAD MEDICINES
+    // ==========================================
+
+    async function loadMedicines() {
+
+        try {
+
+            medicines =
+                await Api.get(
+                    "/Medicine/GetAvailable"
+                );
+
 
          
 
