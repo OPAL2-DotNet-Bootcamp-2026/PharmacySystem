@@ -40,6 +40,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const estimatedTotal =
         document.getElementById("estimatedTotal");
 
+    const allOrdersTableBody =
+    document.getElementById("allOrdersTableBody");
+
+    const myOrdersTableBody =
+        document.getElementById("myOrdersTableBody");
+
     
     // ==========================================
     // VARIABLES
