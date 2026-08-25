@@ -816,4 +816,14 @@ async function loadOrders() {
             orders
         );
 
+        // Admin and Manager see all orders
+
+        if (
+            Auth.role() === "Admin" ||
+            Auth.role() === "Manager"
+        ) {
+
+            renderAllOrders(orders);
+        }
+
 });
