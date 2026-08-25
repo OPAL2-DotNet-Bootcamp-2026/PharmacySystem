@@ -586,6 +586,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     );
 
+    // ==========================================
+    // CREATE PHARMACIST ORDER
+    // ==========================================
+
+    async function createPharmacistOrder() {
+
+        const pharmacyID =
+            Number(
+                pharmacySelect.value
+            );
+
 
 
 
