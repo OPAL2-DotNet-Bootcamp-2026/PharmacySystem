@@ -13,11 +13,14 @@ namespace Pharmacy_System.Repos
             context = _context;
         }
 
-        public async Task<List<WarehouseStock>> GetByWarehouse(int warehouseId)
+        public async Task<List<WarehouseStock>> GetByWarehouse(
+        int warehouseId)
         {
-            return await context.warehouseStocks.Where(ws => ws.WarehouseID == warehouseId)
-                                                .Include(ws => ws.Medicine)
-                                                .ToListAsync();
+            return await context.warehouseStocks
+                .Where(ws => ws.WarehouseID == warehouseId)
+                .Include(ws => ws.Medicine)
+                .ThenInclude(m => m.Category)
+                .ToListAsync();
         }
 
 
@@ -26,7 +29,9 @@ namespace Pharmacy_System.Repos
             return await context.warehouseStocks
                 .Where(ws => ws.MedicineID == medicineId)
                 .Include(ws => ws.Medicine)
+                .ThenInclude(m => m.Category)
                 .Include(ws => ws.Warehouse)
+
                 .ToListAsync();
         }
 
@@ -36,15 +41,21 @@ namespace Pharmacy_System.Repos
         }
 
         // medicines with a low quantity
-        public async Task<List<WarehouseStock>> GetLowStock(int warehouseId,int minimumQuantity)
+        public async Task<List<WarehouseStock>> GetLowStock(
+    int warehouseId,
+    int minimumQuantity)
         {
-            return await context.warehouseStocks.Where(ws =>ws.WarehouseID == warehouseId &&ws.Quantity <= minimumQuantity)
-                                                .Include(ws => ws.Medicine)
-                                                .ToListAsync();
+            return await context.warehouseStocks
+                .Where(ws =>
+                    ws.WarehouseID == warehouseId &&
+                    ws.Quantity <= minimumQuantity)
+                .Include(ws => ws.Medicine)
+                .ThenInclude(m => m.Category)
+                .ToListAsync();
         }
 
 
-        
+
         public async Task Add(WarehouseStock warehouseStock)
         {
             await context.warehouseStocks.AddAsync(warehouseStock);

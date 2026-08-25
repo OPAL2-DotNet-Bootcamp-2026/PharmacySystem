@@ -10,6 +10,8 @@
         public int MedicineID { get; set; }
         public string MedicineName { get; set; }
 
+        public string CategoryName { get; set; } = string.Empty;
+
         public int Quantity { get; set; }
 
         public DateOnly? ExpiryDate { get; set; }
