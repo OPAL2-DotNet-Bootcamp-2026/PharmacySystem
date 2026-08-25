@@ -803,6 +803,24 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "[data-reject-id]"
                 );
 
+                       if (rejectButton) {
+
+                const orderId =
+                    Number(
+                        rejectButton.dataset.rejectId
+                    );
+
+
+                await updateOrderStatus(
+                    orderId,
+                    "Cancelled"
+                );
+            }
+
+        }
+    );
+}
+
 
     // ==========================================
     // EVENTS
