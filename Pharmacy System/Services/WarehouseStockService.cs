@@ -33,6 +33,8 @@ namespace Pharmacy_System.Services
                 WarehouseStockID = ws.WarehouseStockID,
                 WarehouseID = ws.WarehouseID,
                 MedicineID = ws.MedicineID,
+                CategoryName = ws.Medicine.Category.CategoryName,
+
                 MedicineName = ws.Medicine.MedicineName,
                 Quantity = ws.Quantity,
                 ExpiryDate = ws.ExpiryDate
@@ -54,6 +56,8 @@ namespace Pharmacy_System.Services
                 WarehouseStockID = ws.WarehouseStockID,
                 WarehouseID = ws.WarehouseID,
                 MedicineID = ws.MedicineID,
+                CategoryName = ws.Medicine.Category.CategoryName,
+
                 MedicineName = ws.Medicine.MedicineName,
                 Quantity = ws.Quantity,
                 ExpiryDate = ws.ExpiryDate
@@ -220,6 +224,8 @@ namespace Pharmacy_System.Services
                 WarehouseStockID = ws.WarehouseStockID,
                 WarehouseID = ws.WarehouseID,
                 MedicineID = ws.MedicineID,
+                CategoryName = ws.Medicine.Category.CategoryName,
+
                 MedicineName = ws.Medicine.MedicineName,
                 Quantity = ws.Quantity,
                 ExpiryDate = ws.ExpiryDate
