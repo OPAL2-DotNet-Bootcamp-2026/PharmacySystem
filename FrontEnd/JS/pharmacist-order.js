@@ -358,6 +358,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                 quantityInput.value
             );
 
+            // Check medicine
+
+        if (!medicineId) {
+
+            alert(
+                "Please select a medicine."
+            );
+
+            return;
+        }
+
 
 
          
