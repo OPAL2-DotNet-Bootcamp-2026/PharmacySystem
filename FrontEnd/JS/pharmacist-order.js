@@ -248,6 +248,18 @@ document.addEventListener("DOMContentLoaded", async () => {
                 );
             }
 
+            // Select pharmacist's pharmacy automatically
+
+            pharmacySelect.value =
+                currentPharmacist.pharmacyID;
+
+
+            // Pharmacist cannot choose another pharmacy
+
+            pharmacySelect.disabled = true;
+
+        }
+
 
 
          
