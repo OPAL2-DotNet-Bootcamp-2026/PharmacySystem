@@ -285,6 +285,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
+        const pharmacyId =
+            Number(
+                pharmacySelect.value
+            );
+
 
 
          
