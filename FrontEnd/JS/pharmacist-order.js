@@ -826,4 +826,25 @@ async function loadOrders() {
             renderAllOrders(orders);
         }
 
+          // Pharmacist sees own orders
+
+        if (
+            Auth.role() === "Pharmacist" &&
+            currentPharmacist
+        ) {
+
+            const myOrders =
+                orders.filter(
+                    order =>
+                        order.pharmacistID ===
+                        currentPharmacist.pharmacistID
+                );
+
+
+            renderMyOrders(myOrders);
+        }
+
+    }
+
+
 });
