@@ -946,8 +946,30 @@ function renderAllOrders(orders) {
                     </small>
                 </td>
 
+                   <td>
+                    ${medicines}
+                </td>
 
+                <td>
+                    ${date}
+                </td>
 
+                <td class="text-end">
+                    OMR ${Number(order.totalCost).toFixed(3)}
+                </td>
+
+                <td>
+                    ${order.status}
+                </td>
+
+                <td class="text-end">
+                    ${actions}
+                </td>
+
+            </tr>
+        `;
+    });
+}
 
 
 });
