@@ -433,6 +433,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
 
+        // Refresh displayed medicines
+
+        renderOrderDetails();
+
+
+        // Reset
+
+        medicineSelect.value = "";
+
+        quantityInput.value = 1;
+
+    }
+
 
 
          
