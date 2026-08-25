@@ -273,6 +273,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+     // ==========================================
+    // LOAD PHARMACISTS BY PHARMACY
+    // ADMIN ONLY
+    // ==========================================
+
+    async function loadPharmacistsByPharmacy() {
+
+        if (Auth.role() !== "Admin") {
+
+            return;
+        }
+
 
 
          
