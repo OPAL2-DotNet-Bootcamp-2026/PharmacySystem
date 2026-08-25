@@ -482,6 +482,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         let total = 0;
 
+        orderDetails.forEach((detail, index) => {
+
+            const subtotal =
+                detail.unitPrice *
+                detail.quantity;
+
+
+            total += subtotal;
+
+
+            html += `
+
+                <div
+                    class="d-flex
+                           justify-content-between
+                           align-items-center
+                           border-bottom
+                           py-3"
+                >
+
 
 
          
