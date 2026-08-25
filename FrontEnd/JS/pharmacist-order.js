@@ -51,5 +51,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let currentPharmacist = null;
 
+    // ==========================================
+    // GET USER ID FROM TOKEN
+    // ==========================================
+
+    function getUserIdFromToken() {
+
+        const token = Auth.token();
+
+
+        if (!token) {
+
+            return null;
+        }
+
 
 })
