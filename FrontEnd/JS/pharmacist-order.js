@@ -638,6 +638,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
+        // Check pharmacist
+
+        if (!pharmacistID) {
+
+            alert(
+                "Please select a pharmacist."
+            );
+
+            return;
+        }
+
 
 
 
