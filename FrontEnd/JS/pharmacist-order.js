@@ -25,5 +25,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     const medicineSelect =
         document.getElementById("medicineId");
 
+     const quantityInput =
+        document.getElementById("quantity");
+
+    const addMedicineButton =
+        document.querySelector(".btn-add-medicine");
+
+    const submitButton =
+        document.querySelector(".btn-submit-order");
+
+    const orderLines =
+        document.getElementById("orderLines");
+
+    const estimatedTotal =
+        document.getElementById("estimatedTotal");
+
 
 })
