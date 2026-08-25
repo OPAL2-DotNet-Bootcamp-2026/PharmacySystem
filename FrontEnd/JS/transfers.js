@@ -71,7 +71,32 @@ let approvedOrders = [];
 
 
 // ==========================================
+// HELPER
+// Supports camelCase and PascalCase
+// ==========================================
+
+function getValue(
+    item,
+    camelCase,
+    pascalCase,
+    fallback = null
+) {
+
+    return (
+        item?.[camelCase]
+        ??
+        item?.[pascalCase]
+        ??
+        fallback
+    );
+
+}
+
+
+
+// ==========================================
 // LOAD APPROVED PHARMACIST ORDERS
+// GET /api/PharmacistOrder
 // ==========================================
 
 async function loadApprovedOrders() {
@@ -80,15 +105,43 @@ async function loadApprovedOrders() {
 
         const orders =
             await Api.get(
-                "/api/PharmacistOrder"
+                "/PharmacistOrder"
             );
 
 
+        console.log(
+            "PHARMACIST ORDERS:",
+            orders
+        );
+
+
+        const orderList =
+            Array.isArray(orders)
+                ? orders
+                : [];
+
+
         approvedOrders =
-            orders.filter(
-                order =>
-                    order.status ===
-                    "Approved"
+            orderList.filter(
+                function (order) {
+
+                    const status =
+                        getValue(
+                            order,
+                            "status",
+                            "Status",
+                            ""
+                        );
+
+
+                    return (
+                        String(status)
+                            .toLowerCase()
+                        ===
+                        "approved"
+                    );
+
+                }
             );
 
 
@@ -97,24 +150,72 @@ async function loadApprovedOrders() {
             <option
                 value=""
                 selected
-                disabled
-            >
+                disabled>
+
                 Select approved order
+
             </option>
 
         `;
 
 
+        if (
+            approvedOrders.length === 0
+        ) {
+
+            pharmacistOrder.innerHTML += `
+
+                <option
+                    value=""
+                    disabled>
+
+                    No approved orders found
+
+                </option>
+
+            `;
+
+            return;
+
+        }
+
+
         approvedOrders.forEach(
-            order => {
+            function (order) {
+
+                const orderId =
+                    Number(
+
+                        getValue(
+                            order,
+                            "pharmacistOrderId",
+                            "PharmacistOrderId",
+                            0
+                        )
+
+                    );
+
+
+                const pharmacyName =
+                    getValue(
+                        order,
+                        "pharmacyName",
+                        "PharmacyName",
+                        ""
+                    );
+
 
                 pharmacistOrder.innerHTML += `
 
                     <option
-                        value="${order.pharmacistOrderId}"
-                    >
+                        value="${orderId}">
 
-                        Order #${order.pharmacistOrderId}
+                        Order #${orderId}
+                        ${
+                            pharmacyName
+                                ? ` - ${pharmacyName}`
+                                : ""
+                        }
 
                     </option>
 
@@ -124,13 +225,26 @@ async function loadApprovedOrders() {
         );
 
     }
-
     catch (error) {
 
         console.error(
             "Failed to load approved orders:",
             error
         );
+
+
+        pharmacistOrder.innerHTML = `
+
+            <option
+                value=""
+                selected
+                disabled>
+
+                Could not load approved orders
+
+            </option>
+
+        `;
 
     }
 
@@ -139,7 +253,7 @@ async function loadApprovedOrders() {
 
 
 // ==========================================
-// WHEN APPROVED ORDER CHANGES
+// ORDER CHANGE
 // ==========================================
 
 function handleOrderChange() {
@@ -152,10 +266,27 @@ function handleOrderChange() {
 
     const selectedOrder =
         approvedOrders.find(
-            order =>
-                order.pharmacistOrderId
-                ===
-                selectedId
+            function (order) {
+
+                const orderId =
+                    Number(
+
+                        getValue(
+                            order,
+                            "pharmacistOrderId",
+                            "PharmacistOrderId",
+                            0
+                        )
+
+                    );
+
+
+                return (
+                    orderId ===
+                    selectedId
+                );
+
+            }
         );
 
 
@@ -187,67 +318,27 @@ function renderOrderMedicines(
 
 
     const details =
-        order.orderDetails
+
+        getValue(
+            order,
+            "orderDetails",
+            "OrderDetails",
+            null
+        )
+
         ??
-        order.pharmacistOrderDetails
-        ??
-        [];
 
-
-    details.forEach(
-        detail => {
-
-            transferMedicinesBody.innerHTML += `
-
-                <tr>
-
-
-                    <td>
-
-                        <strong>
-
-                            ${
-                                detail.medicineName
-                                ??
-                                `Medicine #${detail.medicineId}`
-                            }
-
-                        </strong>
-
-                    </td>
-
-
-                    <td>
-
-                        ${
-                            detail.categoryName
-                            ??
-                            "-"
-                        }
-
-                    </td>
-
-
-                    <td class="text-end">
-
-                        ${
-                            detail.quantity
-                            ??
-                            0
-                        }
-
-                    </td>
-
-
-                </tr>
-
-            `;
-
-        }
-    );
+        getValue(
+            order,
+            "pharmacistOrderDetails",
+            "PharmacistOrderDetails",
+            []
+        );
 
 
     if (
+        !Array.isArray(details)
+        ||
         details.length === 0
     ) {
 
@@ -257,8 +348,7 @@ function renderOrderMedicines(
 
                 <td
                     colspan="3"
-                    class="text-center text-muted"
-                >
+                    class="text-center text-muted">
 
                     No medicines found.
 
@@ -268,7 +358,93 @@ function renderOrderMedicines(
 
         `;
 
+        return;
+
     }
+
+
+    details.forEach(
+        function (detail) {
+
+            const medicineName =
+                getValue(
+                    detail,
+                    "medicineName",
+                    "MedicineName",
+                    null
+                );
+
+
+            const medicineID =
+                Number(
+
+                    getValue(
+                        detail,
+                        "medicineID",
+                        "MedicineID",
+
+                        getValue(
+                            detail,
+                            "medicineId",
+                            "MedicineId",
+                            0
+                        )
+                    )
+
+                );
+
+
+            const quantity =
+                Number(
+
+                    getValue(
+                        detail,
+                        "quantity",
+                        "Quantity",
+                        0
+                    )
+
+                );
+
+
+            transferMedicinesBody.innerHTML += `
+
+                <tr>
+
+                    <td>
+
+                        <strong>
+
+                            ${
+                                medicineName
+                                ??
+                                `Medicine #${medicineID}`
+                            }
+
+                        </strong>
+
+                    </td>
+
+
+                    <td>
+
+                        -
+
+                    </td>
+
+
+                    <td class="text-end">
+
+                        ${quantity}
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
 
 }
 
@@ -276,6 +452,7 @@ function renderOrderMedicines(
 
 // ==========================================
 // CREATE TRANSFER
+// POST /api/Transfer
 // ==========================================
 
 async function createTransfer(
@@ -302,15 +479,29 @@ async function createTransfer(
     }
 
 
-
-    // Find selected order from array
-
     const selectedOrder =
         approvedOrders.find(
-            order =>
-                order.pharmacistOrderId
-                ===
-                pharmacistOrderId
+            function (order) {
+
+                const orderId =
+                    Number(
+
+                        getValue(
+                            order,
+                            "pharmacistOrderId",
+                            "PharmacistOrderId",
+                            0
+                        )
+
+                    );
+
+
+                return (
+                    orderId ===
+                    pharmacistOrderId
+                );
+
+            }
         );
 
 
@@ -326,31 +517,132 @@ async function createTransfer(
 
 
 
-    // Get medicines/details
+    // ==========================================
+    // PHARMACY ID
+    // ==========================================
+
+    const pharmacyID =
+        Number(
+
+            getValue(
+                selectedOrder,
+                "pharmacyID",
+                "PharmacyID",
+
+                getValue(
+                    selectedOrder,
+                    "pharmacyId",
+                    "PharmacyId",
+                    0
+                )
+            )
+
+        );
+
+
+    if (!pharmacyID) {
+
+        console.log(
+            "SELECTED ORDER:",
+            selectedOrder
+        );
+
+        alert(
+            "Pharmacy ID was not found in this order."
+        );
+
+        return;
+
+    }
+
+
+
+    // ==========================================
+    // ORDER DETAILS
+    // ==========================================
 
     const details =
-        selectedOrder.orderDetails
+
+        getValue(
+            selectedOrder,
+            "orderDetails",
+            "OrderDetails",
+            null
+        )
+
         ??
-        selectedOrder.pharmacistOrderDetails
-        ??
-        [];
+
+        getValue(
+            selectedOrder,
+            "pharmacistOrderDetails",
+            "PharmacistOrderDetails",
+            []
+        );
+
+
+    if (
+        !Array.isArray(details)
+        ||
+        details.length === 0
+    ) {
+
+        alert(
+            "This order has no medicines."
+        );
+
+        return;
+
+    }
 
 
 
-    // Convert order details
-    // into transfer details
+    // ==========================================
+    // TRANSFER DETAILS
+    // ==========================================
 
     const transferDetails =
         details.map(
-            detail => {
+            function (detail) {
+
+                const medicineID =
+                    Number(
+
+                        getValue(
+                            detail,
+                            "medicineID",
+                            "MedicineID",
+
+                            getValue(
+                                detail,
+                                "medicineId",
+                                "MedicineId",
+                                0
+                            )
+                        )
+
+                    );
+
+
+                const quantity =
+                    Number(
+
+                        getValue(
+                            detail,
+                            "quantity",
+                            "Quantity",
+                            0
+                        )
+
+                    );
+
 
                 return {
 
-                    medicineId:
-                        detail.medicineId,
+                    medicineID:
+                        medicineID,
 
                     quantity:
-                        detail.quantity
+                        quantity
 
                 };
 
@@ -359,20 +651,63 @@ async function createTransfer(
 
 
 
-    // ======================================
-    // CREATE TRANSFER OBJECT
-    // ======================================
+    // ==========================================
+    // VALIDATE DETAILS
+    // ==========================================
+
+    const invalidDetail =
+        transferDetails.find(
+            function (detail) {
+
+                return (
+                    detail.medicineID <= 0
+                    ||
+                    detail.quantity <= 0
+                );
+
+            }
+        );
+
+
+    if (invalidDetail) {
+
+        console.log(
+            "INVALID DETAILS:",
+            transferDetails
+        );
+
+        alert(
+            "One medicine has invalid data."
+        );
+
+        return;
+
+    }
+
+
+
+    // ==========================================
+    // ONE MAIN WAREHOUSE
+    // ==========================================
+
+    const MAIN_WAREHOUSE_ID = 1;
+
+
+
+    // ==========================================
+    // CREATE BODY
+    // ==========================================
 
     const newTransfer = {
 
+        warehouseID:
+            MAIN_WAREHOUSE_ID,
+
+        pharmacyID:
+            pharmacyID,
+
         pharmacistOrderId:
-            selectedOrder.pharmacistOrderId,
-
-        pharmacyId:
-            selectedOrder.pharmacyId,
-
-        warehouseId:
-            selectedOrder.warehouseId,
+            pharmacistOrderId,
 
         transferDetails:
             transferDetails
@@ -380,19 +715,24 @@ async function createTransfer(
     };
 
 
-
     console.log(
-        "Transfer to create:",
+        "TRANSFER TO CREATE:",
         newTransfer
     );
 
 
-
     try {
 
-        await Api.post(
-            "/api/Transfer",
-            newTransfer
+        const result =
+            await Api.post(
+                "/Transfer",
+                newTransfer
+            );
+
+
+        console.log(
+            "TRANSFER CREATED:",
+            result
         );
 
 
@@ -401,14 +741,8 @@ async function createTransfer(
         );
 
 
-
-        // Reset form
-
         transferForm.reset();
 
-
-
-        // Reset medicine table
 
         transferMedicinesBody.innerHTML = `
 
@@ -416,8 +750,7 @@ async function createTransfer(
 
                 <td
                     colspan="3"
-                    class="text-center text-muted"
-                >
+                    class="text-center text-muted">
 
                     Select an approved order.
 
@@ -428,21 +761,11 @@ async function createTransfer(
         `;
 
 
-
-        // Reload approved orders
-        // because created order should not
-        // stay available
-
         await loadApprovedOrders();
-
-
-
-        // Reload transfer history
 
         await loadTransfers();
 
     }
-
     catch (error) {
 
         console.error(
@@ -465,6 +788,7 @@ async function createTransfer(
 
 // ==========================================
 // LOAD ALL TRANSFERS
+// GET /api/Transfer
 // ==========================================
 
 async function loadTransfers() {
@@ -473,32 +797,37 @@ async function loadTransfers() {
 
         const transfers =
             await Api.get(
-                "/api/Transfer"
+                "/Transfer"
             );
 
 
         console.log(
-            "Transfers:",
+            "TRANSFERS:",
             transfers
         );
 
 
+        const transferList =
+            Array.isArray(transfers)
+                ? transfers
+                : [];
+
+
         renderTransfers(
-            transfers
+            transferList
         );
 
 
         renderRoadTransfers(
-            transfers
+            transferList
         );
 
 
         renderIncomingTransfers(
-            transfers
+            transferList
         );
 
     }
-
     catch (error) {
 
         console.error(
@@ -515,8 +844,7 @@ async function loadTransfers() {
 
                     <td
                         colspan="7"
-                        class="text-center text-danger"
-                    >
+                        class="text-center text-danger">
 
                         Failed to load transfers.
 
@@ -528,6 +856,14 @@ async function loadTransfers() {
 
         }
 
+
+        if (roadSummary) {
+
+            roadSummary.textContent =
+                "Could not load transfers.";
+
+        }
+
     }
 
 }
@@ -535,7 +871,7 @@ async function loadTransfers() {
 
 
 // ==========================================
-// RENDER TRANSFER HISTORY
+// RENDER ALL TRANSFERS
 // ==========================================
 
 function renderTransfers(
@@ -553,7 +889,6 @@ function renderTransfers(
         "";
 
 
-
     if (transferCount) {
 
         transferCount.textContent =
@@ -562,69 +897,192 @@ function renderTransfers(
     }
 
 
-
     transfers.forEach(
-        transfer => {
-
+        function (transfer) {
 
             const transferId =
-                transfer.transferId;
+                Number(
 
+                    getValue(
+                        transfer,
+                        "transferId",
+                        "TransferId",
+
+                        getValue(
+                            transfer,
+                            "transferID",
+                            "TransferID",
+                            0
+                        )
+                    )
+
+                );
+
+
+            const warehouseID =
+                Number(
+
+                    getValue(
+                        transfer,
+                        "warehouseID",
+                        "WarehouseID",
+
+                        getValue(
+                            transfer,
+                            "warehouseId",
+                            "WarehouseId",
+                            0
+                        )
+                    )
+
+                );
+
+
+            const pharmacyID =
+                Number(
+
+                    getValue(
+                        transfer,
+                        "pharmacyID",
+                        "PharmacyID",
+
+                        getValue(
+                            transfer,
+                            "pharmacyId",
+                            "PharmacyId",
+                            0
+                        )
+                    )
+
+                );
 
 
             const warehouseName =
-                transfer.warehouseName
-                ??
-                `Warehouse #${transfer.warehouseId}`;
+                getValue(
+                    transfer,
+                    "location",
+                    "Location",
 
+                    getValue(
+                        transfer,
+                        "warehouseName",
+                        "WarehouseName",
+                        `Warehouse #${warehouseID}`
+                    )
+                );
 
 
             const pharmacyName =
-                transfer.pharmacyName
-                ??
-                `Pharmacy #${transfer.pharmacyId}`;
-
+                getValue(
+                    transfer,
+                    "pharmacyName",
+                    "PharmacyName",
+                    `Pharmacy #${pharmacyID}`
+                );
 
 
             const status =
-                transfer.status
-                ??
-                "-";
+                getValue(
+                    transfer,
+                    "status",
+                    "Status",
+                    "-"
+                );
 
+
+            const transferDate =
+                getValue(
+                    transfer,
+                    "transferDate",
+                    "TransferDate",
+                    null
+                );
+
+
+            const receiveDate =
+                getValue(
+                    transfer,
+                    "receiveDate",
+                    "ReceiveDate",
+                    null
+                );
+
+
+            const transferDetails =
+                getValue(
+                    transfer,
+                    "transferDetails",
+                    "TransferDetails",
+                    []
+                );
 
 
             const medicineNames =
-                transfer.medicineNames
-                ??
-                [];
+                Array.isArray(
+                    transferDetails
+                )
+                    ?
+                    transferDetails.map(
+                        function (detail) {
 
+                            return (
+
+                                getValue(
+                                    detail,
+                                    "medicineName",
+                                    "MedicineName",
+                                    null
+                                )
+
+                                ??
+
+                                `Medicine #${
+                                    getValue(
+                                        detail,
+                                        "medicineID",
+                                        "MedicineID",
+                                        ""
+                                    )
+                                }`
+
+                            );
+
+                        }
+                    )
+                    :
+                    [];
 
 
             const contents =
                 medicineNames.length > 0
-
-                    ? medicineNames.join(", ")
-
-                    : "-";
-
+                    ?
+                    medicineNames.join(
+                        ", "
+                    )
+                    :
+                    "-";
 
 
             let actionHtml =
                 "";
 
 
+            const cleanStatus =
+                String(status)
+                    .toLowerCase();
+
 
             if (
-                status ===
-                "Shipped"
+                cleanStatus === "shipped"
+                ||
+                cleanStatus === "in transit"
             ) {
 
                 actionHtml = `
 
                     <button
                         class="confirm-btn"
-                        onclick="receiveTransfer(${transferId})"
-                    >
+                        onclick="receiveTransfer(${transferId})">
 
                         Confirm receive
 
@@ -633,7 +1091,6 @@ function renderTransfers(
                 `;
 
             }
-
             else {
 
                 actionHtml = `
@@ -641,13 +1098,15 @@ function renderTransfers(
                     <span class="received-date">
 
                         ${
-                            transfer.receiveDate
-                            ?
-                            `Received ${formatDate(
-                                transfer.receiveDate
-                            )}`
-                            :
-                            status
+                            receiveDate
+                                ?
+                                `Received ${
+                                    formatDate(
+                                        receiveDate
+                                    )
+                                }`
+                                :
+                                status
                         }
 
                     </span>
@@ -657,20 +1116,16 @@ function renderTransfers(
             }
 
 
-
             transferTable.innerHTML += `
 
                 <tr
-                    data-id="${transferId}"
-                >
+                    data-id="${transferId}">
 
 
                     <td>
 
                         <strong>
-
                             #${transferId}
-
                         </strong>
 
                     </td>
@@ -701,7 +1156,7 @@ function renderTransfers(
 
                         ${
                             formatDate(
-                                transfer.transferDate
+                                transferDate
                             )
                         }
 
@@ -711,17 +1166,13 @@ function renderTransfers(
                     <td>
 
                         <span
-                            class="status ${status.toLowerCase()}"
-                        >
+                            class="status ${cleanStatus.replace(" ", "-")}">
 
                             <span
-                                class="status-dot"
-                            >
+                                class="status-dot">
                             </span>
 
-                            ${
-                                status.toUpperCase()
-                            }
+                            ${String(status).toUpperCase()}
 
                         </span>
 
@@ -743,7 +1194,6 @@ function renderTransfers(
     );
 
 
-
     if (
         transfers.length === 0
     ) {
@@ -754,8 +1204,7 @@ function renderTransfers(
 
                 <td
                     colspan="7"
-                    class="text-center text-muted"
-                >
+                    class="text-center text-muted">
 
                     No transfers found.
 
@@ -773,6 +1222,7 @@ function renderTransfers(
 
 // ==========================================
 // ON THE ROAD
+// Pending / Shipped / In Transit
 // ==========================================
 
 function renderRoadTransfers(
@@ -790,28 +1240,46 @@ function renderRoadTransfers(
     }
 
 
-
-    const shippedTransfers =
+    const roadTransfers =
         transfers.filter(
-            transfer =>
-                transfer.status ===
-                "Shipped"
+            function (transfer) {
+
+                const status =
+                    getValue(
+                        transfer,
+                        "status",
+                        "Status",
+                        ""
+                    );
+
+
+                const cleanStatus =
+                    String(status)
+                        .toLowerCase();
+
+
+                return (
+                    cleanStatus === "pending"
+                    ||
+                    cleanStatus === "shipped"
+                    ||
+                    cleanStatus === "in transit"
+                );
+
+            }
         );
 
 
-
     roadSummary.textContent =
-        `${shippedTransfers.length} shipment(s) on the road`;
-
+        `${roadTransfers.length} shipment(s) on the road`;
 
 
     roadContent.innerHTML =
         "";
 
 
-
     if (
-        shippedTransfers.length === 0
+        roadTransfers.length === 0
     ) {
 
         roadContent.innerHTML = `
@@ -829,27 +1297,128 @@ function renderRoadTransfers(
     }
 
 
-
     const transfer =
-        shippedTransfers[0];
+        roadTransfers[0];
 
+
+    const transferId =
+        Number(
+
+            getValue(
+                transfer,
+                "transferId",
+                "TransferId",
+
+                getValue(
+                    transfer,
+                    "transferID",
+                    "TransferID",
+                    0
+                )
+            )
+
+        );
+
+
+    const pharmacyID =
+        Number(
+
+            getValue(
+                transfer,
+                "pharmacyID",
+                "PharmacyID",
+
+                getValue(
+                    transfer,
+                    "pharmacyId",
+                    "PharmacyId",
+                    0
+                )
+            )
+
+        );
 
 
     const warehouseName =
-        transfer.warehouseName
-        ??
-        `Warehouse #${transfer.warehouseId}`;
+        getValue(
+            transfer,
+            "location",
+            "Location",
 
+            getValue(
+                transfer,
+                "warehouseName",
+                "WarehouseName",
+                "Main Warehouse — Rusayl"
+            )
+        );
 
 
     const pharmacyName =
-        transfer.pharmacyName
-        ??
-        `Pharmacy #${transfer.pharmacyId}`;
+        getValue(
+            transfer,
+            "pharmacyName",
+            "PharmacyName",
+            `Pharmacy #${pharmacyID}`
+        );
 
+
+    const transferDetails =
+        getValue(
+            transfer,
+            "transferDetails",
+            "TransferDetails",
+            []
+        );
+
+
+    let totalQuantity =
+        0;
+
+
+    if (
+        Array.isArray(
+            transferDetails
+        )
+    ) {
+
+        totalQuantity =
+            transferDetails.reduce(
+                function (
+                    total,
+                    detail
+                ) {
+
+                    const quantity =
+                        Number(
+
+                            getValue(
+                                detail,
+                                "quantity",
+                                "Quantity",
+                                0
+                            )
+
+                        );
+
+
+                    return (
+                        total +
+                        quantity
+                    );
+
+                },
+
+                0
+
+            );
+
+    }
 
 
     roadContent.innerHTML = `
+
+        <!-- FROM -->
 
         <div class="road-place">
 
@@ -858,14 +1427,13 @@ function renderRoadTransfers(
             </span>
 
             <strong>
-
                 ${warehouseName}
-
             </strong>
 
         </div>
 
 
+        <!-- ROAD -->
 
         <div class="road">
 
@@ -882,24 +1450,31 @@ function renderRoadTransfers(
         </div>
 
 
+        <!-- TO -->
 
         <div
-            class="road-place road-place-right"
-        >
+            class="road-place
+                   road-place-right">
 
             <span>
                 HEADING TO
             </span>
 
             <strong>
-
                 ${pharmacyName}
-
             </strong>
 
             <small>
 
-                #${transfer.transferId}
+                #${transferId}
+
+                ${
+                    totalQuantity > 0
+                        ?
+                        ` · ${totalQuantity} units`
+                        :
+                        ""
+                }
 
             </small>
 
@@ -926,14 +1501,34 @@ function renderIncomingTransfers(
     }
 
 
-
     const incoming =
         transfers.filter(
-            transfer =>
-                transfer.status ===
-                "Shipped"
-        );
+            function (transfer) {
 
+                const status =
+                    getValue(
+                        transfer,
+                        "status",
+                        "Status",
+                        ""
+                    );
+
+
+                const cleanStatus =
+                    String(status)
+                        .toLowerCase();
+
+
+                return (
+                    cleanStatus === "pending"
+                    ||
+                    cleanStatus === "shipped"
+                    ||
+                    cleanStatus === "in transit"
+                );
+
+            }
+        );
 
 
     if (
@@ -946,49 +1541,106 @@ function renderIncomingTransfers(
     }
 
 
-
     incomingTransfers.innerHTML =
         "";
 
 
-
     incoming.forEach(
-        transfer => {
+        function (transfer) {
+
+            const transferId =
+                Number(
+
+                    getValue(
+                        transfer,
+                        "transferId",
+                        "TransferId",
+
+                        getValue(
+                            transfer,
+                            "transferID",
+                            "TransferID",
+                            0
+                        )
+                    )
+
+                );
 
 
             const warehouseName =
-                transfer.warehouseName
-                ??
-                `Warehouse #${transfer.warehouseId}`;
+                getValue(
+                    transfer,
+                    "location",
+                    "Location",
 
+                    getValue(
+                        transfer,
+                        "warehouseName",
+                        "WarehouseName",
+                        "Main Warehouse — Rusayl"
+                    )
+                );
+
+
+            const transferDetails =
+                getValue(
+                    transfer,
+                    "transferDetails",
+                    "TransferDetails",
+                    []
+                );
 
 
             const medicineNames =
-                transfer.medicineNames
-                ??
-                [];
+                Array.isArray(
+                    transferDetails
+                )
+                    ?
+                    transferDetails.map(
+                        function (detail) {
 
+                            return (
+
+                                getValue(
+                                    detail,
+                                    "medicineName",
+                                    "MedicineName",
+                                    null
+                                )
+
+                                ??
+
+                                `Medicine #${
+                                    getValue(
+                                        detail,
+                                        "medicineID",
+                                        "MedicineID",
+                                        ""
+                                    )
+                                }`
+
+                            );
+
+                        }
+                    )
+                    :
+                    [];
 
 
             incomingTransfers.innerHTML += `
 
                 <div
-                    class="incoming-transfer-row"
-                >
+                    class="incoming-transfer-row">
 
 
                     <div>
 
                         <span class="small-label">
-
                             TRANSFER
-
                         </span>
 
                         <strong>
-
-                            #${transfer.transferId}
-
+                            #${transferId}
                         </strong>
 
                     </div>
@@ -997,15 +1649,11 @@ function renderIncomingTransfers(
                     <div>
 
                         <span class="small-label">
-
                             FROM
-
                         </span>
 
                         <strong>
-
                             ${warehouseName}
-
                         </strong>
 
                     </div>
@@ -1014,21 +1662,19 @@ function renderIncomingTransfers(
                     <div>
 
                         <span class="small-label">
-
                             CONTENTS
-
                         </span>
 
                         <strong>
 
                             ${
                                 medicineNames.length > 0
-
-                                ?
-                                medicineNames.join(", ")
-
-                                :
-                                "-"
+                                    ?
+                                    medicineNames.join(
+                                        ", "
+                                    )
+                                    :
+                                    "-"
                             }
 
                         </strong>
@@ -1039,15 +1685,13 @@ function renderIncomingTransfers(
                     <div>
 
                         <span
-                            class="status shipped"
-                        >
+                            class="status shipped">
 
                             <span
-                                class="status-dot"
-                            >
+                                class="status-dot">
                             </span>
 
-                            SHIPPED
+                            ON THE ROAD
 
                         </span>
 
@@ -1058,8 +1702,7 @@ function renderIncomingTransfers(
 
                         <button
                             class="confirm-btn"
-                            onclick="receiveTransfer(${transfer.transferId})"
-                        >
+                            onclick="receiveTransfer(${transferId})">
 
                             Confirm receive
 
@@ -1074,7 +1717,6 @@ function renderIncomingTransfers(
 
         }
     );
-
 
 
     if (
@@ -1099,6 +1741,7 @@ function renderIncomingTransfers(
 
 // ==========================================
 // RECEIVE TRANSFER
+// PUT /api/Transfer/{id}/confirm-receive
 // ==========================================
 
 async function receiveTransfer(
@@ -1108,8 +1751,11 @@ async function receiveTransfer(
     try {
 
         await Api.put(
-            `/api/Transfer/${id}/receive`,
+
+            `/Transfer/${id}/confirm-receive`,
+
             {}
+
         );
 
 
@@ -1121,7 +1767,6 @@ async function receiveTransfer(
         await loadTransfers();
 
     }
-
     catch (error) {
 
         console.error(
@@ -1139,6 +1784,15 @@ async function receiveTransfer(
     }
 
 }
+
+
+
+// ==========================================
+// MAKE RECEIVE FUNCTION AVAILABLE
+// ==========================================
+
+window.receiveTransfer =
+    receiveTransfer;
 
 
 
@@ -1201,33 +1855,30 @@ function formatDate(
 // EVENTS
 // ==========================================
 
-if (
+if (pharmacistOrder) {
+
     pharmacistOrder
-) {
+        .addEventListener(
 
-    pharmacistOrder.addEventListener(
+            "change",
 
-        "change",
+            handleOrderChange
 
-        handleOrderChange
-
-    );
+        );
 
 }
 
 
+if (transferForm) {
 
-if (
     transferForm
-) {
+        .addEventListener(
 
-    transferForm.addEventListener(
+            "submit",
 
-        "submit",
+            createTransfer
 
-        createTransfer
-
-    );
+        );
 
 }
 
