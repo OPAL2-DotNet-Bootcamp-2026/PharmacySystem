@@ -904,6 +904,30 @@ function renderAllOrders(orders) {
 
         let actions = "-";
 
+         if (
+            order.status === "Pending"
+        ) {
+
+            actions = `
+                <button
+                    type="button"
+                    class="btn btn-sm btn-success"
+                    data-approve-id="${order.pharmacistOrderId}"
+                >
+                    Approve
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-sm btn-danger"
+                    data-reject-id="${order.pharmacistOrderId}"
+                >
+                    Reject
+                </button>
+            `;
+        }
+
+
 
 
 
