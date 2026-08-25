@@ -78,6 +78,26 @@ document.addEventListener("DOMContentLoaded", async () => {
                             .replace(/_/g, "/")
                     )
                 );
+
+                return (
+                payload[
+                    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
+                ]
+
+                ||
+
+                payload.nameid
+
+                ||
+
+                payload.sub
+
+                ||
+
+                null
+            );
+
+        }
          
 
     
