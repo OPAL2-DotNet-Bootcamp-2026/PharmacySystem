@@ -1,22 +1,4 @@
-// ==========================================
-// DASHBOARD PAGE
-// Every number on this page comes from the API.
-//
-// Endpoints used:
-//   GET /api/Supplier/GetAll
-//   GET /api/Warehouse/GetAll
-//   GET /api/WarehouseStock/GetByWarehouse/{id}
-//   GET /api/WarehouseStock/GetLowStock/{id}?minimumQuantity=50
-//   GET /api/Pharmacy
-//   GET /api/PharmacyStock/by-pharmacy/{id}
-//   GET /api/PharmacyStock/low-stock/{id}
-//   GET /api/PharmacistOrder
-//   GET /api/Transfer
-//   GET /api/Supply            (Admin + Manager only)
-//
-// Load order in dashboard.html:
-//   Config.js -> Auth.js -> Api.js -> dashboard.js
-// ==========================================
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -49,9 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    // The page shows or hides sections using the URL
-    // hash. Force it to the real role so nobody can
-    // see the admin view by typing #admin.
+// Redirect to the role-specific dashboard if the hash is wrong
 
     if (window.location.hash !== "#" + roleKey) {
 
@@ -67,12 +47,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    // ==========================================
-    // HELPERS
-    // ==========================================
+  
+  
 
 
-    // Read a property whatever its casing
+   // Get a property from an object, trying several names
 
     function val(obj, ...names) {
 
