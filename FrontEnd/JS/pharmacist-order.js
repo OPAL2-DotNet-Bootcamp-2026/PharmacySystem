@@ -686,6 +686,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         };
 
+        console.log(
+            "Order sent to API:",
+            order
+        );
+
+
+
+        try {
+
+            submitButton.disabled = true;
+
+            submitButton.textContent =
+                "Submitting...";
+
+
 
 
 
