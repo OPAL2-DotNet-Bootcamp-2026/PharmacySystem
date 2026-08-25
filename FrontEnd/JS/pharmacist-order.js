@@ -381,6 +381,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
+        // Find medicine information
+
+        const medicine =
+            medicines.find(
+                item =>
+                    item.medicineID === medicineId
+            );
+
+
 
          
 
