@@ -479,31 +479,27 @@
 
 
                                 <!-- Warehouse -->
+                                 <div class="col-md-6">
 
-                                <div class="col-md-6">
+                                <label for="warehouseName">
+                                  Warehouse
+                                </label>
 
-                                    <label for="warehouse">
-                                        Warehouse
-                                    </label>
+                                <input
+                                type="text"
+                                id="warehouseName"
+                                class="form-control"
+                                value="Main Warehouse — Rusayl"
+                                readonly>
+                               <input
+                               type="hidden"
+                               id="warehouse"
+                               name="warehouseID"
+                            value="1">
 
-                                    <select
-                                        id="warehouse"
-                                        name="warehouseID"
-                                        class="form-select"
-                                        required>
+                            </div>
 
-                                        <option
-                                            value=""
-                                            selected
-                                            disabled>
-
-                                            Select warehouse
-
-                                        </option>
-
-                                    </select>
-
-                                </div>
+                            
 
 
                                 <!-- Medicine -->
@@ -764,9 +760,10 @@
     <!-- JavaScript -->
 
  <script src="../JS/Config.js">   </script>
-     <script src="../JS/auth.js"></script>
-    <script src="../JS/api.js"></script>
+     <script src="../JS/Auth.js"></script>
+    <script src="../JS/Api.js"></script>
     <script src="../JS/Supply.js"></script>
+    
 
 </body>
 
