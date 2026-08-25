@@ -858,6 +858,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+    await loadOrders();
+
+});
+
 
 // ==========================================
 // LOAD ORDERS FROM DATABASE
@@ -1156,5 +1160,3 @@ async function updateOrderStatus(
 
 
 
-
-});
