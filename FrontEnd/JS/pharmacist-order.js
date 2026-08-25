@@ -732,6 +732,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             renderOrderDetails();
 
+            await loadOrders();
+
 
 
             // Reload orders if you add
