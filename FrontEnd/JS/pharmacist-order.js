@@ -413,6 +413,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
 
+         else {
+
+            orderDetails.push({
+
+                medicineID:
+                    medicineId,
+
+                medicineName:
+                    medicine.medicineName,
+
+                unitPrice:
+                    medicine.unitPrice,
+
+                quantity:
+                    quantity
+
+            });
+
+        }
+
 
 
          
