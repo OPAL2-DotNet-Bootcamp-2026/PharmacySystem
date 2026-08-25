@@ -185,6 +185,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             `;
 
+            medicines.forEach(medicine => {
+
+                medicineSelect.innerHTML += `
+
+                    <option
+                        value="${medicine.medicineID}"
+                    >
+                        ${medicine.medicineName}
+                    </option>
+
+                `;
+
+            });
+
+        }
+
 
          
 
