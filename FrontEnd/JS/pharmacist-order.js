@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             return null;
         }
     }
-    
+
     // ==========================================
     // LOAD PHARMACIES
     // ==========================================
@@ -130,6 +130,28 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </option>
 
             `;
+
+            pharmacies.forEach(pharmacy => {
+
+                if (!pharmacy.isActive) {
+
+                    return;
+                }
+
+
+                pharmacySelect.innerHTML += `
+
+                    <option
+                        value="${pharmacy.pharmacyID}"
+                    >
+                        ${pharmacy.pharmacyName}
+                    </option>
+
+                `;
+
+            });
+
+        }
 
          
 
