@@ -611,6 +611,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return;
             }
 
+            pharmacistID =
+                currentPharmacist.pharmacistID;
+
+        }
+
 
 
 
