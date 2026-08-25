@@ -1070,6 +1070,17 @@ async function updateOrderStatus(
         );
 
 
+        alert(
+            `Order ${status} successfully.`
+        );
+
+
+        await loadOrders();
+
+    }
+
+
+
 
 
 });
