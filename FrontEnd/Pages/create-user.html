@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,9 +46,7 @@
 <body>
 
 
-    <!-- ==================================
-         ROLE FLAGS
-    ================================== -->
+    <!-- ROLE FLAGS -->
 
     <b id="admin" class="role-flag"></b>
     <b id="manager" class="role-flag"></b>
@@ -62,14 +59,10 @@
         <div class="row min-vh-100">
 
 
-            <!-- ==================================
-                 SIDEBAR
-            ================================== -->
+            <!-- SIDEBAR -->
 
             <div class="col-md-3 col-lg-2 sidebar p-3">
 
-
-                <!-- Brand -->
 
                 <div class="sidebar-brand">
 
@@ -106,10 +99,6 @@
                 </div>
 
 
-
-                <!-- ==================================
-                     OVERVIEW
-                ================================== -->
 
                 <p class="sidebar-title">
                     OVERVIEW
@@ -159,10 +148,6 @@
 
 
 
-                <!-- ==================================
-                     INTO THE WAREHOUSE
-                ================================== -->
-
                 <p
                     class="sidebar-title"
                     data-roles="admin manager"
@@ -170,8 +155,6 @@
                     INTO THE WAREHOUSE
                 </p>
 
-
-                <!-- Suppliers -->
 
                 <a
                     href="suppliers.html#admin"
@@ -201,9 +184,6 @@
                 </a>
 
 
-
-                <!-- Supplies -->
-
                 <a
                     href="supply.html#admin"
                     data-roles="admin"
@@ -231,9 +211,6 @@
 
                 </a>
 
-
-
-                <!-- Warehouse Stock -->
 
                 <a
                     href="warehouse-stock.html#admin"
@@ -264,17 +241,10 @@
 
 
 
-                <!-- ==================================
-                     OUT TO THE PHARMACY
-                ================================== -->
-
                 <p class="sidebar-title">
                     OUT TO THE PHARMACY
                 </p>
 
-
-
-                <!-- Pharmacist Orders -->
 
                 <a
                     href="pharmacist-order.html#admin"
@@ -285,10 +255,6 @@
 
                     <span>
                         Pharmacist Orders
-                    </span>
-
-                    <span class="sidebar-count">
-                        1
                     </span>
 
                 </a>
@@ -305,10 +271,6 @@
                         Pharmacist Orders
                     </span>
 
-                    <span class="sidebar-count">
-                        1
-                    </span>
-
                 </a>
 
 
@@ -323,15 +285,8 @@
                         Pharmacist Orders
                     </span>
 
-                    <span class="sidebar-count">
-                        1
-                    </span>
-
                 </a>
 
-
-
-                <!-- Transfers -->
 
                 <a
                     href="transfer.html#admin"
@@ -342,10 +297,6 @@
 
                     <span>
                         Transfers
-                    </span>
-
-                    <span class="sidebar-count">
-                        1
                     </span>
 
                 </a>
@@ -362,10 +313,6 @@
                         Transfers
                     </span>
 
-                    <span class="sidebar-count">
-                        1
-                    </span>
-
                 </a>
 
 
@@ -380,15 +327,8 @@
                         Incoming Transfers
                     </span>
 
-                    <span class="sidebar-count">
-                        1
-                    </span>
-
                 </a>
 
-
-
-                <!-- Pharmacy Stock -->
 
                 <a
                     href="pharmacy-stock.html#admin"
@@ -433,10 +373,6 @@
 
 
 
-                <!-- ==================================
-                     USER MANAGEMENT
-                ================================== -->
-
                 <p
                     class="sidebar-title"
                     data-roles="admin"
@@ -461,10 +397,6 @@
 
 
 
-                <!-- ==================================
-                     SIGN OUT
-                ================================== -->
-
                 <a
                     href="#"
                     class="sign-out"
@@ -484,23 +416,13 @@
 
 
 
-            <!-- ==================================
-                 MAIN CONTENT
-            ================================== -->
+            <!-- MAIN -->
 
             <main class="col-md-9 col-lg-10 main-content">
 
 
-                <!-- ==================================
-                     ADMIN VIEW
-                ================================== -->
-
                 <div data-roles="admin">
 
-
-                    <!-- ==================================
-                         HEADER
-                    ================================== -->
 
                     <div class="page-header">
 
@@ -521,7 +443,7 @@
 
 
                             <p>
-                               Add a new staff member and assign the right system role.
+                                Add a new staff member and assign the right system role.
                             </p>
 
                         </div>
@@ -533,9 +455,7 @@
                     <div class="row g-4">
 
 
-                        <!-- ==================================
-                             CREATE USER FORM
-                        ================================== -->
+                        <!-- CREATE FORM -->
 
                         <div class="col-lg-7">
 
@@ -550,7 +470,7 @@
 
 
                                     <p>
-                                        All fields are required.
+                                        Complete the required information.
                                     </p>
 
                                 </div>
@@ -577,14 +497,9 @@
                                             id="username"
                                             name="username"
                                             maxlength="50"
-                                            placeholder="Layla Al Harthy"
+                                            placeholder="Layla"
                                             required
                                         >
-
-
-                                        <small>
-                                            Up to 50 characters.
-                                        </small>
 
                                     </div>
 
@@ -608,11 +523,6 @@
                                             required
                                         >
 
-
-                                        <small>
-                                            Enter a valid email address.
-                                        </small>
-
                                     </div>
 
 
@@ -635,12 +545,6 @@
                                             placeholder="At least 8 characters"
                                             required
                                         >
-
-
-                                        <small>
-                                            Minimum 8 characters.
-                                            Password is stored as a hash.
-                                        </small>
 
                                     </div>
 
@@ -686,18 +590,89 @@
 
                                         </select>
 
+                                    </div>
 
-                                        <small>
-                                            Admin, Manager or Pharmacist.
-                                        </small>
+
+
+                                    <!-- ==========================
+                                         PHARMACIST FIELDS
+                                    =========================== -->
+
+                                    <div
+                                        id="pharmacist-fields"
+                                        style="display:none;"
+                                    >
+
+
+                                        <!-- Full Name -->
+
+                                        <div class="field">
+
+                                            <label for="fullName">
+                                                Full Name
+                                            </label>
+
+
+                                            <input
+                                                type="text"
+                                                id="fullName"
+                                                name="fullName"
+                                                maxlength="100"
+                                                placeholder="Layla Al Harthy"
+                                            >
+
+                                        </div>
+
+
+
+                                        <!-- Phone -->
+
+                                        <div class="field">
+
+                                            <label for="phone">
+                                                Phone
+                                            </label>
+
+
+                                            <input
+                                                type="text"
+                                                id="phone"
+                                                name="phone"
+                                                placeholder="99112233"
+                                            >
+
+                                        </div>
+
+
+
+                                        <!-- Pharmacy -->
+
+                                        <div class="field">
+
+                                            <label for="pharmacyId">
+                                                Pharmacy
+                                            </label>
+
+
+                                            <select
+                                                id="pharmacyId"
+                                                name="pharmacyId"
+                                            >
+
+                                                <option value="">
+                                                    Select pharmacy
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
 
                                     </div>
 
 
 
-                                    <!-- ==================================
-                                         CREATE MESSAGE
-                                    ================================== -->
+                                    <!-- MESSAGE -->
 
                                     <p
                                         id="create-user-message"
@@ -710,7 +685,7 @@
 
 
 
-                                    <!-- Actions -->
+                                    <!-- ACTIONS -->
 
                                     <div class="form-actions">
 
@@ -750,9 +725,7 @@
 
 
 
-                        <!-- ==================================
-                             ROLE INFORMATION
-                        ================================== -->
+                        <!-- ROLE INFORMATION -->
 
                         <div class="col-lg-5">
 
@@ -764,20 +737,15 @@
                                 </h2>
 
 
-
-                                <!-- Admin -->
-
                                 <div class="role-row role-row--admin">
 
                                     <span class="role-dot"></span>
-
 
                                     <div>
 
                                         <strong>
                                             Admin
                                         </strong>
-
 
                                         <p>
                                             Everything, plus user management.
@@ -789,19 +757,15 @@
 
 
 
-                                <!-- Manager -->
-
                                 <div class="role-row role-row--manager">
 
                                     <span class="role-dot"></span>
-
 
                                     <div>
 
                                         <strong>
                                             Manager
                                         </strong>
-
 
                                         <p>
                                             Warehouse stock, suppliers,
@@ -814,19 +778,15 @@
 
 
 
-                                <!-- Pharmacist -->
-
                                 <div class="role-row role-row--pharmacist">
 
                                     <span class="role-dot"></span>
-
 
                                     <div>
 
                                         <strong>
                                             Pharmacist
                                         </strong>
-
 
                                         <p>
                                             Orders, incoming transfers
@@ -838,17 +798,6 @@
                                 </div>
 
 
-
-                                <p class="info-note">
-
-                                    <i class="bi bi-info-circle"></i>
-
-                                    Deleting an account deactivates
-                                    the user so they cannot sign in.
-
-                                </p>
-
-
                             </section>
 
                         </div>
@@ -858,9 +807,7 @@
 
 
 
-                    <!-- ==================================
-                         EXISTING USERS
-                    ================================== -->
+                    <!-- EXISTING USERS -->
 
                     <section class="users-card">
 
@@ -886,7 +833,6 @@
                             </div>
 
 
-
                             <span
                                 class="users-summary"
                                 id="users-summary"
@@ -900,7 +846,6 @@
 
 
                         <div class="table-responsive">
-
 
                             <table class="table users-table">
 
@@ -935,17 +880,12 @@
 
 
 
-                                <!-- ==================================
-                                     USERS FROM DATABASE
-                                ================================== -->
-
                                 <tbody id="users-table-body">
 
                                 </tbody>
 
 
                             </table>
-
 
                         </div>
 
@@ -956,10 +896,6 @@
                 </div>
 
 
-
-                <!-- ==================================
-                     FOOTER
-                ================================== -->
 
                 <footer class="mt-auto text-center py-3">
 
@@ -981,12 +917,8 @@
 
 
 
-    <!-- ==================================
-         JAVASCRIPT
-    ================================== -->
-
-
     <!-- Bootstrap JS -->
+
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     >
