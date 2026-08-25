@@ -1014,6 +1014,11 @@ function renderMyOrders(orders) {
                 .join("<br>")
             || "-";
 
+                    const date =
+            new Date(
+                order.orderDate
+            ).toLocaleDateString("en-GB");
+
 
 
 });
