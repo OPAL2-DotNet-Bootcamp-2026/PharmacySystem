@@ -342,6 +342,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+    // ==========================================
+    // ADD MEDICINE
+    // ==========================================
+
+    function addMedicine() {
+
+        const medicineId =
+            Number(
+                medicineSelect.value
+            );
+
 
          
 
