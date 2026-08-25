@@ -222,6 +222,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             return;
         }
+         try {
+
+            const userId =
+                Number(
+                    getUserIdFromToken()
+                );
+
+
+            const pharmacists =
+                await Api.get(
+                    "/Pharmacist"
+                );
+
 
 
          
