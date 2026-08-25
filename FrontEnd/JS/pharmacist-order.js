@@ -241,6 +241,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                         pharmacist.userID === userId
                 );
 
+                 if (!currentPharmacist) {
+
+                throw new Error(
+                    "Pharmacist profile was not found."
+                );
+            }
+
 
 
          
