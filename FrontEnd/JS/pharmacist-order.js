@@ -747,6 +747,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
 
+         finally {
+
+            submitButton.disabled = false;
+
+            submitButton.textContent =
+                "Submit order";
+
+        }
+
+    }
+
 
 
 
