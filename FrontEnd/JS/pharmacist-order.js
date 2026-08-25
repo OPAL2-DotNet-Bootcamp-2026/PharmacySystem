@@ -108,6 +108,29 @@ document.addEventListener("DOMContentLoaded", async () => {
             return null;
         }
     }
+    
+    // ==========================================
+    // LOAD PHARMACIES
+    // ==========================================
+
+    async function loadPharmacies() {
+
+        try {
+
+            const pharmacies =
+                await Api.get(
+                    "/Pharmacy"
+                );
+
+
+            pharmacySelect.innerHTML = `
+
+                <option value="">
+                    Select pharmacy
+                </option>
+
+            `;
+
          
 
     
