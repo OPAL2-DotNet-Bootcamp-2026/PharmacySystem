@@ -446,6 +446,29 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+    // ==========================================
+    // RENDER ORDER DETAILS
+    // ==========================================
+
+    function renderOrderDetails() {
+
+        // No medicines
+
+        if (orderDetails.length === 0) {
+
+            orderLines.innerHTML = `
+
+                <h3>
+                    No medicines added yet
+                </h3>
+
+                <p>
+                    Pick a medicine and a quantity,
+                    then add it to the order.
+                </p>
+
+            `;
+
 
 
          
