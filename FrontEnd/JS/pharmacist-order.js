@@ -212,6 +212,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+     // ==========================================
+    // FIND LOGGED-IN PHARMACIST
+    // ==========================================
+
+    async function loadCurrentPharmacist() {
+
+        if (Auth.role() !== "Pharmacist") {
+
+            return;
+        }
+
 
          
 
