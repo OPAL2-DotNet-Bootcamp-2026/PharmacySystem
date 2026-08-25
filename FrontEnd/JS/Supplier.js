@@ -1,176 +1,153 @@
-// ==========================================
-// SUPPLIERS PAGE
-// ==========================================
-
-
-// ==========================================
-// GET HTML ELEMENTS
-// ==========================================
-
-const addSupplierBtn =
-    document.getElementById("addSupplierBtn");
-
-const supplierModal =
-    document.getElementById("supplierModal");
-
-const closeModalBtn =
-    document.getElementById("closeModalBtn");
-
-const cancelSupplierBtn =
-    document.getElementById("cancelSupplierBtn");
-
-const supplierForm =
-    document.getElementById("supplierForm");
-
-const supplierTableBody =
-    document.getElementById("supplierTableBody");
-
-const supplierCount =
-    document.getElementById("supplierCount");
-
-const modalTitle =
-    document.getElementById("modalTitle");
-
-const modalDescription =
-    document.getElementById("modalDescription");
-
-const saveSupplierBtn =
-    document.getElementById("saveSupplierBtn");
-
-const successMessage =
-    document.getElementById("successMessage");
-
-const successTitle =
-    document.getElementById("successTitle");
-
-const successText =
-    document.getElementById("successText");
 
 
 
-// ==========================================
-// DEFAULT SUPPLIERS
-// ==========================================
-
-const defaultSuppliers = [
-
-    {
-        id: 1,
-        name: "Gulf Pharma Distribution",
-        email: "orders@gulfpharma.com",
-        phone: "+96824561200",
-        location: "Rusayl, Muscat",
-        status: "Active"
-    },
+document.addEventListener("DOMContentLoaded", function () {
 
 
-    {
-        id: 2,
-        name: "Muscat Medical Supplies",
-        email: "sales@muscatmed.com",
-        phone: "+96824778101",
-        location: "Ghala, Muscat",
-        status: "Active"
-    },
+    // LOGIN 
 
+    if (!Auth.isLoggedIn()) {
 
-    {
-        id: 3,
-        name: "Al Rawahi Pharma",
-        email: "info@alrawahi.com",
-        phone: "+96826443311",
-        location: "Nizwa, Dakhiliyah",
-        status: "Active"
-    },
+        window.location.href = "login.html";
 
+        return;
 
-    {
-        id: 4,
-        name: "Oman Drug House",
-        email: "contact@odh.com",
-        phone: "+96824900744",
-        location: "Sohar, Batinah",
-        status: "Active"
-    },
-
-
-    {
-        id: 5,
-        name: "Delta Med Trading",
-        email: "hello@deltamed.com",
-        phone: "+96823336890",
-        location: "Salalah, Dhofar",
-        status: "Inactive"
     }
 
-];
+
+    const role = Auth.role();
+
+    const canEdit =role === "Admin" || role === "Manager";
+        
+
+    const canDelete = role === "Admin";
+       
 
 
 
-// ==========================================
-// LOAD SUPPLIERS FROM LOCAL STORAGE
-// ==========================================
+    // GET HTML ELEMENTS
 
-let suppliers =
-    JSON.parse(
-        localStorage.getItem("pharmacySuppliers")
-    );
+    const addSupplierBtn =document.getElementById("addSupplierBtn");
 
+    const supplierModal =document.getElementById("supplierModal");
 
+    const closeModalBtn =document.getElementById("closeModalBtn");
 
-// First time opening the page
+    const cancelSupplierBtn =document.getElementById("cancelSupplierBtn");
 
-if (!suppliers) {
+    const supplierForm =document.getElementById("supplierForm");
 
-    suppliers = defaultSuppliers;
+    const supplierTableBody =document.getElementById("supplierTableBody");
 
-    saveToLocalStorage();
+    const supplierCount =document.getElementById("supplierCount");
 
-}
+    const modalTitle =document.getElementById("modalTitle");   
 
+    const modalDescription = document.getElementById("modalDescription");
 
+    const saveSupplierBtn =document.getElementById("saveSupplierBtn");
 
-// ==========================================
-// EDIT MODE
-// ==========================================
+    const successMessage =document.getElementById("successMessage"); 
 
-let editingSupplierId = null;
-
-
-
-// ==========================================
-// SAVE TO LOCAL STORAGE
-// ==========================================
-
-function saveToLocalStorage() {
-
-    localStorage.setItem(
-        "pharmacySuppliers",
-        JSON.stringify(suppliers)
-    );
-
-}
+    const successTitle =document.getElementById("successTitle");
+  
+    const successText =document.getElementById("successText");
+        
 
 
 
-// ==========================================
-// DISPLAY SUPPLIERS
-// ==========================================
-
-function displaySuppliers() {
-
-    supplierTableBody.innerHTML = "";
 
 
-    // Update record count
+    let suppliers = [];
 
-    supplierCount.textContent =
-        `${suppliers.length} records`;
+    let editingSupplierId = null;
 
 
-    // No suppliers
 
-    if (suppliers.length === 0) {
+    // Hide "Add supplier" for roles that cannot create
+
+    if (!canEdit) {addSupplierBtn.style.display = "none";}
+
+        
+
+
+
+    function normalise(item) {
+
+        return {
+
+            id:
+                item.supplierID ??
+                item.SupplierID,
+
+            name:
+                item.fullName ??
+                item.FullName ??
+                "",
+
+            phone:
+                item.phone ??
+                item.Phone ??
+                "",
+
+            email:
+                item.email ??
+                item.Email ??
+                "",
+
+            location:
+                item.location ??
+                item.Location ??
+                "",
+
+            isActive:
+                (item.isActive ??
+                    item.IsActive) === true
+
+        };
+
+    }
+
+
+
+    // ==========================================
+    // LOAD SUPPLIERS FROM THE DATABASE
+    // GET /api/Supplier/GetAll
+    // ==========================================
+
+    async function loadSuppliers() {
+
+        showTableMessage("Loading suppliers...");
+
+
+        try {
+
+            const data = await Api.get("/Supplier/GetAll");     
+
+
+            suppliers =(data || []).map(normalise);
+            
+            displaySuppliers();
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            showTableMessage( error.message ||"Could not load suppliers.");
+
+            supplierCount.textContent = "0 records";
+
+        }
+
+    }
+
+
+
+    // HELPER
+    // Show one message row inside the table
+
+    function showTableMessage(text) {
 
         supplierTableBody.innerHTML = `
 
@@ -180,7 +157,7 @@ function displaySuppliers() {
                     colspan="5"
                     class="no-suppliers">
 
-                    No suppliers found.
+                    ${escapeHTML(text)}
 
                 </td>
 
@@ -188,88 +165,55 @@ function displaySuppliers() {
 
         `;
 
-        return;
-
     }
 
 
 
-    // Create rows
+    // DISPLAY SUPPLIERS
 
-    suppliers.forEach(function (supplier) {
+    function displaySuppliers() {
 
-
-        const row =
-            document.createElement("tr");
+        supplierTableBody.innerHTML = "";
 
 
-        const statusClass =
-            supplier.status === "Active"
-                ? "active"
-                : "inactive";
+        supplierCount.textContent =`${suppliers.length} records`;
+            
+        if (suppliers.length === 0) {
+
+            showTableMessage("No suppliers found.");
+
+            return;
+
+        }
 
 
-        row.innerHTML = `
 
-            <!-- Supplier -->
-
-            <td>
-
-                <span class="supplier-name">
-
-                    ${escapeHTML(supplier.name)}
-
-                </span>
+        suppliers.forEach(function (supplier) {
 
 
-                <span class="supplier-email">
+            const row = document.createElement("tr");
 
-                    ${escapeHTML(supplier.email)}
-
-                </span>
-
-            </td>
-
-
-            <!-- Phone -->
-
-            <td>
-
-                ${escapeHTML(supplier.phone)}
-
-            </td>
+            const statusClass =
+                supplier.isActive
+                    ? "active"
+                    : "inactive";
 
 
-            <!-- Location -->
-
-            <td>
-
-                ${escapeHTML(supplier.location)}
-
-            </td>
+            const statusLabel =
+                supplier.isActive
+                    ? "ACTIVE"
+                    : "INACTIVE";
 
 
-            <!-- Status -->
 
-            <td>
+            // Buttons depend on the user's role
 
-                <span class="status ${statusClass}">
-
-                    <span class="status-dot"></span>
-
-                    ${supplier.status.toUpperCase()}
-
-                </span>
-
-            </td>
+            let actionsHTML = "";
 
 
-            <!-- Actions -->
+            if (canEdit) {
 
-            <td>
-
-                <div class="supplier-actions">
-
+                actionsHTML += `
 
                     <button
                         type="button"
@@ -280,6 +224,14 @@ function displaySuppliers() {
 
                     </button>
 
+                `;
+
+            }
+
+
+            if (canDelete) {
+
+                actionsHTML += `
 
                     <button
                         type="button"
@@ -290,259 +242,409 @@ function displaySuppliers() {
 
                     </button>
 
+                `;
 
-                </div>
-
-            </td>
-
-        `;
-
-
-        supplierTableBody.appendChild(row);
-
-    });
-
-}
+            }
 
 
 
-// ==========================================
-// OPEN ADD SUPPLIER MODAL
-// ==========================================
+            row.innerHTML = `
 
-addSupplierBtn.addEventListener(
-    "click",
-    function () {
+                <!-- Supplier -->
 
-        editingSupplierId = null;
+                <td>
 
+                    <span class="supplier-name">
 
-        modalTitle.textContent =
-            "Add supplier";
+                        ${escapeHTML(supplier.name)}
+
+                    </span>
 
 
-        modalDescription.textContent =
-            "Enter supplier information.";
+                    <span class="supplier-email">
+
+                        ${escapeHTML(supplier.email)}
+
+                    </span>
+
+                </td>
 
 
-        saveSupplierBtn.textContent =
-            "Add supplier";
+                <!-- Phone -->
 
+                <td>
+
+                    ${escapeHTML(supplier.phone)}
+
+                </td>
+
+
+                <!-- Location -->
+
+                <td>
+
+                    ${escapeHTML(supplier.location)}
+
+                </td>
+
+
+                <!-- Status -->
+
+                <td>
+
+                    <span class="status ${statusClass}">
+
+                        <span class="status-dot"></span>
+
+                        ${statusLabel}
+
+                    </span>
+
+                </td>
+
+
+                <!-- Actions -->
+
+                <td>
+
+                    <div class="supplier-actions">
+
+                        ${actionsHTML}
+
+                    </div>
+
+                </td>
+
+            `;
+
+
+            supplierTableBody.appendChild(row);
+
+        });
+
+    }
+
+
+
+    // OPEN ADD SUPPLIER MODAL
+
+    addSupplierBtn.addEventListener(
+        "click",
+        function () {
+
+            editingSupplierId = null;
+
+
+            modalTitle.textContent = "Add supplier";
+            
+
+            modalDescription.textContent ="Enter supplier information.";        
+
+            saveSupplierBtn.textContent ="Add supplier";
+                
+            supplierForm.reset();
+
+            document.getElementById("supplierStatus" ).value = "Active";
+                       
+            supplierModal.classList.add("show");
+
+
+            setTimeout(function () {
+
+                document .getElementById("supplierName").focus();         
+
+            }, 100);
+
+        }
+    );
+
+
+
+    // CLOSE MODAL
+
+    function closeSupplierModal() {
+
+        supplierModal.classList.remove("show");
 
         supplierForm.reset();
 
-
-        document.getElementById(
-            "supplierStatus"
-        ).value = "Active";
-
-
-        supplierModal.classList.add("show");
-
-
-        setTimeout(function () {
-
-            document
-                .getElementById("supplierName")
-                .focus();
-
-        }, 100);
+        editingSupplierId = null;
 
     }
-);
 
 
 
-// ==========================================
-// CLOSE MODAL
-// ==========================================
-
-function closeSupplierModal() {
-
-    supplierModal.classList.remove("show");
-
-    supplierForm.reset();
-
-    editingSupplierId = null;
-
-}
+    cancelSupplierBtn.addEventListener("click",closeSupplierModal);
+             
 
 
+    closeModalBtn.addEventListener("click",closeSupplierModal);
+        
 
-// Cancel button
+    // Click outside the modal
 
-cancelSupplierBtn.addEventListener(
-    "click",
-    closeSupplierModal
-);
+    supplierModal.addEventListener(
+        "click",
+        function (event) {
 
+            if (event.target === supplierModal) {
 
+                closeSupplierModal();
 
-// X button
-
-closeModalBtn.addEventListener(
-    "click",
-    closeSupplierModal
-);
-
-
-
-// Click outside modal
-
-supplierModal.addEventListener(
-    "click",
-    function (event) {
-
-        if (event.target === supplierModal) {
-
-            closeSupplierModal();
+            }
 
         }
-
-    }
-);
+    );
 
 
 
-// Escape keyboard
+    // Escape key
 
-document.addEventListener(
-    "keydown",
-    function (event) {
+    document.addEventListener(
+        "keydown",
+        function (event) {
 
-        if (
-            event.key === "Escape" &&
-            supplierModal.classList.contains("show")
-        ) {
+            if (
+                event.key === "Escape" &&
+                supplierModal.classList.contains("show")
+            ) {
 
-            closeSupplierModal();
+                closeSupplierModal();
 
-        }
-
-    }
-);
-
-
-
-// ==========================================
-// FORM SUBMIT
-// ADD OR UPDATE
-// ==========================================
-
-supplierForm.addEventListener(
-    "submit",
-    function (event) {
-
-        event.preventDefault();
-
-
-
-        // Get form values
-
-        const name =
-            document
-                .getElementById("supplierName")
-                .value
-                .trim();
-
-
-        const phone =
-            document
-                .getElementById("supplierPhone")
-                .value
-                .trim();
-
-
-        const email =
-            document
-                .getElementById("supplierEmail")
-                .value
-                .trim();
-
-
-        const location =
-            document
-                .getElementById("supplierLocation")
-                .value
-                .trim();
-
-
-        const status =
-            document
-                .getElementById("supplierStatus")
-                .value;
-
-
-
-        // Simple validation
-
-        if (
-            !name ||
-            !phone ||
-            !email ||
-            !location
-        ) {
-
-            alert(
-                "Please fill in all supplier information."
-            );
-
-            return;
+            }
 
         }
+    );
 
 
 
-        // ==================================
-        // EDIT EXISTING SUPPLIER
-        // ==================================
+    // ==========================================
+    // FORM SUBMIT
+    // Create (POST) or Update (PUT)
+    // ==========================================
 
-        if (editingSupplierId !== null) {
+    supplierForm.addEventListener(
+        "submit",
+        async function (event) {
 
-
-            const supplier =
-                suppliers.find(
-                    function (item) {
-
-                        return (
-                            item.id ===
-                            editingSupplierId
-                        );
-
-                    }
-                );
+            event.preventDefault();
 
 
-            if (!supplier) {
+
+            const name =document.getElementById("supplierName").value.trim();
+                
+
+            const phone =document.getElementById("supplierPhone").value.trim();
+                             
+
+            const email =document.getElementById("supplierEmail").value.trim();
+          
+                    
+
+            const location =document.getElementById("supplierLocation").value.trim();
+                
+                
+
+            const status =document.getElementById("supplierStatus").value;
+                
+                    
+            
+            // Required fields
+
+            if (
+                !name ||
+                !phone ||
+                !email ||
+                !location
+            ) {
+
+                alert("Please fill in all supplier information." );                 
 
                 return;
 
             }
 
 
-            supplier.name = name;
 
-            supplier.phone = phone;
+            // The backend requires an email ending in .com
 
-            supplier.email = email;
+            if (!/.+@.+\.com$/.test(email)) {
 
-            supplier.location = location;
+                alert("Email must contain @ and end with .com" );
+                    
+                return;
 
-            supplier.status = status;
-
-
-            saveToLocalStorage();
-
-            displaySuppliers();
-
-            closeSupplierModal();
+            }
 
 
-            showSuccessMessage(
-                "Supplier updated",
-                `${name} was updated successfully.`
+
+            // Phone column is only 13 characters
+
+            if (phone.length > 13) {
+
+                alert("Phone number cannot be longer than 13 characters." );
+                    
+
+                return;
+
+            }
+
+
+
+            // Property names must match the C# DTO
+
+            const body = {
+
+                fullName: name,
+
+                phone: phone,
+
+                email: email,
+
+                location: location,
+
+                isActive: status === "Active"
+
+            };
+
+
+
+            // Block double clicks
+
+            const originalButtonText =saveSupplierBtn.textContent;
+                
+
+            saveSupplierBtn.disabled = true;
+
+            saveSupplierBtn.textContent = "Saving...";
+
+
+
+            try {
+
+
+                // ==================================
+                // UPDATE
+                // PUT /api/Supplier/Update/5
+                // ==================================
+
+                if (editingSupplierId !== null) {
+
+
+                    await Api.put(`/Supplier/Update/${editingSupplierId}`,body);
+                        
+                                      
+                    closeSupplierModal();
+
+                    await loadSuppliers();
+
+
+                    showSuccessMessage("Supplier updated",`${name} was updated successfully.`);
+                                             
+
+                    return;
+
+                }
+
+
+
+                // ==================================
+                // CREATE
+                // POST /api/Supplier/Create
+                // ==================================
+
+                await Api.post("/Supplier/Create",body);
+                    
+                
+
+                closeSupplierModal();
+
+                await loadSuppliers();
+
+
+                showSuccessMessage("Supplier added", `${name} was added successfully.`);
+                    
+                            
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                // Shows the real reason
+                // "Supplier email already exists"
+
+                alert(error.message ||"Could not save the supplier.");                            
+
+            } finally {
+
+                saveSupplierBtn.disabled = false;
+
+                saveSupplierBtn.textContent =originalButtonText;
+                    
+
+            }
+
+        }
+    );
+
+
+
+    // ==========================================
+    // TABLE BUTTONS
+    // EDIT + DELETE
+    // ==========================================
+
+    supplierTableBody.addEventListener(
+        "click",
+        function (event) {
+
+
+            if (event.target.classList.contains("btn-edit-supplier") )
+               
+                
+            {
+
+                editSupplier( Number(event.target.dataset.id));     
+                
+            }
+
+
+
+            if (event.target.classList.contains("btn-delete-supplier") ) 
+                     
+           {
+
+                deleteSupplier(
+                    Number(event.target.dataset.id)
+                );
+
+            }
+
+        }
+    );
+
+
+
+    // ==========================================
+    // EDIT SUPPLIER
+    // Fills the form from the loaded list
+    // ==========================================
+
+    function editSupplier(id) {
+
+
+        const supplier =
+            suppliers.find(
+                function (item) {
+
+                    return item.id === id;
+
+                }
             );
 
+
+        if (!supplier) {
 
             return;
 
@@ -550,350 +652,173 @@ supplierForm.addEventListener(
 
 
 
-        // ==================================
-        // ADD NEW SUPPLIER
-        // ==================================
+        editingSupplierId = id;
 
 
-        const newSupplier = {
 
-            id: Date.now(),
-
-            name: name,
-
-            phone: phone,
-
-            email: email,
-
-            location: location,
-
-            status: status
-
-        };
+        modalTitle.textContent = "Edit supplier";
+           
 
 
-        // Add to array
+        modalDescription.textContent ="Update supplier information.";     
 
-        suppliers.push(newSupplier);
+        saveSupplierBtn.textContent ="Save changes";
 
-
-        // Save
-
-        saveToLocalStorage();
+            
 
 
-        // Update table
-
-        displaySuppliers();
-
-
-        // Close modal
-
-        closeSupplierModal();
+        document.getElementById(
+            "supplierName"
+        ).value = supplier.name;
 
 
-        // Show success
+        document.getElementById(
+            "supplierPhone"
+        ).value = supplier.phone;
 
-        showSuccessMessage(
-            "Supplier added",
-            `${name} was added successfully.`
-        );
+
+        document.getElementById(
+            "supplierEmail"
+        ).value = supplier.email;
+
+
+        document.getElementById(
+            "supplierLocation"
+        ).value = supplier.location;
+
+
+        document.getElementById(
+            "supplierStatus"
+        ).value =
+            supplier.isActive
+                ? "Active"
+                : "Inactive";
+
+
+
+        supplierModal.classList.add("show");
 
     }
-);
 
 
 
-// ==========================================
-// TABLE BUTTONS
-// EDIT + DELETE
-// ==========================================
+    // ==========================================
+    // DELETE SUPPLIER
+    // DELETE /api/Supplier/Delete/5
+    // ==========================================
 
-supplierTableBody.addEventListener(
-    "click",
-    function (event) {
+    async function deleteSupplier(id) {
 
 
-        // ==================================
-        // EDIT
-        // ==================================
+        const supplier =
+            suppliers.find(
+                function (item) {
 
-        if (
-            event.target.classList.contains(
-                "btn-edit-supplier"
-            )
-        ) {
+                    return item.id === id;
 
-
-            const id =
-                Number(
-                    event.target.dataset.id
-                );
+                }
+            );
 
 
-            editSupplier(id);
+        if (!supplier) {
+
+            return;
+
+        }
+
+        const confirmed =confirm(`Are you sure you want to delete ${supplier.name}?`);
+            
+
+        if (!confirmed) {
+
+            return;
 
         }
 
 
-
-        // ==================================
-        // DELETE
-        // ==================================
-
-        if (
-            event.target.classList.contains(
-                "btn-delete-supplier"
-            )
-        ) {
+//delete supplier from the database( soft delete )
+        try {
 
 
-            const id =
-                Number(
-                    event.target.dataset.id
-                );
+            await Api.del(`/Supplier/Delete/${id}` );
+                
+            await loadSuppliers();
+
+            showSuccessMessage(
+                "Supplier deleted",
+                `${supplier.name} was deleted successfully.`
+            );
 
 
-            deleteSupplier(id);
+        } catch (error) {
+
+            console.error(error);
+
+
+            alert(error.message ||"Could not delete the supplier."  );
+                
 
         }
 
     }
-);
 
 
 
-// ==========================================
-// EDIT SUPPLIER
-// ==========================================
+    // ==========================================
+    // SUCCESS MESSAGE
+    // ==========================================
 
-function editSupplier(id) {
-
-
-    const supplier =
-        suppliers.find(
-            function (item) {
-
-                return item.id === id;
-
-            }
-        );
+    let successTimer;
 
 
-    if (!supplier) {
-
-        return;
-
-    }
+    function showSuccessMessage(title, message) {
 
 
+        successTitle.textContent = title;
 
-    editingSupplierId = id;
-
-
-
-    // Change modal title
-
-    modalTitle.textContent =
-        "Edit supplier";
+        successText.textContent = message;
 
 
-    modalDescription.textContent =
-        "Update supplier information.";
+        successMessage.classList.add("show");
 
 
-    saveSupplierBtn.textContent =
-        "Save changes";
+        clearTimeout(successTimer);
 
 
+        successTimer =
+            setTimeout(
+                function () {
 
-    // Fill form
+                    successMessage
+                        .classList
+                        .remove("show");
 
-    document.getElementById(
-        "supplierName"
-    ).value = supplier.name;
-
-
-    document.getElementById(
-        "supplierPhone"
-    ).value = supplier.phone;
-
-
-    document.getElementById(
-        "supplierEmail"
-    ).value = supplier.email;
-
-
-    document.getElementById(
-        "supplierLocation"
-    ).value = supplier.location;
-
-
-    document.getElementById(
-        "supplierStatus"
-    ).value = supplier.status;
-
-
-
-    // Open modal
-
-    supplierModal.classList.add("show");
-
-}
-
-
-
-// ==========================================
-// DELETE SUPPLIER
-// ==========================================
-
-function deleteSupplier(id) {
-
-
-    const supplier =
-        suppliers.find(
-            function (item) {
-
-                return item.id === id;
-
-            }
-        );
-
-
-    if (!supplier) {
-
-        return;
+                },
+                3000
+            );
 
     }
 
 
 
-    const confirmed =
-        confirm(
-            `Are you sure you want to delete ${supplier.name}?`
-        );
+    // ESCAPE HTML
+    // Prevent user input from becoming HTML
 
+    function escapeHTML(value) {
 
-    if (!confirmed) {
+        const div = document.createElement("div");
 
-        return;
+        div.textContent = value ?? "";
+        return div.innerHTML;
 
     }
 
 
 
-    // Remove supplier
+    //  PAGE LOAD
+    // 
 
-    suppliers =
-        suppliers.filter(
-            function (item) {
-
-                return item.id !== id;
-
-            }
-        );
+    loadSuppliers();
 
 
-    // Save new list
-
-    saveToLocalStorage();
-
-
-    // Refresh table
-
-    displaySuppliers();
-
-
-    // Success
-
-    showSuccessMessage(
-        "Supplier deleted",
-        `${supplier.name} was deleted successfully.`
-    );
-
-}
-
-
-
-// ==========================================
-// SUCCESS MESSAGE
-// ==========================================
-
-let successTimer;
-
-
-function showSuccessMessage(
-    title,
-    message
-) {
-
-
-    // Change text
-
-    successTitle.textContent =
-        title;
-
-
-    successText.textContent =
-        message;
-
-
-
-    // Show
-
-    successMessage.classList.add(
-        "show"
-    );
-
-
-
-    // Reset previous timer
-
-    clearTimeout(successTimer);
-
-
-
-    // Hide after 3 seconds
-
-    successTimer =
-        setTimeout(
-            function () {
-
-                successMessage
-                    .classList
-                    .remove("show");
-
-            },
-            3000
-        );
-
-}
-
-
-
-// ==========================================
-// ESCAPE HTML
-// Prevent user input from becoming HTML
-// ==========================================
-
-function escapeHTML(value) {
-
-    const div =
-        document.createElement("div");
-
-
-    div.textContent =
-        value ?? "";
-
-
-    return div.innerHTML;
-
-}
-
-
-
-// ==========================================
-// FIRST PAGE LOAD
-// ==========================================
-
-displaySuppliers();
+});
