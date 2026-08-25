@@ -767,6 +767,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         addMedicine
     );
 
+    submitButton.addEventListener(
+        "click",
+        createPharmacistOrder
+    );
+
 
 
 
