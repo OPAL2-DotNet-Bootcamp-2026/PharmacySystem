@@ -798,4 +798,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+
+// ==========================================
+// LOAD ORDERS FROM DATABASE
+// ==========================================
+
+async function loadOrders() {
+
+    try {
+
+        const orders =
+            await Api.get("/PharmacistOrder");
+
+
+        console.log(
+            "Orders from database:",
+            orders
+        );
+
 });
