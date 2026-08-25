@@ -235,6 +235,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "/Pharmacist"
                 );
 
+                currentPharmacist =
+                pharmacists.find(
+                    pharmacist =>
+                        pharmacist.userID === userId
+                );
+
 
 
          
