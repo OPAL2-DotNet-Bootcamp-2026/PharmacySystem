@@ -778,6 +778,23 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "[data-approve-id]"
                 );
 
+                 if (approveButton) {
+
+                const orderId =
+                    Number(
+                        approveButton.dataset.approveId
+                    );
+
+
+                await updateOrderStatus(
+                    orderId,
+                    "Approved"
+                );
+
+
+                return;
+            }
+
 
     // ==========================================
     // EVENTS
