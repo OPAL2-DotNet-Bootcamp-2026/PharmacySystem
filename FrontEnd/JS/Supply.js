@@ -5,19 +5,15 @@ document.addEventListener("DOMContentLoaded", function () {
     // Change these if your controller routes differ
     // ==========================================
 
-    const ENDPOINTS = {
 
-        suppliers: "/Supplier/GetAll",
+        const ENDPOINTS = {
+    suppliers: "/Supplier/GetAll",
+    medicines: "/Medicine/GetAll",
+    supplies: "/Supply",
+    createSupply: "/Supply"
+};
 
-        warehouses: "/Warehouse/GetAll",
-
-        medicines: "/Medicine/GetAll",
-
-        supplies: "/Supply/GetAll",
-
-        createSupply: "/Supply/Create"
-
-    };
+    
 
 
     // ==========================================
@@ -234,20 +230,13 @@ document.addEventListener("DOMContentLoaded", function () {
     async function loadFormOptions() {
 
         try {
-
-            const [
-                suppliers,
-                warehouses,
-                medicines
-            ] = await Promise.all([
-
-                Api.get(ENDPOINTS.suppliers),
-
-                Api.get(ENDPOINTS.warehouses),
-
-                Api.get(ENDPOINTS.medicines)
-
-            ]);
+const [
+    suppliers,
+    medicines
+] = await Promise.all([
+    Api.get(ENDPOINTS.suppliers),
+    Api.get(ENDPOINTS.medicines)
+]);
 
 
             fillSelect(
@@ -276,30 +265,7 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-            fillSelect(
-
-                warehouseSelect,
-
-                warehouses,
-
-                [
-                    "warehouseID",
-                    "WarehouseID",
-                    "warehouseId",
-                    "id"
-                ],
-
-                [
-                    "warehouseName",
-                    "WarehouseName",
-                    "name"
-                ],
-
-                "Select warehouse"
-
-            );
-
-
+           
             fillSelect(
 
                 medicineSelect,
