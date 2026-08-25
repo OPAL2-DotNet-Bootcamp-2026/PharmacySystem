@@ -532,18 +532,35 @@
 
 
                                 <select
-                                    id="pharmacyId"
-                                    name="pharmacyId"
-                                    class="form-select">
+                                id="pharmacyId"
+                                name="pharmacyId"
+                                class="form-select"
+                                >
+                                <option value="">
+                                    Select pharmacy
+                                </option>
+                            </select>
 
-                                    <option value="1">
-                                        Muscat Pharmacy &mdash; Ruwi
+                            </div>
+
+                            <!-- Pharmacist -->
+                            <div
+                                class="col-lg-8"
+                                id="pharmacistField"
+                                data-roles="admin"
+                            >
+
+                                <label for="pharmacistId">
+                                    Pharmacist
+                                </label>
+
+                                <select
+                                    id="pharmacistId"
+                                    class="form-select"
+                                >
+                                    <option value="">
+                                        Select pharmacist
                                     </option>
-
-                                    <option value="2">
-                                        Seeb Pharmacy
-                                    </option>
-
                                 </select>
 
                             </div>
@@ -580,22 +597,11 @@
                                 <select
                                     id="medicineId"
                                     name="medicineId"
-                                    class="form-select">
+                                    class="form-select"
+                                >
 
-                                    <option value="1">
-                                        Panadol Extra 500mg
-                                    </option>
-
-                                    <option value="2">
-                                        Amoxicillin 500mg
-                                    </option>
-
-                                    <option value="3">
-                                        Vitamin C 1000mg
-                                    </option>
-
-                                    <option value="4">
-                                        Cetirizine 10mg
+                                    <option value="">
+                                        Select medicine
                                     </option>
 
                                 </select>
@@ -629,7 +635,10 @@
 
                         <!-- Empty Order -->
 
-                        <div class="order-lines-empty">
+                        <div 
+                        class="order-lines-empty"
+                        id="orderLines"
+                        >
 
                             <h3>
                                 No medicines added yet
@@ -653,7 +662,7 @@
 
                             Estimated total
 
-                            <strong>
+                            <strong  id="estimatedTotal">
                                 OMR 0.000
                             </strong>
 
