@@ -627,6 +627,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
 
+        // Check pharmacy
+
+        if (!pharmacyID) {
+
+            alert(
+                "Please select a pharmacy."
+            );
+
+            return;
+        }
+
 
 
 
