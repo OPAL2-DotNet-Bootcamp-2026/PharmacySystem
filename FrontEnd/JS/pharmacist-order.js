@@ -201,6 +201,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
 
+        catch (error) {
+
+            console.error(
+                "Failed to load medicines:",
+                error
+            );
+
+        }
+
+    }
+
 
          
 
