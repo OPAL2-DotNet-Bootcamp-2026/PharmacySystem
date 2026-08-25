@@ -772,6 +772,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         createPharmacistOrder
     );
 
+    pharmacySelect.addEventListener(
+        "change",
+        loadPharmacistsByPharmacy
+    );
+
 
 
 
