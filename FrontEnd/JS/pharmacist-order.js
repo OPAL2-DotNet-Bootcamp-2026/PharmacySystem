@@ -710,6 +710,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                     order
                 );
 
+                 console.log(
+                "Order created:",
+                result
+            );
+
+
+            alert(
+                "Pharmacist order created successfully."
+            );
+
                 
 
 
