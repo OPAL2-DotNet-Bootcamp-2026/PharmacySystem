@@ -517,6 +517,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                     </div>
 
+                    <div class="d-flex align-items-center gap-3">
+
+                        <strong>
+
+                            OMR
+                            ${subtotal.toFixed(3)}
+
+                        </strong>
+
 
 
          
