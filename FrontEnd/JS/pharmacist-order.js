@@ -98,6 +98,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
         }
+        catch (error) {
+
+            console.error(
+                "Could not read token:",
+                error
+            );
+
+            return null;
+        }
+    }
          
 
     
