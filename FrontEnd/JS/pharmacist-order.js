@@ -310,6 +310,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                     `/Pharmacist/by-pharmacy/${pharmacyId}`
                 );
 
+                pharmacists.forEach(pharmacist => {
+
+                if (!pharmacist.isActive) {
+
+                    return;
+                }
+
 
 
          
