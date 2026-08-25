@@ -565,6 +565,28 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "[data-remove-index]"
                 );
 
+                if (!button) {
+
+                return;
+            }
+
+
+            const index =
+                Number(
+                    button.dataset.removeIndex
+                );
+
+
+            orderDetails.splice(
+                index,
+                1
+            );
+            renderOrderDetails();
+
+        }
+    );
+
+
 
 
          
