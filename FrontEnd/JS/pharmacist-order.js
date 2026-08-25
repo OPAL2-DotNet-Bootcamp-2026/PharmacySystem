@@ -596,6 +596,20 @@ document.addEventListener("DOMContentLoaded", async () => {
             Number(
                 pharmacySelect.value
             );
+            let pharmacistID;
+
+            // Logged-in Pharmacist
+
+        if (Auth.role() === "Pharmacist") {
+
+            if (!currentPharmacist) {
+
+                alert(
+                    "Pharmacist profile was not found."
+                );
+
+                return;
+            }
 
 
 
