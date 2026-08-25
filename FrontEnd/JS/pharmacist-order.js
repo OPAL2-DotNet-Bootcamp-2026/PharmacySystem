@@ -700,6 +700,19 @@ document.addEventListener("DOMContentLoaded", async () => {
             submitButton.textContent =
                 "Submitting...";
 
+            // ==================================
+            // POST TO API
+            // ==================================
+
+            const result =
+                await Api.post(
+                    "/PharmacistOrder",
+                    order
+                );
+
+                
+
+
 
 
 
