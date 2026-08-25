@@ -777,21 +777,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         loadPharmacistsByPharmacy
     );
 
+    // ==========================================
+    // FIRST PAGE LOAD
+    // ==========================================
+
+    await loadPharmacies();
+
+    await loadMedicines();
 
 
+    if (Auth.role() === "Pharmacist") {
 
-                
+        await loadCurrentPharmacist();
 
+    }
 
-
-
-
-
-
-
-         
-
-    
-
-
-})
+});
