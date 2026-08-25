@@ -40,5 +40,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     const estimatedTotal =
         document.getElementById("estimatedTotal");
 
+    
+    // ==========================================
+    // VARIABLES
+    // ==========================================
+
+    let medicines = [];
+
+    let orderDetails = [];
+
+    let currentPharmacist = null;
+
 
 })
