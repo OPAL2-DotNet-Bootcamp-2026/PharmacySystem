@@ -353,6 +353,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                 medicineSelect.value
             );
 
+            const quantity =
+            Number(
+                quantityInput.value
+            );
+
+
 
          
 
