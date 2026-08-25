@@ -389,6 +389,15 @@ document.addEventListener("DOMContentLoaded", async () => {
                     item.medicineID === medicineId
             );
 
+            if (!medicine) {
+
+            alert(
+                "Medicine was not found."
+            );
+
+            return;
+        }
+
 
 
          
