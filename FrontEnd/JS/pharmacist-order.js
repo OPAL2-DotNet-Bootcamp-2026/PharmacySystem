@@ -927,6 +927,25 @@ function renderAllOrders(orders) {
             `;
         }
 
+         allOrdersTableBody.innerHTML += `
+            <tr>
+
+                <td>
+                    #${order.pharmacistOrderId}
+                </td>
+
+                <td>
+                    <strong>
+                        ${order.pharmacyName}
+                    </strong>
+
+                    <br>
+
+                    <small>
+                        ${order.fullName}
+                    </small>
+                </td>
+
 
 
 
