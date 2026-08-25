@@ -40,6 +40,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const estimatedTotal =
         document.getElementById("estimatedTotal");
 
+    const allOrdersTableBody =
+    document.getElementById("allOrdersTableBody");
+
+    const myOrdersTableBody =
+        document.getElementById("myOrdersTableBody");
+
     
     // ==========================================
     // VARIABLES
@@ -726,6 +732,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             renderOrderDetails();
 
+            await loadOrders();
+
 
 
             // Reload orders if you add
@@ -757,6 +765,64 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
     }
+
+    if (allOrdersTableBody) {
+
+    allOrdersTableBody.addEventListener(
+        "click",
+        async event => {
+
+
+            // APPROVE
+
+            const approveButton =
+                event.target.closest(
+                    "[data-approve-id]"
+                );
+
+                 if (approveButton) {
+
+                const orderId =
+                    Number(
+                        approveButton.dataset.approveId
+                    );
+
+
+                await updateOrderStatus(
+                    orderId,
+                    "Approved"
+                );
+
+
+                return;
+            }
+
+
+            // REJECT
+
+            const rejectButton =
+                event.target.closest(
+                    "[data-reject-id]"
+                );
+
+                       if (rejectButton) {
+
+                const orderId =
+                    Number(
+                        rejectButton.dataset.rejectId
+                    );
+
+
+                await updateOrderStatus(
+                    orderId,
+                    "Cancelled"
+                );
+            }
+
+        }
+    );
+}
+
 
     // ==========================================
     // EVENTS
@@ -792,4 +858,305 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+    await loadOrders();
+
 });
+
+
+// ==========================================
+// LOAD ORDERS FROM DATABASE
+// ==========================================
+
+async function loadOrders() {
+
+    try {
+
+        const orders =
+            await Api.get("/PharmacistOrder");
+
+
+        console.log(
+            "Orders from database:",
+            orders
+        );
+
+        // Admin and Manager see all orders
+
+        if (
+            Auth.role() === "Admin" ||
+            Auth.role() === "Manager"
+        ) {
+
+            renderAllOrders(orders);
+        }
+
+          // Pharmacist sees own orders
+
+        if (
+            Auth.role() === "Pharmacist" &&
+            currentPharmacist
+        ) {
+
+            const myOrders =
+                orders.filter(
+                    order =>
+                        order.pharmacistID ===
+                        currentPharmacist.pharmacistID
+                );
+
+
+            renderMyOrders(myOrders);
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Failed to load orders:",
+            error
+        );
+    }
+}
+
+// ==========================================
+// ADMIN / MANAGER ORDERS
+// ==========================================
+
+function renderAllOrders(orders) {
+
+    if (!allOrdersTableBody) {
+        return;
+    }
+
+        if (orders.length === 0) {
+
+        allOrdersTableBody.innerHTML = `
+            <tr>
+                <td
+                    colspan="7"
+                    class="text-center py-4"
+                >
+                    No orders found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+       allOrdersTableBody.innerHTML = "";
+
+
+    orders.forEach(order => {
+
+        const medicines =
+            order.orderDetails
+                ?.map(
+                    detail =>
+                        `${detail.medicineName} ×${detail.quantity}`
+                )
+                .join("<br>")
+            || "-";
+
+
+        const date =
+            new Date(
+                order.orderDate
+            ).toLocaleDateString("en-GB");
+
+
+        let actions = "-";
+
+         if (
+            order.status === "Pending"
+        ) {
+
+            actions = `
+                <button
+                    type="button"
+                    class="btn btn-sm btn-success"
+                    data-approve-id="${order.pharmacistOrderId}"
+                >
+                    Approve
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-sm btn-danger"
+                    data-reject-id="${order.pharmacistOrderId}"
+                >
+                    Reject
+                </button>
+            `;
+        }
+
+         allOrdersTableBody.innerHTML += `
+            <tr>
+
+                <td>
+                    #${order.pharmacistOrderId}
+                </td>
+
+                <td>
+                    <strong>
+                        ${order.pharmacyName}
+                    </strong>
+
+                    <br>
+
+                    <small>
+                        ${order.fullName}
+                    </small>
+                </td>
+
+                   <td>
+                    ${medicines}
+                </td>
+
+                <td>
+                    ${date}
+                </td>
+
+                <td class="text-end">
+                    OMR ${Number(order.totalCost).toFixed(3)}
+                </td>
+
+                <td>
+                    ${order.status}
+                </td>
+
+                <td class="text-end">
+                    ${actions}
+                </td>
+
+            </tr>
+        `;
+    });
+}
+
+// ==========================================
+// PHARMACIST MY ORDERS
+// ==========================================
+
+function renderMyOrders(orders) {
+
+    if (!myOrdersTableBody) {
+        return;
+    }
+
+
+    if (orders.length === 0) {
+
+        myOrdersTableBody.innerHTML = `
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="text-center py-4"
+                >
+                    No orders found.
+                </td>
+
+            </tr>
+        `;
+
+        return;
+    }
+
+       myOrdersTableBody.innerHTML = "";
+
+
+    orders.forEach(order => {
+
+        const medicines =
+            order.orderDetails
+                ?.map(
+                    detail =>
+                        `${detail.medicineName} ×${detail.quantity}`
+                )
+                .join("<br>")
+            || "-";
+
+                    const date =
+            new Date(
+                order.orderDate
+            ).toLocaleDateString("en-GB");
+
+            myOrdersTableBody.innerHTML += `
+            <tr>
+
+                <td>
+                    #${order.pharmacistOrderId}
+                </td>
+
+                <td>
+                    ${order.pharmacyName}
+                </td>
+
+                <td>
+                    ${medicines}
+                </td>
+
+                <td>
+                    ${date}
+                </td>
+
+                <td class="text-end">
+                    OMR ${Number(order.totalCost).toFixed(3)}
+                </td>
+
+                <td>
+                    ${order.status}
+                </td>
+
+            </tr>
+        `;
+    });
+}
+
+// ==========================================
+// APPROVE / REJECT ORDER
+// ==========================================
+
+async function updateOrderStatus(
+    orderId,
+    status
+) {
+
+    try {
+
+        await Api.put(
+            `/PharmacistOrder/${orderId}/status`,
+            {
+                status: status
+            }
+        );
+
+
+        alert(
+            `Order ${status} successfully.`
+        );
+
+
+        await loadOrders();
+
+    }
+
+      catch (error) {
+
+        console.error(
+            "Failed to update order:",
+            error
+        );
+
+
+        alert(
+            error.message
+        );
+    }
+}
+
+
+
+
