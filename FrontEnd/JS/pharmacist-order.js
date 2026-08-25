@@ -501,6 +501,21 @@ document.addEventListener("DOMContentLoaded", async () => {
                            border-bottom
                            py-3"
                 >
+                
+                <div>
+
+                        <strong>
+                            ${detail.medicineName}
+                        </strong>
+
+                        <div class="text-muted">
+
+                            Quantity:
+                            ${detail.quantity}
+
+                        </div>
+
+                    </div>
 
 
 
