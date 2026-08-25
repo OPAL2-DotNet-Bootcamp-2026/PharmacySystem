@@ -369,6 +369,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
+        // Check quantity
+
+        if (!quantity || quantity < 1) {
+
+            alert(
+                "Quantity must be greater than 0."
+            );
+
+            return;
+        }
+
 
 
          
