@@ -303,6 +303,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
+          try {
+
+            const pharmacists =
+                await Api.get(
+                    `/Pharmacist/by-pharmacy/${pharmacyId}`
+                );
+
 
 
          
