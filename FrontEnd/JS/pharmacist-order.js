@@ -661,6 +661,31 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
+        // ======================================
+        // BODY SENT TO BACKEND
+        // ======================================
+
+        const order = {
+
+            pharmacistID:
+                pharmacistID,
+
+            pharmacyID:
+                pharmacyID,
+
+            orderDetails:
+                orderDetails.map(detail => ({
+
+                    medicineID:
+                        detail.medicineID,
+
+                    quantity:
+                        detail.quantity
+
+                }))
+
+        };
+
 
 
 
