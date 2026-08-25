@@ -758,6 +758,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+    // ==========================================
+    // EVENTS
+    // ==========================================
+
+    addMedicineButton.addEventListener(
+        "click",
+        addMedicine
+    );
+
 
 
 
