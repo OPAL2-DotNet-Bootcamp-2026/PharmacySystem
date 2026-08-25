@@ -1051,6 +1051,25 @@ function renderMyOrders(orders) {
     });
 }
 
+// ==========================================
+// APPROVE / REJECT ORDER
+// ==========================================
+
+async function updateOrderStatus(
+    orderId,
+    status
+) {
+
+    try {
+
+        await Api.put(
+            `/PharmacistOrder/${orderId}/status`,
+            {
+                status: status
+            }
+        );
+
+
 
 
 });
