@@ -1000,7 +1000,20 @@ function renderMyOrders(orders) {
         return;
     }
 
-    
+       myOrdersTableBody.innerHTML = "";
+
+
+    orders.forEach(order => {
+
+        const medicines =
+            order.orderDetails
+                ?.map(
+                    detail =>
+                        `${detail.medicineName} ×${detail.quantity}`
+                )
+                .join("<br>")
+            || "-";
+
 
 
 });
