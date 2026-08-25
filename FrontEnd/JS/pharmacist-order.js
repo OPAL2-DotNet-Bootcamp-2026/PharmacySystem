@@ -733,7 +733,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
 
-        
+        catch (error) {
+
+            console.error(
+                "Failed to create order:",
+                error
+            );
+
+
+            alert(
+                error.message
+            );
+
+        }
+
+
+
 
                 
 
