@@ -544,6 +544,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         });
 
+         orderLines.innerHTML = html;
+
+
+        estimatedTotal.textContent =
+            `OMR ${total.toFixed(3)}`;
+
+    }
+
 
 
          
