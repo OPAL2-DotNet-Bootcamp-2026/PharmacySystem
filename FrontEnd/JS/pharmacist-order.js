@@ -881,6 +881,30 @@ function renderAllOrders(orders) {
         return;
     }
 
+       allOrdersTableBody.innerHTML = "";
+
+
+    orders.forEach(order => {
+
+        const medicines =
+            order.orderDetails
+                ?.map(
+                    detail =>
+                        `${detail.medicineName} ×${detail.quantity}`
+                )
+                .join("<br>")
+            || "-";
+
+
+        const date =
+            new Date(
+                order.orderDate
+            ).toLocaleDateString("en-GB");
+
+
+        let actions = "-";
+
+
 
 
 });
