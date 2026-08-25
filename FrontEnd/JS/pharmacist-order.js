@@ -430,7 +430,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     medicine.medicineName,
 
                 unitPrice:
-                    medicine.unitPrice,
+                    Number(medicine.unitPrice),
+
 
                 quantity:
                     quantity
@@ -438,6 +439,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
 
         }
+
+        console.log(
+        "Order medicines:",
+        orderDetails
+    );
 
         // Refresh displayed medicines
 
@@ -860,7 +866,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await loadOrders();
 
-});
+
 
 
 // ==========================================
@@ -1157,6 +1163,6 @@ async function updateOrderStatus(
     }
 }
 
-
+});
 
 
