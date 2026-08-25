@@ -616,6 +616,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
 
+        // Admin
+
+        else if (Auth.role() === "Admin") {
+
+            pharmacistID =
+                Number(
+                    pharmacistSelect.value
+                );
+
+        }
+
+
 
 
 
