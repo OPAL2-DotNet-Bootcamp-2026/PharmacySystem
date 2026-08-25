@@ -64,6 +64,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             return null;
         }
+        try {
+
+            const payloadPart =
+                token.split(".")[1];
+
+
+            const payload =
+                JSON.parse(
+                    atob(
+                        payloadPart
+                            .replace(/-/g, "+")
+                            .replace(/_/g, "/")
+                    )
+                );
+         
+
+    
 
 
 })
