@@ -855,5 +855,15 @@ async function loadOrders() {
     }
 }
 
+// ==========================================
+// ADMIN / MANAGER ORDERS
+// ==========================================
+
+function renderAllOrders(orders) {
+
+    if (!allOrdersTableBody) {
+        return;
+    }
+
 
 });
