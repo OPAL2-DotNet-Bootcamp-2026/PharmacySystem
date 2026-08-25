@@ -177,6 +177,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "/Medicine/GetAvailable"
                 );
 
+                medicineSelect.innerHTML = `
+
+                <option value="">
+                    Select medicine
+                </option>
+
+            `;
+
 
          
 
