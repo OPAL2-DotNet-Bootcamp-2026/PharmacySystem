@@ -317,6 +317,20 @@ document.addEventListener("DOMContentLoaded", async () => {
                     return;
                 }
 
+                pharmacistSelect.innerHTML += `
+
+                    <option
+                        value="${pharmacist.pharmacistID}"
+                    >
+                        ${pharmacist.fullName}
+                    </option>
+
+                `;
+
+            });
+
+        }
+
 
 
          
