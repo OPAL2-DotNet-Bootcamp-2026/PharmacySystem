@@ -1,722 +1,700 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    // ==========================================
-    // API ENDPOINTS
-    // Change these if your controller routes differ
-    // ==========================================
 
+        // ==========================================
+        // API ENDPOINTS
+        // ==========================================
 
         const ENDPOINTS = {
-    suppliers: "/Supplier/GetAll",
-    medicines: "/Medicine/GetAll",
-    supplies: "/Supply",
-    createSupply: "/Supply"
-};
 
-    
+            suppliers:
+                "/Supplier/GetAll",
 
+            medicines:
+                "/Medicine/GetAll",
 
-    // ==========================================
-    // LOGIN AND ROLE
-    // ==========================================
+            supplies:
+                "/Supply",
 
-    if (!Auth.isLoggedIn()) {
-
-        window.location.href = "login.html";
-
-        return;
-
-    }
-
-
-    const role = Auth.role();
-
-    const canCreateSupply =
-        role === "Admin" ||
-        role === "Manager";
-
-
-    // ==========================================
-    // GET HTML ELEMENTS
-    // ==========================================
-
-    const supplyForm =
-        document.getElementById("supplyForm");
-
-    const supplierSelect =
-        document.getElementById("supplier");
-
-    const warehouseSelect =
-        document.getElementById("warehouse");
-
-    const medicineSelect =
-        document.getElementById("medicine");
-
-    const batchNumberInput =
-        document.getElementById("batchNumber");
-
-    const quantityInput =
-        document.getElementById("quantity");
-
-    const expiryDateInput =
-        document.getElementById("expiryDate");
-
-    const unitCostInput =
-        document.getElementById("unitCost");
-
-    const saveSupplyBtn =
-        document.getElementById("saveSupplyBtn");
-
-    const supplyHistoryBody =
-        document.getElementById("supplyHistoryBody");
-
-    const successMessage =
-        document.getElementById("supplySuccessMessage");
-
-    const successText =
-        document.getElementById("supplySuccessText");
-
-
-    if (!supplyForm) {
-
-        return;
-
-    }
-
-
-    // Only Admin and Manager can create supplies
-
-    if (!canCreateSupply) {
-
-        supplyForm.style.display = "none";
-
-        return;
-
-    }
-
-
-    // ==========================================
-    // HELPER FUNCTIONS
-    // ==========================================
-
-    function firstValue(item, keys, fallback = "") {
-
-        for (const key of keys) {
-
-            if (
-                item?.[key] !== undefined &&
-                item[key] !== null
-            ) {
-
-                return item[key];
-
-            }
-
-        }
-
-        return fallback;
-
-    }
-
-
-    function escapeHTML(value) {
-
-        const div = document.createElement("div");
-
-        div.textContent = value ?? "";
-
-        return div.innerHTML;
-
-    }
-
-
-    function unwrapList(data) {
-
-        if (Array.isArray(data)) {
-
-            return data;
-
-        }
-
-
-        if (Array.isArray(data?.items)) {
-
-            return data.items;
-
-        }
-
-
-        if (Array.isArray(data?.data)) {
-
-            return data.data;
-
-        }
-
-
-        if (Array.isArray(data?.result)) {
-
-            return data.result;
-
-        }
-
-
-        return [];
-
-    }
-
-
-    // ==========================================
-    // ADD DATA TO SELECT
-    // ==========================================
-
-    function fillSelect(
-        select,
-        items,
-        idKeys,
-        nameKeys,
-        placeholder
-    ) {
-
-        select.innerHTML = `
-
-            <option
-                value=""
-                selected
-                disabled>
-
-                ${placeholder}
-
-            </option>
-
-        `;
-
-
-        unwrapList(items).forEach(function (item) {
-
-            const id =
-                firstValue(item, idKeys);
-
-            const name =
-                firstValue(item, nameKeys);
-
-
-            if (id === "" || name === "") {
-
-                return;
-
-            }
-
-
-            const option =
-                document.createElement("option");
-
-
-            option.value = id;
-
-            option.textContent = name;
-
-
-            select.appendChild(option);
-
-        });
-
-    }
-
-
-    // ==========================================
-    // LOAD FORM DATA
-    // ==========================================
-
-    async function loadFormOptions() {
-
-        try {
-const [
-    suppliers,
-    medicines
-] = await Promise.all([
-    Api.get(ENDPOINTS.suppliers),
-    Api.get(ENDPOINTS.medicines)
-]);
-
-
-            fillSelect(
-
-                supplierSelect,
-
-                suppliers,
-
-                [
-                    "supplierID",
-                    "SupplierID",
-                    "supplierId",
-                    "id"
-                ],
-
-                [
-                    "fullName",
-                    "FullName",
-                    "supplierName",
-                    "SupplierName",
-                    "name"
-                ],
-
-                "Select supplier"
-
-            );
-
-
-           
-            fillSelect(
-
-                medicineSelect,
-
-                medicines,
-
-                [
-                    "medicineID",
-                    "MedicineID",
-                    "medicineId",
-                    "id"
-                ],
-
-                [
-                    "medicineName",
-                    "MedicineName",
-                    "name"
-                ],
-
-                "Select medicine"
-
-            );
-
-        } catch (error) {
-
-            console.error(error);
-
-
-            alert(
-
-                error.message ||
-                "Could not load supply form data."
-
-            );
-
-        }
-
-    }
-
-
-    // ==========================================
-    // TABLE MESSAGE
-    // ==========================================
-
-    function showTableMessage(message) {
-
-        supplyHistoryBody.innerHTML = `
-
-            <tr>
-
-                <td
-                    colspan="7"
-                    class="supply-table-message">
-
-                    ${escapeHTML(message)}
-
-                </td>
-
-            </tr>
-
-        `;
-
-    }
-
-
-    // ==========================================
-    // NORMALISE SUPPLY DATA
-    // ==========================================
-
-    function normaliseSupply(item) {
-
-        return {
-
-            date:
-                firstValue(
-                    item,
-                    [
-                        "createdAt",
-                        "CreatedAt",
-                        "supplyDate",
-                        "SupplyDate",
-                        "date"
-                    ]
-                ),
-
-            supplier:
-                firstValue(
-                    item,
-                    [
-                        "supplierName",
-                        "SupplierName",
-                        "supplierFullName",
-                        "SupplierFullName"
-                    ],
-                    "—"
-                ),
-
-            medicine:
-                firstValue(
-                    item,
-                    [
-                        "medicineName",
-                        "MedicineName"
-                    ],
-                    "—"
-                ),
-
-            batchNumber:
-                firstValue(
-                    item,
-                    [
-                        "batchNumber",
-                        "BatchNumber"
-                    ],
-                    "—"
-                ),
-
-            quantity:
-                Number(
-                    firstValue(
-                        item,
-                        [
-                            "quantity",
-                            "Quantity"
-                        ],
-                        0
-                    )
-                ),
-
-            unitCost:
-                Number(
-                    firstValue(
-                        item,
-                        [
-                            "unitCost",
-                            "UnitCost"
-                        ],
-                        0
-                    )
-                ),
-
-            warehouse:
-                firstValue(
-                    item,
-                    [
-                        "warehouseName",
-                        "WarehouseName"
-                    ],
-                    "—"
-                )
+            createSupply:
+                "/Supply"
 
         };
 
-    }
 
 
-    // ==========================================
-    // FORMAT DATE
-    // ==========================================
+        // ==========================================
+        // LOGIN CHECK
+        // ==========================================
 
-    function formatDate(value) {
+        if (!Auth.isLoggedIn()) {
 
-        if (!value) {
-
-            return "—";
-
-        }
-
-
-        const date = new Date(value);
-
-
-        if (Number.isNaN(date.getTime())) {
-
-            return value;
-
-        }
-
-
-        return new Intl.DateTimeFormat(
-
-            "en-GB",
-
-            {
-                day: "2-digit",
-                month: "short",
-                year: "numeric"
-            }
-
-        ).format(date);
-
-    }
-
-
-    // ==========================================
-    // DISPLAY SUPPLIES
-    // ==========================================
-
-    function displaySupplies(data) {
-
-        const supplies =
-            unwrapList(data)
-                .map(normaliseSupply);
-
-
-        if (supplies.length === 0) {
-
-            showTableMessage(
-                "No supplies found."
-            );
+            window.location.href =
+                "login.html";
 
             return;
 
         }
 
 
-        supplyHistoryBody.innerHTML = "";
+
+        // ==========================================
+        // ROLE
+        // ==========================================
+
+        const role =
+            Auth.role();
 
 
-        supplies.forEach(function (supply) {
+        const canCreateSupply =
 
-            const row =
-                document.createElement("tr");
-
-
-            row.innerHTML = `
-
-                <td>
-
-                    ${escapeHTML(
-                        formatDate(supply.date)
-                    )}
-
-                </td>
+            role === "Admin" ||
+            role === "Manager";
 
 
-                <td>
 
-                    ${escapeHTML(
-                        supply.supplier
-                    )}
+        // ==========================================
+        // HTML ELEMENTS
+        // ==========================================
 
-                </td>
-
-
-                <td>
-
-                    ${escapeHTML(
-                        supply.medicine
-                    )}
-
-                </td>
-
-
-                <td>
-
-                    ${escapeHTML(
-                        supply.batchNumber
-                    )}
-
-                </td>
-
-
-                <td>
-
-                    <strong>
-
-                        ${escapeHTML(
-                            supply.quantity
-                        )}
-
-                    </strong>
-
-                </td>
-
-
-                <td>
-
-                    OMR ${escapeHTML(
-                        supply.unitCost.toFixed(3)
-                    )}
-
-                </td>
-
-
-                <td>
-
-                    ${escapeHTML(
-                        supply.warehouse
-                    )}
-
-                </td>
-
-            `;
-
-
-            supplyHistoryBody.appendChild(row);
-
-        });
-
-    }
-
-
-    // ==========================================
-    // LOAD SUPPLY HISTORY
-    // GET /api/Supply/GetAll
-    // ==========================================
-
-    async function loadSupplies() {
-
-        showTableMessage(
-            "Loading supplies..."
-        );
-
-
-        try {
-
-            const data =
-                await Api.get(
-                    ENDPOINTS.supplies
-                );
-
-
-            displaySupplies(data);
-
-        } catch (error) {
-
-            console.error(error);
-
-
-            showTableMessage(
-
-                error.message ||
-                "Could not load supply history."
-
+        const supplyForm =
+            document.getElementById(
+                "supplyForm"
             );
+
+
+        const supplierSelect =
+            document.getElementById(
+                "supplier"
+            );
+
+
+        const warehouseSelect =
+            document.getElementById(
+                "warehouse"
+            );
+
+
+        const medicineSelect =
+            document.getElementById(
+                "medicine"
+            );
+
+
+        const batchNumberInput =
+            document.getElementById(
+                "batchNumber"
+            );
+
+
+        const quantityInput =
+            document.getElementById(
+                "quantity"
+            );
+
+
+        const expiryDateInput =
+            document.getElementById(
+                "expiryDate"
+            );
+
+
+        const unitCostInput =
+            document.getElementById(
+                "unitCost"
+            );
+
+
+        const saveSupplyBtn =
+            document.getElementById(
+                "saveSupplyBtn"
+            );
+
+
+        const supplyHistoryBody =
+            document.getElementById(
+                "supplyHistoryBody"
+            );
+
+
+        const successMessage =
+            document.getElementById(
+                "supplySuccessMessage"
+            );
+
+
+        const successText =
+            document.getElementById(
+                "supplySuccessText"
+            );
+
+
+
+        if (!supplyForm) {
+
+            return;
 
         }
 
-    }
 
 
-    // ==========================================
-    // SUCCESS MESSAGE
-    // ==========================================
+        // ==========================================
+        // ONLY ADMIN / MANAGER
+        // ==========================================
 
-    let successTimer;
+        if (!canCreateSupply) {
 
+            supplyForm.style.display =
+                "none";
 
-    function showSuccessMessage(
-        medicineName
-    ) {
+            return;
 
-        successText.textContent =
-
-            `${medicineName} was added to warehouse stock successfully.`;
+        }
 
 
-        successMessage.classList.add(
-            "show"
-        );
 
+        // ==========================================
+        // HELPER: GET FIRST VALUE
+        // ==========================================
 
-        clearTimeout(successTimer);
+        function firstValue(
+            item,
+            keys,
+            fallback = ""
+        ) {
 
+            for (const key of keys) {
 
-        successTimer = setTimeout(
+                if (
+                    item?.[key] !== undefined &&
+                    item?.[key] !== null
+                ) {
 
-            function () {
+                    return item[key];
 
-                successMessage
-                    .classList
-                    .remove("show");
-
-            },
-
-            3500
-
-        );
-
-    }
-
-
-    // ==========================================
-    // SAVE SUPPLY
-    // POST /api/Supply/Create
-    // ==========================================
-
-    supplyForm.addEventListener(
-
-        "submit",
-
-        async function (event) {
-
-            event.preventDefault();
-
-
-            if (!supplyForm.checkValidity()) {
-
-                supplyForm.reportValidity();
-
-                return;
+                }
 
             }
 
 
-            const quantity =
-                Number(quantityInput.value);
+            return fallback;
+
+        }
 
 
-            const unitCost =
-                Number(unitCostInput.value);
 
+        // ==========================================
+        // ESCAPE HTML
+        // ==========================================
 
-            const expiryDate =
-                new Date(
-                    `${expiryDateInput.value}T00:00:00`
+        function escapeHTML(value) {
+
+            const div =
+                document.createElement(
+                    "div"
                 );
 
 
-            if (quantity <= 0) {
-
-                alert(
-                    "Quantity must be greater than zero."
-                );
-
-                return;
-
-            }
+            div.textContent =
+                value ?? "";
 
 
-            if (unitCost < 0) {
+            return div.innerHTML;
 
-                alert(
-                    "Unit cost cannot be negative."
-                );
+        }
 
-                return;
+
+
+        // ==========================================
+        // UNWRAP LIST
+        // ==========================================
+
+        function unwrapList(data) {
+
+            if (Array.isArray(data)) {
+
+                return data;
 
             }
 
 
             if (
-                Number.isNaN(
-                    expiryDate.getTime()
-                ) ||
-                expiryDate <= new Date()
+                Array.isArray(
+                    data?.items
+                )
             ) {
 
+                return data.items;
+
+            }
+
+
+            if (
+                Array.isArray(
+                    data?.data
+                )
+            ) {
+
+                return data.data;
+
+            }
+
+
+            if (
+                Array.isArray(
+                    data?.result
+                )
+            ) {
+
+                return data.result;
+
+            }
+
+
+            return [];
+
+        }
+
+
+
+        // ==========================================
+        // FILL SELECT
+        // ==========================================
+
+        function fillSelect(
+            select,
+            items,
+            idKeys,
+            nameKeys,
+            placeholder
+        ) {
+
+            select.innerHTML = `
+
+                <option
+                    value=""
+                    selected
+                    disabled>
+
+                    ${placeholder}
+
+                </option>
+
+            `;
+
+
+            unwrapList(items)
+                .forEach(
+                    function (item) {
+
+
+                        const id =
+                            firstValue(
+                                item,
+                                idKeys
+                            );
+
+
+                        const name =
+                            firstValue(
+                                item,
+                                nameKeys
+                            );
+
+
+                        if (
+                            id === "" ||
+                            name === ""
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        const option =
+                            document.createElement(
+                                "option"
+                            );
+
+
+                        option.value =
+                            id;
+
+
+                        option.textContent =
+                            name;
+
+
+                        select.appendChild(
+                            option
+                        );
+
+                    }
+                );
+
+        }
+
+
+
+        // ==========================================
+        // LOAD SUPPLIER + MEDICINE
+        // ==========================================
+
+        async function loadFormOptions() {
+
+            try {
+
+
+                const [
+                    suppliers,
+                    medicines
+                ] =
+                    await Promise.all([
+
+                        Api.get(
+                            ENDPOINTS.suppliers
+                        ),
+
+                        Api.get(
+                            ENDPOINTS.medicines
+                        )
+
+                    ]);
+
+
+
+                // Supplier dropdown
+
+                fillSelect(
+
+                    supplierSelect,
+
+                    suppliers,
+
+                    [
+                        "supplierID",
+                        "SupplierID",
+                        "supplierId",
+                        "id"
+                    ],
+
+                    [
+                        "fullName",
+                        "FullName",
+                        "supplierName",
+                        "SupplierName",
+                        "name"
+                    ],
+
+                    "Select supplier"
+
+                );
+
+
+
+                // Medicine dropdown
+
+                fillSelect(
+
+                    medicineSelect,
+
+                    medicines,
+
+                    [
+                        "medicineID",
+                        "MedicineID",
+                        "medicineId",
+                        "id"
+                    ],
+
+                    [
+                        "medicineName",
+                        "MedicineName",
+                        "name"
+                    ],
+
+                    "Select medicine"
+
+                );
+
+
+            }
+            catch (error) {
+
+
+                console.error(
+                    error
+                );
+
+
                 alert(
-                    "Expiry date must be in the future."
+
+                    error.message ||
+
+                    "Could not load supply form data."
+
+                );
+
+            }
+
+        }
+
+
+
+        // ==========================================
+        // TABLE MESSAGE
+        // ==========================================
+
+        function showTableMessage(
+            message
+        ) {
+
+            supplyHistoryBody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="supply-table-message">
+
+                        ${escapeHTML(
+                            message
+                        )}
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+
+
+        // ==========================================
+        // NORMALISE SUPPLY
+        // ==========================================
+
+        function normaliseSupply(
+            item
+        ) {
+
+            return {
+
+
+                // Date
+
+                date:
+                    firstValue(
+                        item,
+                        [
+                            "supplyDate",
+                            "SupplyDate",
+                            "createdAt",
+                            "CreatedAt",
+                            "date"
+                        ],
+                        null
+                    ),
+
+
+
+                // ==================================
+                // SUPPLIER NAME
+                //
+                // Backend returns:
+                // FullName
+                // ==================================
+
+                supplier:
+                    firstValue(
+                        item,
+                        [
+                            "fullName",
+                            "FullName",
+                            "supplierName",
+                            "SupplierName",
+                            "supplierFullName",
+                            "SupplierFullName"
+                        ],
+                        "—"
+                    ),
+
+
+
+                // ==================================
+                // MEDICINE NAME
+                // ==================================
+
+                medicine:
+                    firstValue(
+                        item,
+                        [
+                            "medicineName",
+                            "MedicineName"
+                        ],
+                        "—"
+                    ),
+
+
+
+                // Batch number
+
+                batchNumber:
+                    firstValue(
+                        item,
+                        [
+                            "batchNumber",
+                            "BatchNumber"
+                        ],
+                        "—"
+                    ),
+
+
+
+                // Quantity
+
+                quantity:
+                    Number(
+                        firstValue(
+                            item,
+                            [
+                                "quantity",
+                                "Quantity"
+                            ],
+                            0
+                        )
+                    ),
+
+
+
+                // Unit cost
+
+                unitCost:
+                    Number(
+                        firstValue(
+                            item,
+                            [
+                                "unitCost",
+                                "UnitCost"
+                            ],
+                            0
+                        )
+                    ),
+
+
+
+                // ==================================
+                // WAREHOUSE NAME
+                //
+                // Backend returns:
+                // Location
+                // ==================================
+
+                warehouse:
+                    firstValue(
+                        item,
+                        [
+                            "location",
+                            "Location",
+                            "warehouseName",
+                            "WarehouseName"
+                        ],
+                        "Main Warehouse — Rusayl"
+                    )
+
+            };
+
+        }
+
+
+
+        // ==========================================
+        // FORMAT DATE
+        // ==========================================
+
+        function formatDate(
+            value
+        ) {
+
+            if (!value) {
+
+                return "—";
+
+            }
+
+
+            const date =
+                new Date(
+                    value
+                );
+
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                return value;
+
+            }
+
+
+            return new Intl
+                .DateTimeFormat(
+
+                    "en-GB",
+
+                    {
+
+                        day:
+                            "2-digit",
+
+                        month:
+                            "short",
+
+                        year:
+                            "numeric"
+
+                    }
+
+                )
+                .format(
+                    date
+                );
+
+        }
+
+
+
+        // ==========================================
+        // DISPLAY SUPPLIES
+        // ==========================================
+
+        function displaySupplies(
+            data
+        ) {
+
+            const supplies =
+
+                unwrapList(data)
+                    .map(
+                        normaliseSupply
+                    );
+
+
+            if (
+                supplies.length === 0
+            ) {
+
+                showTableMessage(
+
+                    "No supplies found."
+
                 );
 
                 return;
@@ -724,133 +702,592 @@ const [
             }
 
 
-            /*
-                These properties must match
-                your CreateSupplyDTO in C#
-            */
-
-            const body = {
-
-                supplierID:
-                    Number(
-                        supplierSelect.value
-                    ),
-
-                warehouseID:
-                    Number(
-                        warehouseSelect.value
-                    ),
-
-                medicineID:
-                    Number(
-                        medicineSelect.value
-                    ),
-
-                batchNumber:
-                    batchNumberInput
-                        .value
-                        .trim(),
-
-                quantity:
-                    quantity,
-
-                expiryDate:
-                    expiryDateInput.value,
-
-                unitCost:
-                    unitCost
-
-            };
+            supplyHistoryBody.innerHTML =
+                "";
 
 
-            const selectedMedicine =
 
-                medicineSelect.options[
-                    medicineSelect.selectedIndex
-                ].text;
+            supplies.forEach(
 
-
-            const originalButtonHTML =
-                saveSupplyBtn.innerHTML;
+                function (supply) {
 
 
-            saveSupplyBtn.disabled = true;
+                    const row =
+
+                        document
+                            .createElement(
+                                "tr"
+                            );
 
 
-            saveSupplyBtn.innerHTML = `
+                    row.innerHTML = `
 
-                <span
-                    class="spinner-border spinner-border-sm me-2">
-                </span>
 
-                Saving...
+                        <!-- DATE -->
 
-            `;
+                        <td>
+
+                            ${escapeHTML(
+                                formatDate(
+                                    supply.date
+                                )
+                            )}
+
+                        </td>
+
+
+
+                        <!-- SUPPLIER -->
+
+                        <td>
+
+                            ${escapeHTML(
+                                supply.supplier
+                            )}
+
+                        </td>
+
+
+
+                        <!-- MEDICINE -->
+
+                        <td>
+
+                            ${escapeHTML(
+                                supply.medicine
+                            )}
+
+                        </td>
+
+
+
+                        <!-- BATCH -->
+
+                        <td>
+
+                            ${escapeHTML(
+                                supply.batchNumber
+                            )}
+
+                        </td>
+
+
+
+                        <!-- QUANTITY -->
+
+                        <td>
+
+                            <strong>
+
+                                ${escapeHTML(
+                                    supply.quantity
+                                )}
+
+                            </strong>
+
+                        </td>
+
+
+
+                        <!-- UNIT COST -->
+
+                        <td>
+
+                            OMR ${escapeHTML(
+
+                                supply.unitCost
+                                    .toFixed(3)
+
+                            )}
+
+                        </td>
+
+
+
+                        <!-- WAREHOUSE -->
+
+                        <td>
+
+                            ${escapeHTML(
+                                supply.warehouse
+                            )}
+
+                        </td>
+
+                    `;
+
+
+                    supplyHistoryBody
+                        .appendChild(
+                            row
+                        );
+
+                }
+
+            );
+
+        }
+
+
+
+        // ==========================================
+        // LOAD SUPPLY HISTORY
+        //
+        // GET /api/Supply
+        // ==========================================
+
+        async function loadSupplies() {
+
+
+            showTableMessage(
+
+                "Loading supplies..."
+
+            );
 
 
             try {
 
-                await Api.post(
 
-                    ENDPOINTS.createSupply,
+                const data =
 
-                    body
+                    await Api.get(
 
+                        ENDPOINTS.supplies
+
+                    );
+
+
+                console.log(
+                    "SUPPLIES:",
+                    data
                 );
 
 
-                // Clear the form
-
-                supplyForm.reset();
-
-
-                // Reload supply history
-
-                await loadSupplies();
-
-
-                // Show success message
-
-                showSuccessMessage(
-                    selectedMedicine
+                displaySupplies(
+                    data
                 );
 
-            } catch (error) {
 
-                console.error(error);
+            }
+            catch (error) {
 
 
-                alert(
+                console.error(
+                    error
+                );
+
+
+                showTableMessage(
 
                     error.message ||
-                    "Could not save the supply."
+
+                    "Could not load supply history."
 
                 );
-
-            } finally {
-
-                saveSupplyBtn.disabled = false;
-
-                saveSupplyBtn.innerHTML =
-                    originalButtonHTML;
 
             }
 
         }
 
-    );
 
 
-    // ==========================================
-    // PAGE LOAD
-    // ==========================================
+        // ==========================================
+        // SUCCESS MESSAGE
+        // ==========================================
 
-    Promise.all([
+        let successTimer;
 
-        loadFormOptions(),
 
-        loadSupplies()
+        function showSuccessMessage(
+            medicineName
+        ) {
 
-    ]);
 
-});
+            successText.textContent =
+
+                `${medicineName} was added to warehouse stock successfully.`;
+
+
+
+            successMessage
+                .classList
+                .add(
+                    "show"
+                );
+
+
+            clearTimeout(
+                successTimer
+            );
+
+
+            successTimer =
+                setTimeout(
+
+                    function () {
+
+                        successMessage
+                            .classList
+                            .remove(
+                                "show"
+                            );
+
+                    },
+
+                    3500
+
+                );
+
+        }
+
+
+
+        // ==========================================
+        // SAVE SUPPLY
+        //
+        // POST /api/Supply
+        // ==========================================
+
+        supplyForm
+            .addEventListener(
+
+                "submit",
+
+                async function (
+                    event
+                ) {
+
+
+                    event
+                        .preventDefault();
+
+
+
+                    // ==================================
+                    // HTML VALIDATION
+                    // ==================================
+
+                    if (
+                        !supplyForm
+                            .checkValidity()
+                    ) {
+
+                        supplyForm
+                            .reportValidity();
+
+                        return;
+
+                    }
+
+
+
+                    // ==================================
+                    // VALUES
+                    // ==================================
+
+                    const quantity =
+
+                        Number(
+                            quantityInput
+                                .value
+                        );
+
+
+                    const unitCost =
+
+                        Number(
+                            unitCostInput
+                                .value
+                        );
+
+
+                    const expiryDate =
+
+                        new Date(
+
+                            `${expiryDateInput.value}T00:00:00`
+
+                        );
+
+
+
+                    // ==================================
+                    // QUANTITY VALIDATION
+                    // ==================================
+
+                    if (
+                        quantity <= 0
+                    ) {
+
+                        alert(
+
+                            "Quantity must be greater than zero."
+
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    // ==================================
+                    // UNIT COST VALIDATION
+                    // ==================================
+
+                    if (
+                        unitCost < 0
+                    ) {
+
+                        alert(
+
+                            "Unit cost cannot be negative."
+
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    // ==================================
+                    // EXPIRY VALIDATION
+                    // ==================================
+
+                    if (
+
+                        Number.isNaN(
+                            expiryDate
+                                .getTime()
+                        )
+
+                        ||
+
+                        expiryDate <=
+                        new Date()
+
+                    ) {
+
+                        alert(
+
+                            "Expiry date must be in the future."
+
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    // ==================================
+                    // CREATE BODY
+                    //
+                    // Matches CreateSupplyDto
+                    // ==================================
+
+                    const body = {
+
+
+                        supplierID:
+
+                            Number(
+                                supplierSelect
+                                    .value
+                            ),
+
+
+                        warehouseID:
+
+                            Number(
+                                warehouseSelect
+                                    .value
+                            ),
+
+
+                        medicineID:
+
+                            Number(
+                                medicineSelect
+                                    .value
+                            ),
+
+
+                        batchNumber:
+
+                            batchNumberInput
+                                .value
+                                .trim(),
+
+
+                        quantity:
+
+                            quantity,
+
+
+                        expiryDate:
+
+                            expiryDateInput
+                                .value,
+
+
+                        unitCost:
+
+                            unitCost
+
+                    };
+
+
+
+                    console.log(
+                        "SUPPLY BODY:",
+                        body
+                    );
+
+
+
+                    const selectedMedicine =
+
+                        medicineSelect
+                            .options[
+                                medicineSelect
+                                    .selectedIndex
+                            ]
+                            .text;
+
+
+
+                    const originalButtonHTML =
+
+                        saveSupplyBtn
+                            .innerHTML;
+
+
+
+                    saveSupplyBtn
+                        .disabled =
+                        true;
+
+
+
+                    saveSupplyBtn
+                        .innerHTML = `
+
+                            <span
+                                class="spinner-border spinner-border-sm me-2">
+                            </span>
+
+                            Saving...
+
+                        `;
+
+
+
+                    try {
+
+
+                        // Save into database
+
+                        await Api.post(
+
+                            ENDPOINTS
+                                .createSupply,
+
+                            body
+
+                        );
+
+
+
+                        // Clear fields
+
+                        supplyForm
+                            .reset();
+
+
+
+                        /*
+                         * reset() clears the hidden
+                         * warehouse value too only if
+                         * dynamically changed.
+                         *
+                         * In your HTML it is value="1",
+                         * so ensure it remains 1.
+                         */
+
+                        warehouseSelect
+                            .value =
+                            "1";
+
+
+
+                        // Reload history
+
+                        await loadSupplies();
+
+
+
+                        // Success message
+
+                        showSuccessMessage(
+
+                            selectedMedicine
+
+                        );
+
+
+                    }
+                    catch (error) {
+
+
+                        console.error(
+                            error
+                        );
+
+
+                        alert(
+
+                            error.message ||
+
+                            "Could not save the supply."
+
+                        );
+
+
+                    }
+                    finally {
+
+
+                        saveSupplyBtn
+                            .disabled =
+                            false;
+
+
+                        saveSupplyBtn
+                            .innerHTML =
+                            originalButtonHTML;
+
+                    }
+
+                }
+
+            );
+
+
+
+        // ==========================================
+        // PAGE LOAD
+        // ==========================================
+
+        Promise.all([
+
+            loadFormOptions(),
+
+            loadSupplies()
+
+        ]);
+
+    }
+);

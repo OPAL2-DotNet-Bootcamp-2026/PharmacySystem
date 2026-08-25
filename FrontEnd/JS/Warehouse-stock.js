@@ -23,7 +23,6 @@ document.addEventListener(
                 "login.html";
 
             return;
-
         }
 
 
@@ -67,7 +66,6 @@ document.addEventListener(
 
 
             return div.innerHTML;
-
         }
 
 
@@ -115,15 +113,6 @@ document.addEventListener(
                     ),
 
 
-                categoryName:
-                    getValue(
-                        item,
-                        "categoryName",
-                        "CategoryName",
-                        "—"
-                    ),
-
-
                 quantity:
                     Number(
                         getValue(
@@ -162,12 +151,13 @@ document.addEventListener(
             }
 
 
-            const date = new Date(
+            const date =
+                new Date(
 
-                `${String(value)
-                    .slice(0, 10)}T00:00:00`
+                    `${String(value)
+                        .slice(0, 10)}T00:00:00`
 
-            );
+                );
 
 
             if (
@@ -210,7 +200,7 @@ document.addEventListener(
                 <tr>
 
                     <td
-                        colspan="5"
+                        colspan="4"
                         class="warehouse-message">
 
                         ${escapeHTML(message)}
@@ -346,7 +336,6 @@ document.addEventListener(
                     const isLow =
 
                         stock.quantity <=
-
                         LOW_STOCK_LIMIT;
 
 
@@ -377,16 +366,17 @@ document.addEventListener(
 
                     // Progress bar percentage
 
-                    const barWidth = Math.max(
+                    const barWidth =
+                        Math.max(
 
-                        (
-                            stock.quantity /
-                            maximumQuantity
-                        ) * 100,
+                            (
+                                stock.quantity /
+                                maximumQuantity
+                            ) * 100,
 
-                        4
+                            4
 
-                    );
+                        );
 
 
 
@@ -410,16 +400,6 @@ document.addEventListener(
 
                         </td>
 
-
-                        <!-- Category -->
-
-                        <td class="medicine-category">
-
-                            ${escapeHTML(
-                                stock.categoryName
-                            )}
-
-                        </td>
 
 
                         <!-- Quantity -->
@@ -452,6 +432,7 @@ document.addEventListener(
                         </td>
 
 
+
                         <!-- Expiry -->
 
                         <td class="expiry-date">
@@ -465,6 +446,7 @@ document.addEventListener(
                             )}
 
                         </td>
+
 
 
                         <!-- Level -->
@@ -517,17 +499,19 @@ document.addEventListener(
             try {
 
 
-                const data = await Api.get(
+                const data =
+                    await Api.get(
 
-                    `/WarehouseStock/GetByWarehouse/${MAIN_WAREHOUSE_ID}`
+                        `/WarehouseStock/GetByWarehouse/${MAIN_WAREHOUSE_ID}`
 
-                );
+                    );
 
 
                 displayStock(data);
 
 
-            } catch (error) {
+            }
+            catch (error) {
 
 
                 console.error(
