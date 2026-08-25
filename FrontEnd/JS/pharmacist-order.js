@@ -290,6 +290,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                 pharmacySelect.value
             );
 
+             pharmacistSelect.innerHTML = `
+
+            <option value="">
+                Select pharmacist
+            </option>
+
+        `;
+
 
 
          
