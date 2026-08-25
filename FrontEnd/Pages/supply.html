@@ -2,90 +2,66 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>Supplies | Pharmacy System</title>
-
 
     <!-- Bootstrap CSS -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
-
     <!-- Bootstrap Icons -->
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
+    <!-- Dashboard CSS -->
+    <link
+        rel="stylesheet"
+        href="../CSS/dashboard.css">
 
-    <!-- Dashboard CSS  (sidebar + role rules live here) -->
-    <link rel="stylesheet" href="../CSS/dashboard.css">
+    <!-- Supply CSS -->
+    <link
+        rel="stylesheet"
+        href="../CSS/supply.css">
 
-
-    <!-- Supply Page CSS -->
-    <link rel="stylesheet" href="../CSS/supply.css">
-
-      <!--font css-->
-    <link rel="stylesheet"
-    href="../CSS/font.css"
-    >
-
+    <!-- Font CSS -->
+    <link
+        rel="stylesheet"
+        href="../CSS/font.css">
 </head>
-
-
-<!--
-    ROLE
-
-    Admin + Manager page.
-
-    The role comes from the #fragment in the URL:
-
-        supply.html#admin
-        supply.html#manager
-
-    A pharmacist sees the "no access" panel.
--->
 
 <body>
 
-
-    <!-- ==================================
-         ROLE FLAGS
-         The #fragment in the URL picks the role.
-         ================================== -->
+    <!-- Role flags -->
 
     <b id="admin" class="role-flag"></b>
     <b id="manager" class="role-flag"></b>
     <b id="pharmacist" class="role-flag"></b>
 
 
-
     <div class="container-fluid app">
 
         <div class="row min-vh-100">
-
 
             <!-- ==================================
                  SIDEBAR
                  ================================== -->
 
-<div class="col-md-3 col-lg-2 sidebar p-3">
-
+            <div class="col-md-3 col-lg-2 sidebar p-3">
 
                 <!-- Brand -->
 
                 <div class="sidebar-brand">
 
                     <div class="sidebar-logo">
-
                         <i class="bi bi-plus-lg"></i>
-
                     </div>
-
 
                     <div>
 
@@ -93,16 +69,13 @@
                             Pharmacy System
                         </h4>
 
-
                         <small data-roles="admin">
                             ADMIN VIEW
                         </small>
 
-
                         <small data-roles="manager">
                             MANAGER VIEW
                         </small>
-
 
                         <small data-roles="pharmacist">
                             PHARMACIST VIEW
@@ -113,10 +86,7 @@
                 </div>
 
 
-
-                <!-- ==================================
-                     OVERVIEW
-                     ================================== -->
+                <!-- Overview -->
 
                 <p class="sidebar-title">
                     OVERVIEW
@@ -125,81 +95,66 @@
 
                 <a
                     href="dashboard.html#admin"
-                    data-roles="admin"
-                                    >
+                    data-roles="admin">
 
                     <i class="bi bi-grid"></i>
 
-                    <span>
-                        Dashboard
-                    </span>
+                    <span>Dashboard</span>
 
                 </a>
+
 
                 <a
                     href="dashboard.html#manager"
-                    data-roles="manager"
-                                    >
+                    data-roles="manager">
 
                     <i class="bi bi-grid"></i>
 
-                    <span>
-                        Dashboard
-                    </span>
+                    <span>Dashboard</span>
 
                 </a>
+
 
                 <a
                     href="dashboard.html#pharmacist"
-                    data-roles="pharmacist"
-                                    >
+                    data-roles="pharmacist">
 
                     <i class="bi bi-grid"></i>
 
-                    <span>
-                        Dashboard
-                    </span>
+                    <span>Dashboard</span>
 
                 </a>
 
 
-
-                <!-- ==================================
-                     INTO THE WAREHOUSE
-                     Admin + Manager
-                     ================================== -->
+                <!-- Into the warehouse -->
 
                 <p
                     class="sidebar-title"
-                    data-roles="admin manager"
-                >
+                    data-roles="admin manager">
+
                     INTO THE WAREHOUSE
+
                 </p>
 
 
                 <a
                     href="suppliers.html#admin"
-                    data-roles="admin"
-                >
+                    data-roles="admin">
 
                     <i class="bi bi-building"></i>
 
-                    <span>
-                        Suppliers
-                    </span>
+                    <span>Suppliers</span>
 
                 </a>
 
+
                 <a
                     href="suppliers.html#manager"
-                    data-roles="manager"
-                >
+                    data-roles="manager">
 
                     <i class="bi bi-building"></i>
 
-                    <span>
-                        Suppliers
-                    </span>
+                    <span>Suppliers</span>
 
                 </a>
 
@@ -207,258 +162,203 @@
                 <a
                     href="supply.html#admin"
                     data-roles="admin"
-                    class="active"
-                >
+                    class="active">
 
                     <i class="bi bi-box-seam"></i>
 
-                    <span>
-                        Supplies
-                    </span>
+                    <span>Supplies</span>
 
                 </a>
+
 
                 <a
                     href="supply.html#manager"
                     data-roles="manager"
-                    class="active"
-                >
+                    class="active">
 
                     <i class="bi bi-box-seam"></i>
 
-                    <span>
-                        Supplies
-                    </span>
+                    <span>Supplies</span>
 
                 </a>
 
 
                 <a
                     href="warehouse-stock.html#admin"
-                    data-roles="admin"
-                >
+                    data-roles="admin">
 
                     <i class="bi bi-boxes"></i>
 
-                    <span>
-                        Warehouse Stock
-                    </span>
+                    <span>Warehouse Stock</span>
 
                 </a>
+
 
                 <a
                     href="warehouse-stock.html#manager"
-                    data-roles="manager"
-                >
+                    data-roles="manager">
 
                     <i class="bi bi-boxes"></i>
 
-                    <span>
-                        Warehouse Stock
-                    </span>
+                    <span>Warehouse Stock</span>
 
                 </a>
 
 
-
-                <!-- ==================================
-                     OUT TO THE PHARMACY
-                     ================================== -->
+                <!-- Out to the pharmacy -->
 
                 <p class="sidebar-title">
                     OUT TO THE PHARMACY
                 </p>
 
 
-                <a href="pharmacist-order.html#admin"
+                <a
+                    href="pharmacist-order.html#admin"
                     data-roles="admin">
 
                     <i class="bi bi-clipboard2"></i>
 
-                    <span>
-                        Pharmacist Orders
-                    </span>
+                    <span>Pharmacist Orders</span>
 
-                    <span class="sidebar-count">
-                        1
-                    </span>
+                    <span class="sidebar-count">1</span>
 
                 </a>
 
-                <a href="pharmacist-order.html#manager"
+
+                <a
+                    href="pharmacist-order.html#manager"
                     data-roles="manager">
 
                     <i class="bi bi-clipboard2"></i>
 
-                    <span>
-                        Pharmacist Orders
-                    </span>
+                    <span>Pharmacist Orders</span>
 
-                    <span class="sidebar-count">
-                        1
-                    </span>
+                    <span class="sidebar-count">1</span>
 
                 </a>
 
-                <a href="pharmacist-order.html#pharmacist"
+
+                <a
+                    href="pharmacist-order.html#pharmacist"
                     data-roles="pharmacist">
 
                     <i class="bi bi-clipboard2"></i>
 
-                    <span>
-                        Pharmacist Orders
-                    </span>
+                    <span>Pharmacist Orders</span>
 
-                    <span class="sidebar-count">
-                        1
-                    </span>
+                    <span class="sidebar-count">1</span>
 
                 </a>
 
 
-                <a href="transfer.html#admin"
+                <a
+                    href="transfer.html#admin"
                     data-roles="admin">
 
                     <i class="bi bi-truck"></i>
 
+                    <span>Transfers</span>
 
-                    <span data-roles="admin manager">
-                        Transfers
-                    </span>
-
-
-                    <span data-roles="pharmacist">
-                        Incoming Transfers
-                    </span>
-
-                    <span class="sidebar-count">
-                        1
-                    </span>
+                    <span class="sidebar-count">1</span>
 
                 </a>
 
-                <a href="transfer.html#manager"
+
+                <a
+                    href="transfer.html#manager"
                     data-roles="manager">
 
                     <i class="bi bi-truck"></i>
 
+                    <span>Transfers</span>
 
-                    <span data-roles="admin manager">
-                        Transfers
-                    </span>
-
-
-                    <span data-roles="pharmacist">
-                        Incoming Transfers
-                    </span>
-
-                    <span class="sidebar-count">
-                        1
-                    </span>
+                    <span class="sidebar-count">1</span>
 
                 </a>
 
-                <a href="transfer.html#pharmacist"
+
+                <a
+                    href="transfer.html#pharmacist"
                     data-roles="pharmacist">
 
                     <i class="bi bi-truck"></i>
 
+                    <span>Incoming Transfers</span>
 
-                    <span data-roles="admin manager">
-                        Transfers
-                    </span>
-
-
-                    <span data-roles="pharmacist">
-                        Incoming Transfers
-                    </span>
-
-                    <span class="sidebar-count">
-                        1
-                    </span>
+                    <span class="sidebar-count">1</span>
 
                 </a>
 
 
-                <a href="pharmacy-stock.html#admin"
+                <a
+                    href="pharmacy-stock.html#admin"
                     data-roles="admin">
 
                     <i class="bi bi-capsule"></i>
 
-                    <span>
-                        Pharmacy Stock
-                    </span>
+                    <span>Pharmacy Stock</span>
 
                 </a>
 
-                <a href="pharmacy-stock.html#manager"
+
+                <a
+                    href="pharmacy-stock.html#manager"
                     data-roles="manager">
 
                     <i class="bi bi-capsule"></i>
 
-                    <span>
-                        Pharmacy Stock
-                    </span>
+                    <span>Pharmacy Stock</span>
 
                 </a>
 
-                <a href="pharmacy-stock.html#pharmacist"
+
+                <a
+                    href="pharmacy-stock.html#pharmacist"
                     data-roles="pharmacist">
 
                     <i class="bi bi-capsule"></i>
 
-                    <span>
-                        Pharmacy Stock
-                    </span>
+                    <span>Pharmacy Stock</span>
 
                 </a>
 
 
-
-                <!-- ==================================
-                     USER MANAGEMENT
-                     Admin Only
-                     ================================== -->
+                <!-- User management -->
 
                 <p
                     class="sidebar-title"
-                    data-roles="admin"
-                >
+                    data-roles="admin">
+
                     USER MANAGEMENT
+
                 </p>
 
 
                 <a
                     href="create-user.html#admin"
-                    data-roles="admin"
-                >
+                    data-roles="admin">
 
                     <i class="bi bi-person-plus"></i>
 
-                    <span>
-                        Create User
-                    </span>
+                    <span>Create User</span>
 
                 </a>
 
 
-
-                <!-- Sign Out -->
+                <!-- Sign out -->
 
                 <a
                     href="login.html"
-                    class="sign-out"
-                >
+                    class="sign-out">
 
                     <i class="bi bi-box-arrow-right"></i>
 
-                    <span>
-                        Sign Out
-                    </span>
+                    <span>Sign Out</span>
 
                 </a>
 
             </div>
+
 
             <!-- ==================================
                  MAIN CONTENT
@@ -466,11 +366,7 @@
 
             <div class="col-md-9 col-lg-10 main-content p-4">
 
-
-                <!-- ==================================
-                     NO ACCESS
-                     Pharmacist
-                     ================================== -->
+                <!-- Pharmacist no-access message -->
 
                 <div
                     class="no-access"
@@ -490,8 +386,7 @@
 
                     <a
                         href="transfer.html#pharmacist"
-                        class="back-link"
-                        data-roles="pharmacist">
+                        class="back-link">
 
                         Go to incoming transfers
 
@@ -500,28 +395,21 @@
                 </div>
 
 
-
-                <!-- ==================================
-                     ADMIN + MANAGER VIEW
-                     ================================== -->
+                <!-- Admin and Manager -->
 
                 <div data-roles="admin manager">
 
-
-                    <!-- ==================================
-                         PAGE HEADER
-                         ================================== -->
+                    <!-- Page header -->
 
                     <div class="supply-page-header mb-4">
 
                         <div>
 
-                            <h2>
-                                Supplies
-                            </h2>
+                            <h2>Supplies</h2>
 
                             <p>
-                                Record new medicine supplies received into the warehouse.
+                                Record new medicine supplies received
+                                into the warehouse.
                             </p>
 
                         </div>
@@ -530,7 +418,7 @@
 
 
                     <!-- ==================================
-                         CREATE NEW SUPPLY
+                         CREATE SUPPLY
                          ================================== -->
 
                     <div class="supply-panel mb-4">
@@ -539,63 +427,55 @@
 
                             <div>
 
-                                <h4>
-                                    Create New Supply
-                                </h4>
+                                <h4>Create New Supply</h4>
 
                                 <p>
-                                    Add a new medicine shipment to warehouse stock.
+                                    Add a new medicine shipment to
+                                    warehouse stock.
                                 </p>
 
                             </div>
 
                             <div class="supply-icon">
+
                                 <i class="bi bi-box-seam"></i>
+
                             </div>
 
                         </div>
 
 
-                        <div class="supply-form">
+                        <form
+                            id="supplyForm"
+                            class="supply-form">
 
                             <div class="row g-4">
 
-
                                 <!-- Supplier -->
+<div class="col-md-6">
 
-                                <div class="col-md-6">
+    <label for="supplier">
+        Supplier
+    </label>
 
-                                    <label for="supplier">
-                                        Supplier
-                                    </label>
+    <select
+        id="supplier"
+        name="supplierID"
+        class="form-select"
+        required>
 
-                                    <select
-                                        id="supplier"
-                                        class="form-select">
+        <option
+            value=""
+            selected
+            disabled>
 
-                                        <option selected>
-                                            Select supplier
-                                        </option>
+            Select supplier
 
-                                        <option>
-                                            Gulf Pharmaceutical
-                                        </option>
+        </option>
 
-                                        <option>
-                                            Oman Medical Supplies
-                                        </option>
+    </select>
 
-                                        <option>
-                                            Muscat Pharma
-                                        </option>
-
-                                        <option>
-                                            Al Noor Medical
-                                        </option>
-
-                                    </select>
-
-                                </div>
+</div>
 
 
                                 <!-- Warehouse -->
@@ -608,18 +488,17 @@
 
                                     <select
                                         id="warehouse"
-                                        class="form-select">
+                                        name="warehouseID"
+                                        class="form-select"
+                                        required>
 
-                                        <option selected>
+                                        <option
+                                            value=""
+                                            selected
+                                            disabled>
+
                                             Select warehouse
-                                        </option>
 
-                                        <option>
-                                            Main Warehouse — Rusayl
-                                        </option>
-
-                                        <option>
-                                            Muscat Warehouse
                                         </option>
 
                                     </select>
@@ -637,30 +516,17 @@
 
                                     <select
                                         id="medicine"
-                                        class="form-select">
+                                        name="medicineID"
+                                        class="form-select"
+                                        required>
 
-                                        <option selected>
+                                        <option
+                                            value=""
+                                            selected
+                                            disabled>
+
                                             Select medicine
-                                        </option>
 
-                                        <option>
-                                            Panadol Extra 500mg
-                                        </option>
-
-                                        <option>
-                                            Amoxicillin 500mg
-                                        </option>
-
-                                        <option>
-                                            Insulin Glargine
-                                        </option>
-
-                                        <option>
-                                            Ventolin Inhaler
-                                        </option>
-
-                                        <option>
-                                            Vitamin C 1000mg
                                         </option>
 
                                     </select>
@@ -668,7 +534,7 @@
                                 </div>
 
 
-                                <!-- Batch Number -->
+                                <!-- Batch number -->
 
                                 <div class="col-md-6">
 
@@ -679,8 +545,10 @@
                                     <input
                                         type="text"
                                         id="batchNumber"
+                                        name="batchNumber"
                                         class="form-control"
-                                        placeholder="Enter batch number">
+                                        placeholder="Enter batch number"
+                                        required>
 
                                 </div>
 
@@ -696,14 +564,16 @@
                                     <input
                                         type="number"
                                         id="quantity"
+                                        name="quantity"
                                         class="form-control"
                                         placeholder="Enter quantity"
-                                        min="1">
+                                        min="1"
+                                        required>
 
                                 </div>
 
 
-                                <!-- Expiry Date -->
+                                <!-- Expiry date -->
 
                                 <div class="col-md-6">
 
@@ -714,12 +584,14 @@
                                     <input
                                         type="date"
                                         id="expiryDate"
-                                        class="form-control">
+                                        name="expiryDate"
+                                        class="form-control"
+                                        required>
 
                                 </div>
 
 
-                                <!-- Unit Cost -->
+                                <!-- Unit cost -->
 
                                 <div class="col-md-6">
 
@@ -730,20 +602,23 @@
                                     <input
                                         type="number"
                                         id="unitCost"
+                                        name="unitCost"
                                         class="form-control"
                                         placeholder="Enter unit cost"
                                         min="0"
-                                        step="0.001">
+                                        step="0.001"
+                                        required>
 
                                 </div>
 
 
-                                <!-- Save Button -->
+                                <!-- Save button -->
 
                                 <div class="col-md-6 supply-button-wrapper">
 
                                     <button
-                                        type="button"
+                                        type="submit"
+                                        id="saveSupplyBtn"
                                         class="btn btn-save-supply">
 
                                         <i class="bi bi-check-lg me-2"></i>
@@ -756,7 +631,7 @@
 
                             </div>
 
-                        </div>
+                        </form>
 
                     </div>
 
@@ -771,9 +646,7 @@
 
                             <div>
 
-                                <h4>
-                                    Supply History
-                                </h4>
+                                <h4>Supply History</h4>
 
                                 <p>
                                     Recently recorded medicine supplies.
@@ -781,7 +654,9 @@
 
                             </div>
 
-                            <i class="bi bi-clock-history supply-history-icon"></i>
+                            <i
+                                class="bi bi-clock-history supply-history-icon">
+                            </i>
 
                         </div>
 
@@ -794,135 +669,35 @@
 
                                     <tr>
 
-                                        <th>
-                                            DATE
-                                        </th>
+                                        <th>DATE</th>
 
-                                        <th>
-                                            SUPPLIER
-                                        </th>
+                                        <th>SUPPLIER</th>
 
-                                        <th>
-                                            MEDICINE
-                                        </th>
+                                        <th>MEDICINE</th>
 
-                                        <th>
-                                            BATCH NO.
-                                        </th>
+                                        <th>BATCH NO.</th>
 
-                                        <th>
-                                            QTY
-                                        </th>
+                                        <th>QTY</th>
 
-                                        <th>
-                                            UNIT COST
-                                        </th>
+                                        <th>UNIT COST</th>
 
-                                        <th>
-                                            WAREHOUSE
-                                        </th>
+                                        <th>WAREHOUSE</th>
 
                                     </tr>
 
                                 </thead>
 
 
-                                <tbody>
+                                <tbody id="supplyHistoryBody">
 
                                     <tr>
 
-                                        <td>
-                                            25 Jul 2026
-                                        </td>
+                                        <td
+                                            colspan="7"
+                                            class="supply-table-message">
 
-                                        <td>
-                                            Oman Medical Supplies
-                                        </td>
+                                            Loading supplies...
 
-                                        <td>
-                                            Insulin Glargine
-                                        </td>
-
-                                        <td>
-                                            BN-2026-0043
-                                        </td>
-
-                                        <td>
-                                            <strong>120</strong>
-                                        </td>
-
-                                        <td>
-                                            OMR 3.500
-                                        </td>
-
-                                        <td>
-                                            Main Warehouse
-                                        </td>
-
-                                    </tr>
-
-
-                                    <tr>
-
-                                        <td>
-                                            20 Jul 2026
-                                        </td>
-
-                                        <td>
-                                            Gulf Pharmaceutical
-                                        </td>
-
-                                        <td>
-                                            Panadol Extra 500mg
-                                        </td>
-
-                                        <td>
-                                            BN-2026-0039
-                                        </td>
-
-                                        <td>
-                                            <strong>200</strong>
-                                        </td>
-
-                                        <td>
-                                            OMR 1.200
-                                        </td>
-
-                                        <td>
-                                            Main Warehouse
-                                        </td>
-
-                                    </tr>
-
-
-                                    <tr>
-
-                                        <td>
-                                            15 Jul 2026
-                                        </td>
-
-                                        <td>
-                                            Muscat Pharma
-                                        </td>
-
-                                        <td>
-                                            Amoxicillin 500mg
-                                        </td>
-
-                                        <td>
-                                            BN-2026-0034
-                                        </td>
-
-                                        <td>
-                                            <strong>150</strong>
-                                        </td>
-
-                                        <td>
-                                            OMR 2.100
-                                        </td>
-
-                                        <td>
-                                            Main Warehouse
                                         </td>
 
                                     </tr>
@@ -935,9 +710,8 @@
 
                     </div>
 
-                    <!-- ==================================
-                         FOOTER
-                         ================================== -->
+
+                    <!-- Footer -->
 
                     <footer class="small-footer">
 
@@ -954,6 +728,45 @@
         </div>
 
     </div>
+
+
+    <!-- ==================================
+         SUCCESS MESSAGE
+         ================================== -->
+
+    <div
+        id="supplySuccessMessage"
+        class="supply-success-message"
+        role="status"
+        aria-live="polite">
+
+        <span class="supply-success-icon">
+
+            <i class="bi bi-check-lg"></i>
+
+        </span>
+
+        <div>
+
+            <strong>
+                Supply saved
+            </strong>
+
+            <p id="supplySuccessText">
+                The supply was added successfully.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript -->
+
+ <script src="../JS/Config.js">   </script>
+     <script src="../JS/auth.js"></script>
+    <script src="../JS/api.js"></script>
+    <script src="../JS/Supply.js"></script>
 
 </body>
 
