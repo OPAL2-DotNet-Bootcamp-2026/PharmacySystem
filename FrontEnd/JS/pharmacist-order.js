@@ -552,6 +552,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+    // ==========================================
+    // REMOVE MEDICINE
+    // ==========================================
+
+    orderLines.addEventListener(
+        "click",
+        event => {
+
+            const button =
+                event.target.closest(
+                    "[data-remove-index]"
+                );
+
 
 
          
