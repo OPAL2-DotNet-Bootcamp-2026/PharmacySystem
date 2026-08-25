@@ -720,6 +720,21 @@ document.addEventListener("DOMContentLoaded", async () => {
                 "Pharmacist order created successfully."
             );
 
+            // Clear order
+
+            orderDetails = [];
+
+            renderOrderDetails();
+
+
+
+            // Reload orders if you add
+            // loadOrders() later
+
+        }
+
+        
+
                 
 
 
