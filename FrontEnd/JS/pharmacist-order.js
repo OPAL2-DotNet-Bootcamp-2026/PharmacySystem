@@ -764,6 +764,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+    if (allOrdersTableBody) {
+
+    allOrdersTableBody.addEventListener(
+        "click",
+        async event => {
+
+
+            // APPROVE
+
+            const approveButton =
+                event.target.closest(
+                    "[data-approve-id]"
+                );
+
+
     // ==========================================
     // EVENTS
     // ==========================================
