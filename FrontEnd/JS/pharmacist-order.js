@@ -1019,6 +1019,38 @@ function renderMyOrders(orders) {
                 order.orderDate
             ).toLocaleDateString("en-GB");
 
+            myOrdersTableBody.innerHTML += `
+            <tr>
+
+                <td>
+                    #${order.pharmacistOrderId}
+                </td>
+
+                <td>
+                    ${order.pharmacyName}
+                </td>
+
+                <td>
+                    ${medicines}
+                </td>
+
+                <td>
+                    ${date}
+                </td>
+
+                <td class="text-end">
+                    OMR ${Number(order.totalCost).toFixed(3)}
+                </td>
+
+                <td>
+                    ${order.status}
+                </td>
+
+            </tr>
+        `;
+    });
+}
+
 
 
 });
