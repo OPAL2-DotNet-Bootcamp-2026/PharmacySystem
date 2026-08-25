@@ -971,5 +971,34 @@ function renderAllOrders(orders) {
     });
 }
 
+// ==========================================
+// PHARMACIST MY ORDERS
+// ==========================================
+
+function renderMyOrders(orders) {
+
+    if (!myOrdersTableBody) {
+        return;
+    }
+
+
+    if (orders.length === 0) {
+
+        myOrdersTableBody.innerHTML = `
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="text-center py-4"
+                >
+                    No orders found.
+                </td>
+
+            </tr>
+        `;
+
+        return;
+    }
+
 
 });
