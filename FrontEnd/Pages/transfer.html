@@ -112,7 +112,9 @@
 
 
 
-                <!-- OVERVIEW -->
+                <!-- ==================================
+                     OVERVIEW
+                ================================== -->
 
                 <p class="sidebar-title">
                     OVERVIEW
@@ -323,7 +325,9 @@
 
 
 
-                <!-- Transfers -->
+                <!-- ==================================
+                     TRANSFERS
+                ================================== -->
 
                 <a
                     href="transfer.html#admin"
@@ -395,7 +399,9 @@
 
 
 
-                <!-- Pharmacy Stock -->
+                <!-- ==================================
+                     PHARMACY STOCK
+                ================================== -->
 
                 <a
                     href="pharmacy-stock.html#admin"
@@ -467,7 +473,9 @@
 
 
 
-                <!-- Sign Out -->
+                <!-- ==================================
+                     SIGN OUT
+                ================================== -->
 
                 <a
                     href="login.html"
@@ -561,6 +569,10 @@
                     <div class="create-transfer-modal-card">
 
 
+                        <!-- ==================================
+                             MODAL HEADER
+                        ================================== -->
+
                         <div class="create-transfer-card-header">
 
 
@@ -591,7 +603,9 @@
 
 
 
-                        <!-- Form -->
+                        <!-- ==================================
+                             FORM
+                        ================================== -->
 
                         <form
                             id="transferForm"
@@ -599,25 +613,30 @@
                         >
 
 
+                            <!-- ==================================
+                                 APPROVED ORDER ONLY
+                            ================================== -->
+
                             <div class="row g-3">
 
 
-                                <!-- Approved Order -->
-
-                                <div class="col-md-6">
+                                <div class="col-12">
 
 
                                     <label
                                         for="pharmacistOrder"
                                         class="form-label"
                                     >
+
                                         Approved Pharmacist Order
+
                                     </label>
 
 
                                     <select
                                         id="pharmacistOrder"
                                         class="form-select"
+                                        required
                                     >
 
                                         <option
@@ -625,93 +644,12 @@
                                             selected
                                             disabled
                                         >
+
                                             Select approved order
+
                                         </option>
 
                                     </select>
-
-
-                                </div>
-
-
-
-                                <!-- Warehouse -->
-
-                                <div class="col-md-6">
-
-
-                                    <label
-                                        for="warehouse"
-                                        class="form-label"
-                                    >
-                                        Warehouse
-                                    </label>
-
-
-                                    <select
-                                        id="warehouse"
-                                        class="form-select"
-                                    >
-
-                                        <option
-                                            value=""
-                                            selected
-                                            disabled
-                                        >
-                                            Select warehouse
-                                        </option>
-
-                                    </select>
-
-
-                                </div>
-
-
-
-                                <!-- Pharmacy -->
-
-                                <div class="col-md-6">
-
-
-                                    <label
-                                        for="pharmacy"
-                                        class="form-label"
-                                    >
-                                        Pharmacy
-                                    </label>
-
-
-                                    <input
-                                        type="text"
-                                        id="pharmacy"
-                                        class="form-control"
-                                        readonly
-                                    >
-
-
-                                </div>
-
-
-
-                                <!-- Status -->
-
-                                <div class="col-md-6">
-
-
-                                    <label
-                                        for="orderStatus"
-                                        class="form-label"
-                                    >
-                                        Order Status
-                                    </label>
-
-
-                                    <input
-                                        type="text"
-                                        id="orderStatus"
-                                        class="form-control"
-                                        readonly
-                                    >
 
 
                                 </div>
@@ -721,7 +659,9 @@
 
 
 
-                            <!-- Medicines -->
+                            <!-- ==================================
+                                 ORDER MEDICINES
+                            ================================== -->
 
                             <div class="transfer-medicines">
 
@@ -733,7 +673,8 @@
                                     </h5>
 
                                     <p>
-                                        All medicines and quantities will be transferred.
+                                        Medicines and quantities come from
+                                        the selected approved pharmacist order.
                                     </p>
 
                                 </div>
@@ -742,7 +683,9 @@
                                 <div class="table-responsive">
 
 
-                                    <table class="table transfer-create-table">
+                                    <table
+                                        class="table transfer-create-table"
+                                    >
 
 
                                         <thead>
@@ -766,7 +709,27 @@
                                         </thead>
 
 
+                                        <!--
+                                            JavaScript fills medicines
+                                            from selected approved order
+                                        -->
+
                                         <tbody id="transferMedicinesBody">
+
+
+                                            <tr>
+
+                                                <td
+                                                    colspan="3"
+                                                    class="text-center text-muted"
+                                                >
+
+                                                    Select an approved order.
+
+                                                </td>
+
+                                            </tr>
+
 
                                         </tbody>
 
@@ -781,7 +744,9 @@
 
 
 
-                            <!-- Buttons -->
+                            <!-- ==================================
+                                 BUTTONS
+                            ================================== -->
 
                             <div class="transfer-form-actions">
 
@@ -790,7 +755,9 @@
                                     for="showCreateTransfer"
                                     class="cancel-transfer-btn"
                                 >
+
                                     Cancel
+
                                 </label>
 
 
@@ -857,12 +824,18 @@
                             On the road
                         </h2>
 
+
                         <p id="roadSummary">
+
                             Loading transfers...
+
                         </p>
 
                     </div>
 
+
+
+                    <!-- JavaScript fills this -->
 
                     <div
                         id="roadContent"
@@ -877,7 +850,7 @@
 
 
                 <!-- ==================================
-                     ALL TRANSFERS
+                     ALL TRANSFERS / HISTORY
                 ================================== -->
 
                 <section
@@ -892,8 +865,11 @@
                             All transfers
                         </h2>
 
+
                         <p id="transferCount">
+
                             Loading transfers...
+
                         </p>
 
                     </div>
@@ -943,7 +919,28 @@
                             </thead>
 
 
+
+                            <!--
+                                JavaScript loads transfer
+                                history from database here
+                            -->
+
                             <tbody id="transferTableBody">
+
+
+                                <tr>
+
+                                    <td
+                                        colspan="7"
+                                        class="text-center text-muted"
+                                    >
+
+                                        Loading transfers...
+
+                                    </td>
+
+                                </tr>
+
 
                             </tbody>
 
@@ -974,12 +971,18 @@
                             Incoming transfers
                         </h2>
 
+
                         <p id="incomingTransferCount">
+
                             Loading transfers...
+
                         </p>
 
                     </div>
 
+
+
+                    <!-- JavaScript fills incoming transfers -->
 
                     <div id="incomingTransfers">
 
@@ -990,7 +993,9 @@
 
 
 
-                <!-- Footer -->
+                <!-- ==================================
+                     FOOTER
+                ================================== -->
 
                 <footer class="mt-auto text-center py-3">
 
@@ -1013,7 +1018,9 @@
 
 
 
-    <!-- Bootstrap -->
+    <!-- ==================================
+         BOOTSTRAP
+    ================================== -->
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
@@ -1021,7 +1028,16 @@
     </script>
 
 
-    <!-- Transfer JavaScript -->
+
+    <!-- ==================================
+         YOUR PROJECT JAVASCRIPT
+    ================================== -->
+
+    <script src="../JS/config.js"></script>
+
+    <script src="../JS/auth.js"></script>
+
+    <script src="../JS/api.js"></script>
 
     <script src="../JS/transfers.js"></script>
 
