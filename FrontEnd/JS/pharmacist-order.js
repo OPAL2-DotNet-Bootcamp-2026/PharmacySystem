@@ -796,6 +796,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
 
+            // REJECT
+
+            const rejectButton =
+                event.target.closest(
+                    "[data-reject-id]"
+                );
+
+
     // ==========================================
     // EVENTS
     // ==========================================
