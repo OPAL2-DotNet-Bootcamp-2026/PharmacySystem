@@ -12,5 +12,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
+    // ==========================================
+    // ELEMENTS
+    // ==========================================
+
+    const pharmacySelect =
+        document.getElementById("pharmacyId");
+
+    const pharmacistSelect =
+        document.getElementById("pharmacistId");
+
+    const medicineSelect =
+        document.getElementById("medicineId");
+
 
 })
