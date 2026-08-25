@@ -1079,6 +1079,20 @@ async function updateOrderStatus(
 
     }
 
+      catch (error) {
+
+        console.error(
+            "Failed to update order:",
+            error
+        );
+
+
+        alert(
+            error.message
+        );
+    }
+}
+
 
 
 
