@@ -25,11 +25,24 @@ const Api = {
         } catch {
             data = null;
         }
-        if (!response.ok) {
-            throw new Error(
-                data?.message || "Something went wrong."
-            );
-        }
+     if (!response.ok) {
+
+    console.error(
+        "API ERROR:",
+        response.status,
+        data
+    );
+
+    throw new Error(
+        data?.message
+        ||
+        data?.title
+        ||
+        JSON.stringify(data)
+        ||
+        `Request failed: ${response.status}`
+    );
+}
         return data;
     },
     get(endpoint) {
