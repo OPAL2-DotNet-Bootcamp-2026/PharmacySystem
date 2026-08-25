@@ -526,6 +526,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                         </strong>
 
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-outline-danger"
+                            data-remove-index="${index}"
+                        >
+
+                            Remove
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
 
 
          
