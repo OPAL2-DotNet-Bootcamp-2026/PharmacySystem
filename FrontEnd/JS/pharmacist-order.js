@@ -469,6 +469,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             `;
 
+             estimatedTotal.textContent =
+                "OMR 0.000";
+
+
+            return;
+        }
+
+
+
+        let html = "";
+
+        let total = 0;
+
 
 
          
