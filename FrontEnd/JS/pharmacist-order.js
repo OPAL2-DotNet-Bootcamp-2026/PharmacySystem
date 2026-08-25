@@ -398,6 +398,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
+        // Check if medicine already exists in order
+
+        const existingMedicine =
+            orderDetails.find(
+                item =>
+                    item.medicineID === medicineId
+            );
+
 
 
          
