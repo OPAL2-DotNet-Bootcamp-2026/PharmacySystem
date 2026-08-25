@@ -846,5 +846,14 @@ async function loadOrders() {
 
     }
 
+    catch (error) {
+
+        console.error(
+            "Failed to load orders:",
+            error
+        );
+    }
+}
+
 
 });
