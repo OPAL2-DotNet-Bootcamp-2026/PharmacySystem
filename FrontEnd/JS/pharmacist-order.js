@@ -334,6 +334,19 @@ async function loadMedicines() {
     }
 }
 
+async function loadCurrentPharmacist() {
+    try {
+        const userId = Number(getUserIdFromToken());
+        const pharmacists = await Api.get("/Pharmacist");
+
+        currentPharmacist = pharmacists.find(
+            pharmacist => pharmacist.userID === userId
+        );
+
+        if (!currentPharmacist) {
+            throw new Error("Pharmacist profile was not found.");
+        }
+
 
     // ==========================================
     // ADD MEDICINE
