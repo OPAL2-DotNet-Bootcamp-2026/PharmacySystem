@@ -19,9 +19,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const pharmacySelect =
         document.getElementById("pharmacyId");
 
-    const pharmacistSelect =
-        document.getElementById("pharmacistId");
-
     const medicineSelect =
         document.getElementById("medicineId");
 
@@ -281,13 +278,133 @@ document.addEventListener("DOMContentLoaded", async () => {
 
      // ==========================================
     // LOAD PHARMACISTS BY PHARMACY
-    // ADMIN ONLY
+    // database-loading
     // ==========================================
     
+    async function createPharmacistOrder() {
     if (Auth.role() !== "Pharmacist") {
-    return;
-    
+    return;  
     }
+
+    if (!currentPharmacist) {
+        alert("Pharmacist profile was not found.");
+        return;
+    }
+
+    const pharmacyID = Number(pharmacySelect.value);
+    const pharmacistID = currentPharmacist.pharmacistID;
+
+    if (!pharmacyID) {
+        alert("Your pharmacy was not found.");
+        return;
+    }
+
+    if (orderDetails.length === 0) {
+        alert("Please add at least one medicine.");
+        return;
+    }
+
+    const order = {
+        pharmacistID: pharmacistID,
+        pharmacyID: pharmacyID,
+        orderDetails: orderDetails.map(detail => ({
+            medicineID: detail.medicineID,
+            quantity: detail.quantity
+        }))
+    };
+
+    try {
+        submitButton.disabled = true;
+        submitButton.textContent = "Submitting...";
+
+        await Api.post("/PharmacistOrder", order);
+
+        alert("Pharmacist order created successfully.");
+
+        orderDetails = [];
+        renderOrderDetails();
+        await loadOrders();
+    } 
+    
+    catch (error) {
+        console.error("Failed to create order:", error);
+        alert(error.message);
+    } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit order";
+    }
+}
+
+    // ==========================================
+
+    async function loadPharmacies() {
+    try {
+        const pharmacies = await Api.get("/Pharmacy");
+
+        pharmacySelect.innerHTML = `
+            <option value="">Select pharmacy</option>
+        `;
+
+        pharmacies.forEach(pharmacy => {
+            if (!pharmacy.isActive) {
+                return;
+            }
+
+            pharmacySelect.innerHTML += `
+                <option value="${pharmacy.pharmacyID}">
+                    ${pharmacy.pharmacyName}
+                </option>
+            `;
+        });
+         } catch (error) {
+        console.error("Failed to load pharmacies:", error);
+    }
+}
+
+async function loadMedicines() {
+    try {
+        medicines = await Api.get("/Medicine/GetAvailable");
+
+        medicineSelect.innerHTML = `
+            <option value="">Select medicine</option>
+        `;
+
+        medicines.forEach(medicine => {
+            medicineSelect.innerHTML += `
+                <option value="${medicine.medicineID}">
+                    ${medicine.medicineName}
+                </option>
+            `;
+        });
+
+        } catch (error) {
+        console.error("Failed to load medicines:", error);
+    }
+}
+
+async function loadCurrentPharmacist() {
+    try {
+        const userId = Number(getUserIdFromToken());
+        const pharmacists = await Api.get("/Pharmacist");
+
+        currentPharmacist = pharmacists.find(
+            pharmacist => pharmacist.userID === userId
+        );
+
+        if (!currentPharmacist) {
+            throw new Error("Pharmacist profile was not found.");
+        }
+
+        // Select the pharmacist's assigned pharmacy.
+        pharmacySelect.value = currentPharmacist.pharmacyID;
+
+        // Prevent the pharmacist from changing the pharmacy.
+        pharmacySelect.disabled = true;
+    } catch (error) {
+        console.error("Failed to find pharmacist:", error);
+        alert(error.message);
+    }
+}
 
 
     // ==========================================
@@ -775,21 +892,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     // ==========================================
     // EVENTS
     // ==========================================
-
-    addMedicineButton.addEventListener(
-        "click",
-        addMedicine
-    );
-
-    submitButton.addEventListener(
+    // Only initialize the New order form for pharmacists.
+    if (Auth.role() === "Pharmacist") {
+        addMedicineButton.addEventListener("click", addMedicine);
+        
+        submitButton.addEventListener(
         "click",
         createPharmacistOrder
     );
 
-    pharmacySelect.addEventListener(
-        "change",
-        loadPharmacistsByPharmacy
-    );
+    // Load form information from the database.
+    await loadPharmacies();
+    await loadMedicines();
+    await loadCurrentPharmacist();
+}
+
+// Admin and manager order information still comes from the database.
+await loadOrders();
 
     // ==========================================
     // FIRST PAGE LOAD
