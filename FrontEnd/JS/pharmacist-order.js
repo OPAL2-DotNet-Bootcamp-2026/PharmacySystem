@@ -304,6 +304,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
+    const order = {
+        pharmacistID: pharmacistID,
+        pharmacyID: pharmacyID,
+        orderDetails: orderDetails.map(detail => ({
+            medicineID: detail.medicineID,
+            quantity: detail.quantity
+        }))
+    };
+
     // ==========================================
 
     async function loadPharmacies() {
