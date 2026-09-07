@@ -5,7 +5,7 @@ namespace Pharmacy_System.Repos
 {
     public class PharmacistRepo
     {
-        private PharmacyContext context;
+        private readonly PharmacyContext context;
 
 
         public PharmacistRepo(
@@ -16,23 +16,24 @@ namespace Pharmacy_System.Repos
         }
 
 
-
-        // =========================================
-        // GET ALL PHARMACISTS
-        // =========================================
+        // =====================================
+        // GET ALL ACTIVE PHARMACISTS
+        // =====================================
 
         public async Task<List<Pharmacist>>
             GetAllPharmacist()
         {
             return await context.pharmacists
+                .Where(
+                    p => p.IsActive
+                )
                 .ToListAsync();
         }
 
 
-
-        // =========================================
-        // GET PHARMACIST BY ID
-        // =========================================
+        // =====================================
+        // GET ACTIVE PHARMACIST BY ID
+        // =====================================
 
         public async Task<Pharmacist?>
             GetPharmacistById(
@@ -43,15 +44,16 @@ namespace Pharmacy_System.Repos
                 .FirstOrDefaultAsync(
                     p =>
                         p.PharmacistID == id
+                        &&
+                        p.IsActive
                 );
         }
 
 
-
-        // =========================================
+        // =====================================
         // GET PHARMACIST BY USER ID
-        // NEW
-        // =========================================
+        // IMPORTANT FOR DELETE
+        // =====================================
 
         public async Task<Pharmacist?>
             GetPharmacistByUserId(
@@ -66,10 +68,9 @@ namespace Pharmacy_System.Repos
         }
 
 
-
-        // =========================================
-        // GET PHARMACIST BY EMAIL
-        // =========================================
+        // =====================================
+        // GET ACTIVE PHARMACIST BY EMAIL
+        // =====================================
 
         public async Task<Pharmacist?>
             GetPharmacistByEmail(
@@ -80,14 +81,15 @@ namespace Pharmacy_System.Repos
                 .FirstOrDefaultAsync(
                     p =>
                         p.Email == email
+                        &&
+                        p.IsActive
                 );
         }
 
 
-
-        // =========================================
+        // =====================================
         // CHECK EMAIL EXISTS
-        // =========================================
+        // =====================================
 
         public async Task<bool>
             EmailExists(
@@ -102,10 +104,9 @@ namespace Pharmacy_System.Repos
         }
 
 
-
-        // =========================================
-        // GET PHARMACY BY ID
-        // =========================================
+        // =====================================
+        // GET PHARMACY
+        // =====================================
 
         public async Task<Pharmacy?>
             GetPharmacyById(
@@ -120,10 +121,9 @@ namespace Pharmacy_System.Repos
         }
 
 
-
-        // =========================================
-        // GET PHARMACIST BY NAME
-        // =========================================
+        // =====================================
+        // GET ACTIVE PHARMACIST BY NAME
+        // =====================================
 
         public async Task<List<Pharmacist>>
             GetPharmacistByName(
@@ -133,18 +133,17 @@ namespace Pharmacy_System.Repos
             return await context.pharmacists
                 .Where(
                     p =>
-                        p.FullName.Contains(
-                            name
-                        )
+                        p.FullName.Contains(name)
+                        &&
+                        p.IsActive
                 )
                 .ToListAsync();
         }
 
 
-
-        // =========================================
-        // GET PHARMACISTS BY PHARMACY
-        // =========================================
+        // =====================================
+        // GET ACTIVE PHARMACISTS BY PHARMACY
+        // =====================================
 
         public async Task<List<Pharmacist>>
             GetByPharmacy(
@@ -154,17 +153,17 @@ namespace Pharmacy_System.Repos
             return await context.pharmacists
                 .Where(
                     p =>
-                        p.PharmacyID ==
-                        pharmacyId
+                        p.PharmacyID == pharmacyId
+                        &&
+                        p.IsActive
                 )
                 .ToListAsync();
         }
 
 
-
-        // =========================================
-        // ADD PHARMACIST
-        // =========================================
+        // =====================================
+        // ADD
+        // =====================================
 
         public async Task Add(
             Pharmacist pharmacist
@@ -181,10 +180,9 @@ namespace Pharmacy_System.Repos
         }
 
 
-
-        // =========================================
-        // UPDATE PHARMACIST
-        // =========================================
+        // =====================================
+        // UPDATE
+        // =====================================
 
         public async Task PharmacistUpdate()
         {
@@ -193,10 +191,9 @@ namespace Pharmacy_System.Repos
         }
 
 
-
-        // =========================================
-        // SOFT DELETE PHARMACIST
-        // =========================================
+        // =====================================
+        // SOFT DELETE
+        // =====================================
 
         public async Task PharmacistDelete(
             Pharmacist pharmacist

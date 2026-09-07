@@ -7,7 +7,6 @@ namespace Pharmacy_System.Services
 {
     public class UserService
     {
-
         private readonly UserRepo userRepo;
 
         private readonly PharmacistRepo pharmacistRepo;
@@ -20,15 +19,13 @@ namespace Pharmacy_System.Services
         private const int MaxFailedAttempts =
             5;
 
-
         private const int LockoutMinutes =
             15;
 
 
-
-        // =========================================
+        // =====================================
         // CONSTRUCTOR
-        // =========================================
+        // =====================================
 
         public UserService(
             UserRepo _userRepo,
@@ -54,21 +51,68 @@ namespace Pharmacy_System.Services
         }
 
 
+        // =====================================
+        // CHECK EMAIL
+        // =====================================
 
-        // =========================================
+        public async Task<bool>
+            EmailExists(
+                string email
+            )
+        {
+            email =
+                email.Trim();
+
+
+            return await userRepo
+                .EmailExists(
+                    email
+                );
+        }
+
+
+        // =====================================
+        // CHECK USERNAME
+        // =====================================
+
+        public async Task<bool>
+            UsernameExists(
+                string username
+            )
+        {
+            username =
+                username.Trim();
+
+
+            return await userRepo
+                .UsernameExists(
+                    username
+                );
+        }
+
+
+        // =====================================
         // CREATE USER
-        // =========================================
+        // =====================================
 
         public async Task<UserResponseDto?>
             CreateUser(
                 RegisterUserDto dto
             )
         {
+            string email =
+                dto.Email.Trim();
+
+
+            string username =
+                dto.Username.Trim();
+
 
             bool emailExists =
-                await userRepo.EmailExists(
-                    dto.Email
-                );
+                await userRepo
+                    .EmailExists(
+                        email
+                    );
 
 
             if (emailExists)
@@ -77,15 +121,27 @@ namespace Pharmacy_System.Services
             }
 
 
+            bool usernameExists =
+                await userRepo
+                    .UsernameExists(
+                        username
+                    );
+
+
+            if (usernameExists)
+            {
+                return null;
+            }
+
 
             User user =
                 new User()
                 {
                     Username =
-                        dto.Username,
+                        username,
 
                     Email =
-                        dto.Email,
+                        email,
 
                     PasswordHash =
                         BCrypt.Net.BCrypt
@@ -101,11 +157,10 @@ namespace Pharmacy_System.Services
                 };
 
 
-
-            await userRepo.AddUser(
-                user
-            );
-
+            await userRepo
+                .AddUser(
+                    user
+                );
 
 
             logger.LogInformation(
@@ -113,7 +168,6 @@ namespace Pharmacy_System.Services
                 user.Email,
                 user.Role
             );
-
 
 
             return new UserResponseDto()
@@ -133,30 +187,24 @@ namespace Pharmacy_System.Services
                 IsActive =
                     user.IsActive
             };
-
         }
 
 
-
-        // =========================================
+        // =====================================
         // LOGIN
-        // =========================================
+        // =====================================
 
         public async Task<LoginResponseDto?>
             Login(
                 LoginDto dto
             )
         {
-
             User? user =
                 await userRepo
                     .GetUserByEmail(
                         dto.Email
                     );
 
-
-
-            // USER NOT FOUND
 
             if (user == null)
             {
@@ -170,9 +218,6 @@ namespace Pharmacy_System.Services
             }
 
 
-
-            // USER IS INACTIVE
-
             if (!user.IsActive)
             {
                 logger.LogWarning(
@@ -184,9 +229,6 @@ namespace Pharmacy_System.Services
                 return null;
             }
 
-
-
-            // ACCOUNT IS LOCKED
 
             if (
                 user.LockedUntil != null
@@ -206,9 +248,6 @@ namespace Pharmacy_System.Services
             }
 
 
-
-            // CHECK PASSWORD
-
             bool validPassword =
                 BCrypt.Net.BCrypt.Verify(
                     dto.Password,
@@ -216,14 +255,9 @@ namespace Pharmacy_System.Services
                 );
 
 
-
-            // WRONG PASSWORD
-
             if (!validPassword)
             {
-
                 user.FailedLoginAttempts++;
-
 
 
                 if (
@@ -231,7 +265,6 @@ namespace Pharmacy_System.Services
                     MaxFailedAttempts
                 )
                 {
-
                     user.LockedUntil =
                         DateTime.UtcNow
                             .AddMinutes(
@@ -239,11 +272,8 @@ namespace Pharmacy_System.Services
                             );
 
 
-                    // Reset counter when locked
-
                     user.FailedLoginAttempts =
                         0;
-
 
 
                     logger.LogWarning(
@@ -252,22 +282,17 @@ namespace Pharmacy_System.Services
                         LockoutMinutes,
                         MaxFailedAttempts
                     );
-
                 }
-
 
                 else
                 {
-
                     logger.LogWarning(
                         "Login failed - wrong password for {Email} (attempt {Count} of {Max})",
                         dto.Email,
                         user.FailedLoginAttempts,
                         MaxFailedAttempts
                     );
-
                 }
-
 
 
                 await userRepo
@@ -275,14 +300,11 @@ namespace Pharmacy_System.Services
 
 
                 return null;
-
             }
 
 
-
             // =====================================
-            // SUCCESSFUL LOGIN
-            // CLEAR OLD FAILED ATTEMPTS
+            // LOGIN SUCCESS
             // =====================================
 
             if (
@@ -291,7 +313,6 @@ namespace Pharmacy_System.Services
                 user.LockedUntil != null
             )
             {
-
                 user.FailedLoginAttempts =
                     0;
 
@@ -302,12 +323,8 @@ namespace Pharmacy_System.Services
 
                 await userRepo
                     .UserUpdate();
-
             }
 
-
-
-            // CREATE JWT TOKEN
 
             string token =
                 authService
@@ -316,13 +333,11 @@ namespace Pharmacy_System.Services
                     );
 
 
-
             logger.LogInformation(
                 "User {Email} logged in as {Role}",
                 user.Email,
                 user.Role
             );
-
 
 
             return new LoginResponseDto()
@@ -336,23 +351,19 @@ namespace Pharmacy_System.Services
                 Role =
                     user.Role
             };
-
         }
 
 
-
-        // =========================================
+        // =====================================
         // GET ALL USERS
-        // =========================================
+        // =====================================
 
         public async Task<List<UserResponseDto>>
             GetAllUsers()
         {
-
             List<User> users =
                 await userRepo
                     .GetAllUsers();
-
 
 
             return users
@@ -377,21 +388,18 @@ namespace Pharmacy_System.Services
                         }
                 )
                 .ToList();
-
         }
 
 
-
-        // =========================================
+        // =====================================
         // GET USER BY ID
-        // =========================================
+        // =====================================
 
         public async Task<UserResponseDto?>
             GetUserById(
                 int id
             )
         {
-
             User? user =
                 await userRepo
                     .GetUserById(
@@ -405,7 +413,6 @@ namespace Pharmacy_System.Services
             }
 
 
-
             return new UserResponseDto()
             {
                 UserID =
@@ -423,21 +430,18 @@ namespace Pharmacy_System.Services
                 IsActive =
                     user.IsActive
             };
-
         }
 
 
-
-        // =========================================
+        // =====================================
         // GET USER BY EMAIL
-        // =========================================
+        // =====================================
 
         public async Task<UserResponseDto?>
             GetUserByEmail(
                 string email
             )
         {
-
             User? user =
                 await userRepo
                     .GetUserByEmail(
@@ -451,7 +455,6 @@ namespace Pharmacy_System.Services
             }
 
 
-
             return new UserResponseDto()
             {
                 UserID =
@@ -469,22 +472,18 @@ namespace Pharmacy_System.Services
                 IsActive =
                     user.IsActive
             };
-
         }
 
 
-
-        // =========================================
-        // DELETE USER
-        // SOFT DELETE
-        // =========================================
+        // =====================================
+        // SOFT DELETE USER
+        // =====================================
 
         public async Task<bool>
             UserDelete(
                 int id
             )
         {
-
             // Find user
 
             User? user =
@@ -500,9 +499,8 @@ namespace Pharmacy_System.Services
             }
 
 
-
             // =====================================
-            // IF USER IS A PHARMACIST
+            // IF PHARMACIST
             // =====================================
 
             if (
@@ -510,8 +508,7 @@ namespace Pharmacy_System.Services
                 "Pharmacist"
             )
             {
-
-                // Find pharmacist profile
+                // Find pharmacist record
                 // using UserID
 
                 Pharmacist? pharmacist =
@@ -521,35 +518,28 @@ namespace Pharmacy_System.Services
                         );
 
 
-
-                // If profile exists,
-                // deactivate it too
+                // Deactivate pharmacist profile
 
                 if (
                     pharmacist != null
                 )
                 {
-
                     await pharmacistRepo
                         .PharmacistDelete(
                             pharmacist
                         );
-
                 }
-
             }
 
 
-
             // =====================================
-            // DEACTIVATE USER LOGIN
+            // DEACTIVATE USER
             // =====================================
 
             await userRepo
                 .UserDelete(
                     user
                 );
-
 
 
             logger.LogInformation(
@@ -559,10 +549,7 @@ namespace Pharmacy_System.Services
             );
 
 
-
             return true;
-
         }
-
     }
 }
