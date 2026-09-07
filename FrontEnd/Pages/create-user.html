@@ -46,10 +46,14 @@
 <body>
 
 
-    <!-- ROLE FLAGS -->
+    <!-- =====================================
+         ROLE FLAGS
+    ====================================== -->
 
     <b id="admin" class="role-flag"></b>
+
     <b id="manager" class="role-flag"></b>
+
     <b id="pharmacist" class="role-flag"></b>
 
 
@@ -59,12 +63,17 @@
         <div class="row min-vh-100">
 
 
-            <!-- SIDEBAR -->
+            <!-- =====================================
+                 SIDEBAR
+            ====================================== -->
 
             <div class="col-md-3 col-lg-2 sidebar p-3">
 
 
+                <!-- BRAND -->
+
                 <div class="sidebar-brand">
+
 
                     <div class="sidebar-logo">
 
@@ -96,9 +105,12 @@
 
                     </div>
 
+
                 </div>
 
 
+
+                <!-- OVERVIEW -->
 
                 <p class="sidebar-title">
                     OVERVIEW
@@ -147,6 +159,8 @@
                 </a>
 
 
+
+                <!-- INTO WAREHOUSE -->
 
                 <p
                     class="sidebar-title"
@@ -240,6 +254,8 @@
                 </a>
 
 
+
+                <!-- OUT TO PHARMACY -->
 
                 <p class="sidebar-title">
                     OUT TO THE PHARMACY
@@ -373,6 +389,8 @@
 
 
 
+                <!-- USER MANAGEMENT -->
+
                 <p
                     class="sidebar-title"
                     data-roles="admin"
@@ -397,6 +415,8 @@
 
 
 
+                <!-- SIGN OUT -->
+
                 <a
                     href="#"
                     class="sign-out"
@@ -416,7 +436,9 @@
 
 
 
-            <!-- MAIN -->
+            <!-- =====================================
+                 MAIN
+            ====================================== -->
 
             <main class="col-md-9 col-lg-10 main-content">
 
@@ -424,9 +446,13 @@
                 <div data-roles="admin">
 
 
+                    <!-- PAGE HEADER -->
+
                     <div class="page-header">
 
+
                         <div>
+
 
                             <span class="admin-tag">
 
@@ -446,7 +472,9 @@
                                 Add a new staff member and assign the right system role.
                             </p>
 
+
                         </div>
+
 
                     </div>
 
@@ -455,14 +483,18 @@
                     <div class="row g-4">
 
 
-                        <!-- CREATE FORM -->
+                        <!-- =====================================
+                             CREATE FORM
+                        ====================================== -->
 
                         <div class="col-lg-7">
+
 
                             <section class="form-card">
 
 
                                 <div class="form-card-header">
+
 
                                     <h2>
                                         Account details
@@ -472,6 +504,7 @@
                                     <p>
                                         Complete the required information.
                                     </p>
+
 
                                 </div>
 
@@ -483,9 +516,12 @@
                                 >
 
 
-                                    <!-- Username -->
+                                    <!-- =========================
+                                         USERNAME
+                                    ========================== -->
 
                                     <div class="field">
+
 
                                         <label for="username">
                                             Username
@@ -501,13 +537,17 @@
                                             required
                                         >
 
+
                                     </div>
 
 
 
-                                    <!-- Email -->
+                                    <!-- =========================
+                                         EMAIL
+                                    ========================== -->
 
                                     <div class="field">
+
 
                                         <label for="email">
                                             Email
@@ -518,18 +558,29 @@
                                             type="email"
                                             id="email"
                                             name="email"
+
                                             maxlength="100"
+
+                                            pattern=".+@.+\.com$"
+
+                                            title="Email must contain @ and end with .com"
+
                                             placeholder="layla@pharmacy.com"
+
                                             required
                                         >
+
 
                                     </div>
 
 
 
-                                    <!-- Password -->
+                                    <!-- =========================
+                                         PASSWORD
+                                    ========================== -->
 
                                     <div class="field">
+
 
                                         <label for="password">
                                             Password
@@ -540,19 +591,26 @@
                                             type="password"
                                             id="password"
                                             name="password"
+
                                             minlength="8"
                                             maxlength="255"
+
                                             placeholder="At least 8 characters"
+
                                             required
                                         >
+
 
                                     </div>
 
 
 
-                                    <!-- Role -->
+                                    <!-- =========================
+                                         ROLE
+                                    ========================== -->
 
                                     <div class="field">
+
 
                                         <label for="role">
                                             Role
@@ -564,6 +622,7 @@
                                             name="role"
                                             required
                                         >
+
 
                                             <option
                                                 value=""
@@ -588,15 +647,17 @@
                                                 Pharmacist
                                             </option>
 
+
                                         </select>
+
 
                                     </div>
 
 
 
-                                    <!-- ==========================
+                                    <!-- =================================
                                          PHARMACIST FIELDS
-                                    =========================== -->
+                                    ================================== -->
 
                                     <div
                                         id="pharmacist-fields"
@@ -604,9 +665,10 @@
                                     >
 
 
-                                        <!-- Full Name -->
+                                        <!-- FULL NAME -->
 
                                         <div class="field">
+
 
                                             <label for="fullName">
                                                 Full Name
@@ -617,17 +679,21 @@
                                                 type="text"
                                                 id="fullName"
                                                 name="fullName"
+
                                                 maxlength="100"
+
                                                 placeholder="Layla Al Harthy"
                                             >
+
 
                                         </div>
 
 
 
-                                        <!-- Phone -->
+                                        <!-- PHONE -->
 
                                         <div class="field">
+
 
                                             <label for="phone">
                                                 Phone
@@ -635,19 +701,28 @@
 
 
                                             <input
-                                                type="text"
+                                                type="tel"
                                                 id="phone"
                                                 name="phone"
-                                                placeholder="99112233"
+
+                                                pattern="\+968 [0-9]{8}"
+
+                                                maxlength="13"
+
+                                                placeholder="+968 99112233"
+
+                                                title="Phone must be in the format +968 99112233"
                                             >
+
 
                                         </div>
 
 
 
-                                        <!-- Pharmacy -->
+                                        <!-- PHARMACY -->
 
                                         <div class="field">
+
 
                                             <label for="pharmacyId">
                                                 Pharmacy
@@ -659,11 +734,14 @@
                                                 name="pharmacyId"
                                             >
 
+
                                                 <option value="">
                                                     Select pharmacy
                                                 </option>
 
+
                                             </select>
+
 
                                         </div>
 
@@ -672,7 +750,9 @@
 
 
 
-                                    <!-- MESSAGE -->
+                                    <!-- =================================
+                                         MESSAGE
+                                    ================================== -->
 
                                     <p
                                         id="create-user-message"
@@ -681,11 +761,14 @@
                                             margin:0;
                                             font-size:14px;
                                         "
-                                    ></p>
+                                    >
+                                    </p>
 
 
 
-                                    <!-- ACTIONS -->
+                                    <!-- =================================
+                                         ACTIONS
+                                    ================================== -->
 
                                     <div class="form-actions">
 
@@ -695,11 +778,14 @@
                                             class="btn-create"
                                         >
 
+
                                             <i class="bi bi-person-plus"></i>
+
 
                                             <span>
                                                 Create user
                                             </span>
+
 
                                         </button>
 
@@ -709,7 +795,9 @@
                                             type="reset"
                                             class="btn-clear"
                                         >
+
                                             Clear
+
                                         </button>
 
 
@@ -721,13 +809,17 @@
 
                             </section>
 
+
                         </div>
 
 
 
-                        <!-- ROLE INFORMATION -->
+                        <!-- =====================================
+                             ROLE INFORMATION
+                        ====================================== -->
 
                         <div class="col-lg-5">
+
 
                             <section class="info-card">
 
@@ -737,68 +829,94 @@
                                 </h2>
 
 
+
+                                <!-- ADMIN -->
+
                                 <div class="role-row role-row--admin">
+
 
                                     <span class="role-dot"></span>
 
+
                                     <div>
+
 
                                         <strong>
                                             Admin
                                         </strong>
 
+
                                         <p>
                                             Everything, plus user management.
                                         </p>
 
+
                                     </div>
+
 
                                 </div>
 
 
 
+                                <!-- MANAGER -->
+
                                 <div class="role-row role-row--manager">
+
 
                                     <span class="role-dot"></span>
 
+
                                     <div>
+
 
                                         <strong>
                                             Manager
                                         </strong>
+
 
                                         <p>
                                             Warehouse stock, suppliers,
                                             supply records and transfers.
                                         </p>
 
+
                                     </div>
+
 
                                 </div>
 
 
 
+                                <!-- PHARMACIST -->
+
                                 <div class="role-row role-row--pharmacist">
+
 
                                     <span class="role-dot"></span>
 
+
                                     <div>
+
 
                                         <strong>
                                             Pharmacist
                                         </strong>
+
 
                                         <p>
                                             Orders, incoming transfers
                                             and pharmacy shelf stock.
                                         </p>
 
+
                                     </div>
+
 
                                 </div>
 
 
                             </section>
+
 
                         </div>
 
@@ -807,7 +925,9 @@
 
 
 
-                    <!-- EXISTING USERS -->
+                    <!-- =====================================
+                         EXISTING USERS
+                    ====================================== -->
 
                     <section class="users-card">
 
@@ -816,6 +936,7 @@
 
 
                             <div>
+
 
                                 <h2>
                                     Existing users
@@ -828,7 +949,9 @@
                                         margin:0;
                                         font-size:14px;
                                     "
-                                ></p>
+                                >
+                                </p>
+
 
                             </div>
 
@@ -837,7 +960,9 @@
                                 class="users-summary"
                                 id="users-summary"
                             >
+
                                 0 accounts
+
                             </span>
 
 
@@ -847,34 +972,43 @@
 
                         <div class="table-responsive">
 
+
                             <table class="table users-table">
 
 
                                 <thead>
 
+
                                     <tr>
+
 
                                         <th>
                                             Username
                                         </th>
 
+
                                         <th>
                                             Email
                                         </th>
+
 
                                         <th>
                                             Role
                                         </th>
 
+
                                         <th>
                                             Status
                                         </th>
+
 
                                         <th class="text-end">
                                             Action
                                         </th>
 
+
                                     </tr>
+
 
                                 </thead>
 
@@ -887,6 +1021,7 @@
 
                             </table>
 
+
                         </div>
 
 
@@ -897,13 +1032,17 @@
 
 
 
+                <!-- FOOTER -->
+
                 <footer class="mt-auto text-center py-3">
+
 
                     <p class="small-footer">
 
                         &copy; 2026 Pharmacy System
 
                     </p>
+
 
                 </footer>
 
@@ -913,8 +1052,14 @@
 
         </div>
 
+
     </div>
 
+
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
 
 
     <!-- Bootstrap JS -->
@@ -925,18 +1070,38 @@
     </script>
 
 
+
     <!-- Shared JS -->
 
-    <script src="../JS/Config.js" defer></script>
+    <script
+        src="../JS/Config.js"
+        defer
+    >
+    </script>
 
-    <script src="../JS/Auth.js" defer></script>
 
-    <script src="../JS/Api.js" defer></script>
+    <script
+        src="../JS/Auth.js"
+        defer
+    >
+    </script>
 
 
-    <!-- Create User JS -->
+    <script
+        src="../JS/Api.js"
+        defer
+    >
+    </script>
 
-    <script src="../JS/Create-user.js" defer></script>
+
+
+    <!-- Create User -->
+
+    <script
+        src="../JS/Create-user.js"
+        defer
+    >
+    </script>
 
 
 </body>
