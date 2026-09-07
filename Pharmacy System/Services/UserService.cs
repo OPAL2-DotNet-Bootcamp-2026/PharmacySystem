@@ -19,6 +19,7 @@ namespace Pharmacy_System.Services
         private const int MaxFailedAttempts =
             5;
 
+
         private const int LockoutMinutes =
             15;
 
@@ -108,6 +109,8 @@ namespace Pharmacy_System.Services
                 dto.Username.Trim();
 
 
+            // Check email
+
             bool emailExists =
                 await userRepo
                     .EmailExists(
@@ -121,6 +124,8 @@ namespace Pharmacy_System.Services
             }
 
 
+            // Check username
+
             bool usernameExists =
                 await userRepo
                     .UsernameExists(
@@ -133,7 +138,8 @@ namespace Pharmacy_System.Services
                 return null;
             }
 
-                Email = email,
+
+            // Create user
 
             User user =
                 new User()
@@ -203,14 +209,16 @@ namespace Pharmacy_System.Services
             User? user =
                 await userRepo
                     .GetUserByEmail(
-                        dto.Email
+                        dto.Email.Trim()
                     );
 
+
+            // User does not exist
 
             if (user == null)
             {
                 logger.LogWarning(
-                    "Login failed - no account for {Email}",
+                    "Login failed - no active account for {Email}",
                     dto.Email
                 );
 
@@ -219,17 +227,7 @@ namespace Pharmacy_System.Services
             }
 
 
-            if (!user.IsActive)
-            {
-                logger.LogWarning(
-                    "Login blocked - account {Email} is inactive",
-                    dto.Email
-                );
-
-
-                return null;
-            }
-
+            // Account locked
 
             if (
                 user.LockedUntil != null
@@ -249,12 +247,18 @@ namespace Pharmacy_System.Services
             }
 
 
+            // Check password
+
             bool validPassword =
                 BCrypt.Net.BCrypt.Verify(
                     dto.Password,
                     user.PasswordHash
                 );
 
+
+            // =====================================
+            // WRONG PASSWORD
+            // =====================================
 
             if (!validPassword)
             {
@@ -305,7 +309,7 @@ namespace Pharmacy_System.Services
 
 
             // =====================================
-            // LOGIN SUCCESS
+            // SUCCESSFUL LOGIN
             // =====================================
 
             if (
@@ -326,6 +330,8 @@ namespace Pharmacy_System.Services
                     .UserUpdate();
             }
 
+
+            // Generate JWT
 
             string token =
                 authService
@@ -356,7 +362,7 @@ namespace Pharmacy_System.Services
 
 
         // =====================================
-        // GET ALL USERS
+        // GET ALL ACTIVE USERS
         // =====================================
 
         public async Task<List<UserResponseDto>>
@@ -446,7 +452,7 @@ namespace Pharmacy_System.Services
             User? user =
                 await userRepo
                     .GetUserByEmail(
-                        email
+                        email.Trim()
                     );
 
 
@@ -485,11 +491,11 @@ namespace Pharmacy_System.Services
                 int id
             )
         {
-            // Find user
+            // Get user even if inactive
 
             User? user =
                 await userRepo
-                    .GetUserById(
+                    .GetUserByIdIncludingInactive(
                         id
                     );
 
@@ -501,7 +507,7 @@ namespace Pharmacy_System.Services
 
 
             // =====================================
-            // IF PHARMACIST
+            // IF USER IS PHARMACIST
             // =====================================
 
             if (
@@ -509,9 +515,6 @@ namespace Pharmacy_System.Services
                 "Pharmacist"
             )
             {
-                // Find pharmacist record
-                // using UserID
-
                 Pharmacist? pharmacist =
                     await pharmacistRepo
                         .GetPharmacistByUserId(
@@ -519,10 +522,10 @@ namespace Pharmacy_System.Services
                         );
 
 
-                // Deactivate pharmacist profile
-
                 if (
                     pharmacist != null
+                    &&
+                    pharmacist.IsActive
                 )
                 {
                     await pharmacistRepo
@@ -534,13 +537,16 @@ namespace Pharmacy_System.Services
 
 
             // =====================================
-            // DEACTIVATE USER
+            // DEACTIVATE USER ACCOUNT
             // =====================================
 
-            await userRepo
-                .UserDelete(
-                    user
-                );
+            if (user.IsActive)
+            {
+                await userRepo
+                    .UserDelete(
+                        user
+                    );
+            }
 
 
             logger.LogInformation(

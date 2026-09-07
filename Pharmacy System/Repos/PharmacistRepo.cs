@@ -105,7 +105,7 @@ namespace Pharmacy_System.Repos
 
 
         // =====================================
-        // GET PHARMACY
+        // GET PHARMACY BY ID
         // =====================================
 
         public async Task<Pharmacy?>
@@ -162,7 +162,7 @@ namespace Pharmacy_System.Repos
 
 
         // =====================================
-        // ADD
+        // ADD PHARMACIST
         // =====================================
 
         public async Task Add(
@@ -192,7 +192,7 @@ namespace Pharmacy_System.Repos
 
 
         // =====================================
-        // SOFT DELETE
+        // SOFT DELETE PHARMACIST
         // =====================================
 
         public async Task PharmacistDelete(
@@ -201,6 +201,10 @@ namespace Pharmacy_System.Repos
         {
             pharmacist.IsActive =
                 false;
+
+
+            pharmacist.UpdatedAt =
+                DateTime.UtcNow;
 
 
             await context

@@ -16,7 +16,6 @@ namespace Pharmacy_System.Repos
         }
 
 
-
         // =====================================
         // GET ALL ACTIVE USERS
         // =====================================
@@ -32,9 +31,8 @@ namespace Pharmacy_System.Repos
         }
 
 
-
         // =====================================
-        // GET USER BY ID
+        // GET ACTIVE USER BY ID
         // =====================================
 
         public async Task<User?>
@@ -43,19 +41,36 @@ namespace Pharmacy_System.Repos
             )
         {
             return await context.users
-                .Where(
+                .FirstOrDefaultAsync(
                     u =>
                         u.UserID == id
                         &&
                         u.IsActive
-                )
-                .FirstOrDefaultAsync();
+                );
         }
 
 
+        // =====================================
+        // GET USER BY ID
+        // INCLUDING INACTIVE
+        // USED FOR DELETE / ADMIN WORK
+        // =====================================
+
+        public async Task<User?>
+            GetUserByIdIncludingInactive(
+                int id
+            )
+        {
+            return await context.users
+                .FirstOrDefaultAsync(
+                    u =>
+                        u.UserID == id
+                );
+        }
+
 
         // =====================================
-        // GET USER BY EMAIL
+        // GET ACTIVE USER BY EMAIL
         // =====================================
 
         public async Task<User?>
@@ -71,7 +86,6 @@ namespace Pharmacy_System.Repos
                         u.IsActive
                 );
         }
-
 
 
         // =====================================
@@ -91,10 +105,8 @@ namespace Pharmacy_System.Repos
         }
 
 
-
         // =====================================
         // CHECK USERNAME EXISTS
-        // NEW
         // =====================================
 
         public async Task<bool>
@@ -108,7 +120,6 @@ namespace Pharmacy_System.Repos
                         u.Username == username
                 );
         }
-
 
 
         // =====================================
@@ -130,7 +141,6 @@ namespace Pharmacy_System.Repos
         }
 
 
-
         // =====================================
         // UPDATE USER
         // =====================================
@@ -140,7 +150,6 @@ namespace Pharmacy_System.Repos
             await context
                 .SaveChangesAsync();
         }
-
 
 
         // =====================================
