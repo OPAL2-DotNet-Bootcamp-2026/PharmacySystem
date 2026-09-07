@@ -347,6 +347,17 @@ async function loadCurrentPharmacist() {
             throw new Error("Pharmacist profile was not found.");
         }
 
+        // Select the pharmacist's assigned pharmacy.
+        pharmacySelect.value = currentPharmacist.pharmacyID;
+
+        // Prevent the pharmacist from changing the pharmacy.
+        pharmacySelect.disabled = true;
+    } catch (error) {
+        console.error("Failed to find pharmacist:", error);
+        alert(error.message);
+    }
+}
+
 
     // ==========================================
     // ADD MEDICINE
