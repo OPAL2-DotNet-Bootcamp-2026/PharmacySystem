@@ -281,10 +281,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     // database-loading
     // ==========================================
     
+    async function createPharmacistOrder() {
     if (Auth.role() !== "Pharmacist") {
-    return;
-    
+    return;  
     }
+    
+    if (!currentPharmacist) {
+        alert("Pharmacist profile was not found.");
+        return;
+    }
+
+    // ==========================================
 
     async function loadPharmacies() {
     try {
