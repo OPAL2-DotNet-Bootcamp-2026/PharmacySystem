@@ -7,61 +7,207 @@ namespace Pharmacy_System.Repos
     {
         private PharmacyContext context;
 
-        public PharmacistRepo(PharmacyContext _context)
+
+        public PharmacistRepo(
+            PharmacyContext _context
+        )
         {
             context = _context;
         }
 
-        public async Task<List<Pharmacist>> GetAllPharmacist()
+
+
+        // =========================================
+        // GET ALL PHARMACISTS
+        // =========================================
+
+        public async Task<List<Pharmacist>>
+            GetAllPharmacist()
         {
-            return await context.pharmacists.ToListAsync();
+            return await context.pharmacists
+                .ToListAsync();
         }
 
-        public async Task<Pharmacist?> GetPharmacistById(int id)
+
+
+        // =========================================
+        // GET PHARMACIST BY ID
+        // =========================================
+
+        public async Task<Pharmacist?>
+            GetPharmacistById(
+                int id
+            )
         {
-            return await context.pharmacists.FirstOrDefaultAsync(p => p.PharmacistID == id);
+            return await context.pharmacists
+                .FirstOrDefaultAsync(
+                    p =>
+                        p.PharmacistID == id
+                );
         }
 
-        public async Task<Pharmacist?> GetPharmacistByEmail(string email)
+
+
+        // =========================================
+        // GET PHARMACIST BY USER ID
+        // NEW
+        // =========================================
+
+        public async Task<Pharmacist?>
+            GetPharmacistByUserId(
+                int userId
+            )
         {
-            return await context.pharmacists.FirstOrDefaultAsync(e => e.Email == email);
+            return await context.pharmacists
+                .FirstOrDefaultAsync(
+                    p =>
+                        p.UserID == userId
+                );
         }
 
-        public async Task<bool> EmailExists(string email)
+
+
+        // =========================================
+        // GET PHARMACIST BY EMAIL
+        // =========================================
+
+        public async Task<Pharmacist?>
+            GetPharmacistByEmail(
+                string email
+            )
         {
-            return await context.pharmacists.AnyAsync(p => p.Email == email);
+            return await context.pharmacists
+                .FirstOrDefaultAsync(
+                    p =>
+                        p.Email == email
+                );
         }
 
-        public async Task<Pharmacy?> GetPharmacyById(int id)
+
+
+        // =========================================
+        // CHECK EMAIL EXISTS
+        // =========================================
+
+        public async Task<bool>
+            EmailExists(
+                string email
+            )
         {
-            return await context.pharmacies.FirstOrDefaultAsync(p => p.PharmacyID == id);
+            return await context.pharmacists
+                .AnyAsync(
+                    p =>
+                        p.Email == email
+                );
         }
 
-        public async Task<List<Pharmacist>> GetPharmacistByName(string name)
+
+
+        // =========================================
+        // GET PHARMACY BY ID
+        // =========================================
+
+        public async Task<Pharmacy?>
+            GetPharmacyById(
+                int id
+            )
         {
-            return await context.pharmacists.Where(n => n.FullName.Contains(name)).ToListAsync();
+            return await context.pharmacies
+                .FirstOrDefaultAsync(
+                    p =>
+                        p.PharmacyID == id
+                );
         }
 
-        public async Task<List<Pharmacist>> GetByPharmacy(int pharmacyId)
+
+
+        // =========================================
+        // GET PHARMACIST BY NAME
+        // =========================================
+
+        public async Task<List<Pharmacist>>
+            GetPharmacistByName(
+                string name
+            )
         {
-            return await context.pharmacists.Where(p => p.PharmacyID == pharmacyId).ToListAsync();
+            return await context.pharmacists
+                .Where(
+                    p =>
+                        p.FullName.Contains(
+                            name
+                        )
+                )
+                .ToListAsync();
         }
 
-        public async Task Add(Pharmacist pharmacists)
+
+
+        // =========================================
+        // GET PHARMACISTS BY PHARMACY
+        // =========================================
+
+        public async Task<List<Pharmacist>>
+            GetByPharmacy(
+                int pharmacyId
+            )
         {
-            await context.pharmacists.AddAsync(pharmacists);
-            await context.SaveChangesAsync();
+            return await context.pharmacists
+                .Where(
+                    p =>
+                        p.PharmacyID ==
+                        pharmacyId
+                )
+                .ToListAsync();
         }
+
+
+
+        // =========================================
+        // ADD PHARMACIST
+        // =========================================
+
+        public async Task Add(
+            Pharmacist pharmacist
+        )
+        {
+            await context.pharmacists
+                .AddAsync(
+                    pharmacist
+                );
+
+
+            await context
+                .SaveChangesAsync();
+        }
+
+
+
+        // =========================================
+        // UPDATE PHARMACIST
+        // =========================================
 
         public async Task PharmacistUpdate()
         {
-            await context.SaveChangesAsync();
+            await context
+                .SaveChangesAsync();
         }
 
-        public async Task PharmacistDelete(Pharmacist pharmacists)
+
+
+        // =========================================
+        // SOFT DELETE PHARMACIST
+        // =========================================
+
+        public async Task PharmacistDelete(
+            Pharmacist pharmacist
+        )
         {
-            pharmacists.IsActive = false;
-            await context.SaveChangesAsync();
+            pharmacist.IsActive =
+                false;
+
+
+            await context
+                .SaveChangesAsync();
         }
     }
 }
