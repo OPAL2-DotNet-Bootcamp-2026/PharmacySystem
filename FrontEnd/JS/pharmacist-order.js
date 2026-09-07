@@ -841,16 +841,23 @@ async function loadCurrentPharmacist() {
     // ==========================================
     // EVENTS
     // ==========================================
-
-    addMedicineButton.addEventListener(
-        "click",
-        addMedicine
-    );
-
-    submitButton.addEventListener(
+    // Only initialize the New order form for pharmacists.
+    if (Auth.role() === "Pharmacist") {
+        addMedicineButton.addEventListener("click", addMedicine);
+        
+        submitButton.addEventListener(
         "click",
         createPharmacistOrder
     );
+
+    // Load form information from the database.
+    await loadPharmacies();
+    await loadMedicines();
+    await loadCurrentPharmacist();
+}
+
+// Admin and manager order information still comes from the database.
+await loadOrders();
 
     // ==========================================
     // FIRST PAGE LOAD
