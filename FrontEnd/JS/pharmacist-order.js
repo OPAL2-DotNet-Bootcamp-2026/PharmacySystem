@@ -855,11 +855,6 @@ async function loadCurrentPharmacist() {
         createPharmacistOrder
     );
 
-    pharmacySelect.addEventListener(
-        "change",
-        loadPharmacistsByPharmacy
-    );
-
     // ==========================================
     // FIRST PAGE LOAD
     // ==========================================
