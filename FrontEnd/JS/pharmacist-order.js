@@ -285,9 +285,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (Auth.role() !== "Pharmacist") {
     return;  
     }
-    
+
     if (!currentPharmacist) {
         alert("Pharmacist profile was not found.");
+        return;
+    }
+
+    const pharmacyID = Number(pharmacySelect.value);
+    const pharmacistID = currentPharmacist.pharmacistID;
+
+    if (!pharmacyID) {
+        alert("Your pharmacy was not found.");
         return;
     }
 
