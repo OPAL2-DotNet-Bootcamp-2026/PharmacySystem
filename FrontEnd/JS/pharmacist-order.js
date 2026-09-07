@@ -299,6 +299,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
+    if (orderDetails.length === 0) {
+        alert("Please add at least one medicine.");
+        return;
+    }
+
     // ==========================================
 
     async function loadPharmacies() {
