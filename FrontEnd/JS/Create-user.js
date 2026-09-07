@@ -9,10 +9,13 @@ document.addEventListener(
 
         if (!Auth.isLoggedIn()) {
 
+
             window.location.href =
                 "login.html";
 
+
             return;
+
         }
 
 
@@ -25,11 +28,15 @@ document.addEventListener(
             Auth.role() !== "Admin"
         ) {
 
+
             window.location.href =
-                "dashboard.html#" +
+                "dashboard.html#"
+                +
                 Auth.role().toLowerCase();
 
+
             return;
+
         }
 
 
@@ -124,16 +131,31 @@ document.addEventListener(
 
 
         // =====================================
+        // VALIDATION PATTERNS
+        // =====================================
+
+        const emailPattern =
+            /^[^@\s]+@[^@\s]+\.com$/;
+
+
+        const phonePattern =
+            /^\+968 [0-9]{8}$/;
+
+
+
+        // =====================================
         // LOAD USERS
         // =====================================
 
         async function loadUsers() {
+
 
             usersMessage.textContent =
                 "Loading users...";
 
 
             try {
+
 
                 const users =
                     await Api.get(
@@ -157,18 +179,25 @@ document.addEventListener(
 
                         row.innerHTML = `
 
+
                             <td>
+
                                 ${user.username}
+
                             </td>
 
 
                             <td>
+
                                 ${user.email}
+
                             </td>
 
 
                             <td>
+
                                 ${user.role}
+
                             </td>
 
 
@@ -176,8 +205,10 @@ document.addEventListener(
 
                                 ${
                                     user.isActive
-                                        ? "Active"
-                                        : "Inactive"
+                                        ?
+                                        "Active"
+                                        :
+                                        "Inactive"
                                 }
 
                             </td>
@@ -185,15 +216,22 @@ document.addEventListener(
 
                             <td class="text-end">
 
-                                <button
-                                    type="button"
-                                    class="btn-delete-user"
-                                    data-user-id="${user.userID}"
-                                >
 
+                             <button
+                                        type="button"
+                                        class="btn-delete-user"
+                                        data-user-id="${user.userID}"
+                                        title="Delete user"
+                            >
+
+                            <i class="bi bi-trash3"></i>
+
+                             <span>
                                     Delete
+                             </span>
 
-                                </button>
+                            </button>
+
 
                             </td>
 
@@ -217,7 +255,9 @@ document.addEventListener(
 
             }
 
+
             catch (error) {
+
 
                 usersMessage.textContent =
                     error.message;
@@ -234,7 +274,9 @@ document.addEventListener(
 
         async function loadPharmacies() {
 
+
             try {
+
 
                 const pharmacies =
                     await Api.get(
@@ -245,7 +287,9 @@ document.addEventListener(
                 pharmacyInput.innerHTML = `
 
                     <option value="">
+
                         Select pharmacy
+
                     </option>
 
                 `;
@@ -272,12 +316,28 @@ document.addEventListener(
 
             }
 
+
             catch (error) {
 
+
                 console.error(
+
                     "Failed to load pharmacies:",
+
                     error
+
                 );
+
+
+                pharmacyInput.innerHTML = `
+
+                    <option value="">
+
+                        Could not load pharmacies
+
+                    </option>
+
+                `;
 
             }
 
@@ -294,29 +354,47 @@ document.addEventListener(
             () => {
 
 
+                // =================================
+                // PHARMACIST
+                // =================================
+
                 if (
                     roleInput.value ===
                     "Pharmacist"
                 ) {
 
+
                     pharmacistFields.style.display =
                         "block";
 
+
+                    // Full name required
 
                     fullNameInput.required =
                         true;
 
 
+                    // Phone required
+
                     phoneInput.required =
                         true;
 
 
+                    // Pharmacy required
+
                     pharmacyInput.required =
                         true;
 
+
                 }
 
+
+                // =================================
+                // ADMIN / MANAGER
+                // =================================
+
                 else {
+
 
                     pharmacistFields.style.display =
                         "none";
@@ -368,6 +446,11 @@ document.addEventListener(
                     "";
 
 
+
+                // =================================
+                // GET BASIC VALUES
+                // =================================
+
                 const username =
                     usernameInput.value.trim();
 
@@ -385,22 +468,301 @@ document.addEventListener(
 
 
 
-                // Basic fields
+                // =================================
+                // USERNAME VALIDATION
+                // =================================
 
-                if (
-                    !username ||
-                    !email ||
-                    !password ||
-                    !role
-                ) {
+                if (!username) {
+
 
                     createMessage.textContent =
-                        "Please complete all fields.";
+                        "Username is required.";
+
+
+                    usernameInput.focus();
+
 
                     return;
+
                 }
 
 
+                if (
+                    username.length > 50
+                ) {
+
+
+                    createMessage.textContent =
+                        "Username cannot be more than 50 characters.";
+
+
+                    usernameInput.focus();
+
+
+                    return;
+
+                }
+
+
+
+                // =================================
+                // EMAIL VALIDATION
+                // =================================
+
+                if (!email) {
+
+
+                    createMessage.textContent =
+                        "Email is required.";
+
+
+                    emailInput.focus();
+
+
+                    return;
+
+                }
+
+
+                if (
+                    email.length > 100
+                ) {
+
+
+                    createMessage.textContent =
+                        "Email cannot be more than 100 characters.";
+
+
+                    emailInput.focus();
+
+
+                    return;
+
+                }
+
+
+                if (
+                    !emailPattern.test(
+                        email
+                    )
+                ) {
+
+
+                    createMessage.textContent =
+                        "Email must contain @ and end with .com";
+
+
+                    emailInput.focus();
+
+
+                    return;
+
+                }
+
+
+
+                // =================================
+                // PASSWORD VALIDATION
+                // =================================
+
+                if (!password) {
+
+
+                    createMessage.textContent =
+                        "Password is required.";
+
+
+                    passwordInput.focus();
+
+
+                    return;
+
+                }
+
+
+                if (
+                    password.length < 8
+                ) {
+
+
+                    createMessage.textContent =
+                        "Password must be at least 8 characters.";
+
+
+                    passwordInput.focus();
+
+
+                    return;
+
+                }
+
+
+
+                // =================================
+                // ROLE VALIDATION
+                // =================================
+
+                if (!role) {
+
+
+                    createMessage.textContent =
+                        "Please choose a role.";
+
+
+                    roleInput.focus();
+
+
+                    return;
+
+                }
+
+
+
+                // =================================
+                // PHARMACIST VALUES
+                // =================================
+
+                let fullName =
+                    null;
+
+
+                let phone =
+                    null;
+
+
+                let pharmacyID =
+                    null;
+
+
+
+                // =================================
+                // PHARMACIST VALIDATION
+                // =================================
+
+                if (
+                    role ===
+                    "Pharmacist"
+                ) {
+
+
+                    fullName =
+                        fullNameInput
+                            .value
+                            .trim();
+
+
+                    phone =
+                        phoneInput
+                            .value
+                            .trim();
+
+
+                    pharmacyID =
+                        Number(
+                            pharmacyInput.value
+                        );
+
+
+
+                    // FULL NAME
+
+                    if (!fullName) {
+
+
+                        createMessage.textContent =
+                            "Full name is required.";
+
+
+                        fullNameInput.focus();
+
+
+                        return;
+
+                    }
+
+
+                    if (
+                        fullName.length > 100
+                    ) {
+
+
+                        createMessage.textContent =
+                            "Full name cannot be more than 100 characters.";
+
+
+                        fullNameInput.focus();
+
+
+                        return;
+
+                    }
+
+
+
+                    // PHONE
+
+                    if (!phone) {
+
+
+                        createMessage.textContent =
+                            "Phone number is required.";
+
+
+                        phoneInput.focus();
+
+
+                        return;
+
+                    }
+
+
+                    if (
+                        !phonePattern.test(
+                            phone
+                        )
+                    ) {
+
+
+                        createMessage.textContent =
+                            "Phone must be in the format +968 99112233";
+
+
+                        phoneInput.focus();
+
+
+                        return;
+
+                    }
+
+
+
+                    // PHARMACY
+
+                    if (
+                        !pharmacyID
+                        ||
+                        pharmacyID < 1
+                    ) {
+
+
+                        createMessage.textContent =
+                            "Please select a valid pharmacy.";
+
+
+                        pharmacyInput.focus();
+
+
+                        return;
+
+                    }
+
+                }
+
+
+
+                // =================================
+                // START CREATING USER
+                // =================================
 
                 createButton.disabled =
                     true;
@@ -419,7 +781,7 @@ document.addEventListener(
 
 
                     // =================================
-                    // PHARMACIST
+                    // CREATE PHARMACIST
                     // =================================
 
                     if (
@@ -428,58 +790,34 @@ document.addEventListener(
                     ) {
 
 
-                        const fullName =
-                            fullNameInput.value.trim();
-
-
-                        const phone =
-                            phoneInput.value.trim();
-
-
-                        const pharmacyID =
-                            Number(
-                                pharmacyInput.value
-                            );
-
-
-
-                        if (
-                            !fullName ||
-                            !phone ||
-                            !pharmacyID
-                        ) {
-
-                            createMessage.textContent =
-                                "Please complete pharmacist details.";
-
-                            return;
-                        }
-
-
-
-                        // Creates User + Pharmacist profile
-
                         await Api.post(
                             "/Pharmacist",
                             {
 
+
                                 username:
                                     username,
+
 
                                 fullName:
                                     fullName,
 
+
                                 phone:
                                     phone,
+
 
                                 email:
                                     email,
 
+
                                 password:
                                     password,
 
+
                                 pharmacyID:
                                     pharmacyID
+
 
                             }
                         );
@@ -488,26 +826,32 @@ document.addEventListener(
 
 
                     // =================================
-                    // ADMIN / MANAGER
+                    // CREATE ADMIN / MANAGER
                     // =================================
 
                     else {
+
 
                         await Api.post(
                             "/User/create",
                             {
 
+
                                 username:
                                     username,
+
 
                                 email:
                                     email,
 
+
                                 password:
                                     password,
 
+
                                 role:
                                     role
+
 
                             }
                         );
@@ -515,6 +859,10 @@ document.addEventListener(
                     }
 
 
+
+                    // =================================
+                    // SUCCESS
+                    // =================================
 
                     createMessage.textContent =
                         "User created successfully.";
@@ -543,14 +891,18 @@ document.addEventListener(
 
                 }
 
+
                 catch (error) {
+
 
                     createMessage.textContent =
                         error.message;
 
                 }
 
+
                 finally {
+
 
                     createButton.disabled =
                         false;
@@ -617,13 +969,12 @@ document.addEventListener(
                 if (!deleteButton) {
 
                     return;
-                }
 
+                }
 
 
                 const userId =
                     deleteButton.dataset.userId;
-
 
 
                 const confirmed =
@@ -635,19 +986,21 @@ document.addEventListener(
                 if (!confirmed) {
 
                     return;
-                }
 
+                }
 
 
                 deleteButton.disabled =
                     true;
 
 
-
                 try {
 
+
                     await Api.del(
+
                         `/User/DeleteUser/${userId}`
+
                     );
 
 
@@ -659,7 +1012,9 @@ document.addEventListener(
 
                 }
 
+
                 catch (error) {
+
 
                     usersMessage.textContent =
                         error.message;
@@ -680,6 +1035,7 @@ document.addEventListener(
         // =====================================
 
         loadUsers();
+
 
         loadPharmacies();
 

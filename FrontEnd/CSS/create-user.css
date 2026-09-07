@@ -1207,3 +1207,77 @@ body:not(:has(.role-flag:target)) .app
 
 }
 
+/* =========================================
+   DELETE USER BUTTON
+========================================= */
+
+.btn-delete-user {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 8px 13px;
+
+    border: 1px solid #e8b4b4;
+
+    border-radius: 10px;
+
+    background: #fff7f7;
+
+    color: #a52a2a;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.btn-delete-user i {
+    font-size: 15px;
+}
+
+
+/* Hover */
+
+.btn-delete-user:hover {
+    background: #fdeaea;
+
+    border-color: #d98585;
+
+    color: #8e1f1f;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 4px 12px
+        rgba(165, 42, 42, 0.12);
+}
+
+
+/* Click */
+
+.btn-delete-user:active {
+    transform: translateY(0);
+}
+
+
+/* Disabled while deleting */
+
+.btn-delete-user:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
