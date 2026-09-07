@@ -313,6 +313,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 }
 
+async function loadMedicines() {
+    try {
+        medicines = await Api.get("/Medicine/GetAvailable");
+
+        medicineSelect.innerHTML = `
+            <option value="">Select medicine</option>
+        `;
+
 
     // ==========================================
     // ADD MEDICINE
