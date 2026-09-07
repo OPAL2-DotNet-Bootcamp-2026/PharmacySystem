@@ -8,80 +8,159 @@ namespace Pharmacy_System.Repos
         private readonly PharmacyContext context;
 
 
-        public UserRepo(PharmacyContext _context)
+        public UserRepo(
+            PharmacyContext _context
+        )
         {
             context = _context;
         }
 
 
-        public async Task<List<User>> GetAllUsers()
+
+        // =====================================
+        // GET ALL ACTIVE USERS
+        // =====================================
+
+        public async Task<List<User>>
+            GetAllUsers()
         {
             return await context.users
-                .Where(u => u.IsActive)
+                .Where(
+                    u => u.IsActive
+                )
                 .ToListAsync();
         }
 
 
-        public async Task<User?> GetUserById(int id)
+
+        // =====================================
+        // GET USER BY ID
+        // =====================================
+
+        public async Task<User?>
+            GetUserById(
+                int id
+            )
         {
             return await context.users
                 .Where(
                     u =>
-                        u.UserID == id &&
+                        u.UserID == id
+                        &&
                         u.IsActive
                 )
                 .FirstOrDefaultAsync();
         }
 
 
-        public async Task<User?> GetUserByEmail(string email)
+
+        // =====================================
+        // GET USER BY EMAIL
+        // =====================================
+
+        public async Task<User?>
+            GetUserByEmail(
+                string email
+            )
         {
             return await context.users
                 .FirstOrDefaultAsync(
                     u =>
-                        u.Email == email &&
+                        u.Email == email
+                        &&
                         u.IsActive
                 );
         }
 
 
-        public async Task<bool> EmailExists(string email)
+
+        // =====================================
+        // CHECK EMAIL EXISTS
+        // =====================================
+
+        public async Task<bool>
+            EmailExists(
+                string email
+            )
         {
             return await context.users
                 .AnyAsync(
-                    u => u.Email == email
+                    u =>
+                        u.Email == email
                 );
         }
 
 
-        public async Task<bool> UsernameExists(string username)
+
+        // =====================================
+        // CHECK USERNAME EXISTS
+        // NEW
+        // =====================================
+
+        public async Task<bool>
+            UsernameExists(
+                string username
+            )
         {
             return await context.users
                 .AnyAsync(
-                    u => u.Username == username
+                    u =>
+                        u.Username == username
                 );
         }
 
 
-        public async Task AddUser(User user)
-        {
-            await context.users.AddAsync(user);
 
-            await context.SaveChangesAsync();
+        // =====================================
+        // ADD USER
+        // =====================================
+
+        public async Task AddUser(
+            User user
+        )
+        {
+            await context.users
+                .AddAsync(
+                    user
+                );
+
+
+            await context
+                .SaveChangesAsync();
         }
 
+
+
+        // =====================================
+        // UPDATE USER
+        // =====================================
 
         public async Task UserUpdate()
         {
-            await context.SaveChangesAsync();
+            await context
+                .SaveChangesAsync();
         }
 
 
-        public async Task UserDelete(User user)
-        {
-            user.IsActive = false;
 
-            await context.SaveChangesAsync();
+        // =====================================
+        // SOFT DELETE USER
+        // =====================================
+
+        public async Task UserDelete(
+            User user
+        )
+        {
+            user.IsActive =
+                false;
+
+
+            user.UpdatedAt =
+                DateTime.UtcNow;
+
+
+            await context
+                .SaveChangesAsync();
         }
     }
 }
