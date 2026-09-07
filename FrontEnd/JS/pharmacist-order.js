@@ -308,6 +308,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </option>
             `;
         });
+         } catch (error) {
+        console.error("Failed to load pharmacies:", error);
+    }
+}
 
 
     // ==========================================
