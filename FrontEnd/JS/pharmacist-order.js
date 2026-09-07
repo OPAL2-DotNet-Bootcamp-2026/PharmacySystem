@@ -283,70 +283,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     // LOAD PHARMACISTS BY PHARMACY
     // ADMIN ONLY
     // ==========================================
-
-    async function loadPharmacistsByPharmacy() {
-
-        if (Auth.role() !== "Admin") {
-
-            return;
-        }
-
-        const pharmacyId =
-            Number(
-                pharmacySelect.value
-            );
-
-             pharmacistSelect.innerHTML = `
-
-            <option value="">
-                Select pharmacist
-            </option>
-
-        `;
-
-         if (!pharmacyId) {
-
-            return;
-        }
-
-          try {
-
-            const pharmacists =
-                await Api.get(
-                    `/Pharmacist/by-pharmacy/${pharmacyId}`
-                );
-
-                pharmacists.forEach(pharmacist => {
-
-                if (!pharmacist.isActive) {
-
-                    return;
-                }
-
-                pharmacistSelect.innerHTML += `
-
-                    <option
-                        value="${pharmacist.pharmacistID}"
-                    >
-                        ${pharmacist.fullName}
-                    </option>
-
-                `;
-
-            });
-
-        }
-
-         catch (error) {
-
-            console.error(
-                "Failed to load pharmacists:",
-                error
-            );
-
-        }
-
+    
+    if (Auth.role() !== "Pharmacist") {
+    return;
+    
     }
+
 
     // ==========================================
     // ADD MEDICINE
