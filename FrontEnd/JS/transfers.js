@@ -4,6 +4,39 @@
 
 
 // ==========================================
+// CHECK LOGIN + KEEP CORRECT ROLE VIEW
+// ==========================================
+
+if (!Auth.isLoggedIn()) {
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+const currentRole =
+    Auth.role() || "";
+
+
+const currentRoleKey =
+    currentRole.toLowerCase();
+
+
+if (
+    currentRoleKey &&
+    window.location.hash !==
+    "#" + currentRoleKey
+) {
+
+    window.location.hash =
+        currentRoleKey;
+
+}
+
+
+
+// ==========================================
 // HTML ELEMENTS
 // ==========================================
 
@@ -72,7 +105,6 @@ let approvedOrders = [];
 
 // ==========================================
 // HELPER
-// Supports camelCase and PascalCase
 // ==========================================
 
 function getValue(
@@ -83,11 +115,17 @@ function getValue(
 ) {
 
     return (
+
         item?.[camelCase]
+
         ??
+
         item?.[pascalCase]
+
         ??
+
         fallback
+
     );
 
 }
@@ -95,13 +133,21 @@ function getValue(
 
 
 // ==========================================
-// LOAD APPROVED PHARMACIST ORDERS
-// GET /api/PharmacistOrder
+// LOAD APPROVED ORDERS
 // ==========================================
 
 async function loadApprovedOrders() {
 
+
+    if (!pharmacistOrder) {
+
+        return;
+
+    }
+
+
     try {
+
 
         const orders =
             await Api.get(
@@ -125,6 +171,7 @@ async function loadApprovedOrders() {
             orderList.filter(
                 function (order) {
 
+
                     const status =
                         getValue(
                             order,
@@ -135,10 +182,14 @@ async function loadApprovedOrders() {
 
 
                     return (
+
                         String(status)
                             .toLowerCase()
+
                         ===
+
                         "approved"
+
                     );
 
                 }
@@ -150,7 +201,8 @@ async function loadApprovedOrders() {
             <option
                 value=""
                 selected
-                disabled>
+                disabled
+            >
 
                 Select approved order
 
@@ -163,17 +215,20 @@ async function loadApprovedOrders() {
             approvedOrders.length === 0
         ) {
 
+
             pharmacistOrder.innerHTML += `
 
                 <option
                     value=""
-                    disabled>
+                    disabled
+                >
 
                     No approved orders found
 
                 </option>
 
             `;
+
 
             return;
 
@@ -182,6 +237,7 @@ async function loadApprovedOrders() {
 
         approvedOrders.forEach(
             function (order) {
+
 
                 const orderId =
                     Number(
@@ -208,13 +264,17 @@ async function loadApprovedOrders() {
                 pharmacistOrder.innerHTML += `
 
                     <option
-                        value="${orderId}">
+                        value="${orderId}"
+                    >
 
                         Order #${orderId}
+
                         ${
                             pharmacyName
-                                ? ` - ${pharmacyName}`
-                                : ""
+                                ?
+                                ` - ${pharmacyName}`
+                                :
+                                ""
                         }
 
                     </option>
@@ -225,7 +285,10 @@ async function loadApprovedOrders() {
         );
 
     }
+
+
     catch (error) {
+
 
         console.error(
             "Failed to load approved orders:",
@@ -238,7 +301,8 @@ async function loadApprovedOrders() {
             <option
                 value=""
                 selected
-                disabled>
+                disabled
+            >
 
                 Could not load approved orders
 
@@ -258,6 +322,7 @@ async function loadApprovedOrders() {
 
 function handleOrderChange() {
 
+
     const selectedId =
         Number(
             pharmacistOrder.value
@@ -267,6 +332,7 @@ function handleOrderChange() {
     const selectedOrder =
         approvedOrders.find(
             function (order) {
+
 
                 const orderId =
                     Number(
@@ -313,6 +379,14 @@ function renderOrderMedicines(
     order
 ) {
 
+
+    if (!transferMedicinesBody) {
+
+        return;
+
+    }
+
+
     transferMedicinesBody.innerHTML =
         "";
 
@@ -342,13 +416,15 @@ function renderOrderMedicines(
         details.length === 0
     ) {
 
+
         transferMedicinesBody.innerHTML = `
 
             <tr>
 
                 <td
                     colspan="3"
-                    class="text-center text-muted">
+                    class="text-center text-muted"
+                >
 
                     No medicines found.
 
@@ -358,6 +434,7 @@ function renderOrderMedicines(
 
         `;
 
+
         return;
 
     }
@@ -365,6 +442,7 @@ function renderOrderMedicines(
 
     details.forEach(
         function (detail) {
+
 
             const medicineName =
                 getValue(
@@ -411,6 +489,7 @@ function renderOrderMedicines(
 
                 <tr>
 
+
                     <td>
 
                         <strong>
@@ -427,9 +506,7 @@ function renderOrderMedicines(
 
 
                     <td>
-
                         -
-
                     </td>
 
 
@@ -438,6 +515,7 @@ function renderOrderMedicines(
                         ${quantity}
 
                     </td>
+
 
                 </tr>
 
@@ -452,12 +530,12 @@ function renderOrderMedicines(
 
 // ==========================================
 // CREATE TRANSFER
-// POST /api/Transfer
 // ==========================================
 
 async function createTransfer(
     event
 ) {
+
 
     event.preventDefault();
 
@@ -470,9 +548,11 @@ async function createTransfer(
 
     if (!pharmacistOrderId) {
 
+
         alert(
             "Please select an approved order."
         );
+
 
         return;
 
@@ -482,6 +562,7 @@ async function createTransfer(
     const selectedOrder =
         approvedOrders.find(
             function (order) {
+
 
                 const orderId =
                     Number(
@@ -507,9 +588,11 @@ async function createTransfer(
 
     if (!selectedOrder) {
 
+
         alert(
             "Approved order not found."
         );
+
 
         return;
 
@@ -517,9 +600,7 @@ async function createTransfer(
 
 
 
-    // ==========================================
     // PHARMACY ID
-    // ==========================================
 
     const pharmacyID =
         Number(
@@ -542,14 +623,11 @@ async function createTransfer(
 
     if (!pharmacyID) {
 
-        console.log(
-            "SELECTED ORDER:",
-            selectedOrder
-        );
 
         alert(
             "Pharmacy ID was not found in this order."
         );
+
 
         return;
 
@@ -557,9 +635,7 @@ async function createTransfer(
 
 
 
-    // ==========================================
     // ORDER DETAILS
-    // ==========================================
 
     const details =
 
@@ -586,9 +662,11 @@ async function createTransfer(
         details.length === 0
     ) {
 
+
         alert(
             "This order has no medicines."
         );
+
 
         return;
 
@@ -596,13 +674,12 @@ async function createTransfer(
 
 
 
-    // ==========================================
     // TRANSFER DETAILS
-    // ==========================================
 
     const transferDetails =
         details.map(
             function (detail) {
+
 
                 const medicineID =
                     Number(
@@ -651,18 +728,19 @@ async function createTransfer(
 
 
 
-    // ==========================================
-    // VALIDATE DETAILS
-    // ==========================================
-
     const invalidDetail =
         transferDetails.find(
             function (detail) {
 
+
                 return (
+
                     detail.medicineID <= 0
+
                     ||
+
                     detail.quantity <= 0
+
                 );
 
             }
@@ -671,14 +749,11 @@ async function createTransfer(
 
     if (invalidDetail) {
 
-        console.log(
-            "INVALID DETAILS:",
-            transferDetails
-        );
 
         alert(
             "One medicine has invalid data."
         );
+
 
         return;
 
@@ -686,28 +761,27 @@ async function createTransfer(
 
 
 
-    // ==========================================
-    // ONE MAIN WAREHOUSE
-    // ==========================================
+    // MAIN WAREHOUSE
 
-    const MAIN_WAREHOUSE_ID = 1;
-
+    const MAIN_WAREHOUSE_ID =
+        1;
 
 
-    // ==========================================
-    // CREATE BODY
-    // ==========================================
 
     const newTransfer = {
+
 
         warehouseID:
             MAIN_WAREHOUSE_ID,
 
+
         pharmacyID:
             pharmacyID,
 
+
         pharmacistOrderId:
             pharmacistOrderId,
+
 
         transferDetails:
             transferDetails
@@ -722,6 +796,7 @@ async function createTransfer(
 
 
     try {
+
 
         const result =
             await Api.post(
@@ -750,7 +825,8 @@ async function createTransfer(
 
                 <td
                     colspan="3"
-                    class="text-center text-muted">
+                    class="text-center text-muted"
+                >
 
                     Select an approved order.
 
@@ -766,7 +842,10 @@ async function createTransfer(
         await loadTransfers();
 
     }
+
+
     catch (error) {
+
 
         console.error(
             "Failed to create transfer:",
@@ -787,13 +866,14 @@ async function createTransfer(
 
 
 // ==========================================
-// LOAD ALL TRANSFERS
-// GET /api/Transfer
+// LOAD TRANSFERS
 // ==========================================
 
 async function loadTransfers() {
 
+
     try {
+
 
         const transfers =
             await Api.get(
@@ -809,8 +889,10 @@ async function loadTransfers() {
 
         const transferList =
             Array.isArray(transfers)
-                ? transfers
-                : [];
+                ?
+                transfers
+                :
+                [];
 
 
         renderTransfers(
@@ -828,7 +910,10 @@ async function loadTransfers() {
         );
 
     }
+
+
     catch (error) {
+
 
         console.error(
             "Failed to load transfers:",
@@ -838,13 +923,15 @@ async function loadTransfers() {
 
         if (transferTable) {
 
+
             transferTable.innerHTML = `
 
                 <tr>
 
                     <td
                         colspan="7"
-                        class="text-center text-danger">
+                        class="text-center text-danger"
+                    >
 
                         Failed to load transfers.
 
@@ -864,6 +951,14 @@ async function loadTransfers() {
 
         }
 
+
+        if (incomingTransferCount) {
+
+            incomingTransferCount.textContent =
+                "Could not load transfers.";
+
+        }
+
     }
 
 }
@@ -871,12 +966,13 @@ async function loadTransfers() {
 
 
 // ==========================================
-// RENDER ALL TRANSFERS
+// RENDER ADMIN / MANAGER TRANSFERS
 // ==========================================
 
 function renderTransfers(
     transfers
 ) {
+
 
     if (!transferTable) {
 
@@ -891,6 +987,7 @@ function renderTransfers(
 
     if (transferCount) {
 
+
         transferCount.textContent =
             `${transfers.length} transfers`;
 
@@ -899,6 +996,7 @@ function renderTransfers(
 
     transfers.forEach(
         function (transfer) {
+
 
             const transferId =
                 Number(
@@ -1025,6 +1123,7 @@ function renderTransfers(
                     transferDetails.map(
                         function (detail) {
 
+
                             return (
 
                                 getValue(
@@ -1049,22 +1148,18 @@ function renderTransfers(
 
                         }
                     )
+
                     :
+
                     [];
 
 
             const contents =
                 medicineNames.length > 0
                     ?
-                    medicineNames.join(
-                        ", "
-                    )
+                    medicineNames.join(", ")
                     :
                     "-";
-
-
-            let actionHtml =
-                "";
 
 
             const cleanStatus =
@@ -1072,40 +1167,90 @@ function renderTransfers(
                     .toLowerCase();
 
 
+            let actionHtml =
+                "";
+
+
+
+            // ======================================
+            // PENDING → ADMIN/MANAGER SHIPS IT
+            // ======================================
+
             if (
-                cleanStatus === "shipped"
-                ||
-                cleanStatus === "in transit"
+                cleanStatus ===
+                "pending"
             ) {
+
 
                 actionHtml = `
 
                     <button
                         class="confirm-btn"
-                        onclick="receiveTransfer(${transferId})">
+                        onclick="shipTransfer(${transferId})"
+                    >
 
-                        Confirm receive
+                        Mark as Shipped
 
                     </button>
 
                 `;
 
             }
-            else {
+
+
+
+            // ======================================
+            // SHIPPED → WAIT FOR PHARMACIST
+            // ======================================
+
+            else if (
+                cleanStatus ===
+                "shipped"
+            ) {
+
 
                 actionHtml = `
 
-                    <span class="received-date">
+                    <span
+                        class="received-date"
+                    >
+
+                        On the road
+
+                    </span>
+
+                `;
+
+            }
+
+
+
+            // ======================================
+            // RECEIVED / CANCELLED
+            // ======================================
+
+            else {
+
+
+                actionHtml = `
+
+                    <span
+                        class="received-date"
+                    >
 
                         ${
                             receiveDate
+
                                 ?
+
                                 `Received ${
                                     formatDate(
                                         receiveDate
                                     )
                                 }`
+
                                 :
+
                                 status
                         }
 
@@ -1116,10 +1261,12 @@ function renderTransfers(
             }
 
 
+
             transferTable.innerHTML += `
 
                 <tr
-                    data-id="${transferId}">
+                    data-id="${transferId}"
+                >
 
 
                     <td>
@@ -1166,13 +1313,18 @@ function renderTransfers(
                     <td>
 
                         <span
-                            class="status ${cleanStatus.replace(" ", "-")}">
+                            class="status ${cleanStatus.replaceAll(" ", "-")}"
+                        >
 
                             <span
-                                class="status-dot">
+                                class="status-dot"
+                            >
                             </span>
 
-                            ${String(status).toUpperCase()}
+                            ${
+                                String(status)
+                                    .toUpperCase()
+                            }
 
                         </span>
 
@@ -1198,13 +1350,15 @@ function renderTransfers(
         transfers.length === 0
     ) {
 
+
         transferTable.innerHTML = `
 
             <tr>
 
                 <td
                     colspan="7"
-                    class="text-center text-muted">
+                    class="text-center text-muted"
+                >
 
                     No transfers found.
 
@@ -1221,13 +1375,76 @@ function renderTransfers(
 
 
 // ==========================================
+// MARK TRANSFER AS SHIPPED
+// PUT /api/Transfer/{id}
+// ==========================================
+
+async function shipTransfer(
+    id
+) {
+
+
+    try {
+
+
+        await Api.put(
+
+            `/Transfer/${id}`,
+
+            {
+
+                status:
+                    "Shipped"
+
+            }
+
+        );
+
+
+        alert(
+            "Transfer marked as shipped."
+        );
+
+
+        await loadTransfers();
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(
+            "Failed to ship transfer:",
+            error
+        );
+
+
+        alert(
+            error.message
+            ||
+            "Failed to ship transfer."
+        );
+
+    }
+
+}
+
+
+window.shipTransfer =
+    shipTransfer;
+
+
+
+// ==========================================
 // ON THE ROAD
-// Pending / Shipped / In Transit
+// ONLY SHIPPED
 // ==========================================
 
 function renderRoadTransfers(
     transfers
 ) {
+
 
     if (
         !roadContent
@@ -1244,6 +1461,7 @@ function renderRoadTransfers(
         transfers.filter(
             function (transfer) {
 
+
                 const status =
                     getValue(
                         transfer,
@@ -1259,11 +1477,10 @@ function renderRoadTransfers(
 
 
                 return (
-                    cleanStatus === "pending"
-                    ||
-                    cleanStatus === "shipped"
-                    ||
-                    cleanStatus === "in transit"
+
+                    cleanStatus ===
+                    "shipped"
+
                 );
 
             }
@@ -1282,15 +1499,20 @@ function renderRoadTransfers(
         roadTransfers.length === 0
     ) {
 
+
         roadContent.innerHTML = `
 
-            <p class="text-muted mb-0">
+            <p
+                class="text-muted mb-0"
+            >
 
-                No transfers are currently on the road.
+                No transfers are currently
+                on the road.
 
             </p>
 
         `;
+
 
         return;
 
@@ -1382,12 +1604,14 @@ function renderRoadTransfers(
         )
     ) {
 
+
         totalQuantity =
             transferDetails.reduce(
                 function (
                     total,
                     detail
                 ) {
+
 
                     const quantity =
                         Number(
@@ -1418,9 +1642,10 @@ function renderRoadTransfers(
 
     roadContent.innerHTML = `
 
-        <!-- FROM -->
 
-        <div class="road-place">
+        <div
+            class="road-place"
+        >
 
             <span>
                 LEFT
@@ -1433,36 +1658,43 @@ function renderRoadTransfers(
         </div>
 
 
-        <!-- ROAD -->
 
         <div class="road">
 
-            <div class="road-line">
+            <div
+                class="road-line"
+            >
             </div>
 
 
             <div class="truck">
 
-                <i class="bi bi-truck"></i>
+                <i
+                    class="bi bi-truck"
+                >
+                </i>
 
             </div>
 
         </div>
 
 
-        <!-- TO -->
 
         <div
-            class="road-place
-                   road-place-right">
+            class="road-place road-place-right"
+        >
 
             <span>
                 HEADING TO
             </span>
 
+
             <strong>
+
                 ${pharmacyName}
+
             </strong>
+
 
             <small>
 
@@ -1488,11 +1720,13 @@ function renderRoadTransfers(
 
 // ==========================================
 // PHARMACIST INCOMING TRANSFERS
+// ONLY SHIPPED
 // ==========================================
 
 function renderIncomingTransfers(
     transfers
 ) {
+
 
     if (!incomingTransfers) {
 
@@ -1504,6 +1738,7 @@ function renderIncomingTransfers(
     const incoming =
         transfers.filter(
             function (transfer) {
+
 
                 const status =
                     getValue(
@@ -1520,11 +1755,10 @@ function renderIncomingTransfers(
 
 
                 return (
-                    cleanStatus === "pending"
-                    ||
-                    cleanStatus === "shipped"
-                    ||
-                    cleanStatus === "in transit"
+
+                    cleanStatus ===
+                    "shipped"
+
                 );
 
             }
@@ -1534,6 +1768,7 @@ function renderIncomingTransfers(
     if (
         incomingTransferCount
     ) {
+
 
         incomingTransferCount.textContent =
             `${incoming.length} incoming transfer(s)`;
@@ -1547,6 +1782,7 @@ function renderIncomingTransfers(
 
     incoming.forEach(
         function (transfer) {
+
 
             const transferId =
                 Number(
@@ -1599,6 +1835,7 @@ function renderIncomingTransfers(
                     transferDetails.map(
                         function (detail) {
 
+
                             return (
 
                                 getValue(
@@ -1623,19 +1860,24 @@ function renderIncomingTransfers(
 
                         }
                     )
+
                     :
+
                     [];
 
 
             incomingTransfers.innerHTML += `
 
                 <div
-                    class="incoming-transfer-row">
+                    class="incoming-transfer-row"
+                >
 
 
                     <div>
 
-                        <span class="small-label">
+                        <span
+                            class="small-label"
+                        >
                             TRANSFER
                         </span>
 
@@ -1648,12 +1890,16 @@ function renderIncomingTransfers(
 
                     <div>
 
-                        <span class="small-label">
+                        <span
+                            class="small-label"
+                        >
                             FROM
                         </span>
 
                         <strong>
+
                             ${warehouseName}
+
                         </strong>
 
                     </div>
@@ -1661,7 +1907,9 @@ function renderIncomingTransfers(
 
                     <div>
 
-                        <span class="small-label">
+                        <span
+                            class="small-label"
+                        >
                             CONTENTS
                         </span>
 
@@ -1670,9 +1918,7 @@ function renderIncomingTransfers(
                             ${
                                 medicineNames.length > 0
                                     ?
-                                    medicineNames.join(
-                                        ", "
-                                    )
+                                    medicineNames.join(", ")
                                     :
                                     "-"
                             }
@@ -1685,10 +1931,12 @@ function renderIncomingTransfers(
                     <div>
 
                         <span
-                            class="status shipped">
+                            class="status shipped"
+                        >
 
                             <span
-                                class="status-dot">
+                                class="status-dot"
+                            >
                             </span>
 
                             ON THE ROAD
@@ -1702,7 +1950,8 @@ function renderIncomingTransfers(
 
                         <button
                             class="confirm-btn"
-                            onclick="receiveTransfer(${transferId})">
+                            onclick="receiveTransfer(${transferId})"
+                        >
 
                             Confirm receive
 
@@ -1723,11 +1972,15 @@ function renderIncomingTransfers(
         incoming.length === 0
     ) {
 
+
         incomingTransfers.innerHTML = `
 
-            <p class="text-muted">
+            <p
+                class="text-muted"
+            >
 
-                No incoming transfers.
+                No shipped transfers
+                are waiting to be received.
 
             </p>
 
@@ -1741,14 +1994,15 @@ function renderIncomingTransfers(
 
 // ==========================================
 // RECEIVE TRANSFER
-// PUT /api/Transfer/{id}/confirm-receive
 // ==========================================
 
 async function receiveTransfer(
     id
 ) {
 
+
     try {
+
 
         await Api.put(
 
@@ -1767,7 +2021,10 @@ async function receiveTransfer(
         await loadTransfers();
 
     }
+
+
     catch (error) {
+
 
         console.error(
             "Failed to receive transfer:",
@@ -1786,11 +2043,6 @@ async function receiveTransfer(
 }
 
 
-
-// ==========================================
-// MAKE RECEIVE FUNCTION AVAILABLE
-// ==========================================
-
 window.receiveTransfer =
     receiveTransfer;
 
@@ -1803,6 +2055,7 @@ window.receiveTransfer =
 function formatDate(
     dateValue
 ) {
+
 
     if (!dateValue) {
 
@@ -1857,6 +2110,7 @@ function formatDate(
 
 if (pharmacistOrder) {
 
+
     pharmacistOrder
         .addEventListener(
 
@@ -1870,6 +2124,7 @@ if (pharmacistOrder) {
 
 
 if (transferForm) {
+
 
     transferForm
         .addEventListener(
@@ -1888,6 +2143,20 @@ if (transferForm) {
 // FIRST PAGE LOAD
 // ==========================================
 
-loadApprovedOrders();
+// Only Admin / Manager need
+// approved orders for creating transfers.
+
+if (
+    currentRole === "Admin"
+    ||
+    currentRole === "Manager"
+) {
+
+    loadApprovedOrders();
+
+}
+
+
+// Everyone can load transfers.
 
 loadTransfers();
