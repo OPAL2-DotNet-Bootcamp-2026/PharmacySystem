@@ -281,13 +281,33 @@ document.addEventListener("DOMContentLoaded", async () => {
 
      // ==========================================
     // LOAD PHARMACISTS BY PHARMACY
-    // ADMIN ONLY
+    // database-loading
     // ==========================================
     
     if (Auth.role() !== "Pharmacist") {
     return;
     
     }
+
+    async function loadPharmacies() {
+    try {
+        const pharmacies = await Api.get("/Pharmacy");
+
+        pharmacySelect.innerHTML = `
+            <option value="">Select pharmacy</option>
+        `;
+
+        pharmacies.forEach(pharmacy => {
+            if (!pharmacy.isActive) {
+                return;
+            }
+
+            pharmacySelect.innerHTML += `
+                <option value="${pharmacy.pharmacyID}">
+                    ${pharmacy.pharmacyName}
+                </option>
+            `;
+        });
 
 
     // ==========================================
