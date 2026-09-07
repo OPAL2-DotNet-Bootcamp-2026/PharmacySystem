@@ -325,6 +325,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         renderOrderDetails();
         await loadOrders();
     } 
+    
+    catch (error) {
+        console.error("Failed to create order:", error);
+        alert(error.message);
+    } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit order";
+    }
+}
 
     // ==========================================
 
