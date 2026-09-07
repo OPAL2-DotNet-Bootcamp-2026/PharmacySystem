@@ -313,6 +313,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         }))
     };
 
+    try {
+        submitButton.disabled = true;
+        submitButton.textContent = "Submitting...";
+
+        await Api.post("/PharmacistOrder", order);
+
+        alert("Pharmacist order created successfully.");
+
+        orderDetails = [];
+        renderOrderDetails();
+        await loadOrders();
+    } 
+
     // ==========================================
 
     async function loadPharmacies() {
