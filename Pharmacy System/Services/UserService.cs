@@ -133,6 +133,7 @@ namespace Pharmacy_System.Services
                 return null;
             }
 
+                Email = email,
 
             User user =
                 new User()

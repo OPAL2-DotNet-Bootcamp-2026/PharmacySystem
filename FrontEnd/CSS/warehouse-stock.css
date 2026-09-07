@@ -1,34 +1,54 @@
 /* ==================================
    WAREHOUSE STOCK PAGE
    ================================== */
+
 .warehouse-page-header {
+
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 }
 
+
 .warehouse-page-header h2 {
-    color: var(--dark-green);
-    font-weight: bold;
+
     margin-bottom: 5px;
+
+    color: var(--dark-green);
+
+    font-weight: bold;
 }
 
+
 .warehouse-page-header p {
+
     margin: 0;
+
     color: var(--muted);
+
     font-size: 14px;
 }
 
 
 /* ==================================
-   WAREHOUSE STOCK PANEL
+   WAREHOUSE PANEL
    ================================== */
 
 .warehouse-stock-panel {
-    background-color: white;
-    border: 1px solid var(--line);
-    border-radius: 16px;
+
     overflow: hidden;
+
+    border: 1px solid #CBD8D2;
+
+    border-radius: 16px;
+
+    background-color: white;
+
+    box-shadow:
+        0 16px 32px
+        rgba(12, 43, 36, 0.10);
 }
 
 
@@ -37,46 +57,74 @@
    ================================== */
 
 .warehouse-panel-header {
-    padding: 20px 24px;
-    border-bottom: 1px solid var(--line);
 
     display: flex;
-    justify-content: space-between;
+
     align-items: center;
+
+    justify-content: space-between;
+
+    gap: 24px;
+
+    padding: 22px 24px 20px;
+
+    border-bottom: 1px solid var(--line);
 }
+
 
 .warehouse-panel-header h4 {
+
     margin: 0 0 5px;
+
     color: var(--dark-green);
-    font-size: 17px;
-    font-weight: bold;
+
+    font-size: 18px;
+
+    font-weight: 700;
 }
 
+
 .warehouse-panel-header p {
+
     margin: 0;
+
     color: var(--muted);
-    font-size: 13px;
+
+    font-size: 12px;
 }
 
 
 /* ==================================
-   WAREHOUSE ICON
+   WAREHOUSE SUMMARY
    ================================== */
 
-.warehouse-stock-icon {
-    width: 42px;
-    height: 42px;
-
-    border-radius: 11px;
-
-    background-color: var(--light-green);
-    color: var(--green);
+.warehouse-summary {
 
     display: flex;
-    align-items: center;
-    justify-content: center;
 
-    font-size: 19px;
+    align-items: center;
+
+    gap: 7px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    white-space: nowrap;
+}
+
+
+.warehouse-total {
+
+    color: var(--dark-green);
+
+    font-weight: 700;
+}
+
+
+.summary-divider {
+
+    color: #9AABA3;
 }
 
 
@@ -85,38 +133,40 @@
    ================================== */
 
 .warehouse-stock-table {
+
     margin-bottom: 0;
-    font-size: 15px;
+
+    font-size: 13px;
 }
 
 
-/* ==================================
-   TABLE HEADER
-   ================================== */
+/* Table Header */
 
 .warehouse-stock-table thead th {
+
+    padding: 13px 22px;
+
+    border-bottom: 1px solid var(--line);
+
     background-color: #F8FAF9;
 
     color: var(--muted);
 
-    font-size: 11px;
+    font-size: 9px;
 
-    letter-spacing: 1.5px;
+    font-weight: 700;
 
-    border-bottom: 1px solid var(--line);
-
-    padding: 14px 18px;
+    letter-spacing: 1.35px;
 
     white-space: nowrap;
 }
 
 
-/* ==================================
-   TABLE BODY
-   ================================== */
+/* Table Body */
 
 .warehouse-stock-table tbody td {
-    padding: 18px;
+
+    padding: 15px 22px;
 
     border-color: var(--line);
 
@@ -125,144 +175,207 @@
     vertical-align: middle;
 
     white-space: nowrap;
-
-    font-size: 15px;
 }
 
 
-/* ==================================
-   TABLE HOVER
-   ================================== */
+/* Table Hover */
 
 .warehouse-stock-table tbody tr:hover {
-    background-color: #F8FBF9;
+
+    background-color: #F7FBF9;
+}
+
+
+.warehouse-stock-table
+tbody tr:hover
+.medicine-name {
+
+    box-shadow:
+        inset 3px 0 0
+        var(--green);
 }
 
 
 /* ==================================
-   QUANTITY
+   MEDICINE INFORMATION
    ================================== */
 
-.warehouse-stock-table tbody td strong {
-    color: var(--green);
-    font-weight: bold;
+.medicine-name {
+
+    color: var(--dark-green) !important;
+
+    font-weight: 700;
 }
 
 
-/* ==================================
-   STOCK LEVEL
-   ================================== */
+.medicine-category {
 
-.stock-level {
-    display: inline-block;
+    color: var(--muted) !important;
+}
 
-    padding: 6px 13px;
 
-    border-radius: 7px;
+.expiry-date {
+
+    color: var(--dark-green) !important;
+
+    font-family: monospace;
 
     font-size: 13px;
-
-    font-weight: bold;
 }
 
 
 /* ==================================
-   HIGH STOCK
+   QUANTITY AND PROGRESS BAR
    ================================== */
 
-.stock-level.high {
-    color: var(--green);
+.quantity-cell {
 
-    background-color: var(--light-green);
-
-    border: 1px solid #BFE8D7;
-}
-
-
-/* ==================================
-   MEDIUM STOCK
-   ================================== */
-
-.stock-level.medium {
-    color: #9A7200;
-
-    background-color: #FFF8DD;
-
-    border: 1px solid #E8D99A;
-}
-
-
-/* ==================================
-   LOW STOCK
-   ================================== */
-
-.stock-level.low {
-    color: #B54747;
-
-    background-color: #FFF0F0;
-
-    border: 1px solid #E5BABA;
-}
-
-
-/* ==================================
-   PAGINATION
-   ================================== */
-
-.warehouse-pagination {
     display: flex;
-
-    justify-content: center;
 
     align-items: center;
 
-    gap: 8px;
+    gap: 11px;
+}
 
-    padding: 20px;
+
+.quantity-cell strong {
+
+    width: 40px;
+
+    color: var(--dark-green);
+
+    font-weight: 700;
+
+    text-align: right;
+}
+
+
+.quantity-track {
+
+    display: inline-block;
+
+    overflow: hidden;
+
+    width: 74px;
+
+    height: 6px;
+
+    border-radius: 999px;
+
+    background-color: #DDE7E2;
+}
+
+
+.quantity-fill {
+
+    display: block;
+
+    height: 100%;
+
+    border-radius: inherit;
+}
+
+
+/* Healthy progress */
+
+.healthy-fill {
+
+    background:
+        linear-gradient(
+            90deg,
+            #198C70,
+            #5FD0AD
+        );
+}
+
+
+/* Low progress */
+
+.low-fill {
+
+    background-color: #C58A21;
 }
 
 
 /* ==================================
-   PAGINATION BUTTON
+   STOCK LEVEL BADGES
    ================================== */
 
-.warehouse-pagination .page-btn {
-    width: 38px;
-    height: 38px;
+.stock-level {
 
-    border: 1px solid var(--line);
+    display: inline-flex;
 
-    background-color: white;
+    align-items: center;
 
-    border-radius: 7px;
+    justify-content: center;
 
-    color: var(--text);
+    gap: 6px;
 
-    font-size: 13px;
+    min-width: 82px;
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.8px;
+
+    text-transform: uppercase;
+}
+
+
+.level-dot {
+
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
+
+    background-color: currentColor;
+}
+
+
+/* Healthy */
+
+.stock-level.healthy {
+
+    border: none;
+
+    background-color: #E3F2ED;
+
+    color: #187D68;
+}
+
+
+/* Low */
+
+.stock-level.low {
+
+    border: none;
+
+    background-color: #FFF0D9;
+
+    color: #B87913;
 }
 
 
 /* ==================================
-   PAGINATION HOVER
+   LOADING AND ERROR MESSAGE
    ================================== */
 
-.warehouse-pagination .page-btn:hover {
-    background-color: var(--light-green);
+.warehouse-message {
 
-    color: var(--green);
-}
+    padding: 30px 20px !important;
 
+    color: var(--muted) !important;
 
-/* ==================================
-   ACTIVE PAGE
-   ================================== */
+    text-align: center;
 
-.warehouse-pagination .page-btn.active {
-    background-color: var(--green);
-
-    color: white;
-
-    border-color: var(--green);
+    white-space: normal !important;
 }
 
 
@@ -271,11 +384,43 @@
    ================================== */
 
 .small-footer {
-    margin-top: 25px;
 
-    text-align: center;
+    margin-top: 25px;
 
     color: var(--muted);
 
     font-size: 12px;
+
+    text-align: center;
+}
+
+
+/* ==================================
+   RESPONSIVE
+   ================================== */
+
+@media (max-width: 767px) {
+
+    .warehouse-panel-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .warehouse-summary {
+
+        width: 100%;
+    }
+
+
+    .warehouse-stock-table thead th,
+    .warehouse-stock-table tbody td {
+
+        padding-right: 16px;
+
+        padding-left: 16px;
+    }
+
 }

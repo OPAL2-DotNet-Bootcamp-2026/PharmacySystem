@@ -35,6 +35,7 @@
 }
 
 
+
 /* ==================================
    ADD SUPPLIER BUTTON
    ================================== */
@@ -60,6 +61,13 @@
 }
 
 
+.btn-add-supplier i {
+
+    margin-right: 5px;
+
+}
+
+
 .btn-add-supplier:hover {
 
     background-color: #17705B;
@@ -67,6 +75,7 @@
     color: white;
 
 }
+
 
 
 /* ==================================
@@ -84,6 +93,51 @@
     overflow: hidden;
 
 }
+
+
+
+/* ==================================
+   PANEL HEADER
+   ================================== */
+
+.suppliers-panel-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 20px 22px;
+
+    border-bottom: 1px solid var(--line);
+
+}
+
+
+.suppliers-panel-header h5 {
+
+    margin: 0 0 5px 0;
+
+    color: var(--dark-green);
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+}
+
+
+.suppliers-panel-header p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
 
 
 /* ==================================
@@ -120,7 +174,7 @@
 
 .suppliers-table tbody td {
 
-    padding: 18px 18px;
+    padding: 18px;
 
     border-color: var(--line);
 
@@ -129,7 +183,8 @@
     vertical-align: middle;
 
     white-space: nowrap;
-     font-size: 15px;
+
+    font-size: 14px;
 
 }
 
@@ -141,17 +196,438 @@
 }
 
 
+
+/* ==================================
+   SUPPLIER NAME + EMAIL
+   ================================== */
+
+.supplier-name {
+
+    display: block;
+
+    color: var(--text);
+
+    font-weight: bold;
+
+    margin-bottom: 3px;
+
+}
+
+
+.supplier-email {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+
 /* ==================================
    STATUS
    ================================== */
 
 .status {
 
-    display: inline-block;
+    display: inline-flex;
 
-    padding: 6px 13px;
+    align-items: center;
 
-    border-radius: 7px;
+    gap: 5px;
+
+    padding: 5px 11px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+.status.active {
+
+    color: #17705B;
+
+    background-color: var(--light-green);
+
+}
+
+
+.status.inactive {
+
+    color: #60788A;
+
+    background-color: #EAF0F4;
+
+}
+
+
+.status-dot {
+
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
+
+    background-color: currentColor;
+
+}
+
+
+
+/* ==================================
+   ACTION BUTTONS
+   ================================== */
+
+.supplier-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 7px;
+
+}
+
+
+.btn-edit-supplier,
+.btn-delete-supplier {
+
+    background-color: white;
+
+    border: 1px solid #CAD6D1;
+
+    border-radius: 8px;
+
+    padding: 7px 12px;
+
+    font-size: 13px;
+
+    transition: 0.2s;
+
+}
+
+
+.btn-edit-supplier {
+
+    color: var(--text);
+
+}
+
+
+.btn-delete-supplier {
+
+    color: #B42318;
+
+}
+
+
+.btn-edit-supplier:hover {
+
+    background-color: var(--light-green);
+
+    border-color: var(--green);
+
+}
+
+
+.btn-delete-supplier:hover {
+
+    background-color: #FFF2F0;
+
+    border-color: #E7AAA5;
+
+}
+
+
+
+/* ==================================
+   EMPTY TABLE
+   ================================== */
+
+.no-suppliers {
+
+    text-align: center;
+
+    color: var(--muted) !important;
+
+    padding: 35px !important;
+
+}
+
+
+
+/* ==================================
+   MODAL BACKGROUND
+   ================================== */
+
+.supplier-modal {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background-color: rgba(12, 43, 36, 0.45);
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+
+    z-index: 9999;
+
+}
+
+
+.supplier-modal.show {
+
+    display: flex;
+
+}
+
+
+
+/* ==================================
+   MODAL BOX
+   ================================== */
+
+.supplier-modal-box {
+
+    width: 560px;
+
+    max-width: 100%;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background-color: white;
+
+    border-radius: 18px;
+
+    padding: 28px 25px 22px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(12, 43, 36, 0.25);
+
+}
+
+
+
+/* ==================================
+   MODAL HEADER
+   ================================== */
+
+.supplier-modal-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    margin-bottom: 22px;
+
+}
+
+
+.supplier-modal-header h3 {
+
+    margin: 0 0 5px 0;
+
+    color: var(--dark-green);
+
+    font-size: 21px;
+
+    font-weight: bold;
+
+}
+
+
+.supplier-modal-header p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+.modal-close-btn {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 35px;
+
+    height: 35px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: var(--muted);
+
+}
+
+
+.modal-close-btn:hover {
+
+    background-color: var(--light-green);
+
+    color: var(--green);
+
+}
+
+
+
+/* ==================================
+   FORM GROUP
+   ================================== */
+
+.supplier-form-group {
+
+    margin-bottom: 18px;
+
+}
+
+
+.supplier-form-group label {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 7px;
+
+}
+
+
+
+/* Inputs */
+
+.supplier-form-group input,
+.supplier-form-group select {
+
+    width: 100%;
+
+    height: 48px;
+
+    border: 1px solid #CBD8D2;
+
+    border-radius: 8px;
+
+    padding: 0 13px;
+
+    background-color: white;
+
+    color: var(--text);
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s;
+
+}
+
+
+.supplier-form-group input::placeholder {
+
+    color: #8D9994;
+
+}
+
+
+.supplier-form-group input:focus,
+.supplier-form-group select:focus {
+
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(31, 138, 112, 0.12);
+
+}
+
+
+
+/* ==================================
+   PHONE + EMAIL ROW
+   ================================== */
+
+.supplier-form-row {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+
+}
+
+
+
+/* ==================================
+   MODAL ACTIONS
+   ================================== */
+
+.supplier-modal-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 22px;
+
+}
+
+
+
+/* Cancel */
+
+.btn-cancel {
+
+    height: 44px;
+
+    padding: 0 18px;
+
+    border: 1px solid #CBD8D2;
+
+    border-radius: 8px;
+
+    background-color: white;
+
+    color: var(--text);
 
     font-size: 13px;
 
@@ -160,81 +636,197 @@
 }
 
 
-.status.active {
+.btn-cancel:hover {
 
-    color: var(--green);
-
-    background-color: var(--light-green);
-
-    border: 1px solid #BFE8D7;
+    background-color: #F8FAF9;
 
 }
 
 
-.status.inactive {
 
-    color: var(--muted);
+/* Save */
 
-    background-color: #F4F5F5;
+.btn-save-supplier {
 
-    border: 1px solid var(--line);
+    height: 44px;
 
-}
+    padding: 0 20px;
 
+    border: none;
 
-/* ==================================
-   PAGINATION
-   ================================== */
-
-.suppliers-pagination {
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 8px;
-
-    padding: 20px;
-
-}
-
-
-.page-btn {
-
-    width: 38px;
-
-    height: 38px;
-
-    border: 1px solid var(--line);
-
-    background-color: white;
-
-    border-radius: 7px;
-
-    color: var(--text);
-
-    font-size: 13px;
-
-}
-
-
-.page-btn:hover {
-
-    background-color: var(--light-green);
-
-    color: var(--green);
-
-}
-
-
-.page-btn.active {
+    border-radius: 8px;
 
     background-color: var(--green);
 
     color: white;
 
-    border-color: var(--green);
+    font-size: 13px;
+
+    font-weight: bold;
+
+}
+
+
+.btn-save-supplier:hover {
+
+    background-color: #17705B;
+
+}
+
+
+
+/* ==================================
+   SUCCESS MESSAGE
+   ================================== */
+
+.supplier-success-message {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    position: fixed;
+
+    top: 25px;
+
+    right: 25px;
+
+    min-width: 300px;
+
+    padding: 14px 18px;
+
+    background-color: white;
+
+    border: 1px solid #BFE8D7;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(12, 43, 36, 0.18);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: translateY(-15px);
+
+    transition: 0.3s;
+
+    z-index: 12000;
+
+}
+
+
+.supplier-success-message.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translateY(0);
+
+}
+
+
+
+/* Green check */
+
+.success-check {
+
+    width: 38px;
+
+    height: 38px;
+
+    min-width: 38px;
+
+    border-radius: 50%;
+
+    background-color: var(--green);
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+}
+
+
+.supplier-success-message strong {
+
+    display: block;
+
+    color: var(--dark-green);
+
+    font-size: 14px;
+
+    margin-bottom: 2px;
+
+}
+
+
+.supplier-success-message p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+
+/* ==================================
+   RESPONSIVE
+   ================================== */
+
+@media (max-width: 768px) {
+
+    .suppliers-page-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+
+    }
+
+
+    .supplier-form-row {
+
+        grid-template-columns: 1fr;
+
+        gap: 0;
+
+    }
+
+
+    .supplier-modal-box {
+
+        padding: 22px 18px;
+
+    }
+
+
+    .supplier-success-message {
+
+        left: 20px;
+
+        right: 20px;
+
+        min-width: auto;
+
+    }
 
 }
