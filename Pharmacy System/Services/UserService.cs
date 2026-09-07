@@ -7,7 +7,6 @@ namespace Pharmacy_System.Services
 {
     public class UserService
     {
-
         private readonly UserRepo userRepo;
 
         private readonly PharmacistRepo pharmacistRepo;
@@ -77,6 +76,7 @@ namespace Pharmacy_System.Services
             }
 
 
+                Email = email,
 
             User user =
                 new User()
@@ -336,7 +336,6 @@ namespace Pharmacy_System.Services
                 Role =
                     user.Role
             };
-
         }
 
 
@@ -423,7 +422,6 @@ namespace Pharmacy_System.Services
                 IsActive =
                     user.IsActive
             };
-
         }
 
 
@@ -469,7 +467,6 @@ namespace Pharmacy_System.Services
                 IsActive =
                     user.IsActive
             };
-
         }
 
 
@@ -563,6 +560,5 @@ namespace Pharmacy_System.Services
             return true;
 
         }
-
     }
 }

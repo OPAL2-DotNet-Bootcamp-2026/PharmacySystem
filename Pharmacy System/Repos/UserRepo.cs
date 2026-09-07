@@ -7,40 +7,69 @@ namespace Pharmacy_System.Repos
     {
         private readonly PharmacyContext context;
 
+
         public UserRepo(PharmacyContext _context)
         {
             context = _context;
         }
 
 
-        public async Task<List<User>> GetAllUsers() 
+        public async Task<List<User>> GetAllUsers()
         {
-            return await context.users.Where(u => u.IsActive).ToListAsync();
+            return await context.users
+                .Where(u => u.IsActive)
+                .ToListAsync();
         }
+
 
         public async Task<User?> GetUserById(int id)
         {
-            return await context.users.Where(u => u.UserID == id && u.IsActive)
-                .FirstOrDefaultAsync(); 
+            return await context.users
+                .Where(
+                    u =>
+                        u.UserID == id &&
+                        u.IsActive
+                )
+                .FirstOrDefaultAsync();
         }
+
 
         public async Task<User?> GetUserByEmail(string email)
         {
-            return await context.users.FirstOrDefaultAsync(u =>u.Email == email &&u.IsActive);
+            return await context.users
+                .FirstOrDefaultAsync(
+                    u =>
+                        u.Email == email &&
+                        u.IsActive
+                );
         }
 
-       
-        public async Task<bool> EmailExists(string email)  
+
+        public async Task<bool> EmailExists(string email)
         {
-            return await context.users.AnyAsync(u => u.Email == email);
+            return await context.users
+                .AnyAsync(
+                    u => u.Email == email
+                );
         }
 
-        
+
+        public async Task<bool> UsernameExists(string username)
+        {
+            return await context.users
+                .AnyAsync(
+                    u => u.Username == username
+                );
+        }
+
+
         public async Task AddUser(User user)
         {
             await context.users.AddAsync(user);
+
             await context.SaveChangesAsync();
         }
+
 
         public async Task UserUpdate()
         {
@@ -48,12 +77,11 @@ namespace Pharmacy_System.Repos
         }
 
 
-        public async Task UserDelete(User user) 
+        public async Task UserDelete(User user)
         {
             user.IsActive = false;
 
             await context.SaveChangesAsync();
         }
-
     }
 }

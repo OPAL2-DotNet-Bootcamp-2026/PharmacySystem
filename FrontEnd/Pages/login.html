@@ -77,8 +77,6 @@
     <section class="login__formside" aria-labelledby="signin-heading">
       <form
         class="loginbox"
-        action="dashboard.html"
-        onsubmit="event.preventDefault(); window.location.assign(this.action);"
       >
         <h2 id="signin-heading">Sign in</h2>
         <p class="sub">Your role decides which part of the chain you can move.</p>
@@ -110,19 +108,31 @@
           >
         </div>
 
-        <a href="dashboard.html" class="signin-btn">Sign in</a>
+        <button
+        type="submit"
+        class="signin-btn"
+        >
+        Sign in 
+        </button>
 
-        <div class="demorow">
-          <p>Demo accounts</p>
-          <div class="demochips">
-            <div class="demochips">
-            <a href="dashboard.html" class="chip" style="--i: 0">Admin</a>
-            <a href="dashboard.html#manager" class="chip" style="--i: 1">Manager</a>
-            <a href="dashboard.html#pharmacist" class="chip" style="--i: 2">Pharmacist</a>
-          </div>
-        </div>
       </form>
     </section>
   </main>
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+  <!-- API URL -->
+  <script src="../JS/Config.js"></script>
+
+  <!-- Authentication -->
+  <script src="../JS/Auth.js"></script>
+
+  <!-- API requests -->
+  <script src="../JS/Api.js"></script>
+
+  <!-- Login page logic -->
+  <script src="../JS/login.js"></script>
+  
 </body>
 </html>

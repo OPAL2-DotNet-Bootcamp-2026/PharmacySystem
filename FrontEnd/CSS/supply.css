@@ -168,7 +168,22 @@
 
     border-color: var(--mint);
 
-    box-shadow: 0 0 0 3px rgba(111, 211, 180, 0.15);
+    box-shadow:
+        0 0 0 3px
+        rgba(111, 211, 180, 0.15);
+}
+
+
+/* Invalid field */
+
+.supply-form .form-control:invalid:focus,
+.supply-form .form-select:invalid:focus {
+
+    border-color: #D88989;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(216, 137, 137, 0.15);
 }
 
 
@@ -201,6 +216,10 @@
     font-size: 13px;
 
     font-weight: bold;
+
+    transition:
+        background-color 0.2s ease,
+        opacity 0.2s ease;
 }
 
 
@@ -209,6 +228,30 @@
     background-color: #17705B;
 
     color: white;
+}
+
+
+.btn-save-supply:focus {
+
+    background-color: #17705B;
+
+    color: white;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(31, 138, 112, 0.18);
+}
+
+
+.btn-save-supply:disabled {
+
+    background-color: var(--green);
+
+    color: white;
+
+    cursor: not-allowed;
+
+    opacity: 0.7;
 }
 
 
@@ -279,6 +322,123 @@
     color: var(--green);
 
     font-weight: bold;
+}
+
+
+/* Loading and empty table message */
+
+.supply-table-message {
+
+    padding: 28px 18px !important;
+
+    color: var(--muted) !important;
+
+    text-align: center;
+
+    white-space: normal !important;
+}
+
+
+/* ==================================
+   SUCCESS MESSAGE
+   ================================== */
+
+.supply-success-message {
+
+    position: fixed;
+
+    right: 24px;
+
+    bottom: 24px;
+
+    z-index: 1100;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 310px;
+
+    padding: 15px 18px;
+
+    border: 1px solid #BFE5D8;
+
+    border-radius: 12px;
+
+    background-color: white;
+
+    box-shadow:
+        0 14px 34px
+        rgba(12, 43, 36, 0.16);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transform: translateY(18px);
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        visibility 0.25s ease;
+}
+
+
+.supply-success-message.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+
+.supply-success-icon {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 38px;
+
+    height: 38px;
+
+    flex: 0 0 38px;
+
+    border-radius: 50%;
+
+    background-color: var(--light-green);
+
+    color: var(--green);
+
+    font-size: 19px;
+}
+
+
+.supply-success-message strong {
+
+    display: block;
+
+    color: var(--dark-green);
+
+    font-size: 14px;
+}
+
+
+.supply-success-message p {
+
+    margin: 2px 0 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
 }
 
 
@@ -380,3 +540,58 @@
     color: white;
 }
 
+
+/* ==================================
+   RESPONSIVE
+   ================================== */
+
+@media (max-width: 767px) {
+
+    .supply-form {
+
+        padding: 20px;
+    }
+
+
+    .supply-panel-header {
+
+        padding: 18px 20px;
+    }
+
+
+    .supply-button-wrapper {
+
+        align-items: stretch;
+    }
+
+
+    .btn-save-supply {
+
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 576px) {
+
+    .supply-success-message {
+
+        right: 14px;
+
+        bottom: 14px;
+
+        left: 14px;
+
+        min-width: 0;
+    }
+
+
+    .no-access {
+
+        margin: 30px auto;
+
+        padding: 30px 22px;
+    }
+
+}
