@@ -321,6 +321,14 @@ async function loadMedicines() {
             <option value="">Select medicine</option>
         `;
 
+        medicines.forEach(medicine => {
+            medicineSelect.innerHTML += `
+                <option value="${medicine.medicineID}">
+                    ${medicine.medicineName}
+                </option>
+            `;
+        });
+
 
     // ==========================================
     // ADD MEDICINE
