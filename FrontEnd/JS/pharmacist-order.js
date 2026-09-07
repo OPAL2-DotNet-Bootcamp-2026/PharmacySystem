@@ -329,6 +329,11 @@ async function loadMedicines() {
             `;
         });
 
+        } catch (error) {
+        console.error("Failed to load medicines:", error);
+    }
+}
+
 
     // ==========================================
     // ADD MEDICINE
