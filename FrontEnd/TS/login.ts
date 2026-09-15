@@ -53,5 +53,16 @@
     const errorBox =
       requireElement<HTMLParagraphElement>("#login-error");
 
+      form.addEventListener(
+      "submit",
+      async (event: SubmitEvent) => {
+        event.preventDefault();
+        errorBox.textContent = "";
+
+        if (!form.reportValidity()) {
+          return;
+        }
+
+
 
 });
