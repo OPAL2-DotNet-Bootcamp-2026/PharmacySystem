@@ -426,6 +426,36 @@ function formatMoney(value: number): string {
 
         information.append(name, quantity);
 
+         const controls =
+          document.createElement("div");
+
+        controls.className =
+          "d-flex align-items-center gap-3";
+
+        const price =
+          document.createElement("strong");
+
+        price.textContent = formatMoney(subtotal);
+
+        const removeButton =
+          document.createElement("button");
+
+        removeButton.type = "button";
+
+        removeButton.className =
+          "btn btn-sm btn-outline-danger";
+
+        removeButton.dataset.removeIndex =
+          String(index);
+
+        removeButton.textContent = "Remove";
+
+        removeButton.setAttribute(
+          "aria-label",
+          `Remove ${detail.medicineName} ` +
+            "from the order",
+        );
+
 
       
 
