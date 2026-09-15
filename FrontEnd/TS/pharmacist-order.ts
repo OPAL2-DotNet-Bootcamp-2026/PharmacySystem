@@ -132,3 +132,25 @@
       if (!parsed || typeof parsed !== "object") {
         return null;
       }
+
+      const payload = parsed as JwtPayload;
+
+      const rawUserId =
+        payload[userIdClaim] ??
+        payload.nameid ??
+        payload.sub;
+
+      const userId = Number(rawUserId);
+
+      return Number.isInteger(userId) && userId > 0
+        ? userId
+        : null;
+    } catch (error: unknown) {
+      console.error(
+        "Could not read the login token:",
+        error,
+      );
+        return null;
+    }
+  }
+  
