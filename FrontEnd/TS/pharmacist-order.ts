@@ -756,6 +756,21 @@ function formatMoney(value: number): string {
       }
     }
 
+    async function createPharmacistOrder():
+      Promise<void> {
+      if (
+        role !== "Pharmacist" ||
+        !currentPharmacist
+      ) {
+        alert(
+          "An active pharmacist profile " +
+            "is required to create an order.",
+        );
+
+        return;
+      }
+
+
 
 
 
