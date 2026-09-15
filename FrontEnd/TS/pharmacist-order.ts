@@ -816,6 +816,14 @@ function formatMoney(value: number): string {
           error,
         );
 
+        alert(errorMessage(error));
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent =
+          "Submit order";
+      }
+    }
+
 
 
 
