@@ -824,6 +824,21 @@ function formatMoney(value: number): string {
       }
     }
 
+     async function updateOrderStatus(
+      orderID: number,
+      status: OrderActionStatus,
+    ): Promise<void> {
+      if (
+        role !== "Admin" &&
+        role !== "Manager"
+      ) {
+        return;
+      }
+
+      const request: UpdateOrderStatusRequest = {
+        status,
+      };
+
 
 
 
