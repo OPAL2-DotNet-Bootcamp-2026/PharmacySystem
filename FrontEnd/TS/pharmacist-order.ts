@@ -6,3 +6,9 @@
     pharmacyName: string;
     isActive: boolean;
   }
+
+   interface Medicine {
+    medicineID: number;
+    medicineName: string;
+    unitPrice: number;
+  }
