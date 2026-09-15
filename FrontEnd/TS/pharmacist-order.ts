@@ -116,3 +116,12 @@
       if (!payloadPart) {
         return null;
       }
+
+      const base64 = payloadPart
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
+
+      const paddedBase64 = base64.padEnd(
+        Math.ceil(base64.length / 4) * 4,
+        "=",
+      );
