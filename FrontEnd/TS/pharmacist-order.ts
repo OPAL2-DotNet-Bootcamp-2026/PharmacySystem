@@ -56,3 +56,7 @@
     pharmacyID: number;
     orderDetails: CreateOrderDetailRequest[];
   }
+
+   interface CreateOrderResponse {
+    pharmacistOrderId: number;
+    m
