@@ -590,6 +590,50 @@ function formatMoney(value: number): string {
 
         appendTextCell(row, order.status);
 
+        const actionsCell = row.insertCell();
+        actionsCell.className = "text-end";
+
+        if (order.status === "Pending") {
+          const approveButton =
+            document.createElement("button");
+
+          approveButton.type = "button";
+
+          approveButton.className =
+            "btn btn-sm btn-success me-1";
+
+          approveButton.dataset.approveId =
+            String(order.pharmacistOrderId);
+
+          approveButton.textContent = "Approve";
+
+          const rejectButton =
+            document.createElement("button");
+
+          rejectButton.type = "button";
+
+          rejectButton.className =
+            "btn btn-sm btn-danger";
+
+          rejectButton.dataset.rejectId =
+            String(order.pharmacistOrderId);
+
+          rejectButton.textContent = "Reject";
+
+          actionsCell.append(
+            approveButton,
+            rejectButton,
+          );
+        } else {
+          actionsCell.textContent = "-";
+        }
+
+        fragment.append(row);
+      });
+
+      allOrdersTableBody.append(fragment);
+    }
+
 
 
 
