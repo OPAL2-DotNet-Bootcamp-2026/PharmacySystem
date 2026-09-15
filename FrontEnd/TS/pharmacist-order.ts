@@ -94,3 +94,11 @@
       ? error.message
       : "Something went wrong. Please try again.";
   }
+
+  function isUserRole(
+    value: string | null,
+  ): value is UserRole {
+    return value === "Admin" ||
+      value === "Manager" ||
+      value === "Pharmacist";
+  }
