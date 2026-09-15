@@ -27,3 +27,9 @@
     unitPrice: number;
     quantity: number;
   }
+
+  interface PharmacistOrderDetail {
+    medicineID: number;
+    medicineName: string;
+    quantity: number;
+  }
