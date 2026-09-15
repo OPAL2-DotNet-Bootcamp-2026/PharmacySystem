@@ -86,6 +86,18 @@
             );
           }
 
+          Auth.save(result);
 
-
-});
+          window.location.href =
+            `dashboard.html#${result.role.toLowerCase()}`;
+        } catch (error: unknown) {
+          errorBox.textContent = errorMessage(error);
+        } finally {
+          button.disabled = false;
+          form.removeAttribute("aria-busy");
+          button.textContent = originalText;
+        }
+      },
+    );
+  });
+})();
