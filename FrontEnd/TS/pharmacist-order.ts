@@ -71,3 +71,20 @@
     nameid?: unknown;
     sub?: unknown;
   }
+
+  const userIdClaim =
+    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
+
+  function requireElement<T extends Element>(
+    selector: string,
+  ): T {
+    const element = document.querySelector<T>(selector);
+
+    if (!element) {
+      throw new Error(
+        `Required order-page element is missing: ${selector}`,
+      );
+    }
+
+    return element;
+  }
