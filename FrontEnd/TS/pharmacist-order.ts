@@ -525,6 +525,21 @@ function formatMoney(value: number): string {
       quantityInput.value = "1";
     }
 
+    function renderAllOrders(
+      orders: PharmacistOrder[],
+    ): void {
+      allOrdersTableBody.replaceChildren();
+
+      if (orders.length === 0) {
+        setTableMessage(
+          allOrdersTableBody,
+          7,
+          "No orders found.",
+        );
+
+        return;
+      }
+
 
 
 
