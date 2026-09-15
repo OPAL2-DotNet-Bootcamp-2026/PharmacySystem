@@ -508,6 +508,23 @@ function formatMoney(value: number): string {
             item.medicineID === medicineID,
         );
 
+        if (existingMedicine) {
+        existingMedicine.quantity += quantity;
+      } else {
+        orderDetails.push({
+          medicineID,
+          medicineName: medicine.medicineName,
+          unitPrice: Number(medicine.unitPrice),
+          quantity,
+        });
+      }
+
+      renderOrderDetails();
+
+      medicineSelect.value = "";
+      quantityInput.value = "1";
+    }
+
 
 
 
