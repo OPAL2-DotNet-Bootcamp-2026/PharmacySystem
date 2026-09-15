@@ -663,6 +663,34 @@ function formatMoney(value: number): string {
 
         appendTextCell(row, order.pharmacyName);
 
+         appendMedicineCell(
+          row,
+          order.orderDetails ?? [],
+        );
+
+        appendTextCell(
+          row,
+          formatDate(order.orderDate),
+        );
+
+        appendTextCell(
+          row,
+          formatMoney(order.totalCost),
+          "text-end",
+        );
+
+        appendTextCell(row, order.status);
+
+        fragment.append(row);
+      });
+
+      myOrdersTableBody.append(fragment);
+    } 
+
+    
+
+
+
 
 
 
