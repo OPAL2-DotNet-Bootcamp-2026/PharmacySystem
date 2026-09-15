@@ -242,6 +242,28 @@ function formatMoney(value: number): string {
       return;
     }
 
+    const role = roleValue;
+    setRoleHash(role);
+
+    const pharmacySelect =
+      requireElement<HTMLSelectElement>("#pharmacyId");
+
+    const medicineSelect =
+      requireElement<HTMLSelectElement>("#medicineId");
+
+    const quantityInput =
+      requireElement<HTMLInputElement>("#quantity");
+
+    const addMedicineButton =
+      requireElement<HTMLButtonElement>(
+        ".btn-add-medicine",
+      );
+
+      const submitButton =
+      requireElement<HTMLButtonElement>(
+        ".btn-submit-order",
+      );
+
 
 
 
