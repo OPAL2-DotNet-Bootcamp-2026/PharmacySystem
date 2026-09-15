@@ -308,6 +308,29 @@ function formatMoney(value: number): string {
       );
     }
 
+    async function loadMedicines(): Promise<void> {
+      medicines =
+        await Api.get<Medicine[]>(
+          "/Medicine/GetAvailable",
+        );
+
+      const placeholder =
+        new Option("Select medicine", "");
+
+      const options = medicines.map(
+        (medicine) =>
+          new Option(
+            medicine.medicineName,
+            String(medicine.medicineID),
+          ),
+      );
+
+      medicineSelect.replaceChildren(
+        placeholder,
+        ...options,
+      );
+    }
+
 
 
 
