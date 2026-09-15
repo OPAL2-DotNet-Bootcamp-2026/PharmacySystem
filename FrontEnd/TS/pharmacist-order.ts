@@ -552,6 +552,26 @@ function formatMoney(value: number): string {
           `#${order.pharmacistOrderId}`,
         );
 
+        const pharmacyCell = row.insertCell();
+
+        const pharmacyName =
+          document.createElement("strong");
+
+        pharmacyName.textContent =
+          order.pharmacyName;
+
+        const pharmacistName =
+          document.createElement("small");
+
+        pharmacistName.textContent =
+          order.fullName;
+
+        pharmacyCell.append(
+          pharmacyName,
+          document.createElement("br"),
+          pharmacistName,
+        );
+
 
 
 
