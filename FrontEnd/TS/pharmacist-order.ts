@@ -907,6 +907,31 @@ function formatMoney(value: number): string {
       );
     }
 
+    if (
+      role === "Admin" ||
+      role === "Manager"
+    ) {
+      allOrdersTableBody.addEventListener(
+        "click",
+        (event: MouseEvent) => {
+          if (!(event.target instanceof Element)) {
+            return;
+          }
+
+          const approveButton =
+            event.target.closest<HTMLButtonElement>(
+              "[data-approve-id]",
+            );
+
+          const rejectButton =
+            event.target.closest<HTMLButtonElement>(
+              "[data-reject-id]",
+            );
+
+          const button =
+            approveButton ?? rejectButton;
+
+
 
 
 
