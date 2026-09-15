@@ -572,6 +572,24 @@ function formatMoney(value: number): string {
           pharmacistName,
         );
 
+        appendMedicineCell(
+          row,
+          order.orderDetails ?? [],
+        );
+
+        appendTextCell(
+          row,
+          formatDate(order.orderDate),
+        );
+
+        appendTextCell(
+          row,
+          formatMoney(order.totalCost),
+          "text-end",
+        );
+
+        appendTextCell(row, order.status);
+
 
 
 
