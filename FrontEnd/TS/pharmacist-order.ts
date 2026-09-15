@@ -12,3 +12,11 @@
     medicineName: string;
     unitPrice: number;
   }
+
+  interface Pharmacist {
+    pharmacistID: number;
+    userID: number;
+    pharmacyID: number;
+    fullName: string;
+    isActive: boolean;
+  }
