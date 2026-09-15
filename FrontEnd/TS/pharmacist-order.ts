@@ -364,6 +364,14 @@ function formatMoney(value: number): string {
       pharmacySelect.disabled = true;
     }
 
+    function renderOrderDetails(): void {
+      orderLines.replaceChildren();
+
+      orderLines.classList.toggle(
+        "order-lines-empty",
+        orderDetails.length === 0,
+      );
+
 
       
 
