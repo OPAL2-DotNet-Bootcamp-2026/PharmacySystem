@@ -959,6 +959,17 @@ function formatMoney(value: number): string {
       );
     }
 
+    try {
+      if (role === "Pharmacist") {
+        await Promise.all([
+          loadPharmacies(),
+          loadMedicines(),
+        ]);
+
+        await loadCurrentPharmacist();
+        renderOrderDetails();
+      }
+
 
 
 
