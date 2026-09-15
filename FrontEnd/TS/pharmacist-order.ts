@@ -482,6 +482,17 @@ function formatMoney(value: number): string {
         return;
       }
 
+      if (
+        !Number.isInteger(quantity) ||
+        quantity < 1
+      ) {
+        alert(
+          "Quantity must be a whole number " +
+            "greater than 0.",
+        );
+        return;
+      }
+
 
 
 
