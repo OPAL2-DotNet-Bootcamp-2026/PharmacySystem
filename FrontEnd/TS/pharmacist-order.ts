@@ -195,6 +195,28 @@ function formatMoney(value: number): string {
     return cell;
   }
 
+  function appendMedicineCell(
+    row: HTMLTableRowElement,
+    details: PharmacistOrderDetail[],
+  ): void {
+    const cell = row.insertCell();
+
+    if (details.length === 0) {
+      cell.textContent = "-";
+      return;
+    }
+
+    details.forEach((detail) => {
+      const line = document.createElement("div");
+
+      line.textContent =
+        `${detail.medicineName} ×${detail.quantity}`;
+
+      cell.append(line);
+    });
+  }
+
+
 
 
 
