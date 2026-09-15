@@ -50,3 +50,9 @@
     medicineID: number;
     quantity: number;
   }
+
+   interface CreateOrderRequest {
+    pharmacistID: number;
+    pharmacyID: number;
+    orderDetails: CreateOrderDetailRequest[];
+  }
