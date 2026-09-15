@@ -59,4 +59,9 @@
 
    interface CreateOrderResponse {
     pharmacistOrderId: number;
-    m
+    message: string;
+  }
+
+   interface UpdateOrderStatusRequest {
+    status: OrderActionStatus;
+  }
