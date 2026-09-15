@@ -13,3 +13,22 @@ interface AuthClient {
   isLoggedIn(): boolean;
   logout(): void;   
 }
+
+interface ApiClient {
+  get<TResponse>(endpoint: string): Promise<TResponse>;
+
+  post<TResponse, TBody>(
+    endpoint: string,
+    body: TBody,
+  ): Promise<TResponse>;
+
+  put<TResponse, TBody>(
+    endpoint: string,
+    body: TBody,
+  ): Promise<TResponse>;
+
+  del<TResponse>(endpoint: string): Promise<TResponse>;
+}
+
+declare const Auth: AuthClient;
+declare const Api: ApiClient;
