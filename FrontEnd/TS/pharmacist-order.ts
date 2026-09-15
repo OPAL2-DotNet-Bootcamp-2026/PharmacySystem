@@ -172,6 +172,14 @@ function formatMoney(value: number): string {
     return `OMR ${Number(value).toFixed(3)}`;
   }
 
+  function formatDate(value: string): string {
+    const date = new Date(value);
+
+    return Number.isNaN(date.getTime())
+      ? "-"
+      : date.toLocaleDateString("en-GB");
+  }
+
 
 
 
