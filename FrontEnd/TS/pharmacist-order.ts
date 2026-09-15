@@ -981,6 +981,14 @@ function formatMoney(value: number): string {
     }
   }
 
+  document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+      void initialise();
+    },
+  );
+})();
+
 
 
 
