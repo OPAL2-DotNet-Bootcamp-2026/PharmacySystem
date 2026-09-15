@@ -45,3 +45,8 @@
     status: string;
     orderDetails: PharmacistOrderDetail[];
   }
+
+  interface CreateOrderDetailRequest {
+    medicineID: number;
+    quantity: number;
+  }
