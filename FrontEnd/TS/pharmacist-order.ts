@@ -704,6 +704,23 @@ function formatMoney(value: number): string {
         });
     }
 
+    async function loadOrders(): Promise<void> {
+      try {
+        const orders =
+          await Api.get<PharmacistOrder[]>(
+            "/PharmacistOrder",
+          );
+
+        updateOrderCounts(orders);
+
+        if (
+          role === "Admin" ||
+          role === "Manager"
+        ) {
+          renderAllOrders(orders);
+          return;
+        }
+
 
 
 
