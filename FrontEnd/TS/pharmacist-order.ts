@@ -687,7 +687,22 @@ function formatMoney(value: number): string {
       myOrdersTableBody.append(fragment);
     } 
 
-    
+    function updateOrderCounts(
+      orders: PharmacistOrder[],
+    ): void {
+      const pendingCount = orders.filter(
+        (order) => order.status === "Pending",
+      ).length;
+
+      document
+        .querySelectorAll<HTMLElement>(
+          "[data-order-count]",
+        )
+        .forEach((badge) => {
+          badge.textContent =
+            String(pendingCount);
+        });
+    }
 
 
 
