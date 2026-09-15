@@ -738,6 +738,25 @@ function formatMoney(value: number): string {
           error,
         );
 
+        const target =
+          role === "Pharmacist"
+            ? myOrdersTableBody
+            : allOrdersTableBody;
+
+        const colspan =
+          role === "Pharmacist" ? 6 : 7;
+
+        target.replaceChildren();
+
+        setTableMessage(
+          target,
+          colspan,
+          errorMessage(error),
+        );
+      }
+    }
+
+
 
 
 
