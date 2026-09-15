@@ -970,6 +970,17 @@ function formatMoney(value: number): string {
         renderOrderDetails();
       }
 
+       await loadOrders();
+    } catch (error: unknown) {
+      console.error(
+        "Failed to initialise the order page:",
+        error,
+      );
+
+      alert(errorMessage(error));
+    }
+  }
+
 
 
 
