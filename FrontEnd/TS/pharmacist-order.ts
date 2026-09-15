@@ -102,3 +102,17 @@
       value === "Manager" ||
       value === "Pharmacist";
   }
+
+  function getUserIdFromToken(): number | null {
+    const token = Auth.token();
+
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payloadPart = token.split(".")[1];
+
+      if (!payloadPart) {
+        return null;
+      }
