@@ -456,6 +456,12 @@ function formatMoney(value: number): string {
             "from the order",
         );
 
+        controls.append(price, removeButton);
+        line.append(information, controls);
+        fragment.append(line);
+      });
+
+
 
       
 
