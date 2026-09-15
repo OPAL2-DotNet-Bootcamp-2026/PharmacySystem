@@ -125,3 +125,10 @@
         Math.ceil(base64.length / 4) * 4,
         "=",
       );
+
+      const parsed: unknown =
+        JSON.parse(atob(paddedBase64));
+
+      if (!parsed || typeof parsed !== "object") {
+        return null;
+      }
