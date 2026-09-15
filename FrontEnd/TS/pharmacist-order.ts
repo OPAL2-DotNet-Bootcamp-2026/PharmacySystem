@@ -391,6 +391,24 @@ function formatMoney(value: number): string {
         return;
       }
 
+      const fragment =
+        document.createDocumentFragment();
+
+      let total = 0;
+
+      orderDetails.forEach((detail, index) => {
+        const subtotal =
+          detail.unitPrice * detail.quantity;
+
+        total += subtotal;
+
+        const line =
+          document.createElement("div");
+
+        line.className =
+          "d-flex justify-content-between " +
+          "align-items-center border-bottom py-3";
+
 
       
 
