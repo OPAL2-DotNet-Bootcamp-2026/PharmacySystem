@@ -931,6 +931,34 @@ function formatMoney(value: number): string {
           const button =
             approveButton ?? rejectButton;
 
+            if (!button) {
+            return;
+          }
+
+          const orderID = Number(
+            approveButton?.dataset.approveId ??
+              rejectButton?.dataset.rejectId,
+          );
+
+          if (
+            !Number.isInteger(orderID) ||
+            orderID < 1
+          ) {
+            return;
+          }
+
+          button.disabled = true;
+
+          void updateOrderStatus(
+            orderID,
+            approveButton
+              ? "Approved"
+              : "Cancelled",
+          );
+        },
+      );
+    }
+
 
 
 
