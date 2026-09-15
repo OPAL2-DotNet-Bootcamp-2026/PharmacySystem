@@ -331,6 +331,19 @@ function formatMoney(value: number): string {
       );
     }
 
+    async function loadCurrentPharmacist():
+      Promise<void> {
+      const userId = getUserIdFromToken();
+
+      if (!userId) {
+        throw new Error(
+          "Your user ID could not be read " +
+            "from the login token.",
+        );
+      }
+
+      
+
 
 
 
