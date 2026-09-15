@@ -876,6 +876,18 @@ function formatMoney(value: number): string {
         },
       );
 
+      orderLines.addEventListener(
+        "click",
+        (event: MouseEvent) => {
+          if (!(event.target instanceof Element)) {
+            return;
+          }
+
+          const button =
+            event.target.closest<HTMLButtonElement>(
+              "[data-remove-index]",
+            );
+
 
 
 
