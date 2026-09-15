@@ -21,4 +21,10 @@
       ? error.message
       : "Unable to sign in. Please try again.";
   }
+
+  function isUserRole(value: string): value is UserRole {
+    return value === "Admin" ||
+      value === "Manager" ||
+      value === "Pharmacist";
+  }
 });
