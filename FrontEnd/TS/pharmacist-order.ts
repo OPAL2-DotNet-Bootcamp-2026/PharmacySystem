@@ -33,3 +33,15 @@
     medicineName: string;
     quantity: number;
   }
+
+  interface PharmacistOrder {
+    pharmacistOrderId: number;
+    pharmacistID: number;
+    fullName: string;
+    pharmacyID: number;
+    pharmacyName: string;
+    orderDate: string;
+    totalCost: number;
+    status: string;
+    orderDetails: PharmacistOrderDetail[];
+  }
