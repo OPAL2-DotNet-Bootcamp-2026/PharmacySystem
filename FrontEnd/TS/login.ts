@@ -74,6 +74,18 @@
         const originalText = button.textContent;
         button.textContent = "Signing in...";
 
+        try {
+          const result = await Api.post<
+            LoginResponse,
+            LoginRequest
+          >("/User/login", request);
+
+          if (!isUserRole(result.role)) {
+            throw new Error(
+              "The server returned an unsupported user role.",
+            );
+          }
+
 
 
 });
