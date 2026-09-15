@@ -323,6 +323,13 @@ input {
   box-shadow: 0 0 0 3px rgba(31, 138, 112, 0.12);
 }
 
+.login-error {
+  min-height: 20px;
+  margin: 4px 0 8px;
+  color: #b42318;
+  font-size: 14px;
+}
+
 .signin-btn {
   display: grid;
   width: 100%;
@@ -344,6 +351,11 @@ input {
 .signin-btn:focus-visible {
   color: var(--green-dark);
   background: var(--green-soft);
+}
+
+.signin-btn:disabled {
+  cursor: wait;
+  opacity: 0.65;
 }
 
 .demorow {

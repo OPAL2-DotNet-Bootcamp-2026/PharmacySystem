@@ -1,1229 +1,408 @@
-document.addEventListener("DOMContentLoaded", async () => {
-
-
-    // ==========================================
-    // CHECK LOGIN
-    // ==========================================
-
-    if (!Auth.isLoggedIn()) {
-
-        window.location.href = "login.html";
-
-        return;
+"use strict";
+(() => {
+    const userIdClaim = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
+    function requireElement(selector) {
+        const element = document.querySelector(selector);
+        if (!element) {
+            throw new Error(`Required order-page element is missing: ${selector}`);
+        }
+        return element;
     }
-
-    // ==========================================
-    // ELEMENTS
-    // ==========================================
-
-    const pharmacySelect =
-        document.getElementById("pharmacyId");
-
-    const medicineSelect =
-        document.getElementById("medicineId");
-
-     const quantityInput =
-        document.getElementById("quantity");
-
-    const addMedicineButton =
-        document.querySelector(".btn-add-medicine");
-
-    const submitButton =
-        document.querySelector(".btn-submit-order");
-
-    const orderLines =
-        document.getElementById("orderLines");
-
-    const estimatedTotal =
-        document.getElementById("estimatedTotal");
-
-    const allOrdersTableBody =
-    document.getElementById("allOrdersTableBody");
-
-    const myOrdersTableBody =
-        document.getElementById("myOrdersTableBody");
-
-    
-    // ==========================================
-    // VARIABLES
-    // ==========================================
-
-    let medicines = [];
-
-    let orderDetails = [];
-
-    let currentPharmacist = null;
-
-    // ==========================================
-    // GET USER ID FROM TOKEN
-    // ==========================================
-
+    function errorMessage(error) {
+        return error instanceof Error
+            ? error.message
+            : "Something went wrong. Please try again.";
+    }
+    function isUserRole(value) {
+        return value === "Admin" || value === "Manager" || value === "Pharmacist";
+    }
     function getUserIdFromToken() {
-
         const token = Auth.token();
-
-
         if (!token) {
-
             return null;
         }
         try {
-
-            const payloadPart =
-                token.split(".")[1];
-
-
-            const payload =
-                JSON.parse(
-                    atob(
-                        payloadPart
-                            .replace(/-/g, "+")
-                            .replace(/_/g, "/")
-                    )
-                );
-
-                return (
-                payload[
-                    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
-                ]
-
-                ||
-
-                payload.nameid
-
-                ||
-
-                payload.sub
-
-                ||
-
-                null
-            );
-
+            const payloadPart = token.split(".")[1];
+            if (!payloadPart) {
+                return null;
+            }
+            const base64 = payloadPart.replace(/-/g, "+").replace(/_/g, "/");
+            const paddedBase64 = base64.padEnd(Math.ceil(base64.length / 4) * 4, "=");
+            const parsed = JSON.parse(atob(paddedBase64));
+            if (!parsed || typeof parsed !== "object") {
+                return null;
+            }
+            const payload = parsed;
+            const rawUserId = payload[userIdClaim] ?? payload.nameid ?? payload.sub;
+            const userId = Number(rawUserId);
+            return Number.isInteger(userId) && userId > 0 ? userId : null;
         }
         catch (error) {
-
-            console.error(
-                "Could not read token:",
-                error
-            );
-
+            console.error("Could not read the login token:", error);
             return null;
         }
     }
-
-    // ==========================================
-    // LOAD PHARMACIES
-    // ==========================================
-
-    async function loadPharmacies() {
-
-        try {
-
-            const pharmacies =
-                await Api.get(
-                    "/Pharmacy"
-                );
-
-
-            pharmacySelect.innerHTML = `
-
-                <option value="">
-                    Select pharmacy
-                </option>
-
-            `;
-
-            pharmacies.forEach(pharmacy => {
-
-                if (!pharmacy.isActive) {
-
+    function setRoleHash(role) {
+        const expectedHash = `#${role.toLowerCase()}`;
+        if (window.location.hash !== expectedHash) {
+            window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}${expectedHash}`);
+        }
+    }
+    function formatMoney(value) {
+        return `OMR ${Number(value).toFixed(3)}`;
+    }
+    function formatDate(value) {
+        const date = new Date(value);
+        return Number.isNaN(date.getTime()) ? "-" : date.toLocaleDateString("en-GB");
+    }
+    function appendTextCell(row, text, className) {
+        const cell = row.insertCell();
+        cell.textContent = text;
+        if (className) {
+            cell.className = className;
+        }
+        return cell;
+    }
+    function appendMedicineCell(row, details) {
+        const cell = row.insertCell();
+        if (details.length === 0) {
+            cell.textContent = "-";
+            return;
+        }
+        details.forEach((detail) => {
+            const line = document.createElement("div");
+            line.textContent = `${detail.medicineName} ×${detail.quantity}`;
+            cell.append(line);
+        });
+    }
+    function setTableMessage(tableBody, colspan, message) {
+        const row = tableBody.insertRow();
+        const cell = row.insertCell();
+        cell.colSpan = colspan;
+        cell.className = "text-center py-4";
+        cell.textContent = message;
+    }
+    async function initialise() {
+        if (!Auth.isLoggedIn()) {
+            window.location.replace("login.html");
+            return;
+        }
+        const roleValue = Auth.role();
+        if (!isUserRole(roleValue)) {
+            window.location.replace("login.html");
+            return;
+        }
+        const role = roleValue;
+        setRoleHash(role);
+        const pharmacySelect = requireElement("#pharmacyId");
+        const medicineSelect = requireElement("#medicineId");
+        const quantityInput = requireElement("#quantity");
+        const addMedicineButton = requireElement(".btn-add-medicine");
+        const submitButton = requireElement(".btn-submit-order");
+        const orderLines = requireElement("#orderLines");
+        const estimatedTotal = requireElement("#estimatedTotal");
+        const allOrdersTableBody = requireElement("#allOrdersTableBody");
+        const myOrdersTableBody = requireElement("#myOrdersTableBody");
+        let medicines = [];
+        let orderDetails = [];
+        let currentPharmacist = null;
+        async function loadPharmacies() {
+            const pharmacies = await Api.get("/Pharmacy");
+            const placeholder = new Option("Select pharmacy", "");
+            const options = pharmacies
+                .filter((pharmacy) => pharmacy.isActive)
+                .map((pharmacy) => new Option(pharmacy.pharmacyName, String(pharmacy.pharmacyID)));
+            pharmacySelect.replaceChildren(placeholder, ...options);
+        }
+        async function loadMedicines() {
+            medicines = await Api.get("/Medicine/GetAvailable");
+            const placeholder = new Option("Select medicine", "");
+            const options = medicines.map((medicine) => new Option(medicine.medicineName, String(medicine.medicineID)));
+            medicineSelect.replaceChildren(placeholder, ...options);
+        }
+        async function loadCurrentPharmacist() {
+            const userId = getUserIdFromToken();
+            if (!userId) {
+                throw new Error("Your user ID could not be read from the login token.");
+            }
+            const pharmacists = await Api.get("/Pharmacist");
+            currentPharmacist =
+                pharmacists.find((pharmacist) => pharmacist.userID === userId && pharmacist.isActive) ?? null;
+            if (!currentPharmacist) {
+                throw new Error("Your active pharmacist profile was not found.");
+            }
+            pharmacySelect.value = String(currentPharmacist.pharmacyID);
+            pharmacySelect.disabled = true;
+        }
+        function renderOrderDetails() {
+            orderLines.replaceChildren();
+            orderLines.classList.toggle("order-lines-empty", orderDetails.length === 0);
+            if (orderDetails.length === 0) {
+                const heading = document.createElement("h3");
+                heading.textContent = "No medicines added yet";
+                const message = document.createElement("p");
+                message.textContent =
+                    "Pick a medicine and a quantity, then add it to the order.";
+                orderLines.append(heading, message);
+                estimatedTotal.textContent = "OMR 0.000";
+                return;
+            }
+            const fragment = document.createDocumentFragment();
+            let total = 0;
+            orderDetails.forEach((detail, index) => {
+                const subtotal = detail.unitPrice * detail.quantity;
+                total += subtotal;
+                const line = document.createElement("div");
+                line.className =
+                    "d-flex justify-content-between align-items-center border-bottom py-3";
+                const information = document.createElement("div");
+                const name = document.createElement("strong");
+                name.textContent = detail.medicineName;
+                const quantity = document.createElement("div");
+                quantity.className = "text-muted";
+                quantity.textContent = `Quantity: ${detail.quantity}`;
+                information.append(name, quantity);
+                const controls = document.createElement("div");
+                controls.className = "d-flex align-items-center gap-3";
+                const price = document.createElement("strong");
+                price.textContent = formatMoney(subtotal);
+                const removeButton = document.createElement("button");
+                removeButton.type = "button";
+                removeButton.className = "btn btn-sm btn-outline-danger";
+                removeButton.dataset.removeIndex = String(index);
+                removeButton.textContent = "Remove";
+                removeButton.setAttribute("aria-label", `Remove ${detail.medicineName} from the order`);
+                controls.append(price, removeButton);
+                line.append(information, controls);
+                fragment.append(line);
+            });
+            orderLines.append(fragment);
+            estimatedTotal.textContent = formatMoney(total);
+        }
+        function addMedicine() {
+            const medicineID = Number(medicineSelect.value);
+            const quantity = Number(quantityInput.value);
+            if (!Number.isInteger(medicineID) || medicineID < 1) {
+                alert("Please select a medicine.");
+                return;
+            }
+            if (!Number.isInteger(quantity) || quantity < 1) {
+                alert("Quantity must be a whole number greater than 0.");
+                return;
+            }
+            const medicine = medicines.find((item) => item.medicineID === medicineID);
+            if (!medicine) {
+                alert("Medicine was not found.");
+                return;
+            }
+            const existingMedicine = orderDetails.find((item) => item.medicineID === medicineID);
+            if (existingMedicine) {
+                existingMedicine.quantity += quantity;
+            }
+            else {
+                orderDetails.push({
+                    medicineID,
+                    medicineName: medicine.medicineName,
+                    unitPrice: Number(medicine.unitPrice),
+                    quantity,
+                });
+            }
+            renderOrderDetails();
+            medicineSelect.value = "";
+            quantityInput.value = "1";
+        }
+        function renderAllOrders(orders) {
+            allOrdersTableBody.replaceChildren();
+            if (orders.length === 0) {
+                setTableMessage(allOrdersTableBody, 7, "No orders found.");
+                return;
+            }
+            const fragment = document.createDocumentFragment();
+            orders.forEach((order) => {
+                const row = document.createElement("tr");
+                appendTextCell(row, `#${order.pharmacistOrderId}`);
+                const pharmacyCell = row.insertCell();
+                const pharmacyName = document.createElement("strong");
+                pharmacyName.textContent = order.pharmacyName;
+                const pharmacistName = document.createElement("small");
+                pharmacistName.textContent = order.fullName;
+                pharmacyCell.append(pharmacyName, document.createElement("br"), pharmacistName);
+                appendMedicineCell(row, order.orderDetails ?? []);
+                appendTextCell(row, formatDate(order.orderDate));
+                appendTextCell(row, formatMoney(order.totalCost), "text-end");
+                appendTextCell(row, order.status);
+                const actionsCell = row.insertCell();
+                actionsCell.className = "text-end";
+                if (order.status === "Pending") {
+                    const approveButton = document.createElement("button");
+                    approveButton.type = "button";
+                    approveButton.className = "btn btn-sm btn-success me-1";
+                    approveButton.dataset.approveId = String(order.pharmacistOrderId);
+                    approveButton.textContent = "Approve";
+                    const rejectButton = document.createElement("button");
+                    rejectButton.type = "button";
+                    rejectButton.className = "btn btn-sm btn-danger";
+                    rejectButton.dataset.rejectId = String(order.pharmacistOrderId);
+                    rejectButton.textContent = "Reject";
+                    actionsCell.append(approveButton, rejectButton);
+                }
+                else {
+                    actionsCell.textContent = "-";
+                }
+                fragment.append(row);
+            });
+            allOrdersTableBody.append(fragment);
+        }
+        function renderMyOrders(orders) {
+            myOrdersTableBody.replaceChildren();
+            if (orders.length === 0) {
+                setTableMessage(myOrdersTableBody, 6, "No orders found.");
+                return;
+            }
+            const fragment = document.createDocumentFragment();
+            orders.forEach((order) => {
+                const row = document.createElement("tr");
+                appendTextCell(row, `#${order.pharmacistOrderId}`);
+                appendTextCell(row, order.pharmacyName);
+                appendMedicineCell(row, order.orderDetails ?? []);
+                appendTextCell(row, formatDate(order.orderDate));
+                appendTextCell(row, formatMoney(order.totalCost), "text-end");
+                appendTextCell(row, order.status);
+                fragment.append(row);
+            });
+            myOrdersTableBody.append(fragment);
+        }
+        function updateOrderCounts(orders) {
+            const pendingCount = orders.filter((order) => order.status === "Pending").length;
+            document.querySelectorAll("[data-order-count]").forEach((badge) => {
+                badge.textContent = String(pendingCount);
+            });
+        }
+        async function loadOrders() {
+            try {
+                const orders = await Api.get("/PharmacistOrder");
+                updateOrderCounts(orders);
+                if (role === "Admin" || role === "Manager") {
+                    renderAllOrders(orders);
                     return;
                 }
-
-
-                pharmacySelect.innerHTML += `
-
-                    <option
-                        value="${pharmacy.pharmacyID}"
-                    >
-                        ${pharmacy.pharmacyName}
-                    </option>
-
-                `;
-
-            });
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Failed to load pharmacies:",
-                error
-            );
-
-        }
-
-    }
-
-     // ==========================================
-    // LOAD MEDICINES
-    // ==========================================
-
-    async function loadMedicines() {
-
-        try {
-
-            medicines =
-                await Api.get(
-                    "/Medicine/GetAvailable"
-                );
-
-                medicineSelect.innerHTML = `
-
-                <option value="">
-                    Select medicine
-                </option>
-
-            `;
-
-            medicines.forEach(medicine => {
-
-                medicineSelect.innerHTML += `
-
-                    <option
-                        value="${medicine.medicineID}"
-                    >
-                        ${medicine.medicineName}
-                    </option>
-
-                `;
-
-            });
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Failed to load medicines:",
-                error
-            );
-
-        }
-
-    }
-
-     // ==========================================
-    // FIND LOGGED-IN PHARMACIST
-    // ==========================================
-
-    async function loadCurrentPharmacist() {
-
-        if (Auth.role() !== "Pharmacist") {
-
-            return;
-        }
-         try {
-
-            const userId =
-                Number(
-                    getUserIdFromToken()
-                );
-
-
-            const pharmacists =
-                await Api.get(
-                    "/Pharmacist"
-                );
-
-                currentPharmacist =
-                pharmacists.find(
-                    pharmacist =>
-                        pharmacist.userID === userId
-                );
-
-                 if (!currentPharmacist) {
-
-                throw new Error(
-                    "Pharmacist profile was not found."
-                );
+                const pharmacist = currentPharmacist;
+                if (pharmacist) {
+                    renderMyOrders(orders.filter((order) => order.pharmacistID === pharmacist.pharmacistID));
+                }
             }
-
-            // Select pharmacist's pharmacy automatically
-
-            pharmacySelect.value =
-                currentPharmacist.pharmacyID;
-
-
-            // Pharmacist cannot choose another pharmacy
-
-            pharmacySelect.disabled = true;
-
+            catch (error) {
+                console.error("Failed to load orders:", error);
+                const target = role === "Pharmacist" ? myOrdersTableBody : allOrdersTableBody;
+                const colspan = role === "Pharmacist" ? 6 : 7;
+                target.replaceChildren();
+                setTableMessage(target, colspan, errorMessage(error));
+            }
         }
-
-        catch (error) {
-
-            console.error(
-                "Failed to find pharmacist:",
-                error
-            );
-
-            alert(error.message);
-
-        }
-
-    }
-
-     // ==========================================
-    // LOAD PHARMACISTS BY PHARMACY
-    // database-loading
-    // ==========================================
-    
-    async function createPharmacistOrder() {
-    if (Auth.role() !== "Pharmacist") {
-    return;  
-    }
-
-    if (!currentPharmacist) {
-        alert("Pharmacist profile was not found.");
-        return;
-    }
-
-    const pharmacyID = Number(pharmacySelect.value);
-    const pharmacistID = currentPharmacist.pharmacistID;
-
-    if (!pharmacyID) {
-        alert("Your pharmacy was not found.");
-        return;
-    }
-
-    if (orderDetails.length === 0) {
-        alert("Please add at least one medicine.");
-        return;
-    }
-
-    const order = {
-        pharmacistID: pharmacistID,
-        pharmacyID: pharmacyID,
-        orderDetails: orderDetails.map(detail => ({
-            medicineID: detail.medicineID,
-            quantity: detail.quantity
-        }))
-    };
-
-    try {
-        submitButton.disabled = true;
-        submitButton.textContent = "Submitting...";
-
-        await Api.post("/PharmacistOrder", order);
-
-        alert("Pharmacist order created successfully.");
-
-        orderDetails = [];
-        renderOrderDetails();
-        await loadOrders();
-    } 
-    
-    catch (error) {
-        console.error("Failed to create order:", error);
-        alert(error.message);
-    } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = "Submit order";
-    }
-}
-
-    // ==========================================
-
-    async function loadPharmacies() {
-    try {
-        const pharmacies = await Api.get("/Pharmacy");
-
-        pharmacySelect.innerHTML = `
-            <option value="">Select pharmacy</option>
-        `;
-
-        pharmacies.forEach(pharmacy => {
-            if (!pharmacy.isActive) {
+        async function createPharmacistOrder() {
+            if (role !== "Pharmacist" || !currentPharmacist) {
+                alert("An active pharmacist profile is required to create an order.");
                 return;
             }
-
-            pharmacySelect.innerHTML += `
-                <option value="${pharmacy.pharmacyID}">
-                    ${pharmacy.pharmacyName}
-                </option>
-            `;
-        });
-         } catch (error) {
-        console.error("Failed to load pharmacies:", error);
-    }
-}
-
-async function loadMedicines() {
-    try {
-        medicines = await Api.get("/Medicine/GetAvailable");
-
-        medicineSelect.innerHTML = `
-            <option value="">Select medicine</option>
-        `;
-
-        medicines.forEach(medicine => {
-            medicineSelect.innerHTML += `
-                <option value="${medicine.medicineID}">
-                    ${medicine.medicineName}
-                </option>
-            `;
-        });
-
-        } catch (error) {
-        console.error("Failed to load medicines:", error);
-    }
-}
-
-async function loadCurrentPharmacist() {
-    try {
-        const userId = Number(getUserIdFromToken());
-        const pharmacists = await Api.get("/Pharmacist");
-
-        currentPharmacist = pharmacists.find(
-            pharmacist => pharmacist.userID === userId
-        );
-
-        if (!currentPharmacist) {
-            throw new Error("Pharmacist profile was not found.");
-        }
-
-        // Select the pharmacist's assigned pharmacy.
-        pharmacySelect.value = currentPharmacist.pharmacyID;
-
-        // Prevent the pharmacist from changing the pharmacy.
-        pharmacySelect.disabled = true;
-    } catch (error) {
-        console.error("Failed to find pharmacist:", error);
-        alert(error.message);
-    }
-}
-
-
-    // ==========================================
-    // ADD MEDICINE
-    // ==========================================
-
-    function addMedicine() {
-
-        const medicineId =
-            Number(
-                medicineSelect.value
-            );
-
-            const quantity =
-            Number(
-                quantityInput.value
-            );
-
-            // Check medicine
-
-        if (!medicineId) {
-
-            alert(
-                "Please select a medicine."
-            );
-
-            return;
-        }
-
-        // Check quantity
-
-        if (!quantity || quantity < 1) {
-
-            alert(
-                "Quantity must be greater than 0."
-            );
-
-            return;
-        }
-
-
-        // Find medicine information
-
-        const medicine =
-            medicines.find(
-                item =>
-                    item.medicineID === medicineId
-            );
-
-            if (!medicine) {
-
-            alert(
-                "Medicine was not found."
-            );
-
-            return;
-        }
-
-        // Check if medicine already exists in order
-
-        const existingMedicine =
-            orderDetails.find(
-                item =>
-                    item.medicineID === medicineId
-            );
-
-            if (existingMedicine) {
-
-            existingMedicine.quantity +=
-                quantity;
-
-        }
-
-         else {
-
-            orderDetails.push({
-
-                medicineID:
-                    medicineId,
-
-                medicineName:
-                    medicine.medicineName,
-
-                unitPrice:
-                    Number(medicine.unitPrice),
-
-
-                quantity:
-                    quantity
-
-            });
-
-        }
-
-        console.log(
-        "Order medicines:",
-        orderDetails
-    );
-
-        // Refresh displayed medicines
-
-        renderOrderDetails();
-
-
-        // Reset
-
-        medicineSelect.value = "";
-
-        quantityInput.value = 1;
-
-    }
-
-    // ==========================================
-    // RENDER ORDER DETAILS
-    // ==========================================
-
-    function renderOrderDetails() {
-
-        // No medicines
-
-        if (orderDetails.length === 0) {
-
-            orderLines.innerHTML = `
-
-                <h3>
-                    No medicines added yet
-                </h3>
-
-                <p>
-                    Pick a medicine and a quantity,
-                    then add it to the order.
-                </p>
-
-            `;
-
-             estimatedTotal.textContent =
-                "OMR 0.000";
-
-
-            return;
-        }
-
-
-
-        let html = "";
-
-        let total = 0;
-
-        orderDetails.forEach((detail, index) => {
-
-            const subtotal =
-                detail.unitPrice *
-                detail.quantity;
-
-
-            total += subtotal;
-
-
-            html += `
-
-                <div
-                    class="d-flex
-                           justify-content-between
-                           align-items-center
-                           border-bottom
-                           py-3"
-                >
-                
-                <div>
-
-                        <strong>
-                            ${detail.medicineName}
-                        </strong>
-
-                        <div class="text-muted">
-
-                            Quantity:
-                            ${detail.quantity}
-
-                        </div>
-
-                    </div>
-
-                    <div class="d-flex align-items-center gap-3">
-
-                        <strong>
-
-                            OMR
-                            ${subtotal.toFixed(3)}
-
-                        </strong>
-
-                        <button
-                            type="button"
-                            class="btn btn-sm btn-outline-danger"
-                            data-remove-index="${index}"
-                        >
-
-                            Remove
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `;
-
-        });
-
-         orderLines.innerHTML = html;
-
-
-        estimatedTotal.textContent =
-            `OMR ${total.toFixed(3)}`;
-
-    }
-
-    // ==========================================
-    // REMOVE MEDICINE
-    // ==========================================
-
-    orderLines.addEventListener(
-        "click",
-        event => {
-
-            const button =
-                event.target.closest(
-                    "[data-remove-index]"
-                );
-
-                if (!button) {
-
+            if (orderDetails.length === 0) {
+                alert("Please add at least one medicine.");
                 return;
             }
-
-
-            const index =
-                Number(
-                    button.dataset.removeIndex
-                );
-
-
-            orderDetails.splice(
-                index,
-                1
-            );
-            renderOrderDetails();
-
-        }
-    );
-
-    // ==========================================
-    // CREATE PHARMACIST ORDER
-    // ==========================================
-
-    async function createPharmacistOrder() {
-
-        const pharmacyID =
-            Number(
-                pharmacySelect.value
-            );
-            let pharmacistID;
-
-            // Logged-in Pharmacist
-
-        if (Auth.role() === "Pharmacist") {
-
-            if (!currentPharmacist) {
-
-                alert(
-                    "Pharmacist profile was not found."
-                );
-
-                return;
-            }
-
-            pharmacistID =
-                currentPharmacist.pharmacistID;
-
-        }
-
-        // Admin
-
-        else if (Auth.role() === "Admin") {
-
-            pharmacistID =
-                Number(
-                    pharmacistSelect.value
-                );
-
-        }
-
-        // Check pharmacy
-
-        if (!pharmacyID) {
-
-            alert(
-                "Please select a pharmacy."
-            );
-
-            return;
-        }
-
-        // Check pharmacist
-
-        if (!pharmacistID) {
-
-            alert(
-                "Please select a pharmacist."
-            );
-
-            return;
-        }
-
-
-        // Check medicines
-
-        if (orderDetails.length === 0) {
-
-            alert(
-                "Please add at least one medicine."
-            );
-
-            return;
-        }
-
-        // ======================================
-        // BODY SENT TO BACKEND
-        // ======================================
-
-        const order = {
-
-            pharmacistID:
-                pharmacistID,
-
-            pharmacyID:
-                pharmacyID,
-
-            orderDetails:
-                orderDetails.map(detail => ({
-
-                    medicineID:
-                        detail.medicineID,
-
-                    quantity:
-                        detail.quantity
-
-                }))
-
-        };
-
-        console.log(
-            "Order sent to API:",
-            order
-        );
-
-
-
-        try {
-
+            const order = {
+                pharmacistID: currentPharmacist.pharmacistID,
+                pharmacyID: currentPharmacist.pharmacyID,
+                orderDetails: orderDetails.map(({ medicineID, quantity }) => ({
+                    medicineID,
+                    quantity,
+                })),
+            };
             submitButton.disabled = true;
-
-            submitButton.textContent =
-                "Submitting...";
-
-            // ==================================
-            // POST TO API
-            // ==================================
-
-            const result =
-                await Api.post(
-                    "/PharmacistOrder",
-                    order
-                );
-
-                 console.log(
-                "Order created:",
-                result
-            );
-
-
-            alert(
-                "Pharmacist order created successfully."
-            );
-
-            // Clear order
-
-            orderDetails = [];
-
-            renderOrderDetails();
-
-            await loadOrders();
-
-
-
-            // Reload orders if you add
-            // loadOrders() later
-
+            submitButton.textContent = "Submitting...";
+            try {
+                await Api.post("/PharmacistOrder", order);
+                alert("Pharmacist order created successfully.");
+                orderDetails = [];
+                renderOrderDetails();
+                await loadOrders();
+            }
+            catch (error) {
+                console.error("Failed to create order:", error);
+                alert(errorMessage(error));
+            }
+            finally {
+                submitButton.disabled = false;
+                submitButton.textContent = "Submit order";
+            }
         }
-
-        catch (error) {
-
-            console.error(
-                "Failed to create order:",
-                error
-            );
-
-
-            alert(
-                error.message
-            );
-
-        }
-
-         finally {
-
-            submitButton.disabled = false;
-
-            submitButton.textContent =
-                "Submit order";
-
-        }
-
-    }
-
-    if (allOrdersTableBody) {
-
-    allOrdersTableBody.addEventListener(
-        "click",
-        async event => {
-
-
-            // APPROVE
-
-            const approveButton =
-                event.target.closest(
-                    "[data-approve-id]"
-                );
-
-                 if (approveButton) {
-
-                const orderId =
-                    Number(
-                        approveButton.dataset.approveId
-                    );
-
-
-                await updateOrderStatus(
-                    orderId,
-                    "Approved"
-                );
-
-
+        async function updateOrderStatus(orderID, status) {
+            if (role !== "Admin" && role !== "Manager") {
                 return;
             }
-
-
-            // REJECT
-
-            const rejectButton =
-                event.target.closest(
-                    "[data-reject-id]"
-                );
-
-                       if (rejectButton) {
-
-                const orderId =
-                    Number(
-                        rejectButton.dataset.rejectId
-                    );
-
-
-                await updateOrderStatus(
-                    orderId,
-                    "Cancelled"
-                );
+            const request = { status };
+            try {
+                await Api.put(`/PharmacistOrder/${orderID}/status`, request);
+                alert(`Order ${status.toLowerCase()} successfully.`);
+                await loadOrders();
             }
-
-        }
-    );
-}
-
-
-    // ==========================================
-    // EVENTS
-    // ==========================================
-    // Only initialize the New order form for pharmacists.
-    if (Auth.role() === "Pharmacist") {
-        addMedicineButton.addEventListener("click", addMedicine);
-        
-        submitButton.addEventListener(
-        "click",
-        createPharmacistOrder
-    );
-
-    // Load form information from the database.
-    await loadPharmacies();
-    await loadMedicines();
-    await loadCurrentPharmacist();
-}
-
-// Admin and manager order information still comes from the database.
-await loadOrders();
-
-    // ==========================================
-    // FIRST PAGE LOAD
-    // ==========================================
-
-    await loadPharmacies();
-
-    await loadMedicines();
-
-
-    if (Auth.role() === "Pharmacist") {
-
-        await loadCurrentPharmacist();
-
-    }
-
-    await loadOrders();
-
-
-
-
-// ==========================================
-// LOAD ORDERS FROM DATABASE
-// ==========================================
-
-async function loadOrders() {
-
-    try {
-
-        const orders =
-            await Api.get("/PharmacistOrder");
-
-
-        console.log(
-            "Orders from database:",
-            orders
-        );
-
-        // Admin and Manager see all orders
-
-        if (
-            Auth.role() === "Admin" ||
-            Auth.role() === "Manager"
-        ) {
-
-            renderAllOrders(orders);
-        }
-
-          // Pharmacist sees own orders
-
-        if (
-            Auth.role() === "Pharmacist" &&
-            currentPharmacist
-        ) {
-
-            const myOrders =
-                orders.filter(
-                    order =>
-                        order.pharmacistID ===
-                        currentPharmacist.pharmacistID
-                );
-
-
-            renderMyOrders(myOrders);
-        }
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Failed to load orders:",
-            error
-        );
-    }
-}
-
-// ==========================================
-// ADMIN / MANAGER ORDERS
-// ==========================================
-
-function renderAllOrders(orders) {
-
-    if (!allOrdersTableBody) {
-        return;
-    }
-
-        if (orders.length === 0) {
-
-        allOrdersTableBody.innerHTML = `
-            <tr>
-                <td
-                    colspan="7"
-                    class="text-center py-4"
-                >
-                    No orders found.
-                </td>
-            </tr>
-        `;
-
-        return;
-    }
-
-       allOrdersTableBody.innerHTML = "";
-
-
-    orders.forEach(order => {
-
-        const medicines =
-            order.orderDetails
-                ?.map(
-                    detail =>
-                        `${detail.medicineName} ×${detail.quantity}`
-                )
-                .join("<br>")
-            || "-";
-
-
-        const date =
-            new Date(
-                order.orderDate
-            ).toLocaleDateString("en-GB");
-
-
-        let actions = "-";
-
-         if (
-            order.status === "Pending"
-        ) {
-
-            actions = `
-                <button
-                    type="button"
-                    class="btn btn-sm btn-success"
-                    data-approve-id="${order.pharmacistOrderId}"
-                >
-                    Approve
-                </button>
-
-                <button
-                    type="button"
-                    class="btn btn-sm btn-danger"
-                    data-reject-id="${order.pharmacistOrderId}"
-                >
-                    Reject
-                </button>
-            `;
-        }
-
-         allOrdersTableBody.innerHTML += `
-            <tr>
-
-                <td>
-                    #${order.pharmacistOrderId}
-                </td>
-
-                <td>
-                    <strong>
-                        ${order.pharmacyName}
-                    </strong>
-
-                    <br>
-
-                    <small>
-                        ${order.fullName}
-                    </small>
-                </td>
-
-                   <td>
-                    ${medicines}
-                </td>
-
-                <td>
-                    ${date}
-                </td>
-
-                <td class="text-end">
-                    OMR ${Number(order.totalCost).toFixed(3)}
-                </td>
-
-                <td>
-                    ${order.status}
-                </td>
-
-                <td class="text-end">
-                    ${actions}
-                </td>
-
-            </tr>
-        `;
-    });
-}
-
-// ==========================================
-// PHARMACIST MY ORDERS
-// ==========================================
-
-function renderMyOrders(orders) {
-
-    if (!myOrdersTableBody) {
-        return;
-    }
-
-
-    if (orders.length === 0) {
-
-        myOrdersTableBody.innerHTML = `
-            <tr>
-
-                <td
-                    colspan="6"
-                    class="text-center py-4"
-                >
-                    No orders found.
-                </td>
-
-            </tr>
-        `;
-
-        return;
-    }
-
-       myOrdersTableBody.innerHTML = "";
-
-
-    orders.forEach(order => {
-
-        const medicines =
-            order.orderDetails
-                ?.map(
-                    detail =>
-                        `${detail.medicineName} ×${detail.quantity}`
-                )
-                .join("<br>")
-            || "-";
-
-                    const date =
-            new Date(
-                order.orderDate
-            ).toLocaleDateString("en-GB");
-
-            myOrdersTableBody.innerHTML += `
-            <tr>
-
-                <td>
-                    #${order.pharmacistOrderId}
-                </td>
-
-                <td>
-                    ${order.pharmacyName}
-                </td>
-
-                <td>
-                    ${medicines}
-                </td>
-
-                <td>
-                    ${date}
-                </td>
-
-                <td class="text-end">
-                    OMR ${Number(order.totalCost).toFixed(3)}
-                </td>
-
-                <td>
-                    ${order.status}
-                </td>
-
-            </tr>
-        `;
-    });
-}
-
-// ==========================================
-// APPROVE / REJECT ORDER
-// ==========================================
-
-async function updateOrderStatus(
-    orderId,
-    status
-) {
-
-    try {
-
-        await Api.put(
-            `/PharmacistOrder/${orderId}/status`,
-            {
-                status: status
+            catch (error) {
+                console.error("Failed to update order:", error);
+                alert(errorMessage(error));
             }
-        );
-
-
-        alert(
-            `Order ${status} successfully.`
-        );
-
-
-        await loadOrders();
-
+        }
+        if (role === "Pharmacist") {
+            addMedicineButton.addEventListener("click", addMedicine);
+            submitButton.addEventListener("click", () => {
+                void createPharmacistOrder();
+            });
+            orderLines.addEventListener("click", (event) => {
+                if (!(event.target instanceof Element)) {
+                    return;
+                }
+                const button = event.target.closest("[data-remove-index]");
+                if (!button) {
+                    return;
+                }
+                const index = Number(button.dataset.removeIndex);
+                if (Number.isInteger(index) && index >= 0 && index < orderDetails.length) {
+                    orderDetails.splice(index, 1);
+                    renderOrderDetails();
+                }
+            });
+        }
+        if (role === "Admin" || role === "Manager") {
+            allOrdersTableBody.addEventListener("click", (event) => {
+                if (!(event.target instanceof Element)) {
+                    return;
+                }
+                const approveButton = event.target.closest("[data-approve-id]");
+                const rejectButton = event.target.closest("[data-reject-id]");
+                const button = approveButton ?? rejectButton;
+                if (!button) {
+                    return;
+                }
+                const orderID = Number(approveButton?.dataset.approveId ?? rejectButton?.dataset.rejectId);
+                if (!Number.isInteger(orderID) || orderID < 1) {
+                    return;
+                }
+                button.disabled = true;
+                void updateOrderStatus(orderID, approveButton ? "Approved" : "Cancelled");
+            });
+        }
+        try {
+            if (role === "Pharmacist") {
+                await Promise.all([loadPharmacies(), loadMedicines()]);
+                await loadCurrentPharmacist();
+                renderOrderDetails();
+            }
+            await loadOrders();
+        }
+        catch (error) {
+            console.error("Failed to initialise the order page:", error);
+            alert(errorMessage(error));
+        }
     }
-
-      catch (error) {
-
-        console.error(
-            "Failed to update order:",
-            error
-        );
-
-
-        alert(
-            error.message
-        );
-    }
-}
-
-});
-
-
+    document.addEventListener("DOMContentLoaded", () => {
+        void initialise();
+    });
+})();
+//# sourceMappingURL=pharmacist-order.js.map

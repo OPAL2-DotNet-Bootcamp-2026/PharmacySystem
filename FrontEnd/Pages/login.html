@@ -90,6 +90,7 @@
             type="email"
             placeholder="name@pharmacy.com"
             autocomplete="username"
+            aria-describedby="login-error"
             required
           >
         </div>
@@ -103,10 +104,13 @@
             type="password"
             placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
             autocomplete="current-password"
+            aria-describedby="login-error"
             minlength="8"
             required
           >
         </div>
+
+        <p id="login-error" class="login-error" role="alert" aria-live="polite"></p>
 
         <button
         type="submit"

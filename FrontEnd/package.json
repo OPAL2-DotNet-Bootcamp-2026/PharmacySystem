@@ -1,0 +1,11 @@
+{
+  "name": "pharmacy-system-frontend",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json --watch"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}
