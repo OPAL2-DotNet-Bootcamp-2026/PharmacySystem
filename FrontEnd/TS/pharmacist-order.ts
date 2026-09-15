@@ -721,6 +721,23 @@ function formatMoney(value: number): string {
           return;
         }
 
+        const pharmacist = currentPharmacist;
+
+        if (pharmacist) {
+          renderMyOrders(
+            orders.filter(
+              (order) =>
+                order.pharmacistID ===
+                pharmacist.pharmacistID,
+            ),
+          );
+        }
+      } catch (error: unknown) {
+        console.error(
+          "Failed to load orders:",
+          error,
+        );
+
 
 
 
