@@ -275,6 +275,11 @@ function formatMoney(value: number): string {
         "#allOrdersTableBody",
       );
 
+      const myOrdersTableBody =
+      requireElement<HTMLTableSectionElement>(
+        "#myOrdersTableBody",
+      );
+
 
 
 
