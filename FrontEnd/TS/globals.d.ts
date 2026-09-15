@@ -5,3 +5,11 @@ interface AuthSession {
   username: string;
   role: UserRole;
 }
+
+interface AuthClient {
+  save(data: AuthSession): void;
+  token(): string | null;
+  role(): UserRole | null;
+  isLoggedIn(): boolean;
+  logout(): void;   
+}
