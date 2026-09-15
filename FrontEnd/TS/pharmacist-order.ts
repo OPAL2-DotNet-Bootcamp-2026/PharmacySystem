@@ -372,6 +372,25 @@ function formatMoney(value: number): string {
         orderDetails.length === 0,
       );
 
+       if (orderDetails.length === 0) {
+        const heading =
+          document.createElement("h3");
+
+        heading.textContent =
+          "No medicines added yet";
+
+        const message =
+          document.createElement("p");
+
+        message.textContent =
+          "Pick a medicine and a quantity, " +
+          "then add it to the order.";
+
+        orderLines.append(heading, message);
+        estimatedTotal.textContent = "OMR 0.000";
+        return;
+      }
+
 
       
 
