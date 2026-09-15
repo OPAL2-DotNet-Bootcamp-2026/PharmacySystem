@@ -68,6 +68,12 @@
           password: passwordInput.value,
         };
 
+        button.disabled = true;
+        form.setAttribute("aria-busy", "true");
+
+        const originalText = button.textContent;
+        button.textContent = "Signing in...";
+
 
 
 });
