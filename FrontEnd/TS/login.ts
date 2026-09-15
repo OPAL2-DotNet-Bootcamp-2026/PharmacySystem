@@ -63,6 +63,11 @@
           return;
         }
 
+        const request: LoginRequest = {
+          email: emailInput.value.trim(),
+          password: passwordInput.value,
+        };
+
 
 
 });
