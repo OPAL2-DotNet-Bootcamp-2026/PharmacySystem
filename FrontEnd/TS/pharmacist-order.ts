@@ -467,6 +467,21 @@ function formatMoney(value: number): string {
         formatMoney(total);
     }
 
+    function addMedicine(): void {
+      const medicineID =
+        Number(medicineSelect.value);
+
+      const quantity =
+        Number(quantityInput.value);
+
+      if (
+        !Number.isInteger(medicineID) ||
+        medicineID < 1
+      ) {
+        alert("Please select a medicine.");
+        return;
+      }
+
 
 
 
