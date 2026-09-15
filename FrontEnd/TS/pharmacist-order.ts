@@ -342,6 +342,23 @@ function formatMoney(value: number): string {
         );
       }
 
+      const pharmacists =
+        await Api.get<Pharmacist[]>("/Pharmacist");
+
+      currentPharmacist =
+        pharmacists.find(
+          (pharmacist) =>
+            pharmacist.userID === userId &&
+            pharmacist.isActive,
+        ) ?? null;
+
+      if (!currentPharmacist) {
+        throw new Error(
+          "Your active pharmacist profile was not found.",
+        );
+      }
+
+
       
 
 
