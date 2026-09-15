@@ -409,6 +409,23 @@ function formatMoney(value: number): string {
           "d-flex justify-content-between " +
           "align-items-center border-bottom py-3";
 
+          const information =
+          document.createElement("div");
+
+        const name =
+          document.createElement("strong");
+
+        name.textContent = detail.medicineName;
+
+        const quantity =
+          document.createElement("div");
+
+        quantity.className = "text-muted";
+        quantity.textContent =
+          `Quantity: ${detail.quantity}`;
+
+        information.append(name, quantity);
+
 
       
 
