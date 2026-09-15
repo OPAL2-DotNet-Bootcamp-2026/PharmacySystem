@@ -634,6 +634,21 @@ function formatMoney(value: number): string {
       allOrdersTableBody.append(fragment);
     }
 
+    function renderMyOrders(
+      orders: PharmacistOrder[],
+    ): void {
+      myOrdersTableBody.replaceChildren();
+
+      if (orders.length === 0) {
+        setTableMessage(
+          myOrdersTableBody,
+          6,
+          "No orders found.",
+        );
+
+        return;
+      }
+
 
 
 
