@@ -863,6 +863,19 @@ function formatMoney(value: number): string {
       }
     }
 
+     if (role === "Pharmacist") {
+      addMedicineButton.addEventListener(
+        "click",
+        addMedicine,
+      );
+
+      submitButton.addEventListener(
+        "click",
+        () => {
+          void createPharmacistOrder();
+        },
+      );
+
 
 
 
