@@ -778,6 +778,21 @@ function formatMoney(value: number): string {
         return;
       }
 
+      const order: CreateOrderRequest = {
+        pharmacistID:
+          currentPharmacist.pharmacistID,
+
+        pharmacyID:
+          currentPharmacist.pharmacyID,
+
+        orderDetails: orderDetails.map(
+          ({ medicineID, quantity }) => ({
+            medicineID,
+            quantity,
+          }),
+        ),
+      };
+
 
 
 
