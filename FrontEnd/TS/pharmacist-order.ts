@@ -264,6 +264,17 @@ function formatMoney(value: number): string {
         ".btn-submit-order",
       );
 
+      const orderLines =
+      requireElement<HTMLDivElement>("#orderLines");
+
+    const estimatedTotal =
+      requireElement<HTMLElement>("#estimatedTotal");
+
+    const allOrdersTableBody =
+      requireElement<HTMLTableSectionElement>(
+        "#allOrdersTableBody",
+      );
+
 
 
 
