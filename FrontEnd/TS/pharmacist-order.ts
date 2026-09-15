@@ -793,6 +793,29 @@ function formatMoney(value: number): string {
         ),
       };
 
+      submitButton.disabled = true;
+      submitButton.textContent = "Submitting...";
+
+      try {
+        await Api.post<
+          CreateOrderResponse,
+          CreateOrderRequest
+        >("/PharmacistOrder", order);
+
+        alert(
+          "Pharmacist order created successfully.",
+        );
+
+        orderDetails = [];
+        renderOrderDetails();
+
+        await loadOrders();
+      } catch (error: unknown) {
+        console.error(
+          "Failed to create order:",
+          error,
+        );
+
 
 
 
