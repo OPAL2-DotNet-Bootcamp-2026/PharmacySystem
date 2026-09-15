@@ -493,6 +493,22 @@ function formatMoney(value: number): string {
         return;
       }
 
+      const medicine = medicines.find(
+        (item) => item.medicineID === medicineID,
+      );
+
+      if (!medicine) {
+        alert("Medicine was not found.");
+        return;
+      }
+
+      const existingMedicine =
+        orderDetails.find(
+          (item) =>
+            item.medicineID === medicineID,
+        );
+
+
 
 
 
