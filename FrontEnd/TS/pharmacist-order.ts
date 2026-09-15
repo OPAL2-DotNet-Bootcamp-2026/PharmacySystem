@@ -20,3 +20,10 @@
     fullName: string;
     isActive: boolean;
   }
+
+  interface OrderLine {
+    medicineID: number;
+    medicineName: string;
+    unitPrice: number;
+    quantity: number;
+  }
