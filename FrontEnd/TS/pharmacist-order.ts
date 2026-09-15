@@ -661,6 +661,8 @@ function formatMoney(value: number): string {
           `#${order.pharmacistOrderId}`,
         );
 
+        appendTextCell(row, order.pharmacyName);
+
 
 
 
