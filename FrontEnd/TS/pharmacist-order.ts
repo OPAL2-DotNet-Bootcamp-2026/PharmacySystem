@@ -166,4 +166,12 @@
           `${expectedHash}`,
       );
     }
+}
+
+function formatMoney(value: number): string {
+    return `OMR ${Number(value).toFixed(3)}`;
+  }
+
+
+
 
