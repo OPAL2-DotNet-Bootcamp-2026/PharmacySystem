@@ -229,6 +229,19 @@ function formatMoney(value: number): string {
     cell.textContent = message;
   }
 
+  async function initialise(): Promise<void> {
+    if (!Auth.isLoggedIn()) {
+      window.location.replace("login.html");
+      return;
+    }
+
+    const roleValue = Auth.role();
+
+    if (!isUserRole(roleValue)) {
+      window.location.replace("login.html");
+      return;
+    }
+
 
 
 
