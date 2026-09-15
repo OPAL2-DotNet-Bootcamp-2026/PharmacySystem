@@ -216,6 +216,19 @@ function formatMoney(value: number): string {
     });
   }
 
+   function setTableMessage(
+    tableBody: HTMLTableSectionElement,
+    colspan: number,
+    message: string,
+  ): void {
+    const row = tableBody.insertRow();
+    const cell = row.insertCell();
+
+    cell.colSpan = colspan;
+    cell.className = "text-center py-4";
+    cell.textContent = message;
+  }
+
 
 
 
