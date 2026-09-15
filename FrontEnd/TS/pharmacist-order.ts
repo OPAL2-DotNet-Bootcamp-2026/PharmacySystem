@@ -839,6 +839,31 @@ function formatMoney(value: number): string {
         status,
       };
 
+      try {
+        await Api.put<
+          string,
+          UpdateOrderStatusRequest
+        >(
+          `/PharmacistOrder/${orderID}/status`,
+          request,
+        );
+
+        alert(
+          `Order ${status.toLowerCase()} successfully.`,
+        );
+
+        await loadOrders();
+      } catch (error: unknown) {
+        console.error(
+          "Failed to update order:",
+          error,
+        );
+
+        alert(errorMessage(error));
+      }
+    }
+
+
 
 
 
