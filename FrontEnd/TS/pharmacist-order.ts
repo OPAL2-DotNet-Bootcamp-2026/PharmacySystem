@@ -180,6 +180,22 @@ function formatMoney(value: number): string {
       : date.toLocaleDateString("en-GB");
   }
 
+  function appendTextCell(
+    row: HTMLTableRowElement,
+    text: string,
+    className?: string,
+  ): HTMLTableCellElement {
+    const cell = row.insertCell();
+    cell.textContent = text;
+
+    if (className) {
+      cell.className = className;
+    }
+
+    return cell;
+  }
+
+
 
 
 
