@@ -153,4 +153,17 @@
         return null;
     }
   }
-  
+
+  function setRoleHash(role: UserRole): void {
+    const expectedHash = `#${role.toLowerCase()}`;
+
+    if (window.location.hash !== expectedHash) {
+      window.history.replaceState(
+        null,
+        "",
+        `${window.location.pathname}` +
+          `${window.location.search}` +
+          `${expectedHash}`,
+      );
+    }
+
