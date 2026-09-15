@@ -65,3 +65,9 @@
    interface UpdateOrderStatusRequest {
     status: OrderActionStatus;
   }
+
+  interface JwtPayload {
+    [claim: string]: unknown;
+    nameid?: unknown;
+    sub?: unknown;
+  }
