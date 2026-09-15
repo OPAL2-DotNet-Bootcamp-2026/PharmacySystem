@@ -770,6 +770,14 @@ function formatMoney(value: number): string {
         return;
       }
 
+      if (orderDetails.length === 0) {
+        alert(
+          "Please add at least one medicine.",
+        );
+
+        return;
+      }
+
 
 
 
