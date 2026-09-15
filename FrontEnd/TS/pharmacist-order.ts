@@ -888,6 +888,25 @@ function formatMoney(value: number): string {
               "[data-remove-index]",
             );
 
+            if (!button) {
+            return;
+          }
+
+          const index =
+            Number(button.dataset.removeIndex);
+
+          if (
+            Number.isInteger(index) &&
+            index >= 0 &&
+            index < orderDetails.length
+          ) {
+            orderDetails.splice(index, 1);
+            renderOrderDetails();
+          }
+        },
+      );
+    }
+
 
 
 
