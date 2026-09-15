@@ -358,6 +358,12 @@ function formatMoney(value: number): string {
         );
       }
 
+       pharmacySelect.value =
+        String(currentPharmacist.pharmacyID);
+
+      pharmacySelect.disabled = true;
+    }
+
 
       
 
