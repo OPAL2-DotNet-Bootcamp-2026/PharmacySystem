@@ -38,4 +38,20 @@
       return;
     }
 
+    const form =
+      requireElement<HTMLFormElement>(".loginbox");
+
+    const emailInput =
+      requireElement<HTMLInputElement>("#email");
+
+    const passwordInput =
+      requireElement<HTMLInputElement>("#password");
+
+    const button =
+      requireElement<HTMLButtonElement>(".signin-btn");
+
+    const errorBox =
+      requireElement<HTMLParagraphElement>("#login-error");
+
+
 });
