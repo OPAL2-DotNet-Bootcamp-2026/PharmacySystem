@@ -540,6 +540,18 @@ function formatMoney(value: number): string {
         return;
       }
 
+      const fragment =
+        document.createDocumentFragment();
+
+      orders.forEach((order) => {
+        const row =
+          document.createElement("tr");
+
+        appendTextCell(
+          row,
+          `#${order.pharmacistOrderId}`,
+        );
+
 
 
 
