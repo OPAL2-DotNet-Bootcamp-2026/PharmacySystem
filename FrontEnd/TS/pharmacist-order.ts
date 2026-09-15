@@ -461,6 +461,13 @@ function formatMoney(value: number): string {
         fragment.append(line);
       });
 
+      orderLines.append(fragment);
+
+      estimatedTotal.textContent =
+        formatMoney(total);
+    }
+
+
 
 
       
