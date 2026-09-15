@@ -280,6 +280,34 @@ function formatMoney(value: number): string {
         "#myOrdersTableBody",
       );
 
+      let medicines: Medicine[] = [];
+    let orderDetails: OrderLine[] = [];
+
+    let currentPharmacist: Pharmacist | null = null;
+
+    async function loadPharmacies(): Promise<void> {
+      const pharmacies =
+        await Api.get<Pharmacy[]>("/Pharmacy");
+
+      const placeholder =
+        new Option("Select pharmacy", "");
+
+      const options = pharmacies
+        .filter((pharmacy) => pharmacy.isActive)
+        .map(
+          (pharmacy) =>
+            new Option(
+              pharmacy.pharmacyName,
+              String(pharmacy.pharmacyID),
+            ),
+        );
+
+      pharmacySelect.replaceChildren(
+        placeholder,
+        ...options,
+      );
+    }
+
 
 
 
