@@ -19,9 +19,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     // GET MAIN CONTENT
     const mainContent = document.querySelector(".main-content");
-    const footer = document.querySelector(".small-footer");
-    if (!mainContent || !footer)
+    const footerContainer = document.getElementById("footer-container");
+    if (!mainContent || !footerContainer) {
         return;
+    }
     // REMOVE OLD HARDCODED STOCK CARDS
     const oldCards = document.querySelectorAll(".stock-card");
     oldCards.forEach((card) => {
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             <p>Loading pharmacy stock...</p>
         </section>
     `;
-    mainContent.insertBefore(container, footer);
+    mainContent.insertBefore(container, footerContainer);
     // LOAD PHARMACIES
     try {
         const pharmacies = await Api.get("/Pharmacy");
@@ -54,7 +55,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const pharmacyID = pharmacy.pharmacyID;
             let stocks = [];
             try {
-                stocks = await Api.get("/PharmacyStock/by-pharmacy/" + pharmacyID);
+                stocks =
+                    await Api.get("/PharmacyStock/by-pharmacy/" + pharmacyID);
             }
             catch (error) {
                 console.error("Stock error for pharmacy:", pharmacyID, error);
@@ -135,7 +137,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
             let expiry = "-";
             if (stock.expiryDate) {
-                expiry = new Date(stock.expiryDate).toLocaleDateString();
+                expiry =
+                    new Date(stock.expiryDate).toLocaleDateString();
             }
             return `
                     <tr>
