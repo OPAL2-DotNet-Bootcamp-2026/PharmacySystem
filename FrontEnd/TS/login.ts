@@ -46,19 +46,19 @@
     }
 
     const form =
-      requireElement<HTMLFormElement>(".loginbox");
+      document.querySelector(".loginbox") as HTMLFormElement;
 
     const emailInput =
-      requireElement<HTMLInputElement>("#email");
+      document.getElementById("email") as HTMLInputElement;
 
     const passwordInput =
-      requireElement<HTMLInputElement>("#password");
+      document.querySelector("#password") as HTMLInputElement;
 
     const button =
-      requireElement<HTMLButtonElement>(".signin-btn");
+      document.querySelector(".signin-btn") as HTMLButtonElement;
 
     const errorBox =
-      requireElement<HTMLParagraphElement>("#login-error");
+      document.querySelector("#login-error") as HTMLParagraphElement    ;
 
       form.addEventListener(
       "submit",
