@@ -31,11 +31,18 @@
   document.addEventListener("DOMContentLoaded", () => {
     const savedRole = Auth.role();
 
-    if (Auth.isLoggedIn() && savedRole) {
-      window.location.replace(
-        `dashboard.html#${savedRole.toLowerCase()}`,
-      );
-      return;
+    // CHECK IF ALREADY LOGGED IN
+    if(Auth.isLoggedIn()){
+        const role=Auth.role();
+        
+    if(role){
+        
+        window.location.replace(
+            "dashboard.html#"+role.toLowerCase()
+        );
+    }
+    
+    return;
     }
 
     const form =
