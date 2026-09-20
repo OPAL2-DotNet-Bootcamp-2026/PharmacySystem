@@ -58,7 +58,23 @@
       document.querySelector(".signin-btn") as HTMLButtonElement;
 
     const errorBox =
-      document.querySelector("#login-error") as HTMLParagraphElement    ;
+      document.querySelector("#login-error") as HTMLParagraphElement;
+
+      if(!errorBox){
+        errorBox=document.createElement("p");
+        errorBox.id="login-error";
+        
+        errorBox.style.cssText=
+        "color:#d33;"+
+        "margin:8px 0;"+
+        "min-height:20px;"+
+        "font-size:14px;";
+
+        button.insertAdjacentElement(
+            "beforebegin",
+            errorBox
+        );
+    }
 
       form.addEventListener(
       "submit",
