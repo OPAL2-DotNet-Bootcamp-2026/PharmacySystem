@@ -1,0 +1,1 @@
+const API_BASE: string = "https://localhost:7102/api";
