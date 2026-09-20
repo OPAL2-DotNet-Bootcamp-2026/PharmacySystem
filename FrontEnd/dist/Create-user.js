@@ -12,9 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // ADMIN ONLY
     const currentRole = Auth.role();
     if (currentRole !== "Admin") {
-        window.location.href ="dashboard.html#" +(currentRole ?? "").toLowerCase();
-                      
-                    
+        window.location.href =
+            "dashboard.html#"
+                +
+                    (currentRole ?? "").toLowerCase();
         return;
     }
     // ELEMENTS
