@@ -19,45 +19,68 @@
     }
     document.addEventListener("DOMContentLoaded", () => {
         const savedRole = Auth.role();
-        if (Auth.isLoggedIn() && savedRole) {
-            window.location.replace(`dashboard.html#${savedRole.toLowerCase()}`);
+        // CHECK IF ALREADY LOGGED IN
+        if (Auth.isLoggedIn()) {
+            const role = Auth.role();
+            if (role) {
+                window.location.replace("dashboard.html#" + role.toLowerCase());
+            }
             return;
         }
-        const form = requireElement(".loginbox");
-        const emailInput = requireElement("#email");
-        const passwordInput = requireElement("#password");
-        const button = requireElement(".signin-btn");
-        const errorBox = requireElement("#login-error");
+        const form = document.querySelector(".loginbox");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.querySelector("#password");
+        const button = document.querySelector(".signin-btn");
+        // CREATE ERROR MESSAGE
+        let errorBox = document.getElementById("login-error");
+        if (!errorBox) {
+            errorBox = document.createElement("p");
+            errorBox.id = "login-error";
+            errorBox.style.cssText =
+                "color:#d33;" +
+                    "margin:8px 0;" +
+                    "min-height:20px;" +
+                    "font-size:14px;";
+            button.insertAdjacentElement("beforebegin", errorBox);
+        }
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
             errorBox.textContent = "";
-            if (!form.reportValidity()) {
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+            if (!email || !password) {
+                errorBox.textContent =
+                    "Please enter email and password.";
                 return;
             }
-            const request = {
-                email: emailInput.value.trim(),
-                password: passwordInput.value,
-            };
             button.disabled = true;
             form.setAttribute("aria-busy", "true");
             const originalText = button.textContent;
             button.textContent = "Signing in...";
             try {
-                const result = await Api.post("/User/login", request);
-                if (!isUserRole(result.role)) {
-                    throw new Error("The server returned an unsupported user role.");
-                }
-                Auth.save(result);
+                const result = await Api.post("/User/login", {
+                    email: email,
+                    password: password
+                });
+                Auth.save({
+                    token: result.token,
+                    username: result.username,
+                    role: result.role
+                });
                 window.location.href =
-                    `dashboard.html#${result.role.toLowerCase()}`;
+                    "dashboard.html#" +
+                        result.role.toLowerCase();
             }
             catch (error) {
-                errorBox.textContent = errorMessage(error);
+                if (error instanceof Error) {
+                    errorBox.textContent =
+                        error.message;
+                }
             }
             finally {
                 button.disabled = false;
-                form.removeAttribute("aria-busy");
-                button.textContent = originalText;
+                button.textContent =
+                    originalText;
             }
         });
     });
