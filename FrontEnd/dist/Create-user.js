@@ -6,8 +6,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     // CHECK LOGIN
     if (!Auth.isLoggedIn()) {
-        window.location.href =
-            "login.html";
+        window.location.href = "login.html";
         return;
     }
     // ADMIN ONLY
