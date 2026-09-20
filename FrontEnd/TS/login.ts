@@ -57,9 +57,8 @@
     const button =
       document.querySelector(".signin-btn") as HTMLButtonElement;
 
-    const errorBox =
-      document.querySelector("#login-error") as HTMLParagraphElement;
-
+    // CREATE ERROR MESSAGE
+    let errorBox=document.getElementById("login-error") as HTMLParagraphElement|null;
       if(!errorBox){
         errorBox=document.createElement("p");
         errorBox.id="login-error";
