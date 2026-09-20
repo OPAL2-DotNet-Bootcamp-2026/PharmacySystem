@@ -2,7 +2,7 @@
 // TYPES
 // ==========================================
 
-interface Pharmacy {
+interface PharmacyInfo {
     pharmacyID: number;
     pharmacyName?: string;
     location?: string;
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async (): Promise<void> => {
 
     // LOAD PHARMACIES
     try {
-        const pharmacies = await Api.get<Pharmacy[]>("/Pharmacy");
+        const pharmacies = await Api.get<PharmacyInfo[]>("/Pharmacy");
 
         console.log("Pharmacies:", pharmacies);
 
