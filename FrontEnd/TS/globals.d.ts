@@ -29,6 +29,3 @@ interface ApiClient {
 
   del<TResponse>(endpoint: string): Promise<TResponse>;
 }
-
-declare const Auth: AuthClient;
-declare const Api: ApiClient;
