@@ -69,27 +69,31 @@
         "margin:8px 0;"+
         "min-height:20px;"+
         "font-size:14px;";
-
-        button.insertAdjacentElement(
-            "beforebegin",
-            errorBox
-        );
-    }
+        
+        button.insertAdjacentElement(
+            "beforebegin",
+            errorBox
+        );
+    }
 
       form.addEventListener(
-      "submit",
-      async (event: SubmitEvent) => {
-        event.preventDefault();
-        errorBox.textContent = "";
-
-        if (!form.reportValidity()) {
-          return;
-        }
-
-        const request: LoginRequest = {
-          email: emailInput.value.trim(),
-          password: passwordInput.value,
-        };
+        "submit",
+        async(event:SubmitEvent)=>{
+            
+            event.preventDefault();
+            errorBox!.textContent="";
+            
+            const email:string=
+            emailInput.value.trim();
+            
+            const password:string=
+            passwordInput.value;
+            
+            if(!email||!password){
+                errorBox!.textContent=
+                "Please enter email and password.";
+                return;
+            }
 
         button.disabled = true;
         form.setAttribute("aria-busy", "true");
