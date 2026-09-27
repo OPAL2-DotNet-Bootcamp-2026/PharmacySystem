@@ -49,7 +49,7 @@ namespace Pharmacy_System
         {
             options.UseSqlServer(
                 @"
-                Server=DESKTOP-1OMOCFK\MSSQLSERVER02;
+                Server=RAHAFSK;
                 Database=PharmacyDB;
                 Trusted_Connection=True;
                 TrustServerCertificate=True;"
